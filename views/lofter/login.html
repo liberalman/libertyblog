@@ -1,0 +1,851 @@
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+
+<div id="hero" class="static-header login-version light clearfix">
+	<div class="text-heading">
+		<h1 class="animated hiding" data-animation="bounceInDown" data-delay="0">登录<span class="highlight">LIBERALMAN</span> 账号</h1>
+		<p class="animated hiding" data-animation="fadeInDown" data-delay="500">个人博客分享平台，随想、随拍、随写。 </p>
+	</div>
+	<div class="container">
+		<div class="signup-wrapper animated hiding" data-animation="bounceInUp" data-delay="0">
+			<div class="row">
+				<div class="col-md-12 center nav nav-tabs" role="navigation">
+					<h6><a href="#login-first-tab-alt" data-toggle="tab">QQ登录</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="#login-second-tab-alt" data-toggle="tab">账号登录</a> </h6>
+				</div>
+			</div>
+			<div class="row">
+				<div class="tab-content alt">
+					<div class="tab-pane active" id="login-first-tab-alt">
+						<div class="section-header animated center" data-animation="fadeInDown">
+							<div class="section-content row">
+								<div class="col-sm-3">
+									<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="0">
+										<span class="form-inline form-register-small">
+										<span id="qqLoginBtn"></span>
+										<span class="h7">QQ登录</span></span>
+									</article>
+									<!--<span class="icon icon-arrows-04"></span>-->
+								</div>
+								<div class="col-sm-3">
+									<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="400">
+										<i class="howitworks icon icon-seo-icons-03 icon-active"></i>
+										<span class="h7">Customers</span>
+									</article>
+									<!--<span class="icon icon-arrows-04"></span>-->
+								</div>
+								<div class="col-sm-3">
+									<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="800">
+										<i class="howitworks icon icon-seo-icons-05 icon-active"></i>
+										<span class="h7">Statistics &amp; Reports</span>
+									</article>
+								</div>
+								<div class="col-sm-3">
+									<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="800">
+										<i class="howitworks icon icon-seo-icons-05 icon-active"></i>
+										<span class="h7">Shipping &amp; Tax</span>
+									</article>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" id="login-second-tab-alt">
+						<div class="section-content row">
+							<div class="col-md-12 animated hiding center" data-animation="fadeInLeft">
+								<form class="form-inline form-register-small" id="form-login">
+									<p id="success-getstarted" class="hidden text-success"> Your request has been succesfully processed. Team Fishry will contact to you within 24 hours.</p>
+									<div class="form-group">
+										<label for="account"></label>
+										<input size="30" type="text" class="form-control required" name="account" id="account" placeholder="用户名" autocomplete="off" />
+									</div>
+									<div class="form-group">
+										<input type="password" class="form-control required" name="password" id="password" placeholder="密码" style="display:block;" autocomplete="off" />
+									</div>
+									<div class="form-group submit-wrap">
+										<input type="hidden" name="small-form" />
+										<button type="submit" class="btn btn-primary btn-md">登录</button>
+									</div>
+								<div class="row">
+									<div class="col-xs-3"><span class="highlight h4"><input type="checkbox" id="remember" name="remember" value="yes" />记住7天</span></div>
+									<div class="col-xs-3"><a href="/register">注册</a></div>
+									<div class="col-xs-3"><a href="/register.html">忘记密码</a></div>
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="text-align:right;margin-top: 9%;padding-right: 5%;">背景作品来自：<a href="http://liberalman.lofter.com" target="_blank">liberalman</a></div>
+</div>
+
+<section id="about" class="section dark">
+	<div class="container">
+		<h2>Build your brand <span class="highlight">online</span></h2>
+		<p>Fishry is based on SaaS (software as a service) model with a twist - You signup, we deliver. <br />A completely managed e-commerce solution for all your online needs.</p>
+		<br />
+		<ul class="nav nav-tabs alt">
+			<li class="active"><a href="#first-tab-alt" data-toggle="tab">Storefront</a></li>
+			<li><a href="#second-tab-alt" data-toggle="tab">ADMIN PANEL</a></li>
+			<li><a href="#third-tab-alt" data-toggle="tab">TECHNOLOGY</a></li>
+		</ul>
+		<div class="tab-content alt">
+			<div class="tab-pane active" id="first-tab-alt">
+				<div class="section-content row">
+					<div class="col-sm-5 col-md-offset-1 animated hiding" data-animation="fadeInRight">
+						<article>
+							<h3>FULL CONTROL <br /><span class="highlight h4">OVER YOUR E-STORE BRANDING</span></h3>
+							<!--<div class="sub-title">Full control over look & feel of your store. </div>-->
+							<p>Get your own design up and running, let us design your store front or apply a customized fishry template.</p>
+							<p>Map a custom domain to your store front.</p>
+						</article>
+					</div>
+					<div class="col-sm-6 animated hiding" data-animation="fadeInLeft">
+						<img src="/img/features/dominos_features.png" class="img-responsive" alt="Storefront Dominos Pakistan" />
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane" id="second-tab-alt">
+				<div class="section-header animated hiding center" data-animation="fadeInDown">
+					<h2>Store Management Panel</h2>
+					<div class="sub-heading">
+						Manage your store from a powerful easy to use Administration panel.
+					</div>
+				</div>
+				<div class="section-content row">
+					<div class="col-sm-3">
+						<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="0">
+							<i class="howitworks icon icon-shopping-04 icon-active"></i>
+							<span class="h7">Product &amp; Inventory Management</span>
+						</article>
+						<!--<span class="icon icon-arrows-04"></span>-->
+					</div>
+					<div class="col-sm-3">
+						<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="400">
+							<i class="howitworks icon icon-seo-icons-03 icon-active"></i>
+							<span class="h7">Customers</span>
+						</article>
+						<!--<span class="icon icon-arrows-04"></span>-->
+					</div>
+					<div class="col-sm-3">
+						<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="800">
+							<i class="howitworks icon icon-seo-icons-05 icon-active"></i>
+							<span class="h7">Statistics &amp; Reports</span>
+						</article>
+					</div>
+					<div class="col-sm-3">
+						<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="800">
+							<i class="howitworks icon icon-seo-icons-05 icon-active"></i>
+							<span class="h7">Shipping &amp; Tax</span>
+						</article>
+					</div>
+				</div>
+				<br />
+				<br />
+			</div>
+			<div class="tab-pane" id="third-tab-alt">
+				<div class="container animated hiding" data-animation="fadeInDown">
+					<h2 class="center">Cutting edge technology</h2>
+					<p class="center">Engineered for the web of future.</p>
+					<div class="col-md-3 col-sm-6 col-xs-12 col-md-offset-1">
+						<article class="center">
+							<a href="#"><img src="/img/themes/tech_azure.png" /></a>
+							<p class="thin">Azure is the only major cloud platform ranked by Gartner as an industry leader for both infrastructure-as-a-service (IaaS) and platform-as-a-service (PaaS). </p>
+						</article>
+					</div>
+					<div class="col-md-3 col-sm-6 col-xs-12">
+						<article class="center">
+							<a href="#"><img src="/img/themes/tech_angular.png" /></a>
+							<p class="thin">AngularJS maintained by Google is a web application framework with the goal of improving testability and performance.of web apps. </p>
+						</article>
+					</div>
+					<div class="col-md-3 col-sm-6 col-xs-12">
+						<article class="center">
+							<a href="#"><img src="/img/themes/tech_node.png" /></a>
+							<p class="thin">Node.js perfect for data-intensive real-time applications that run across distributed devices.</p>
+						</article>
+					</div>
+				</div>
+				<div class="section-header animated hiding center" data-animation="fadeInDown">
+					<h2>Cutting edge technology</h2>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="section-header animated hiding center" data-animation="fadeInDown">
+							<h5>Microsoft’s Azure cloud platform</h5>
+							<p>Azure is the only major cloud platform ranked by Gartner as an industry leader for both infrastructure-as-a-service (IaaS) and platform-as-a-service (PaaS). </p>
+						</div>
+					</div>
+					<div class="col-md-4" style="border-right:#ccc solid 1px;">
+						<div class="section-header animated hiding center" data-animation="fadeInDown">
+							<h4>AngularJS</h4>
+							<p>AngularJS maintained by Google is a web application framework with the goal of improving testability and performance.of web apps.</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="section-header animated hiding center" data-animation="fadeInDown">
+							<h4>NodeJS</h4>
+							<p>Node.js perfect for data-intensive real-time applications that run across distributed devices.</p>
+						</div>
+					</div>
+				</div>
+				<div class="section-header animated hiding center" data-animation="fadeInDown">
+					<h2>Build on Microsoft’s Azure cloud platform</h2>
+					<div class="sub-heading">
+						Azure is the only major cloud platform ranked by Gartner as an industry leader for both infrastructure-as-a-service (IaaS) and platform-as-a-service (PaaS).
+					</div>
+				</div>
+				<div class="section-content row">
+					<div class="col-sm-3">
+						<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="0">
+							<i class="howitworks icon icon-shopping-04 icon-active"></i>
+							<span class="h7">Product &amp; Inventory Management</span>
+						</article>
+						<!--<span class="icon icon-arrows-04"></span>-->
+					</div>
+					<div class="col-sm-3">
+						<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="400">
+							<i class="howitworks icon icon-seo-icons-03 icon-active"></i>
+							<span class="h7">Customers</span>
+						</article>
+						<!--<span class="icon icon-arrows-04"></span>-->
+					</div>
+					<div class="col-sm-3">
+						<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="800">
+							<i class="howitworks icon icon-seo-icons-05 icon-active"></i>
+							<span class="h7">Statistics &amp; Reports</span>
+						</article>
+					</div>
+					<div class="col-sm-3">
+						<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="800">
+							<i class="howitworks icon icon-seo-icons-05 icon-active"></i>
+							<span class="h7">Shipping &amp; Tax</span>
+						</article>
+					</div>
+				</div>
+				<br />
+				<br />
+			</div>
+		</div>
+	</div>
+</section>
+<section id="features-list" class="section dark">
+	<div class="container animated hiding" data-animation="fadeInDown">
+		<h1>Powerful Features</h1>
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<article class="center">
+				<i class="icon icon-multimedia-16 icon-active"></i>
+				<span class="h7">STOREFRONT</span>
+				<p class="thin">Complete control over the look and feel of your web store. Get a custom design or pick a professional theme. </p>
+			</article>
+		</div>
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<article class="center">
+				<i class="icon icon-shopping-18 icon-active"></i>
+				<span class="h7">Shopping Cart</span>
+				<p class="thin">Complete checkout with the ability to handle COD and Credit Cards with payment gateway integrations.</p>
+			</article>
+		</div>
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<article class="center">
+				<i class="icon icon-seo-icons-27 icon-active"></i>
+				<span class="h7">Mobile and Responsive</span>
+				<p class="thin">Powerful API's to build Native iOS &amp; Android apps or build a responsive theme. </p>
+			</article>
+		</div>
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<article class="center">
+				<i class="icon icon-office-24 icon-active"></i>
+				<span class="h7">SEO and Marketing</span>
+				<p class="thin">Fully optimized for SEO with best practices for all search engines.<br /><br /> </p>
+			</article>
+		</div>
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<article class="center">
+				<i class="icon icon-seo-icons-03 icon-active"></i>
+				<span class="h7">Store Management Panel</span>
+				<p class="thin">A powerful yet user friendly admin panel to handle all aspects of the store from batch upload to bullk actions. </p>
+			</article>
+		</div>
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<article class="center">
+				<i class="icon icon-office-12 icon-active"></i>
+				<span class="h7">Reports</span>
+				<p class="thin">Interactive Sales, Product and Customer reports with ability to export for further analysis.</p>
+			</article>
+		</div>
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<article class="center">
+				<i class="icon icon-multimedia-40 icon-active"></i>
+				<span class="h7">Cloud Hosting</span>
+				<p class="thin">Built on Microsoft’s statoe of the art Azure cloud platform, with auto scaling and a 99.95% uptime availability.</p>
+			</article>
+		</div>
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<article class="center">
+				<i class="icon icon-chat-messages-07 icon-active"></i>
+				<span class="h7">Support 24/7</span>
+				<p class="thin">The support team is available 24 hours a day, 7 days a week, via email. </p>
+			</article>
+		</div>
+	</div>
+</section>
+<!-- <a id="showHere"></a>-->
+<section id="themes" class="section dark">
+	<div class="container">
+		<div class="section-header animated hiding" data-animation="fadeInDown">
+			<h2><span class="highlight">Professional</span> Ecommerce Theme</h2>
+			<div class="sub-heading">
+				Responsive themes, easily customized to fit your brand
+			</div>
+		</div>
+		<div class="section-content row">
+			<div class="row">
+				<div class="col-md-3 col-sm-3 col-xs-6" data-animation="flipInY">
+					<a href="http://glammy.fishry.com/" target="_blank"><img src="/img/themes/theme_04.png" width="200" style="border:#f8f8f8 solid 2px; padding:3px;" /></a>
+					<div>
+						<a href="http://glammy.fishry.com/" target="_blank">View Demo</a>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-6" data-animation="flipInY">
+					<a href="http://offset.fishry.com/" target="_blank"><img src="/img/themes/theme_03.png" width="200" style="border:#f8f8f8 solid 2px; padding:3px;" /></a>
+					<div>
+						<a href="http://offset.fishry.com/" target="_blank">View Demo</a>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-6" data-animation="flipInY">
+					<a href="http://harvest.fishry.com/" target="_blank"><img src="/img/themes/theme_02.png" width="200" style="border:#f8f8f8 solid 2px; padding:3px;" /></a>
+					<div>
+						<a href="http://harvest.fishry.com/" target="_blank">View Demo</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section id="mobile" class="section dark">
+	<div class="container">
+		<div class="section-content row">
+			<div class="col-sm-6 animated hiding" data-animation="fadeInRight">
+				<img src="/img/features/dominos_phone.png" class="img-responsive" alt="eCommerce Mobile Apps" />
+			</div>
+			<div class="col-sm-6 animated hiding" data-animation="fadeInLeft">
+				<article>
+					<h3>MOBILE APPS <span class="highlight">FOR YOUR STORE</span></h3>
+					<p>Make your shop accessible to the 70% customers who use their smart phones for shopping. Native iOS &amp; Android apps fully personalized to the look and feel of your online store.</p>
+				</article>
+				<br />
+				<hr class="clearfix" />
+				<br />
+				<div class="row">
+					<div class="col-sm-4">
+						<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="800">
+							<div class="fa fa-photo fa-2x"></div>
+							<div class="h5 thin">
+								<strong>Personalization</strong>
+							</div>
+							<p style="font-size:12px; line-height:12px;" class="text-muted">Personalize the look and feel of the app to match it with your store branding.</p>
+						</article>
+					</div>
+					<div class="col-sm-4">
+						<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="800">
+							<div class="fa fa-shopping-cart fa-2x"></div>
+							<div class="h5">
+								<strong>Ecommerce Ready</strong>
+							</div>
+							<p style="font-size:12px; line-height:12px;" class="text-muted">Complete storefront functionality empowering customers to make purchases with their smart phones.</p>
+						</article>
+					</div>
+					<div class="col-sm-4">
+						<article class="text-center animated hiding" data-animation="fadeInLeft" data-delay="800">
+							<div class="fa fa-bell-o fa-2x"></div>
+							<div class="h5">
+								<strong>Push Notifications</strong>
+							</div>
+							<p style="font-size:12px; line-height:12px;" class="text-muted">Deliver high quality push messages to broadcast deals and promotions for your customers.</p>
+						</article>
+					</div>
+					<hr class="clearfix" />
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section id="customers" class="section dark">
+	<div class="container">
+		<div class="section-header animated hiding" data-animation="fadeInDown">
+			<h2><span class="highlight">Trusted by</span> the World's Best</h2>
+			<div class="sub-heading">
+				We've helped our customers sell over
+				<strong>RS.100 million</strong> worth of products in last 6 months.
+				<br />From nationally recognized brands to your favorite local shops,
+				<br />Fishry is trusted by many brands you know and love.
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-md-3">
+					<div class=" customers">
+						<a href="http://dominos.com.pk" target="_blank"><img src="/img/clients/dominos.png" /></a>
+						<h6>Dominos Pakistan</h6>
+						<small><a href="http://dominos.com.pk" target="_blank" class="text-info small">Visit Store</a></small>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class=" customers">
+						<a href="http://kfcpakistan.com" target="_blank"><img src="/img/clients/kfcpakistan.jpg" /></a>
+						<h6>KFC Pakistan</h6>
+						<small><a href="http://kfcpakistan.com" target="_blank" class="text-info small">Visit Store</a></small>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="customers">
+						<a href="http://shopecs.com" target="_blank"><img src="/img/clients/ecs.jpg" /></a>
+						<h6>ECS</h6>
+						<small><a href="http://shopecs.com" target="_blank" class="small text-info">Visit Store</a></small>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="customers">
+						<a href="http://sairarizwan.com" target="_blank"><img src="/img/clients/sairarizwan.jpg" /></a>
+						<h6>Saira Rizwan</h6>
+						<small><a href="http://sairarizwan.com" target="_blank" class="small text-info">Visit Store</a></small>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="customers">
+						<a href="http://base6.co" target="_blank"><img src="/img/clients/base6.png" /></a>
+						<h6>Base6</h6>
+						<small><a href="http://base6.co" target="_blank" class="small text-info">Visit Store</a></small>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="customers">
+						<a href="http://nishatlinen.com" target="_blank"><img src="/img/clients/nishat.png" /></a>
+						<h6>Nishat Linen</h6>
+						<small><a href="http://nishatlinen.com" target="_blank" class="small text-info">Visit Store</a></small>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="customers">
+						<a href="http://zarashahjahan.com"><img src="/img/clients/zara.png" /></a>
+						<h6>Zara Shahjahan</h6>
+						<small><a href="http://zarashahjahan.com" class="small text-info">Visit Store</a></small>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="customers">
+						<a href="http://thevitamincompany.com/" target="_blank"><img src="/img/clients/vcompany.jpg" /></a>
+						<h6>The Vitamin Company</h6>
+						<small><a href="http://thevitamincompany.com/" target="_blank" class="small text-info">Visit Store</a></small>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="customers">
+						<a href="http://myrangja.com" target="_blank"><img src="/img/clients/rangja.png" /></a>
+						<h6>Rang ja</h6>
+						<small><a href="http://myrangja.com" target="_blank" class="small text-info">Visit Store</a></small>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="customers">
+						<a href="http://chinyere.pk" target="_blank"><img src="/img/clients/chinyner.png" /></a>
+						<h6>Chinyere</h6>
+						<small><a href="http://chinyere.pk" target="_blank" class="small text-info">Visit Store</a></small>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="customers">
+						<a href="http://urbanculture.pk" target="_blank"><img src="/img/clients/urban.png" /></a>
+						<h6>Urban Culture</h6>
+						<small><a href="http://urbanculture.pk" target="_blank" class="small text-info">Visit Store</a></small>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="customers">
+						<a href="http://snmstores.com" target="_blank"><img src="/img/clients/snm.png" /></a>
+						<h6>SNM Stores</h6>
+						<small><a href="http://snmstores.com" target="_blank" class="small text-info">Visit Store</a></small>
+					</div>
+				</div>
+			</div>
+			<br />
+		</div>
+	</div>
+</section>
+<section id="contact">
+	<div class="container">
+		<h3 class="center thin"><strong>CONTACT</strong> FISHRY</h3>
+		<p class="thin text-center">Grow your business online with Fishry. Our dedicated support will help get you started to sell online. </p>
+		<br />
+		<div class="row center">
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-body center">
+						<div>
+							<span class="fa fa-building fa-2x text-info "></span>
+						</div>
+						<h7 class="text-info">
+							Fishry HQ
+						</h7>
+						<p class="thin small">12-D (CCA), Phase 5<br />D.H.A. Lahore Pakistan <br />Tel: +92.42.37060558</p>
+						<button type="submit" class="btn btn-invert btn-md" data-toggle="modal" data-target="#supportModal" onclick="$('#form-support').show();$('#success-support').hide();">Contact</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 ">
+				<div class="panel panel-default">
+					<div class="panel-body center">
+						<div>
+							<span class="fa fa-support fa-2x text-info "></span>
+						</div>
+						<h7 class="text-info">
+							We're here to help 24/7
+						</h7>
+						<p class="thin small">Got a question about using Fishry? <br />The Fishry support team is available 24 hours a day, 7 days a week, by email.</p>
+						<button type="submit" class="btn btn-invert btn-md" data-toggle="modal" data-target="#supportModal" onclick="$('#form-support').show();$('#success-support').hide();">Talk to Support</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="panel panel-default bg-primary ">
+					<div class="panel-body center light center">
+						<div class="light">
+							<span class="fa fa-sign-in fa-2x text-info light "></span>
+						</div>
+						<h7 class="text-info center light">
+							Let’s get started.
+						</h7>
+						<p class="thin small center">Fishry is everything you need to sell online. Manage your orders, contact customers, track sales trends, <br />and more. </p>
+						<button type="submit" class="btn btn-primary btn-md" data-toggle="modal" data-target="#getstartedModal" onclick="$('#form-signup').show();$('#success-signup').hide();">开始</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br />
+		<div class="clearfix"></div>
+	</div>
+</section>
+<!-- Get Started Modal -->
+<div class="modal fade" id="getstartedModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Cancel"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="getstartedModal">Let's Get Started</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<p id="success-signup" class="hidden text-success"> Your request has been succesfully processed. Someone from our team will contact you within the next 48 hours.</p>
+				</div>
+				<form id="form-signup" class="form-horizontal" name="form-support">
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="Name">Name</label>
+						<div class="col-xs-8">
+							<input type="text" class="form-control" name="signup_name" id="gs_name" required="" autocomplete="off" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="Email">Email</label>
+						<div class="col-xs-8">
+							<input type="text" class="form-control" name="signup_email" id="gs_email" required="" autocomplete="off" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="Phone">Phone</label>
+						<div class="col-xs-8">
+							<input type="number" class="form-control" name="signup_phone" id="gs_phone" required="" autocomplete="off" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="Subject">Subject</label>
+						<div class="col-xs-8">
+							<input type="text" class="form-control" name="signup_subject" id="gs_subject" required="" autocomplete="off" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="Question">Question</label>
+						<div class="col-xs-8">
+							<textarea class="form-control" rows="5" name="signup_question" id="gs_question" required=""></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Cancel</button>
+						<button type="submit" id="submit-signup" class="btn btn-sm btn-primary">Send</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Talk to Support -->
+<div class="modal fade" id="supportModal" tabindex="-1" role="dialog" aria-labelledby="supportModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Cancel"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="supportModalLabel">Contact and Support</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<p id="success-support" class="hidden text-success"> Your request has been succesfully processed. Team Fishry will contact to you within 24 hours.</p>
+				</div>
+				<form id="form-support" class="form-horizontal" name="form-support" onsubmit="contact()">
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="Name">Name</label>
+						<div class="col-xs-8">
+							<input type="text" class="form-control" name="support_name" id="support_name" required="" autocomplete="off" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="Email">Email</label>
+						<div class="col-xs-8">
+							<input type="text" class="form-control" name="support_email" id="support_email" required="" autocomplete="off" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="Phone">Phone</label>
+						<div class="col-xs-8">
+							<input type="number" class="form-control" name="support_phone" id="support_phone" required="" autocomplete="off" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="Subject">Subject</label>
+						<div class="col-xs-8">
+							<input type="text" class="form-control" name="support_subject" id="support_subject" required="" autocomplete="off" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="Question">Question</label>
+						<div class="col-xs-8">
+							<textarea class="form-control" rows="5" name="support_question" id="support_question" required=""></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Cancel</button>
+						<button type="submit" id="submit-contact" class="btn btn-sm btn-primary">Send</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="back-to-top">
+	<i class="fa fa-angle-up fa-3x"></i>
+</div>
+
+<script type="text/javascript" src="/js/jquery.flexslider-min.js"></script>
+<script type="text/javascript" src="/js/jquery.nav.js"></script>
+<script type="text/javascript" src="/js/jquery.appear.js"></script>
+<script type="text/javascript" src="/js/jquery.plugin.js"></script>
+<script type="text/javascript" src="/js/jquery.countdown.js"></script>
+<script type="text/javascript" src="/js/waypoints.min.js"></script>
+<script type="text/javascript" src="/js/waypoints-sticky.min.js"></script>
+<script type="text/javascript" src="/js/jquery.validate.js"></script>
+<script type="text/javascript" src="/js/headhesive.min.js"></script>
+<script type="text/javascript" src="/js/mailing-list.js"></script>
+<script type="text/javascript" src="/js/scripts.js"></script>
+<script type="text/javascript" src="/js/jquery.validate.js"></script>
+
+<script>
+
+	$("#form-support").validate({
+		rules: {
+			support_name: {
+				required: true,
+				minlength: 3
+			},
+			support_subject: {
+				required: true,
+				minlength: 3
+			},
+			support_email: {
+				required: true,
+				email: true
+			},
+			support_phone: {
+				required: true,
+				minlength: 10,
+				number: true
+			},
+			support_question: "required"
+		}
+	});
+
+	$("#form-signup").validate({
+		rules: {
+			support_name: {
+				required: true,
+				minlength: 3
+			},
+			support_subject: {
+				required: true,
+				minlength: 3
+			},
+			support_email: {
+				required: true,
+				email: true
+			},
+			support_phone: {
+				required: true,
+				minlength: 10,
+				number: true
+			},
+			support_question: "required"
+		}
+
+	});
+</script>
+<script type="text/javascript">
+	function sendEmail(data) {
+		$.ajax({
+			url: 'https://fishry.azure-mobile.net/api/send_grid',
+			data: data,
+			type: 'POST',
+			dataType: 'json',
+			success: function(response) {
+				if (response) {
+					console.log('auth success response');
+				} else {
+					console.log('error found!');
+				}
+			}
+		});
+	}
+
+	function contact() {
+		var userName = $('#support_name').val();
+		var userEmail = $('#support_email').val();
+		var userPhone = $('#support_phone').val();
+		var userSubject = $('#support_subject').val();
+		var userMessage = $('#support_question').val();
+		var emailTo = 'talk@fishry.com';
+		var fromName = 'Fishry';
+		var subjectEmail = 'General Contact Inquiry via Fishry Website';
+		var byFrom = userEmail;
+		var toBCC = 'haris.shahid@bramerz.pk';
+
+		var emailBody = 'Hello, <p>A general inquiry has been raised from the fishry website.</p><br /><b>Name: </b>' + userName + '<br /> <b>Email : </b>' + userEmail + '<br /><b>Phone : </b>' + userPhone + '<br /><b>Subject : </b>' + userSubject + '<br /><b>Question : </b>' + userMessage + '<br /><br/>Regards,<br/>Fishry Autobot';
+		var dataEmail = {
+			data: emailBody,
+			email: emailTo,
+			subject: subjectEmail,
+			toBCC: toBCC,
+			byFrom: byFrom,
+			fromName: fromName
+		};
+		console.log(dataEmail);
+		if (userName && userEmail && userPhone && userSubject && userMessage) {
+			sendEmail(dataEmail);
+			$('#form-support')[0].reset();
+			$('.error').hide();
+			$('#form-support').hide();
+			event.preventDefault();
+			$('#success-support').show();
+			$('#success-support').removeClass('hidden');
+			$('#success-support').addClass('visible');
+			$('#submit-contact').hide();
+
+		}
+	}
+
+	$("#form-login").validate({
+		rules: {
+			account: {
+				required: true,
+				minlength: 2
+			},
+			password: {
+				required: true,
+				minlength: 6
+			}
+		},
+		messages: {
+			account: {
+				required: '<font color="red">请输入用户名!</font>',
+				minlength: '<font color="red">用户名长度不能小于 2 个字母!</font>'
+			},
+			password: {
+				required: '<font color="red">请输入密码!</font>',
+				minlength: '<font color="red">密码长度不能小于 6 个字母!</font>'
+			}
+		},
+		// 使用 ajax 方式提交
+		submitHandler: function(form) {
+			$.post('/login',
+				$(form).serialize(),
+				function(data) {
+					if ("0" != data) { // 返回0代表成功，其他失败
+						toastr.error(data);
+					} else {
+						toastr.success('登录成功');
+						window.location = "/"; //跳转到首页
+					}
+				});
+		},
+		// 指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
+		errorPlacement: function(error, element) {
+			$(element).closest("form").find("input[name='" + element.attr("id") + "']").append(error);
+		}
+	});
+</script>
+
+<!-- QQ第三方登录 -->
+<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101345272" data-redirecturi="http://callback.liberalman.cn/" charset="utf-8"></script>
+<script type="text/javascript">
+	QC.Login({
+		btnId: "qqLoginBtn",
+		size: "A_L"
+	}, function(oInfo, oOpts) {
+		console.info(oInfo); // 昵称
+		console.info(oOpts); // 点击登录的按钮Id
+		QC.Login.getMe(function(openId, accessToken) {
+			// 提交登录信息到本人网站
+			$.post('/login/qqlogin', {
+				openid: openId,
+				accesstoken: accessToken,
+				nickname: oInfo.nickname,
+				avatarUrl: oInfo.figureurl_qq_2
+			}, function(data) {
+				if ('0' != data) {
+					toastr.error(data);
+				} else {
+					toastr.success('登录成功');
+					window.location = "/"; //跳转到首页
+				}
+
+			});
+
+		});
+
+	});
+
+	/*//调用QC.Login方法，指定btnId参数将按钮绑定在容器节点中
+		   QC.Login({
+		       //btnId：插入按钮的节点id，必选
+		       btnId:"qqLoginBtn",    
+		       //用户需要确认的scope授权项，可选，默认all
+		       scope:"all",
+		       //按钮尺寸，可用值[A_XL| A_L| A_M| A_S|  B_M| B_S| C_S]，可选，默认B_S
+		       size: "A_XL"
+		   }, function(reqData, opts){//登录成功
+		   	
+		       //根据返回数据，更换按钮显示状态方法
+		       var dom = document.getElementById(opts['btnId']),
+		       _logoutTemplate=[
+		            //头像
+		            '<span><img src="{figureurl}" class="{size_key}"/></span>',
+		            //昵称
+		            '<span>{nickname}</span>',
+		            //退出
+		            '<span><a href="javascript:QC.Login.signOut();">退出</a></span>'    
+		       ].join("");
+		       dom && (dom.innerHTML = QC.String.format(_logoutTemplate, {
+		           nickname : QC.String.escHTML(reqData.nickname), //做xss过滤
+		           figureurl : reqData.figureurl
+		       }));
+		   }, function(opts){//注销成功
+		         alert('QQ登录 注销成功');
+		   });*/
+</script>

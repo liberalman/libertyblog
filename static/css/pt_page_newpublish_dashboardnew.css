@@ -1,0 +1,1257 @@
+@charset "utf-8";
+
+.w-pagelayer {
+}
+
+.w-pagelayer .pagelayer {
+	position: fixed;
+	_position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 500;
+}
+
+.w-pagelayer .pagelayer .lyloading {
+	position: absolute;
+	left: 48%;
+	top: 50%;
+	z-index: 5;
+	width: 58px;
+	height: 10px;
+	background: url(http://l.bst.126.net/rsc/img/load.gif) 0 0 no-repeat;
+}
+
+.w-pagelayer .pagelayer .lycover {
+	visibility: hidden;
+	width: 100%;
+	height: 100%;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	background-color: #000;
+}
+
+.w-pagelayer .pagelayer .lycover {
+	*position: fixed;
+	*left: 0;
+	*top: 0;
+	*right: 0;
+	*bottom: 0;
+	*z-index: 3;
+}
+
+.w-pagelayer .pagelayer .lyscroll {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 201;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.w-pagelayer .pagelayer .lybody {
+	width: 800px;
+	padding: 40px 0;
+	margin: 0 auto;
+}
+
+.w-pagelayer .pagelayer .lybody .lycont {
+	zoom: 1;
+}
+
+.w-pagelayer .pagelayer .lyclosed {
+	display: none;
+	position: fixed;
+	_position: absolute;
+	top: 20px;
+	right: 35px;
+	width: 32px;
+	height: 30px;
+	background: url(../rsc/img/loginopen/login-24.png) no-repeat 0 -1290px;
+	_background: url(../rsc/img/loginopen/login.png) no-repeat 0 -1290px;
+}
+
+.w-pagelayer .pagelayer .lyclosed:hover {
+	background-position: -114px -1290px;
+}
+
+.w-pagelayer .pagelayer .a-scale {
+	display: block;
+	*visibility: hidden;
+	opacity: 0;
+	transition: opacity 0.3s;
+	-webkit-transition: opacity 0.3s;
+	-moz-transition: opacity 0.3s;
+	-o-transition: opacity 0.3s;
+}
+
+.w-pagelayer .pagelayer .a-scale-do {
+	display: block;
+	*visibility: visible;
+	opacity: 1;
+}
+@charset "utf-8";
+
+.page-lofter .guide-layer {
+	z-index: 10000;
+}
+
+.page-lofter .guide-avaw {
+	width: 760px;
+}
+
+.page-lofter .guide-avaw .m-layer {
+	width: 100%;
+}
+
+.page-lofter .guide-avaw .m-layer-2 {
+	width: 100%;
+}
+
+.page-lofter .guide-avaw .nbinput1 input {
+	width: 100%;
+}
+
+.page-lofter .guide-infow {
+	width: 630px;
+	z-index: 1000;
+}
+
+.page-lofter .guide-infow .m-layer {
+	width: 100%;
+}
+
+.page-lofter .guide-followw {
+	width: 832px;
+	z-index: 1000;
+}
+
+.page-lofter .guide-followw .m-layer {
+	width: 100%;
+}
+
+.page-lofter .m-layer .layerarr {
+	top: -23px;
+}
+
+.page-lofter .guide-upd .m-layer {
+	width: 700px;
+}
+
+.page-lofter .guide-upd .m-layer .layert {
+	height: 27px;
+	padding: 23px 30px;
+}
+
+.page-lofter .guide-upd .m-layer .layert h3 {
+	font-size: 24px;
+	line-height: 27px;
+}
+
+.page-lofter .guide-upd .m-layer .layerm {
+	padding: 5px 11px 14px 30px;
+}
+
+.unfb {
+	font-size: 12px;
+	height: 22px;
+	line-height: 22px;
+	width: 31px;
+	display: inline;
+}
+
+.page-lofter .m-glist {
+	height: 266px;
+}
+
+.page-lofter .ehint {
+	text-align: center;
+	margin-top: 130px;
+}
+
+.m-start .ng1,.m-start .ng2 {
+	background: url(../rsc/img/guide/ngtip24.png?001) no-repeat 999px 999px;
+	_background: url(../rsc/img/guide/ngtip8.png?001) no-repeat 999px 999px;
+}
+
+.m-start p {
+	padding: 35px 20px 0;
+	text-indent: 0;
+	text-align: left;
+	font-size: 14px;
+	line-height: 26px;
+}
+
+.m-start p a,.m-start p a:hover {
+	line-height: 36px;
+	text-decoration: underline;
+}
+
+.m-start .ng1 {
+	top: 154px;
+	left: 234px;
+	width: 200px;
+	height: 120px;
+	background-position: -4px -230px;
+}
+
+.m-start .ng2 {
+	top: 59px;
+	left: 234px;
+	width: 190px;
+	height: 170px;
+	background-position: -4px 1px;
+	text-indent: -10px;
+}
+@charset "utf-8";
+
+.f-noselect {
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-o-user-select: none;
+}
+
+.f-trans,.publishcommon .publishlayerwrap,.publishcommon .m-mlist .mlistimg .w-img,.publishcommon .m-mlist .mlistimg .w-img img,body .uiutil .zcvr {
+	transition: all 0.3s linear;
+	-webkit-transition: all 0.3s linear;
+	-moz-transition: all 0.3s linear;
+	-o-transition: all 0.3s linear;
+}
+
+.publishcommon .editorWrap .edui-editor .edui-editor-iframeholder {
+	transition: height 0.2s linear;
+	-webkit-transition: height 0.2s linear;
+	-moz-transition: height 0.2s linear;
+	-o-transition: height 0.2s linear;
+}
+
+.js-ueditor-fullscreen .publishcommon .editorWrap .edui-editor .edui-editor-iframeholder {
+	transition: none;
+	-webkit-transition: none;
+	-moz-transition: none;
+	-o-transition: none;
+}
+
+.publishcommon .f-commonicon,.publishcommon .tagArea .tageditor .tokens,.publishcommon .publishType .selpublishtype .zdwn,.publishcommon .selpublishto .zlst .js_selected_option,.publishcommon .selccommons .zlst .js_selected_option,.publishcommon .selpublishtype .zlst .js_selected_option,.publishcommon .selpublishtype .zlst .js-timing-publish.js_selected_option label {
+	background: url(../rsc/img/newpublish/icon.png) -9999px -9999px no-repeat;
+}
+
+.publishcommon .f-pbicon {
+	background: url(../rsc/img/newpublish/pbicon.png) -9999px -9999px no-repeat;
+}
+
+.editphotodesc .editdescwrap .descinput,.js-postText.publishcommon .blogTittle,.js-postVideo.publishcommon  .videoarea .vsearch .vsearchwrap {
+	background: #fff url(../rsc/img/shadow-in.png) 0 0 no-repeat;
+}
+
+.publishcommon .editorWrap,.publishcommon .tagArea,.publishcommon .siteSyncArea,.publishcommon .cCommonsArea {
+	display: none;
+}
+
+.js-activating.publishcommon .publishlayer .editorWrap,.js-activating.publishcommon .publishlayer .tagArea,.js-activating.publishcommon .publishlayer .siteSyncArea,.js-activating.publishcommon .publishlayer .cCommonsArea {
+	display: block;
+}
+
+.js-activating.publishcommon .publishlayer .siteSyncArea.f-dn {
+	display: none;
+}
+
+.publishBarArea {
+}
+
+.js-showpublishlayer.publishBarArea .m-nav2 {
+	display: none;
+}
+
+.publishBarArea .publishcommon {
+	display: none;
+}
+
+.js-showpublishlayer.publishBarArea .publishcommon {
+	display: block;
+}
+/* banner的四个图标的点击事件*/
+.publishBarArea .m-nav2.js-coverShow li a.publishlink {
+	overflow: hidden;
+}
+
+.publishcommon {
+	text-align: left;
+}
+
+.publishcommon .publishlayerwrap {
+	height: 56px;
+	overflow: hidden;
+	visibility: hidden;
+}
+
+.publishcommon .m-mlist {
+	margin: 0;
+}
+
+.publishcommon .m-mlist .mlistimg {
+	position: relative;
+}
+
+.publishcommon .m-mlist .mlistimg .w-img {
+	position: absolute;
+	width: 110px;
+	height: 110px;
+	background-size: 114px;
+	background: none;
+}
+
+.publishcommon .m-mlist .mlistimg .w-img img {
+	width: 110px;
+	height: 110px;
+}
+
+.publishcommon .m-mlist .mlistimg .js-userimgscale.w-img {
+	width: 64px;
+	height: 64px;
+}
+
+.publishcommon .m-mlist .mlistimg .js-userimgscale.w-img img {
+	width: 64px;
+	height: 64px;
+}
+
+.publishcommon .hdinfobar {
+	padding: 2px 0 15px 0;
+}
+
+.publishcommon .publishTo {
+	float: left;
+}
+
+.publishcommon .selpublishto .zlst .zitm.js_selected_option {
+	background-position: 6px -754px;
+}
+
+.publishcommon .selpublishto .zlst .zitm.js_selected_option:hover {
+	background-position: 6px -826px;
+}
+
+.publishcommon .reblogfrom {
+	display: none;
+	float: left;
+	width: 220px;
+	height: 25px;
+	line-height: 25px;
+	margin-left: 20px;
+	color: #ccc;
+	font-size: 16px;
+}
+
+.publishcommon .selccommons .zlst .zitm.js_selected_option {
+	background-position: 5px -758px;
+}
+
+.publishcommon .selccommons .zlst .zitm.js_selected_option:hover {
+	background-position: 5px -830px
+}
+
+.publishcommon .actionBar .publishType {
+	cursor: pointer;
+}
+
+.publishcommon .selpublishtype .zlst .zitm.js_selected_option,.publishcommon .selpublishtype .zlst .js-timing-publish.js_selected_option label {
+	background-position: 6px -754px;
+}
+
+.publishcommon .selpublishtype .zlst .zitm.js_selected_option:hover,.publishcommon .selpublishtype .zlst .js-timing-publish.js_selected_option label:hover {
+	background-position: 6px -826px;
+}
+
+.publishcommon .selpublishtype .zlst .js-timing-publish.js_selected_option:hover {
+	background-position: 6px -754px;
+}
+
+.publishcommon .siteSyncArea {
+	margin: 5px 0 -5px 0;
+}
+
+.publishcommon .siteSyncArea .sitesyncmanager .sitewrap {
+	margin: 0;
+}
+
+.publishcommon .tagArea {
+	margin-bottom: 20px;
+}
+
+.publishcommon .tagArea .tageditor .tokens {
+	background-position: -7px -901px;
+	cursor: text;
+}
+
+.publishcommon .tagArea .tageditor .tokens .iptwrap label {
+	cursor: text;
+}
+
+.publishDateTime .publishDate .js-errorDate,.publishDateTime .publishTime .js-errorTime {
+	background-color: #ffcfcf;
+	margin-bottom: -1px;
+}
+
+.publishcommon .editorWrap {
+	position: relative;
+	border: 1px solid #dfdfdf;
+}
+
+.publishcommon .editor_uploadPhotoArea {
+	display: none;
+	position: absolute;
+	top: 10px;
+	left: 340px;
+	width: 25px;
+	height: 20px;
+	overflow: hidden;
+}
+
+.publishcommon .actionBar {
+	margin-top: 25px;
+}
+
+.publishcommon .actionBar .publishArea {
+	margin-left: 20px;
+}
+
+.publishcommon .actionBar .previewBtn,.publishcommon .actionBar .cancelBtn,.publishcommon .actionBar .publishBtn {
+	height: 36px;
+	line-height: 36px;
+	padding: 0;
+	margin: 0;
+	border: none;
+	outline: none;
+	color: #888;
+	font-size: 16px;
+	text-shadow: -1px -1px 2px #f8f8f8;
+}
+
+.publishcommon .actionBar .previewBtn,.publishcommon .actionBar .cancelBtn {
+	width: 100px;
+	background-position: 0px 1px;
+}
+
+.publishcommon .actionBar .previewBtn::-moz-focus-inner,.publishcommon .actionBar .cancelBtn::-moz-focus-inner {
+	outline: none;
+	border: none;
+}
+
+.publishcommon .actionBar .previewBtn:hover,.publishcommon .actionBar .cancelBtn:hover {
+	background-position: 0px -94px;
+}
+
+.publishcommon .actionBar .previewBtn:active,.publishcommon .actionBar .cancelBtn:active {
+	background-position: 0px -191px;
+	outline: none;
+}
+
+.publishcommon .actionBar .previewBtn[disabled],.publishcommon .actionBar .cancelBtn[disabled],.publishcommon .actionBar .previewBtn[disabled]:active,.publishcommon .actionBar .cancelBtn[disabled]:active {
+	background-position: 0px -286px;
+	outline: none;
+	cursor: default;
+}
+
+.publishcommon .actionBar .previewBtn[disabled] span,.publishcommon .actionBar .cancelBtn[disabled] span,.publishcommon .actionBar .publishBtn[disabled] span,.publishcommon .actionBar .previewBtn[disabled]:active span,.publishcommon .actionBar .cancelBtn[disabled]:active span,.publishcommon .actionBar .publishBtn[disabled]:active span {
+	opacity: 0.5;
+}
+
+.publishcommon .actionBar .publishBtn {
+	width: 109px;
+	background-position: 0px -383px;
+	color: #fff;
+	text-shadow: -1px -1px 0px #779e00;
+}
+
+.publishcommon .actionBar .publishBtn::-moz-focus-inner {
+	outline: none;
+	border: none;
+}
+
+.publishcommon .actionBar .publishBtn:hover {
+	background-position: 0px -478px;
+}
+
+.publishcommon .actionBar .publishBtn:active {
+	background-position: 0px -575px;
+}
+
+.publishcommon .actionBar .publishBtn[disabled],.publishcommon .actionBar .publishBtn[disabled]:active {
+	background-position: 0px -671px;
+	outline: none;
+	cursor: default;
+}
+
+.publishcommon .publishType .selpublishtype {
+	background: none;
+}
+
+.publishcommon .publishType .selpublishtype .zlst {
+	left: -109px;
+	top: 36px;
+}
+
+.publishcommon .publishType .selpublishtype .zlst.js-upperlist {
+	top: auto;
+	bottom: 36px;
+}
+
+.publishcommon .publishType .selpublishtype .zdwn {
+	width: 31px;
+	height: 36px;
+	line-height: 36px;
+	margin: 0;
+	border: none;
+	text-indent: -9999px;
+}
+
+.publishcommon .publishType .selpublishtype .zdwn {
+	background-position: -109px -383px;
+}
+
+.publishcommon .publishType .selpublishtype .zdwn:hover {
+	background-position: -109px -478px;
+}
+
+.publishcommon .publishType .selpublishtype .zdwn:active {
+	background-position: -109px -575px;
+}
+
+.publishcommon .publishType .selpublishtype .zdwn[disabled],.publishcommon .publishType .selpublishtype .zdwn[disabled]:active {
+	background-position: -109px -383px;
+}
+
+.js-postText.publishcommon .blogTittle {
+	position: relative;
+	height: 40px;
+	line-height: 40px;
+	border: 1px solid #dfdfdf;
+	margin-bottom: -1px;
+}
+
+.js-postText.publishcommon .blogTittle input {
+	position: relative;
+	z-index: 10;
+	width: 478px;
+	height: 30px;
+	line-height: 30px;
+	padding: 5px 10px;
+	margin: 0;
+	color: #333;
+	font-size: 14px;
+	border: none;
+	background-color: transparent;
+	background: url(http://l.bst.126.net/rsc/img/common/empty.png) 0 0 repeat;
+	outline: none;
+}
+
+.js-postText.publishcommon .blogTittle label {
+	position: absolute;
+	z-index: 5;
+	top: 0;
+	left: 11px;
+	color: #ccc;
+	font-size: 14px;
+}
+
+.js-postText.publishcommon .editor_uploadPhotoArea {
+	display: block;
+}
+
+.js-postText.publishcommon .editorWrap .newPublishUEditor {
+	min-height: 230px;
+}
+
+.js-postText.publishcommon .editorWrap .edui-editor .edui-editor-iframeholder {
+	height: 190px;
+	min-height: 190px;
+}
+
+.js-postText.publishcommon .blogTittle label.js-hidetips {
+	display: none;
+}
+
+.js-postPhoto.publishcommon {
+}
+
+.js-postPhoto.publishcommon .publishMain {
+	padding-bottom: 5px;
+	margin-bottom: 15px;
+}
+
+.js-postPhoto.publishcommon .editorWrap .newPublishUEditor {
+	min-height: 190px;
+}
+
+.js-postPhoto.publishcommon .editorWrap .edui-editor .edui-editor-iframeholder {
+	height: 150px;
+	min-height: 150px;
+}
+
+.js-postMusic.publishcommon {
+}
+
+.js-postMusic.publishcommon .editorWrap .edui-editor .edui-editor-iframeholder {
+	height: 150px;
+	min-height: 150px;
+}
+
+.js-postVideo.publishcommon .publishMain {
+	padding-bottom: 5px;
+	margin-bottom: 15px;
+}
+
+.js-postVideo.publishcommon .publishMain .vmanagerwrap {
+}
+
+.js-postVideo.publishcommon .editorWrap .newPublishUEditor {
+	min-height: 190px;
+}
+
+.js-postVideo.publishcommon .editorWrap .edui-editor .edui-editor-iframeholder {
+	height: 150px;
+	min-height: 150px;
+}
+
+.js-postVideo.publishcommon .vsearchwrap label.js-hidetips {
+	display: none;
+}
+
+.w-schdpw .vsearchwrap {
+	background: url(../rsc/img/shadow-in.png) no-repeat scroll 0 0 #fff;
+}
+
+.w-schdpw .vsearch .icn,.m-audioarea .w-close2,.m-upload .btn {
+	background: url(../rsc/img/newpublish/apbicon.png) no-repeat scroll 0 0;
+}
+
+.m-audioarea,.m-audioarea a {
+	color: #999;
+}
+
+.m-audioarea a:hover {
+	color: #7493b4;
+}
+
+.m-audioarea .blk {
+	margin: 0 0 20px;
+}
+
+.m-audioarea .w-close2 {
+	position: absolute;
+	width: 17px;
+	height: 17px;
+	background-position: 0 -33px;
+}
+
+.m-rst-oprt .layer,.m-rst-oprt .lnks {
+	-webkit-transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	-o-transition: all .3s ease;
+	transition: all .3s ease;
+}
+
+.m-uploading .probar {
+	-webkit-transition: width .6s ease;
+	-moz-transition: width .6s ease;
+	-o-transition: width .6s ease;
+	transition: width .6s ease;
+}
+
+.w-schdpw {
+	position: relative;
+}
+
+.w-schdpw .vsearch,.m-rst .rst {
+	background: #EDEDED;
+	padding: 10px;
+}
+
+.w-schdpw .vsearchwrap,.m-rst .rstwrap {
+	position: relative;
+	border: 1px solid #ddd;
+}
+
+.w-schdpw .vsearch input {
+	position: relative;
+	z-index: 10;
+	margin: 0;
+	padding: 4px 10px 4px 35px;
+	height: 30px;
+	width: 433px;
+	border: 0;
+	outline: 0;
+	background-color: transparent;
+	background: url(http://l.bst.126.net/rsc/img/common/empty.png) 0 0 repeat;
+	color: #333;
+	font-size: 14px;
+	line-height: 30px;
+}
+
+.w-schdpw .vsearch label {
+	position: absolute;
+	z-index: 5;
+	left: 35px;
+	top: 0;
+	font-size: 14px;
+	line-height: 40px;
+}
+
+.w-schdpw .vsearch .icn {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 35px;
+	height: 40px;
+	background-position: 8px 13px;
+}
+
+.w-schdpw .list {
+	display: none;
+	border: 1px solid #ededed;
+	background: #fff;
+}
+
+.w-schdpw-open .list {
+	display: block;
+}
+
+.w-schdpw .list  .itm {
+	display: block;
+	height: 35px;
+	padding: 0 20px;
+	line-height: 35px;
+	font-size: 16px;
+	color: #333;
+}
+
+.w-schdpw .list  .crt {
+	background: #999;
+	color: #fff;
+}
+
+.w-schdpw .page {
+	margin-top: 5px;
+	border-top: 1px solid #ededed;
+	height: 42px;
+	line-height: 42px;
+}
+
+.w-schdpw .page .lnk,.w-schdpw .page .info {
+	float: left;
+}
+
+.w-schdpw .page .lnk {
+	width: 80px;
+	font-size: 14px;
+	color: #333;
+	text-align: center;
+	border-right: 1px solid #ededed;
+}
+
+.w-schdpw .page .lnk:hover {
+	color: #7493b4;
+}
+
+.w-schdpw .page .disb,.w-schdpw .page .disb:hover {
+	color: #999;
+	cursor: default;
+}
+
+.w-schdpw .page .info {
+	display: inline-block;
+	margin: 0 0 0 15px;
+	width: 306px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.w-schdpw .page .info a,.w-schdpw .page .info a:hover,.m-rst .w-mimg a,.m-rst .w-mimg a:hover,.m-rst-oprt .lnks a,.m-rst-oprt .lnks a:hover {
+	text-decoration: underline;
+}
+
+.m-rst .rstwrap {
+	position: relative;
+	background: #fff;
+}
+
+.m-rst .w-mimg,.m-rst .music {
+	float: left;
+}
+
+.m-rst .w-mimg {
+	border-right: 1px solid #ddd;
+}
+
+.m-rst .music {
+	padding: 32px 0 0 32px;
+}
+
+.m-rst .w-close2 {
+	right: 32px;
+	top: 41px;
+}
+
+.m-upload,.m-uploading {
+	border: 1px solid #eee;
+	height: 48px;
+	line-height: 48px;
+	text-align: center;
+	font-size: 14px;
+}
+
+.m-upload .btn {
+	display: inline-block;
+	padding: 0 5px 0 26px;
+	background-position: 0 -68px;
+}
+
+.m-upload .btn,.m-upload .btn:hover {
+	color: #666;
+}
+
+.m-uploading {
+	position: relative;
+}
+
+.m-uploading .w-close2 {
+	z-index: 1;
+	right: 15px;
+	top: 15px;
+}
+
+.m-uploading .probar {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 0;
+	height: 100%;
+	background: #ededed;
+}
+
+.m-uploading .hint {
+	position: relative;
+	z-index: 1;
+}
+
+.m-rst .w-mimg {
+	text-align: center;
+	line-height: 112px;
+}
+
+.m-rst-oprt .w-mimg {
+	position: relative;
+	line-height: normal;
+}
+
+.m-rst-oprt .layer,.m-rst-oprt .lnks {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.m-rst-oprt .layer {
+	width: 100px;
+	height: 100px;
+	background: #fff;
+	opacity: 0;
+}
+
+.m-rst-oprt .lnks {
+	padding: 25px 0 0;
+	opacity: 0;
+}
+
+.m-rst-oprt .lnks a {
+	display: inline-block;
+	padding: 6px;
+	color: #666;
+}
+
+.m-rst-oprt .w-mimg:hover .layer,.m-rst-oprt .w-mimg.js-hovercover .layer, {
+	opacity: 0.8;
+}
+
+.m-rst-oprt .w-mimg:hover .lnks,.m-rst-oprt .w-mimg.js-hovercover .lnks {
+	opacity: 1;
+}
+
+body .w-pagelayer-publish .pagelayer {
+	z-index: 100;
+}
+
+body .w-pagelayer-publish .pagelayer .lyscroll {
+	overflow-y: scroll;
+}
+
+body .w-pagelayer-publish .pagelayer .lybody {
+	padding-top: 112px;
+}
+
+body .w-pagelayer-publish .pagelayer .lybody {
+	width: 928px;
+}
+
+.m-btns {
+	text-align: right;
+}
+
+.m-btns .btn {
+	width: 60px;
+	height: 26px;
+	border: 0;
+	background: -moz-linear-gradient(top, #84af00 0%, #79a200 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#84af00), color-stop(100%,#79a200));
+	background: -webkit-linear-gradient(top, #84af00 0%,#79a200 100%);
+	background: linear-gradient(#84af00 0%, #79a200 100%);
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	color: #fff;
+	line-height: 26px;
+	text-align: center;
+}
+
+.m-btns .btn:hover {
+	background: -moz-linear-gradient(top, #a1c400 0%, #a1c400 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a1c400), color-stop(100%,#a1c400));
+	background: -webkit-linear-gradient(top, #a1c400 0%,#a1c400 100%);
+	linear-gradient(#a1c400 0%,#a1c400 100%);
+}
+
+.m-btns .btn::-moz-focus-inner {
+	border: 0;
+}
+
+.preOpenCoverForPublish {
+	position: fixed;
+	_position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 99;
+	background: rgba(0, 0, 0, 0.75);
+}
+
+.diymusic .m-upload .btn:hover {
+	cursor: default;
+}
+
+.preOpenCoverForPublish,body .uiutil .zcvr {
+	transition: opacity 0.2s linear;
+	-webkit-transition: opacity 0.2s linear;
+	-moz-transition: opacity 0.2s linear;
+	-o-transition: opacity 0.2s linear;
+}
+
+.publishBarArea .m-nav2 {
+	transition: opacity 0.35s ease,visibility 0.35s ease;
+	-webkit-transition: opacity 0.35s ease,visibility 0.35s ease;
+	-moz-transition: opacity 0.35s ease,visibility 0.35s ease;
+	-o-transition: opacity 0.35s ease,visibility 0.35s ease;
+}
+
+.publishcommon .publishlayerwrap {
+	transition: opacity .15s cubic-bezier(0.550,0.085,0.680,0.530);
+	-webkit-transition: opacity .15s cubic-bezier(0.550,0.085,0.680,0.530);
+	-moz-transition: opacity .15s cubic-bezier(0.550,0.085,0.680,0.530);
+	-o-transition: opacity .15s cubic-bezier(0.550,0.085,0.680,0.530);
+}
+
+.js-showpublishlayer.publishBarArea .m-nav2 {
+	display: block;
+}
+
+body.js-bodyCoverShow .publishBarArea {
+	position: relative;
+	z-index: 100;
+	min-height: 114px;
+	margin-bottom: 18px;
+}
+
+.publishBarArea .m-nav2 {
+	opacity: 1;
+}
+
+body.js-bodyCoverShow .publishBarArea .m-nav2 {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 120;
+	margin: 0;
+	opacity: 1;
+}
+
+.publishcommon .publishlayerwrap {
+	opacity: 0;
+}
+
+.w-pagelayer-publish .publishcommon .publishlayerwrap {
+	opacity: 1;
+}
+
+.videomanager .videoarea,.videomanager .videoarea .searchinfo {
+	transition: all 0.15s linear;
+	-webkit-transition: all 0.15s linear;
+	-moz-transition: all 0.15s linear;
+	-o-transition: all 0.15s linear;
+}
+
+.xiamimusic .w-schdpw .list {
+	transition: all 0.15s linear;
+	-webkit-transition: all 0.15s linear;
+	-moz-transition: all 0.15s linear;
+	-o-transition: all 0.15s linear;
+}
+
+.xiamimusic .w-schdpw .list {
+	display: block;
+	visibility: hidden;
+	height: 0;
+	overflow: hidden;
+	border: 0;
+}
+
+.xiamimusic .w-schdpw .list.js-showResultArea {
+	visibility: visible;
+	border: 1px solid #EDEDED;
+}
+
+.xiamimusic .m-rst {
+	transition: opacity 0.2s linear;
+	-webkit-transition: opacity 0.2s linear;
+	-moz-transition: opacity 0.2s linear;
+	-o-transition: opacity 0.2s linear;
+}
+
+.xiamimusic .m-rst {
+	opacity: 0;
+}
+
+.xiamimusic .m-rst.js-showMusicPreview {
+	opacity: 1;
+}
+
+.diymusic .musicPreview {
+	transition: opacity 0.2s linear;
+	-webkit-transition: opacity 0.2s linear;
+	-moz-transition: opacity 0.2s linear;
+	-o-transition: opacity 0.2s linear;
+}
+
+.diymusic .musicPreview {
+	opacity: 0;
+}
+
+.diymusic .musicPreview.js-showMusicPreview {
+	opacity: 1;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap {
+	transition: opacity 0.2s linear;
+	-webkit-transition: opacity 0.2s linear;
+	-moz-transition: opacity 0.2s linear;
+	-o-transition: opacity 0.2s linear;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap .addPhotoBar {
+	border: 1px dashed #dfdfdf;
+	background: #fff;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap .photoList {
+	padding-bottom: 0;
+	margin-top: 0;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap .photoList .photoItem {
+	transition: all 0.2s linear;
+	-webkit-transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap .photoList .photoItem.js-oneOpacity {
+	opacity: 1;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap .photoList .photoItem .itemWrap img {
+	transition: opacity 0.35s linear;
+	-webkit-transition: opacity 0.35s linear;
+	-moz-transition: opacity 0.35s linear;
+	-o-transition: opacity 0.35s linear;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap .photoList .photoItem .itemWrap img {
+	position: relative;
+	z-index: 8;
+	opacity: 0;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState0 .photowrap {
+	position: relative;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState0 .photowrap {
+	height: 313px;
+	overflow: hidden;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState0 .photowrap.js-moreThanOnePhoto {
+	overflow: visible;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState0 .photowrap .addPhotoBar {
+	position: relative;
+	z-index: 10;
+	width: 498px;
+	height: 310px;
+	opacity: 1;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState0 .photowrap .addPhotoBar {
+	transition: opacity 0.2s linear;
+	-webkit-transition: opacity 0.2s linear;
+	-moz-transition: opacity 0.2s linear;
+	-o-transition: opacity 0.2s linear;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState0 .photowrap .photoList {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	width: 510px;
+	height: 312px;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState0 .photowrap .photoList {
+	transition: height 0.2s linear,z-index 0.2s linear;
+	-webkit-transition: height 0.2s linear,z-index 0.2s linear;
+	-moz-transition: height 0.2s linear,z-index 0.2s linear;
+	-o-transition: height 0.2s linear,z-index 0.2s linear;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState0 .photowrap .photoList .photoItem {
+	opacity: 0;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState1 .photowrap {
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState1 .photowrap .addPhotoBar {
+	opacity: 0;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState1 .photowrap .photoList {
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState2 .photowrap {
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState2 .photowrap .photoList {
+	z-index: 11;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState2 .photowrap .photoList .photoItem {
+	opacity: 1;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState3 .photowrap {
+	position: static;
+	z-index: auto;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState3 .photowrap {
+	transition: height 0.2s linear,opacity 0.2s linear;
+	-webkit-transition: height 0.2s linear,opacity 0.2s linear;
+	-moz-transition: height 0.2s linear,opacity 0.2s linear;
+	-o-transition: height 0.2s linear,opacity 0.2s linear;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState3 .photowrap .addPhotoBar {
+	transition: all 0.2s linear;
+	-webkit-transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState3 .photowrap .photoList {
+	position: static;
+	z-index: auto;
+	height: 312px;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState3 .photowrap .addPhotoBar {
+	height: 50px;
+	margin-top: 20px;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState4 .photowrap {
+	height: 385px;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState4 .photowrap .addPhotoBar {
+	opacity: 1;
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState5 .photowrap {
+}
+
+.publishcommon .publishlayer .photomanager.js-animateState5 .photowrap .photoList .photoItem {
+}
+
+.publishcommon .publishlayer .photomanager .photowrap.js-exceedMaxPhotoNum .addPhotoBar,.publishcommon .publishlayer .photomanager.js-animateState3 .photowrap.js-exceedMaxPhotoNum .addPhotoBar {
+	height: 0;
+	margin-bottom: -20px;
+	border: none;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap.js_isCitePost {
+	position: relative;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap.js-hasphotoitemhover {
+	position: relative;
+	z-index: 1200;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap.js-hasphotoitemhover .photoList .photoItem .operatebar {
+	display: none;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap.js-hasphotoitemhover .photoList .photoItem.js-photoitemhover .operatebar {
+	display: block;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap .addPhotoBar .addphotobarcover {
+	display: none;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 1000;
+	background: rgba(255, 255, 255, 0.7);
+	opacity: 0;
+}
+
+.publishcommon .publishlayer .photomanager .photowrap.js-hasphotoitemhover .addPhotoBar .addphotobarcover {
+	display: block;
+}
+
+.photomanager .photowrap .photoItem.js-nosimg .clockwise {
+	display: none;
+}

@@ -1,0 +1,36 @@
+<style>
+	/* 修改下当前页面的input宽度 */
+	.input-xlarge{ width:40%;}
+</style>
+<fieldset>
+	<legend>编辑友链</legend>
+	<form class="form-horizontal" method="post">
+	<input type="hidden" name="id" value="{{.link.Id}}" />
+	<table class="table table-form">
+		<tbody>
+		<tr>
+			<th>网站名称：</th>
+			<td><input name="sitename" value="{{.link.Sitename}}" class="input-xlarge" type="text" /></td>
+		</tr>
+		<tr>
+			<th>网站地址</th>
+			<td><input name="url" value="{{.link.Url}}" class="input-xlarge" type="text" /></td>
+		</tr>
+		<tr>
+			<th>排序值</th>
+			<td><input name="rank" value="{{.link.Rank}}" class="input" type="text" /></td>
+		</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+				<button type="submit" class="btn"><i class="icon-ok"></i> 保存</button>
+				<button type="button" class="btn" onclick="javascript:history.back();">取消</button>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	</form>
+
+</fieldset>

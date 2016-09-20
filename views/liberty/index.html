@@ -1,0 +1,160 @@
+<div class="row">
+	<!--<div class="col-md-1">
+		<a href="/user/someone?key=" target="_blank"><img class="img-rounded" width="100% \9;" src="{{.avatarurl}}" /></a>
+	</div>-->
+	<div class="col-md-11">
+		<ul class="nav nav-pills">
+			<li role="presentation">
+				<a class="nav1 active" href="/article/add1"><label>发布文章</label></a>
+			</li>
+			<li role="presentation">
+				<a class="nav1" href="/article/add"><label>广场新</label></a>
+			</li>
+			<li role="presentation">
+				<a class="nav1" href="/admin/article/add"><label>发布文章</label></a>
+			</li>
+			<li role="presentation">
+				<a class="nav1" href="/user/o2bar"><label>刷新</label></a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<br/>
+
+{{range $k, $v := .list}}
+<!-- 遍历文章短讯 -->
+<div class="panel panel-default">
+	<div class="panel-body" style="padding:2% 5%;">
+		<div class="row">
+			<div class="col-md-1">
+				<a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
+			</div>
+			<div class="col-md-9"><a href="{{$v.Link}}" target="_blank"><h4>{{str2html $v.Title}}</h4></a></div>
+			<div class="col-md-2">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</div>
+		</div>
+		<hr />
+		<div class="row">
+			{{if $v.Coverurl}}
+			<div class="col-md-3">
+				<div class="imgc" style="height: auto;">
+					<a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>
+			</div>
+			{{else}}
+			<div class="col-md-12">
+				<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>
+			</div>
+			{{end}}
+		</div>
+		<hr />
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="nav nav-pills navbar-right">
+					<li><a href="#" onclick="author({{$v.Username}})">{{$v.Username}}</a></li>
+					<li><a hidefocus="true" title="关注" onclick="follow({{$v.Username}})">关注</a></li>
+					<li>{{str2html $v.TagsLink}}</li>
+					<li><a href="#">{{date $v.Posttime "Y-m-j"}}</a></li>
+					<li><a href="{{$v.Link}}" hidefocus="true">查看全文</a></li>
+					<li>
+						<a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
+					</li>
+					<li>
+						<a href="http://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{{end}}
+
+<div class="row">{{str2html .pagebar}}</div>
+<br />
+<script type="text/javascript">
+	/*
+													// toastr的配置，也可以不配置，使用默认值。
+													toastr.options = {
+													        "closeButton": false, //是否显示关闭按钮
+													        "debug": false, //是否使用debug模式
+													        "positionClass": "toast-top-right",//弹出窗的位置
+													        "showDuration": "300",//显示的动画时间
+													        "hideDuration": "1000",//消失的动画时间
+													        "timeOut": "5000", //展现时间
+													        "extendedTimeOut": "1000",//加长展示时间
+													        "showEasing": "swing",//显示时的动画缓冲方式
+													        "hideEasing": "linear",//消失时的动画缓冲方式
+													        "showMethod": "fadeIn",//显示时的动画方式
+													        "hideMethod": "fadeOut" //消失时的动画方式
+													       };
+													       */
+	function author(name) {
+		toastr.info('作者：' + name);
+	}
+
+	function follow(name) {
+		toastr.warning('+关注：' + name);
+	}
+
+	function likeit(myself) {
+		toastr.success('喜欢此文！');
+		$(myself).removeClass("glyphicon-heart-empty").addClass("glyphicon-heart");
+	}
+
+	/*可供选择的设置选项
+	closeButton: true
+	是否在通知弹窗上面显示关闭按钮，true：显示；false：不显示
+
+	debug: true
+	是否开起debug
+
+	progressBar: false
+	是否显示进度条，当为false时候不显示；当为true时候，显示进度条，当进度条缩短到0时候，消息通知弹窗消失
+
+	positionClass: 'toast-top-right'
+	位置信息，消息弹窗显示的位置，可以显示的位置对应的值
+	1.toast-top-right
+	2.toast-botton-right
+	3.toash-bottom-left
+	4.toast-top-left
+	5.toast-top-full-width 这个是在网页顶端，宽度铺满整个屏幕
+	6.toast-bottom-full-width
+	7.toast-top-center顶端中间
+	8.toast-bottom-center
+
+	onclick: null
+	showDuration: "300"
+	显示动作（从无到有这个动作）持续的时间
+
+	hideDuration: "1000"
+	隐藏动作持续的时间
+
+	timeOut: "5000"
+	间隔的时间
+
+
+	extendedTimeOut: "1000"
+
+	showEasing: "swing",
+	hideEasing: "linear",
+	showMethod: "fadeIn"
+
+	显示的方式，和jquery相同，可以是show()
+
+
+	hideMethod: "fadeOut"
+	隐藏的方式，和jquery相同，可以是hide()
+
+
+
+	toastr['error']('I am yanying', 'title');
+	其中的error为显示的通知的样式类型，有4种选择
+	1.success 成功，绿色
+	2.info 信息，蓝色
+	3.warning，警告，橙色
+	4.error，错误，深红色
+	其中第一个参数为显示的内容，第二个参数为显示的标题，标题可以省略*/
+</script>

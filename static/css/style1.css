@@ -1,0 +1,165 @@
+/*==== 翻页样式 start ====*/
+
+.page {
+	margin: 20px 0 0 0;
+	text-align: center;
+	width: 100%;
+	overflow: hidden;
+}
+
+.page a b {
+	color: #999;
+}
+
+.page>b,
+.page a {
+	margin: 0 2px;
+	height: 26px;
+	line-height: 26px;
+	border-radius: 50%;
+	width: 26px;
+	text-align: center;
+	display: inline-block
+}
+
+.page a {
+	margin: 0 2px;
+	height: 26px;
+	line-height: 26px;
+	border-radius: 50%;
+	width: 26px;
+	text-align: center;
+	display: inline-block
+}
+
+
+/* 针对IE6 */
+
+.page>b,
+.page a:hover {
+	background: #333;
+	color: #FFF;
+}
+
+.page a {
+	color: #F33;
+	border: #999 1px solid;
+}
+
+
+/*==== 翻页样式 end ====*/
+
+.wrap {
+	/* 长英文自动换行 */
+	word-break: break-all;
+	table-layout: fixed;
+	overflow: hidden;
+}
+
+.shadow {
+	/* 边框阴影 */
+	box-shadow: 0 0 3px #AAA;
+}
+
+
+/*==== 回到首页按钮 start ====*/
+
+.back-to-top {
+	text-align: center;
+	background: #000;
+	color: #fff;
+	display: none;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	font-size: 12px;
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	opacity: 0.4;
+	filter: alpha(opacity=40);
+	-webkit-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+	cursor: pointer;
+	z-index: 9999;
+}
+
+.back-to-top:hover {
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+
+
+/*==== 回到首页按钮 end ====*/
+
+
+/*==== 月日控件 start ====*/
+
+@charset "utf-8";
+.day a {
+	border-radius: 40px;
+	-moz-border-radius: 40px;
+	-webkit-border-radius: 40px;
+	-o-border-radius: 40px;
+}
+
+.logo {
+	position: relative;
+	width: 80px;
+	height: 80px;
+	float: left;
+}
+
+.selfinfo img {
+	max-width: 100%;
+	_width: 100%;
+}
+
+.day a {
+	width: 70px;
+	height: 70px;
+	display: block;
+	border-style: solid;
+	border-width: 5px;
+	font-family: "Rokkitt", arial, serif;
+	font-size: 40px;
+	text-align: center;
+	line-height: 70px;
+}
+
+.month a {
+	display: block;
+	margin: 6px 0 0;
+	color: #c0c0c0;
+	font-size: 24px;
+	text-align: left;
+}
+
+
+/*==== 月日控件 end ====*/
+
+
+/*==== 去掉a的下划线 start ==== */
+
+a {
+	text-decoration: none;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a:active {
+	text-decoration: none;
+}
+
+
+/*==== 去掉a的下划线 end ==== */

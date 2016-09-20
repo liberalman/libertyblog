@@ -1,0 +1,33 @@
+<div class="ui-content jqm-content">
+	<!--<div class="ui-grid-a ui-responsive">
+        	<div class="ui-block-a">
+        		<div class="jqm-block-content">
+        			<h3>Pages &amp; Navigation</h3>
+
+        			<p><a href="pages/" data-ajax="false">Pages</a></p>
+        			<p><a href="navigation/" data-ajax="false">Navigation</a></p>
+        			<p><a href="loader/" data-ajax="false">Loader</a></p>
+        			<p><a href="transitions/" data-ajax="false">Transitions</a></p>
+        		</div>
+        	</div>
+</div>-->
+
+	{{range $k, $v := .list}}
+	<!-- 遍历文章短讯 -->
+	<h2>{{$v.Title}}</h2>
+	<p>{{substr (html2str $v.Excerpt) 0 300|str2html }}
+		... <a href="{{$v.Link}}">查看全文</a></p>
+	<div >
+		<h4>作者:{{$v.Username}}</h4>
+		{{date $v.Posttime "Y-m-j"}}
+		{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}
+		标签:{{str2html $v.TagsLink}}
+		
+		<!--<a class="jqm-view-source-link ui-btn ui-corner-all ui-btn-inline ui-mini" href="{{$v.Link}}">查看全文</a>-->
+		<!--<a class="jqm-view-source-link ui-btn ui-corner-all ui-btn-inline ui-mini" href="#popupDemo" data-rel="popup" aria-haspopup="true" aria-owns="popupDemo" aria-expanded="false">喜欢</a>-->
+		<!--<a class="jqm-view-source-link ui-btn ui-corner-all ui-btn-inline ui-mini" href="#popupDemo" data-rel="popup" aria-haspopup="true" aria-owns="popupDemo" aria-expanded="false">分享</a>-->
+		<!--<a class="jqm-view-source-link ui-btn ui-corner-all ui-btn-inline ui-mini" href="#popupDemo" data-rel="popup" aria-haspopup="true" aria-owns="popupDemo" aria-expanded="false">关注</a>-->
+	</br></br>
+	</div>
+	{{end}}
+</div>

@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="./css/style.css">
+<footer id="footer" class="footer light inverted"> 
+ <div class="container"> 
+  <div class="footer-content row"> 
+   <div class="col-sm-12"> 
+    <ul class="list-inline socials" style="margin:0px; padding:0px; text-align:center;"> 
+     <li><a href="/">首页</a></li>
+     <li><a href="#about">关于</a></li>
+     <li><a href="#contact">联系我们</a></li>
+     <li><a href="#customers">Customers</a></li>
+     <li><a href="#">Terms of Service</a></li>
+    </ul> 
+   </div>
+   <div class="footer-content row"> 
+     <div class="col-sm-12"> 
+       <div class="copyright" style="margin:0px; padding:0px; text-align:center;">
+        Liberty &copy; 2014-2016. All rights reserved.
+       </div>
+     </div>
+  </div>
+  </div>
+ </div> 
+</footer>
+<!-- 载入循环图标 -->
+<div id="mask">
+	<div id="loader"></div>
+</div>
+<!-- 回到顶部图标 -->
+<div class="back-to-top">
+	<i class="fa fa-angle-up fa-3x"></i>
+</div>
+<script type="text/javascript">
+(function(){
+	"use strict";
+	// Init global DOM elements, functions and arrays
+    window.app 			         = {el : {}, fn : {}};
+    app.el['loader']         = $('#loader');
+    app.el['mask']           = $('#mask');
+	
+    //载入转圈图标
+    app.el['loader'].delay(700).fadeOut();
+    app.el['mask'].delay(1200).fadeOut("slow");  
+    
+    // fade in .back-to-top
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 500) {
+            $('.back-to-top').fadeIn();
+        } else {
+            $('.back-to-top').fadeOut();
+        }
+    });
+
+    // scroll body to 0px on click
+    $('.back-to-top').click(function () {
+        $('html, body').animate({
+            scrollTop: 0,
+            easing: 'swing'
+        }, 750);
+        return false;
+    }); 
+})();
+</script>

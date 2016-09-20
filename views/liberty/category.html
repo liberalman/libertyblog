@@ -1,0 +1,72 @@
+<!--<h1 class="t_nav">
+  <span>“慢生活”不是懒惰，放慢速度不是拖延时间，而是让我们在生活中寻找到平衡。</span>
+  <a href="/" class="n1">网站首页</a>
+  <a href="/life.html" class="n2">成长录</a>
+</h1>
+<div class="bloglist left">
+  {{range $k, $v := .list}}
+      <h3><a href="{{$v.Link}}"  target="_blank">{{str2html $v.Title}}</a></h3>
+      <figure><a href="{{$v.Link}}"><img src="{{$v.Coverurl}}"></a></figure>
+      <ul>
+        <p>{{str2html $v.Excerpt}}</p>
+        <a title="阅读全文" href="{{$v.Link}}"  target="_blank" class="readmore">阅读全文>></a>
+      </ul>
+      <p class="lifedateview"><span>{{date $v.Posttime "Y-m-j"}}</span><span>作者：{{$v.Username}}</span><span>所属分类：[{{str2html $v.TagsLink}}]</span></p>
+  {{end}}
+  {{str2html .pagebar}}
+</div>-->
+<link rel="stylesheet" href="/css/style1.css">
+
+	<!-- 中间内容 -->
+	{{range $k, $v := .list}}
+	<!-- 遍历文章短讯 -->
+
+	<div class="row">
+		<div class="col-md-1">
+			<div class="row" align="center">
+				<a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
+				<a href="#" onclick="author({{$v.Username}})">{{$v.Username}}</a>
+			</div>
+		</div>
+		<div class="col-md-11">
+			<div class="panel">
+				<div class="panel-body" style="padding:2% 5%;">
+					<div class="row">
+						<div class="col-md-10"><a href="{{$v.Link}}" target="_blank"><h4>{{str2html $v.Title}}</h4></a></div>
+						<div class="col-md-2">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</div>
+					</div>
+					<hr />
+
+					<div class="row">
+						<!--<div class="img js-36206">
+               <div class="imgc" style="height: auto;">
+                <a href="' + parseImages(obj.data.list[i].avatorUrl) + '" data-lightbox="example-1" hidefocus="true"> <img width="164" src="{{$v.Coverurl}}"/> <span class="total"> <span class="totalbg"></span><span class="totalnum"></span> </span> </a>
+               </div>
+             </div>-->
+
+						<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>
+					</div>
+
+					<hr />
+					<div class="row">
+						<ul class="nav nav-pills navbar-right">
+							<li><a hidefocus="true" title="关注" onclick="follow({{$v.Username}})">关注</a></li>
+							<li>{{str2html $v.TagsLink}}</li>
+							<li><a href="#">{{date $v.Posttime "Y-m-j"}}</a></li>
+							<li><a href="{{$v.Link}}" hidefocus="true">查看全文</a></li>
+							<li>
+								<a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
+							</li>
+							<li>
+								<a href="http://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{{end}} {{str2html .pagebar}}
+
+<hr />

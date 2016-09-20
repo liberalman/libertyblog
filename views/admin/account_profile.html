@@ -1,0 +1,351 @@
+<link href="/css/cropper.min.css" rel="stylesheet">
+<script src="/js/cropper.min.js"></script>
+<style>
+	img {
+		max-width: 100%;
+		/* This rule is very important, please do not ignore this! */
+	}
+</style>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+
+{{if .updated}}
+<script type="text/javascript">
+	toastr.success('修改成功！');
+</script>
+{{end}}
+<div id="page-wrapper">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">个人资料</h1>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+	<div class="row">
+
+		<div class="col-lg-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-bell fa-fw"></i> 我的信息
+					<i class="fa fa-edit fa-fw pull-right" data-toggle="modal" data-target="#myModal"></i>
+				</div>
+
+				<div class="panel-body">
+					<div class="list-group">
+						<a href="#" class="list-group-item">
+							<i class="fa fa-comment fa-fw"></i>用户ID
+							<span class="pull-right text-muted small"><em>{{.user.Id}}</em></span>
+						</a>
+						<a href="#" class="list-group-item">
+							<i class="fa fa-twitter fa-fw"></i>用户名
+
+							<span class="pull-right text-muted small"><em>{{.user.Username}}</em></span>
+						</a>
+						<a href="#" class="list-group-item">
+							<i class="fa fa-envelope fa-fw"></i>邮箱
+							<span class="pull-right text-muted small"><em>{{.user.Email}}</em></span>
+						</a>
+						<a href="#" class="list-group-item">
+							<i class="fa fa-tasks fa-fw"></i>登录次数
+							<span class="pull-right text-muted small">
+                <em>{{.user.Logincount}}</em></span>
+						</a>
+						<a href="#" class="list-group-item">
+							<i class="fa fa-upload fa-fw"></i>最后登录时间
+							<span class="pull-right text-muted small">
+                <em>{{date .user.Lastlogin "Y-m-d H:i:s"}}</em></span>
+						</a>
+						<a href="#" class="list-group-item">
+							<i class="fa fa-bolt fa-fw"></i>最后登录ip
+							<span class="pull-right text-muted small">
+                <em>{{.user.Lastip}}</em></span>
+						</a>
+						<a href="#" class="list-group-item">
+							<i class="fa fa-warning fa-fw"></i>Server Not Responding
+							<span class="pull-right text-muted small">
+                <em>10:57 AM</em></span>
+						</a>
+						<a href="#" class="list-group-item">
+							<i class="fa fa-shopping-cart fa-fw"></i>New Order Placed
+							<span class="pull-right text-muted small">
+                <em>9:49 AM</em></span>
+						</a>
+						<a href="#" class="list-group-item">
+							<i class="fa fa-money fa-fw"></i>Payment Received
+							<span class="pull-right text-muted small">
+                <em>Yesterday</em></span>
+						</a>
+					</div>
+
+					<a href="#" class="btn btn-default btn-block">View All Alerts</a></div>
+			</div>
+
+		</div>
+
+		<div class="col-lg-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					密码管理
+				</div>
+				<div class="panel-body">
+
+					<form role="form" id="updatePassword" class="form-horizontal">
+						<div class="form-group">
+							<label for="password" class="col-sm-3 control-label">当前密码</label>
+							<div class="col-sm-9">
+								<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="newpassword" class="col-sm-3 control-label">新密码</label>
+							<div class="col-sm-9">
+								<input type="password" class="form-control" id="newpassword" name="newpassword" placeholder="Password">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="newpassword2" class="col-sm-3 control-label">确认密码</label>
+							<div class="col-sm-9">
+								<input type="password" class="form-control" id="newpassword2" name="newpassword2" placeholder="Password">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<div class="checkbox">
+									<label>
+					          <input type="checkbox"> No check
+					        </label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="submit" class="btn btn-default">保存</button>
+								<button type="button" class="btn" onclick="javascript:history.back();">取消</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-6 -->
+
+		<div class="col-lg-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					修改头像
+				</div>
+				<div class="panel-body">
+
+					<div class="thumbnail">
+						<img src="{{.user.Avatarurl}}" alt="我的头像">
+						<div class="caption">
+							<h3>我的头像</h3>
+							<p>...</p>
+							<p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModal1">修改头像</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+						</div>
+					</div>
+
+				</div>
+				<!-- /.col-lg-6 (nested) -->
+
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-6 -->
+
+	</div>
+	<!-- /.row -->
+</div>
+<!-- /#page-wrapper -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="updateUsername" class="cmxform" action="/admin/account/profile">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">修改用户名</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class="input-group">
+						<span class="input-group-addon">用户名</span>
+						<input type="text" class="form-control" id="cusername" name="username" placeholder="用户名" value="{{.user.Username}}">
+						<label for="cusername" class="input-group-addon"></label>
+					</div><br />
+					<div class="input-group">
+						<span class="input-group-addon">&nbsp;&nbsp;Email</span>
+						<input type="text" class="form-control" id="cemail" name="email" placeholder="Email" value="{{.user.Email}}">
+						<label for="cemail" class="input-group-addon"></label>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="myclose">关闭</button>
+					<input type="submit" class="btn btn-primary" value="保存" />
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form id="updateAvatar" class="cmxform" action="/admin/account/profile">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">修改头像</h4>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+					<div class="row">
+					<div class="col-md-12">
+					<img src="{{.user.Avatarurl}}" alt="我的头像" id="image">
+
+					<label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+					            <input type="file" class="sr-only" id="inputImage" name="file" accept="img/*">
+					            <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with Blob URLs">
+					              <span class="fa fa-upload"></span>
+					            </span>
+					          </label>
+					         </div></div></div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="myclose">关闭</button>
+					<input type="submit" class="btn btn-primary" value="保存" />
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script>
+toastr.options = {
+	progressBar: true, // 显示进度条
+	//timeOut: "1000", // 间隔的时间
+};
+
+$().ready(function() {
+	$("#updateUsername").validate({
+		rules: {
+			username: {
+				required: true,
+				minlength: 2
+			}
+		},
+		messages: {
+			username: {
+				required: function() {
+					toastr.warning('用户名不能为空!')
+				},
+				minlength: function() {
+					toastr.error('用户名不能少于2个字符!')
+				}
+			}
+		},
+		// 使用 ajax 方式提交
+		submitHandler: function(form) {
+			$.post('/admin/account/updateprofile',
+				$(form).serialize(),
+				function(data) {
+					if ("0" != data) { // 返回0代表成功，其他失败
+						toastr.error(data);
+					} else {
+						toastr.success("数据修改成功");
+						$('#myclose').click(); // 关闭弹窗
+						window.location.reload(); // 刷新
+					}
+				});
+
+		},
+		// 指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
+		errorPlacement: function(error, element) {
+			// Append error within linked label
+			$(element).closest("form").find("label[for='" + element.attr("id") + "']").append(error);
+		}
+	});
+
+	// 在键盘按下并释放及提交后验证提交表单
+	$("#updatePassword").validate({
+		rules: {
+			password: {
+				required: true,
+				minlength: 6
+			},
+			newpassword: {
+				required: true,
+				minlength: 6
+			},
+			newpassword2: {
+				required: true,
+				minlength: 6,
+				equalTo: "#newpassword"
+			},
+		},
+		messages: {
+			password: {
+				required: '<font color="red">请输入密码!</font>',
+				minlength: '<font color="red">密码长度不能小于 6 个字母!</font>'
+			},
+			newpassword: {
+				required: '<font color="red">请输入密码!</font>',
+				minlength: '<font color="red">密码长度不能小于 6 个字母!</font>'
+			},
+			newpassword2: {
+				required: '<font color="red">请输入密码!</font>',
+				minlength: '<font color="red">密码长度不能小于 6 个字母!</font>',
+				equalTo: '<font color="red">两次密码输入不一致!</font>'
+			}
+		},
+		// 使用 ajax 方式提交
+		submitHandler: function(form) {
+			$.post('/admin/account/profile',
+				$(form).serialize(),
+				function(data) {
+					if ("0" != data) { // 返回0代表成功，其他失败
+						toastr.error(data);
+					} else {
+						toastr.success("数据修改成功");
+						window.location.reload(); // 刷新
+					}
+				});
+
+		},
+		// 指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
+		errorPlacement: function(error, element) {
+			// Append error within linked label
+			$(element).closest("form").find("label[for='" + element.attr("id") + "']").append(error);
+		}
+	});
+});
+
+$('#image').cropper({
+	aspectRatio: 16 / 16,
+	crop: function(e) {
+		// Output the result data for cropping image.
+		console.log(e.x);
+		console.log(e.y);
+		console.log(e.width);
+		console.log(e.height);
+		console.log(e.rotate);
+		console.log(e.scaleX);
+		console.log(e.scaleY);
+	}
+});
+</script>

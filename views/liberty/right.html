@@ -1,0 +1,124 @@
+<!--<aside class="right">
+  <div class="weather">
+  <iframe width="260" scrolling="no" height="100" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=19&color=%23&bgc=%23&bdc=%23&icon=1&temp=0&num=2"></iframe>
+  </div>
+  <div class="news">
+    <h3><p>最新<span>文章</span></p></h3>
+    <ul class="rank">
+      {{range $k,$v := .latestblog}}
+          <li><a href="{{$v.Link}}" title="{{$v.Title}}">{{str2html $v.Title}}</a></li>
+     {{end}}
+    </ul>
+    <h3 class="ph"><p>点击<span>排行</span></p></h3>
+    <ul class="paih">
+      {{range $k,$v := .hotblog}}
+          <li><a href="{{$v.Link}}" title="{{$v.Title}}">{{str2html $v.Title}}</a></li>
+      {{end}}
+    </ul>
+
+    <h3 class="links">
+      <p>友情<span>链接</span></p>
+    </h3>
+    <ul class="website">
+      {{range $k,$v := .links}}
+      <li><a href="{{$v.Url}}" target="_blank" >{{$v.Sitename}}</a></li>
+      {{end}}
+    </ul>
+  
+  <a href="/" class="weixin"></a>
+  <div class="visitors">
+      <h3><p>最近访客</p></h3>
+      <ul class="ds-recent-visitors"  data-num-items="24"></ul>
+  </div>
+</aside>-->
+<style>
+	.banner {
+		background: url(../images/banner_top.jpg) top center;
+		overflow: hidden;
+	}
+</style>
+
+<div class="list-group">
+	<a href="" class="list-group-item"><img class="img-circle center-block img-responsive" width="40%" src="{{.avatarurl}}" name="avatorUrl" /></a>
+	<a href="/articles/{{.userid}}" class="list-group-item" onclick="publish({{.stateCount}})">我的帖子<span class="badge" name="stateCount">{{.stateCount}}</span></a>
+	<a href="/articles/{{.userid}}" class="list-group-item" onclick="followed({{.followingCnt}})">粉丝<span class="badge" name="followingCnt">{{.followingCnt}}</span></a>
+</div>
+
+<div>
+	<ul class="list-group">
+		<li class="list-group-item disabled">最新文章</li>
+		{{range $k,$v := .latestblog}}
+		<li class="list-group-item"><a href="{{$v.Link}}" class="mi xtag"><span class="icn icn-4"></span><span class="txt"><span class="us xtag">{{$v.Title}}</span><span class="s-fc2 f-fs0 xtag">{{$v.Views}}阅读</span></span></a></li>
+		{{end}}
+	</ul>
+</div>
+
+<div class="panel">
+	{{.banner}}
+</div>
+
+<div class="panel panel-info">
+	<div class="panel-body">
+		
+			<div style="text-align:center;">
+				<div>
+					<a href="#" ><img class="img-circle" width="40%" src="{{.avatarurl}}" name="avatorUrl" /></a>
+				</div>
+				<h3 ><a href="#">我的相册</a></h3>
+				<p><h3 >Hi</h3></p>
+			</div>
+			
+				<div class="row">
+					<div class="col-xs-6 col-md-6">
+						<a href="#" class="thumbnail">
+							<img src="/img/aboutphoto.jpg" alt="...">
+						</a>
+					</div>
+					<div class="col-xs-6 col-md-6">
+						<a href="#" class="thumbnail">
+							<img src="/img/avatar.png" alt="...">
+						</a>
+					</div>
+					<div class="col-xs-6 col-md-6">
+						<a href="#" class="thumbnail">
+							<img src="{{.staticPath}}/img/avatarher.jpg" alt="...">
+						</a>
+					</div>
+					<div class="col-xs-6 col-md-6">
+						<a href="#" class="thumbnail">
+							<img src="/img/article_header.jpg" alt="...">
+						</a>
+					</div>
+				</div>
+			
+			<div class="btn">
+				<a class="w-gz2 xtag radarlnk" href="http://www.liberalman.cn/login" id="radarlnk"><span>关注</span></a>
+				<a class="radarlnk-actived f-dn" id="radarlnk-actived">已关注</a>
+			</div>
+		
+	</div>
+</div>
+<div>
+	<ul class="list-group">
+		<li class="list-group-item disabled">阅读排行</li>
+		{{range $k,$v := .hotblog}}
+		<li class="list-group-item"><a href="{{$v.Link}}" title="{{$v.Title}}">{{str2html $v.Title}}</a></li>
+		{{end}}
+	</ul>
+</div>
+<div>
+	<h3><p>最近访客</p></h3>
+	<ul class="ds-recent-visitors" data-num-items="24">
+
+	</ul>
+</div>
+
+<script type="text/javascript">
+	function publish(count) {
+		toastr.success('发帖：' + count + '条');
+	}
+
+	function followed(count) {
+		toastr.error('粉丝：' + count + '个');
+	}
+</script>

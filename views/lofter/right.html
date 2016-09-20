@@ -1,0 +1,219 @@
+<!--<aside class="right">
+  <div class="weather">
+  <iframe width="260" scrolling="no" height="100" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=19&color=%23&bgc=%23&bdc=%23&icon=1&temp=0&num=2"></iframe>
+  </div>
+  <div class="news">
+    <h3><p>最新<span>文章</span></p></h3>
+    <ul class="rank">
+      {{range $k,$v := .latestblog}}
+          <li><a href="{{$v.Link}}" title="{{$v.Title}}">{{str2html $v.Title}}</a></li>
+     {{end}}
+    </ul>
+    <h3 class="ph"><p>点击<span>排行</span></p></h3>
+    <ul class="paih">
+      {{range $k,$v := .hotblog}}
+          <li><a href="{{$v.Link}}" title="{{$v.Title}}">{{str2html $v.Title}}</a></li>
+      {{end}}
+    </ul>
+
+    <h3 class="links">
+      <p>友情<span>链接</span></p>
+    </h3>
+    <ul class="website">
+      {{range $k,$v := .links}}
+      <li><a href="{{$v.Url}}" target="_blank" >{{$v.Sitename}}</a></li>
+      {{end}}
+    </ul>
+  
+  <a href="/" class="weixin"></a>
+  <div class="visitors">
+      <h3><p>最近访客</p></h3>
+      <ul class="ds-recent-visitors"  data-num-items="24"></ul>
+  </div>
+</aside>-->
+
+<!-- QQ第三方登录
+<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101345272" data-redirecturi="http://callback.liberalman.cn/" charset="utf-8"></script>
+<script type="text/javascript">
+	QC.Login({
+		//btnId: "qqLoginBtn"
+	}, function(oInfo, oOpts) {
+		toastr.info('Welcome to LIBERALMAN! ' + oInfo.nickname + ' , Just do it!');
+		// 设置用户名和头像
+		$('#avatarUrl').attr('src', oInfo.figureurl_qq_2);
+		$('#username').html(oInfo.nickname);
+	});
+</script> -->
+
+<aside id="rside" class="g-sd">
+
+	<div class="g-box">
+		<div class="m-menu">
+			<div class="menut"></div>
+			<div class="menum">
+				<ul>
+					<li class="first large" id="blogmanage"> <a id="3564422" href="#" class="mi usname"><span class="txt"><span class="lg1" id="username">{{.username}}</span><span class="lg2" id="email">{{.email}}</span></span></a> <a href="#" class="dropicon bmtag"><span class="tip bmtag" style="display:none;">0</span></a>
+						<div class="a-w-sel a-w-sel-6">
+							<div class="w-sel w-sel-6 bmtag" style="margin-top: -59px;">
+								<div class="selc">
+									<div id="bloglstp" class="selcc bmtag">
+										<div class="seli add">
+											<a class="user j-blogman" href="#">创建新主页</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li style="border-color:#b2b2b2;">
+						<div class="crtp"></div><a href="/articles/{{.userid}}" class="mi"><span class="icn icn-9"></span><span class="txt" onclick="publish({{.post_count}})">我的帖子</span><span class="inf inf-1" id="rside-postcount" name="post_count">{{.post_count}}</span></a></li>
+					<li class=""><a class="mi" href="#"><span class="icn icn-3"></span><span class="txt">喜欢</span><span class="inf inf-1" name="">0</span></a></li>
+					<li class=""><a href="#" class="mi"><span class="icn icn-10"></span><span class="txt" onclick="followed({{.follow_count}})">粉丝</span><span class="inf inf-1" id="follow_count">{{.follow_count}}</span></a></li>
+					<li><a class="mi" href="#"><span class="icn icn-1"></span><span class="txt">--</span><span class="inf inf-1" >0</span></a></li>
+					<li class=""><a href="#" class="mi"><span class="icn icn-11"></span><span class="txt">通知</span></a></li>
+					<li class=""><a href="#" class="mi"><span class="icn icn-14"></span><span class="txt">草稿</span><span class="inf inf-1" id="rside-draftcount">0</span></a></li>
+					<li class=""><a href="#" class="mi"><span class="icn icn-13"></span><span class="txt">私信</span><span class="inf inf-1 tip" id="bgmanmsg" >0</span></a></li>
+					<li class="noipt "><a class="mi mi-noipt" href="/admin"><span class="icn icn-8"></span><span class="txt">个人主页设置</span></a></li>
+				</ul>
+			</div>
+			<div class="menub"></div>
+		</div>
+	</div>
+
+	<div class="g-box" id="recommendActivityTag">
+		<div class="m-menu m-menu-1">
+			<div class="menut"></div>
+			<div class="menum">
+				<ul id="recommendActivityTagBox">
+					<li class="first large"><a class="mi xtag"><span class="icn icn-4"></span><span class="txt"><span class="us xtag"><h1>最新文章</h1></span></span></a></li>
+					{{range $k,$v := .latestblog}}
+					<li class=""><a href="{{$v.Link}}" class="mi xtag"><span class="icn icn-4"></span><span class="txt"><span class="us xtag">{{$v.Title}}</span><span class="s-fc2 f-fs0 xtag">{{$v.Views}}阅读</span></span></a></li>
+					{{end}}
+				</ul>
+			</div>
+			<div class="menub"></div>
+		</div>
+	</div>
+	<div class="g-boxv2 f-oh">
+		
+		
+		
+		<!--<div class="banner">
+    <section class="box">
+    <ul class="texts">
+      	<p>生命的意义并不刻意在什么地方停留</p>
+      	<p>更不是不停歇的随波逐流</p>
+     	<p>只要你走下去，总会有惊喜在前方等着你</p>
+    </ul>
+    <div class="avatar"><a href="/"><span>{{.options.nickname}}</span></a> </div>
+    <div class="lock"> </div>
+    <div class="avatarher"><a href="/"><span>她在哪？</span></a> </div>
+  </section>
+</div>-->
+		<script type="text/javascript" src="{{.staticPath}}/js/unslider.js"></script>
+		<script type="text/javascript">
+		    $(document).ready(function() {
+		        $('.banner').unslider(); //启动轮播效果
+		    });
+		</script>
+		<div class="banner">
+		    <ul id="s1">
+		        <li><img src="/img/example-slide-1.jpg" alt="Photo by: Missy S Link: http://www.flickr.com/photos/listenmissy/5087404401/" height="200px" width="100%" /></li>
+		        <li><img src="/img/example-slide-2.jpg" alt="Photo by: Daniel Parks Link: http://www.flickr.com/photos/parksdh/5227623068/" height="200px" width="100%" /></li>
+		        <li><img src="/img/example-slide-3.jpg" alt="Photo by: Mike Ranweiler Link: http://www.flickr.com/photos/27874907@N04/4833059991/" height="200px" width="100%" /></li>
+		        <li><img src="/img/example-slide-4.jpg" alt="Photo by: Stuart SeegerLink: http://www.flickr.com/photos/stuseeger/97577796/" height="200px" width="100%" /></li>
+		    </ul>
+		</div>
+		
+		
+		
+	</div>
+	<div class="g-boxv2 f-oh">
+		<div class="m-selitem2">
+			<a class="f-trans" href="#"> <img src="/img/topic.jpg" /> <span class="cover"></span> <span class="tit"> <span class="seltxt"><span>手机可以拍出怎样的照片？ VOL.19</span></span> <span class="seltxt seltxt-1"><span>手机可以拍出怎样的照片？ VOL.19</span></span>
+				</span>
+			</a>
+		</div>
+		<div class="m-selmorebtn2">
+			<a class="f-trans" href="#">更多专题</a>
+		</div>
+	</div>
+	<div class="g-box" id="radarbox">
+		<div class="g-boxv2 f-oh">
+			<div class="m-rblogmod  f-trans3" id="rblogmod" style="opacity: 1;">
+				<div class="f-tac">
+					<div class="avaimg">
+						<a href="#" class="xtag"><img class="f-db xtag" width="64" height="64" src="{{.avatorUrl}}" name="avatorUrl" /></a>
+					</div>
+					<h3 class="nick f-fs2 s-fc12"><a href="#" class="xtag">我的相册</a></h3>
+					<p class="intro xtag" name="myWords">Hi</p>
+				</div>
+				<div class="m-postlist2 f-cb xtag">
+					<div id="images">
+						<div class="post">
+							<a href="" data-lightbox="example-1"><img src="/img/aboutphoto.jpg" style="width:100%;" /></a>
+						</div>
+						<div class="post">
+							<a href="" data-lightbox="example-1"><img src="/img/avatar.png" style="width:100%;" /></a>
+						</div>
+						<div class="post">
+							<a href="" data-lightbox="example-1"><img src="{{.staticPath}}img/avatarher.jpg" style="width:100%;" /></a>
+						</div>
+						<div class="post">
+							<a href="" data-lightbox="example-1"><img src="/img/article_header.jpg" style="width:100%;" /></a>
+						</div>
+					</div>
+				</div>
+				<div class="btn">
+					<a class="w-gz2 xtag radarlnk" href="http://www.liberalman.cn/login" id="radarlnk"><span>关注</span></a>
+					<a class="radarlnk-actived f-dn" id="radarlnk-actived">已关注</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="g-boxv2 f-oh" style="padding:20px;">
+		<h3 class="ph"><p>阅读排行</p></h3>
+		<ul class="paih">
+			{{range $k,$v := .hotblog}}
+			<li><a href="{{$v.Link}}" title="{{$v.Title}}">{{str2html $v.Title}}</a></li>
+			{{end}}
+		</ul>
+	</div>
+	<div class="g-boxv2 f-oh" style="padding:20px;">
+		<div class="visitors">
+			<h3><p>最近访客</p></h3>
+			<!-- 多说 -->
+			<ul class="ds-recent-visitors" data-num-items="24"></ul>
+		</div>
+	</div>
+</aside>
+<!-- rside 结束 -->
+<script type="text/javascript">
+	function publish(count) {
+		toastr.success('发帖：' + count + '条');
+	}
+
+	function followed(count) {
+		toastr.error('粉丝：' + count + '个');
+	}
+</script>
+
+<!-- 多说评论框 start -->
+<div class="ds-thread" style="display:none;"></div>
+
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+	var duoshuoQuery = {
+		short_name: "liberalman"
+	};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';
+		ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+<!-- 多说公共JS代码 end -->

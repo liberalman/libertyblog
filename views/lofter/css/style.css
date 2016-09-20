@@ -1,0 +1,55 @@
+.footer {
+    color: #ababab;
+    font-weight: 200;
+    padding: 0px 0px 10px 0px;
+    background-color: #282d35;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.light {
+    color: #fff;
+    background: #333;
+}
+.footer .footer-content {
+    padding: 35px 0 25px;
+}
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.footer .list-inline {
+    text-align: left;
+    margin: 0 auto;
+    font-size: 13px;
+}
+.list-inline {
+    padding-left: 0;
+    margin-left: -5px;
+    list-style: none;
+}
+
+
+/* 返回顶端 */
+.back-to-top {
+	text-align: center;
+	background: #000;
+	color: #fff;
+	display: none;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	font-size: 12px;
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	opacity: 0.4;
+	filter: alpha(opacity=40);
+	-webkit-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+	cursor: pointer;
+	z-index: 9999;
+}
+
+.back-to-top:hover {
+	opacity: 1;
+	filter: alpha(opacity=100);
+}

@@ -1,0 +1,316 @@
+<!-- Timeline CSS -->
+<link href="/css/timeline.css" rel="stylesheet">
+
+<div id="page-wrapper">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">历史足迹</h1>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-clock-o fa-fw"></i>The history of my website, Timeline
+				<a class="pull-right" role="button" data-toggle="modal" data-target="#myModal" data-model_label="创建新足迹" data-action="1" >踩个新点</a>
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<ul class="timeline">
+					{{range $k, $v := .list}}
+					<li {{if eq $v.Pos 1}} class="timeline-inverted" {{end}}>
+						{{if eq $v.Icosty 1}}
+						<div class="timeline-badge info">
+							<i class="fa fa-save"></i>
+						</div>
+						{{else if eq $v.Icosty 2}}
+						<div class="timeline-badge warning">
+							<i class="fa fa-credit-card"></i>
+						</div>
+						{{else if eq $v.Icosty 3}}
+						<div class="timeline-badge danger">
+							<i class="fa fa-bomb"></i>
+						</div>
+						{{else if eq $v.Icosty 4}}
+						<div class="timeline-badge success">
+							<i class="fa fa-graduation-cap"></i>
+						</div>
+						{{else}}
+						<div class="timeline-badge">
+							<i class="fa fa-check"></i>
+						</div>
+						{{end}}
+						<div class="timeline-panel">
+							<div class="timeline-heading">
+								<i class="fa fa-edit fa-fw pull-right" data-toggle="modal" data-target="#myModal" data-title="{{$v.Title}}" data-content="{{$v.Content}}"
+									data-dotime="{{$v.Dotime}}" data-icosty="{{$v.Icosty}}" data-pos="{{$v.Pos}}" data-action="2" data-id="{{$v.Id}}" data-model_label="修改我的足迹"></i>
+								<h4 class="timeline-title">{{$v.Title}}</h4>
+								<p>
+									<small class="text-muted">
+										<i class="fa fa-clock-o"></i>{{$v.Dotime}}
+									</small>
+								</p>
+							</div>
+							<div class="timeline-body">
+								<p>{{$v.Content}}</p>
+							</div>
+						</div>
+					</li>
+					{{end}}
+				</ul>
+			</div>
+			<!-- /.panel-body -->
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="form_update">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">足迹</h4>
+				</div>
+				<div class="modal-body">
+					<div class="timeline-panel">
+								<div class="timeline-body">
+									<input name="action" id="action" value="1" class="hidden"/>
+									<input name="id" id="id" value="-1" class="hidden"/>
+									<div class="form-group input-group has-success">
+										<span class="input-group-addon">标题</span>
+										<input type="text" class="form-control" placeholder="标题" name="title" id="title"/>
+										<label for="title" class="input-group-addon"></label>
+									</div>
+									<div class="row">
+										<div class="col-md-5">
+											<div class="form-group input-group">
+												<span class="input-group-addon">时间</span>
+												<input class="form-control" name="dotime" size="16" type="text" id="datetimepicker" data-date-format="yyyy-mm-dd HH:ii:ss">
+												<label for="datetimepicker" class="input-group-addon"></label>
+											</div>
+											
+										</div>
+										<div class="col-md-3">
+											<div class="btn-group">
+												<input class="hidden" name="icosty" id="icosty" value="0"/>
+												<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+							                      <span>图标样式&nbsp;</span>
+							                      <i id="icosty_show" class="fa fa-check"></i>
+							                      <span class="caret"></span>
+							                    </button>
+												<ul class="dropdown-menu" role="menu">
+													<li value="0">
+														<a href="#">
+															<div class="timeline-badge">
+																<i class="fa fa-check"></i>
+															</div>
+														</a>
+													</li>
+													<li value="1">
+														<a href="#">
+															<div class="timeline-badge info">
+																<i class="fa fa-save"></i>
+															</div>
+														</a>
+													</li>
+													<li value="2">
+														<a href="#">
+															<div class="timeline-badge warning">
+																<i class="fa fa-credit-card"></i>
+															</div>
+														</a>
+													</li>
+													<li value="3">
+														<a href="#">
+															<div class="timeline-badge danger">
+																<i class="fa fa-bomb"></i>
+															</div>
+														</a>
+													</li>
+													<li class="divider"></li>
+													<li value="4">
+														<a href="#">
+															<div class="timeline-badge success">
+																<i class="fa fa-graduation-cap"></i>
+															</div>
+														</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<select class="form-control" id="pos" name="pos">
+												<option value="0" selected>时间轴左侧</option>
+												<option value="1">时间轴右侧</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="content">内容描述</label>
+										<textarea class="form-control" name="content" id="content" rows="4"></textarea>
+									</div>
+								</div>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="myclose">关闭</button>
+					<button type="button" class="btn btn-danger" id="del">删除</button>
+					<input type="submit" class="btn btn-primary" value="保存" />
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+
+<link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen" type="text/css" />
+<script src="/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<script src="/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript"></script>
+
+<script>// 日历
+
+$('#datetimepicker').datetimepicker({
+	language: 'zh-CN',
+	weekStart: 1,
+	todayBtn: 1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 2,
+	forceParse: 1,
+	showMeridian: 1
+});
+
+$("#form_update").validate({
+	rules: {
+		title: {
+			required: true,
+			minlength: 2
+		},
+		dotime: {
+			required: true
+		},
+		content: {
+			required: true,
+			minlength: 2
+		}
+	},
+	messages: {
+		title: {
+			required: '<font color="red">请输入内容!</font>',
+			minlength: '<font color="red">标题长度不能小于 2 个字母!</font>'
+		},
+		dotime: {
+			required: '<font color="red">请选择时间!</font>'
+		},
+		content: {
+			required: '<font color="red">请输入内容!</font>',
+			minlength: '<font color="red">密码长度不能小于 2 个字母!</font>'
+		}
+	},
+	// 使用 ajax 方式提交
+	submitHandler: function(form) {
+		$.post('/admin/history',
+			$(form).serialize(),
+			function(data) {
+				if ("0" != data) { // 返回0代表成功，其他失败
+					toastr.error(data);
+				} else {
+					toastr.success("数据修改成功");
+					$('#myclose').click(); // 关闭弹窗
+					window.location.reload(); // 刷新
+				}
+			});
+
+	},
+	// 指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
+	errorPlacement: function(error, element) {
+		// Append error within linked label
+		$(element).closest("form").find("label[for='" + element.attr("id") + "']").append(error);
+}
+});
+
+$('#del').click(function() {
+	$("#action").val(3);
+	$.post('/admin/history', {
+			action: 3,
+			id: $("#id").val()
+		},
+		function(data) {
+			if ("0" != data) { // 返回0代表成功，其他失败
+				toastr.error(data);
+			} else {
+				toastr.success("数据修改成功");
+				$('#myclose').click(); // 关闭弹窗
+				window.location.reload(); // 刷新
+			}
+		});
+});
+
+$('#myModal').on('show.bs.modal', function(event) {
+	// 好奇怪，发现只要以模态框的方式弹出对话框，都会触发此函数。我的日历弹出老是会触发，所以这里将日历过滤下。
+	var button = $(event.relatedTarget) // Button that triggered the modal
+	var model_label = button.data('model_label');
+	if(!model_label) // 如果不是指定的模态框触发，则直接跳出
+		return;
+	
+	var title = button.data('title'); // Extract info from data-* attributes
+	var content = button.data('content');
+	var dotime = button.data('dotime');
+	var icosty = button.data('icosty');
+	var pos = button.data('pos');
+	var action = button.data('action');
+	var id = button.data('id');
+	
+	var modal = $(this);
+
+	function iosty_change(value) {
+		modal.find('#icosty').val(value);
+		var obj = modal.find('#icosty_show').removeClass();
+		switch (value) {
+			case 0:
+				obj.addClass('fa fa-check');
+				break;
+			case 1:
+				obj.addClass('fa fa-save');
+				break;
+			case 2:
+				obj.addClass('fa fa-credit-card');
+				break;
+			case 3:
+				obj.addClass('fa fa-bomb');
+				break;
+			case 4:
+				obj.addClass('fa fa-graduation-cap');
+				break;
+			default:
+				obj.addClass('fa fa-check');
+		}
+	}
+
+	modal.find('#myModalLabel').html(model_label);
+	modal.find('#title').val(title);
+	modal.find('#content').val(content);
+	modal.find('#datetimepicker').val(dotime);
+	modal.find('#icosty').val(icosty);
+	modal.find('#action').val(action); // action 1 新增，2 修改，3 删除
+	if(1 == action){
+		modal.find('#id').val(-1);  // 把id默认置为-1
+	} else {
+		modal.find('#id').val(id);
+	}
+	iosty_change(icosty);
+	modal.find('#pos').val(pos);
+	modal.find('.dropdown-menu li').click('click', function() {
+		var value = $(this).val(); //点击的li标签的value值
+		iosty_change(value);
+	});
+
+});</script>

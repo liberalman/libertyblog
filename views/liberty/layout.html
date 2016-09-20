@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>{{.title}}</title>
+		<meta name="author" content="netease" />
+		<meta name="version" content="1.0" />
+		<meta name="keywords" content="{{.keywords}}">
+		<meta name="description" content="{{.description}}">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+		<link href="{{.staticPath}}/favicon.ico" rel="icon">
+		<link href="{{.staticPath}}/css/bootstrap.min.css" rel="stylesheet">
+		<link href="{{.staticPath}}/css/toastr.min.css" type="text/css" media="all" rel="stylesheet" />
+		<link href="/css/style1.css" rel="stylesheet">
+		<script type="text/javascript" src="{{.staticPath}}/js/jquery-3.1.0.min.js"></script>
+		{{str2html .hidejs}}
+		{{str2html .options.stat}}
+		<style>
+			body {
+				/*background-color: #eee;*/
+				/*background-color: #dfdfe1;
+				background-image: url("{{.staticPath}}/img/article_1.png");
+				background-attachment: fixed;*/
+			}
+		</style>
+	</head>
+
+	<body>
+		{{.header}}
+		<div class="container" role="main">
+			<div class="row">
+				{{if .no_right}}
+					<!-- 主窗口 -->
+					{{.LayoutContent}}
+				{{else}}
+					<div class="col-md-9">
+						<!-- 左侧主窗口 -->
+						{{.LayoutContent}}
+					</div>
+					<div class="col-md-3">
+						<!-- 右侧边栏窗口 -->
+						{{.right}}
+					</div>
+				{{end}}
+			</div>
+		</div>
+		{{.footer}}
+		<script type="text/javascript" src="{{.staticPath}}/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="{{.staticPath}}/js/toastr.min.js"></script>
+	</body>
+
+</html>

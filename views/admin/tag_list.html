@@ -1,0 +1,100 @@
+    <!-- DataTables CSS -->
+    <link href="/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables Responsive CSS -->
+    <link href="/css/responsive.dataTables.min.css" rel="stylesheet">
+
+    
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">标签管理</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            全网标签
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="dataTable_wrapper">
+                            <form method="post" name="p" action="/admin/tag?act=batch">
+                                <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" name="all" value="0" onclick="checkall('ids[]', this)" /></th>
+                                            <th>ID</th>
+                                            <th>标签名称</th>
+                                            <th>内容数</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{range $k, $v := .list}}
+                                            <tr class="gradeA">
+                                                <td><input type="checkbox" name="ids[]" value="{{$v.Id}}" /></td>
+                                                <td>{{$v.Id}}</td>
+                                                <td class="center">{{$v.Name}}</td>
+                                                <td>{{$v.Count}}</td>
+                                            </tr>
+                                        {{end}}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="20">{{str2html .pagebar}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30"><input type="checkbox" name="all" value="0" onclick="checkall('ids[]', this)" /></td>
+                                            <td colspan="20">
+                                                <select name="op" id="op" class="form-control input-sm">
+                                                    <option value="">批量操作</option>
+                                                    <option value="upcount" >更新统计</option>
+                                                    <option value="merge" >合并到</option>
+                                                    <option value="delete" >删除</option>
+                                                </select>
+                                                <span id="mergeto" style="display:none;">
+                                                <input type="text" name="toname" class="span1" style="margin:0" placeholder="新标签" />
+                                                </span>
+                                                <button type="submit" class="btn btn-default">应用</button>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </form>
+                            </div>
+                            <!-- /.table-responsive -->
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    
+
+
+    <!-- DataTables JavaScript -->
+    <script src="/js/jquery.dataTables.min.js"></script>
+    <script src="/js/dataTables.bootstrap.min.js"></script>
+    <script src="/js/dataTables.responsive.min.js"></script>
+    
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+                responsive: true
+        });
+    });
+    </script>
+

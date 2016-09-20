@@ -1,0 +1,140 @@
+<div id="page-wrapper">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">系统设置</h1>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-12">
+			<form role="form" method="post">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						不要随便乱改哦
+					</div>
+					<div class="panel-body">
+						<div class="row">
+
+							<div class="col-lg-6">
+
+								<div class="form-group input-group has-success">
+									<span class="input-group-addon">&nbsp;&nbsp;&nbsp;网站名称</span>
+									<input type="text" class="form-control" placeholder="" name="sitename" value="{{.options.sitename}}" />
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;副标题</span>
+									<input type="text" class="form-control" placeholder="" name="subtitle" value="{{.options.subtitle}}" />
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">网名(昵称)</span>
+									<input type="text" class="form-control" placeholder="" name="nickname" value="{{.options.nickname}}" />
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">&nbsp;&nbsp;网站URL</span>
+									<input type="text" class="form-control" placeholder="" name="siteurl" value="{{.options.siteurl}}" />
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">&nbsp;&nbsp;多说域名</span>
+									<input type="text" class="form-control" placeholder="" name="duoshuo" value="{{.options.duoshuo}}" />
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">&nbsp;&nbsp;新浪微博</span>
+									<input type="text" class="form-control" placeholder="" name="weibo" value="{{.options.weibo}}" />
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">GitHub&nbsp;&nbsp;<i class="fa fa-github"></i></span>
+									<input type="text" class="form-control" placeholder="" name="github" value="{{.options.github}}" />
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">ICP备案号</span>
+									<input type="text" class="form-control" placeholder="" name="icp" value="{{.options.icp}}" />
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">列表每页数量</span>
+									<input type="text" class="form-control" placeholder="" name="pagesize" value="{{.options.pagesize}}" style="width:8%;" maxlength="3" />
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">相册每页数量</span>
+									<input type="text" class="form-control" placeholder="" name="albumsize" value="{{.options.albumsize}}" style="width:8%;" maxlength="3" />
+								</div>
+
+								<div class="form-group">
+									<label>主题模板</label>
+									<select class="form-control" name="theme" style="width:15%;">
+                                                <option value="lofter" {{if eq .options.theme "lofter"}} selected {{end}}>lofter</option>
+                                                <option value="liberty" {{if eq .options.theme "liberty"}} selected {{end}}>liberty</option>
+                                                <option value="mobile" {{if eq .options.theme "mobile"}} selected {{end}}>mobile</option>
+                                            </select>
+								</div>
+								<div class="form-group">
+									<label>时区设置</label>
+									<select class="form-control" name="timezone" style="width:50%;">
+                                                <option value="-12" {{if eq .options.timezone "-12"}}selected{{end}}>(标准时-12:00) 日界线西</option>
+                                                <option value="-11" {{if eq .options.timezone "-11"}}selected{{end}}>(标准时-11:00) 中途岛、萨摩亚群岛</option>
+                                                <option value="-10" {{if eq .options.timezone "-10"}}selected{{end}}>(标准时-10:00) 夏威夷</option>
+                                                <option value="-9" {{if eq .options.timezone "-9"}}selected{{end}}>(标准时-9:00) 阿拉斯加</option>
+                                                <option value="-8" {{if eq .options.timezone "-8"}}selected{{end}}>(标准时-8:00) 太平洋时间(美国和加拿大)</option>
+                                                <option value="-7" {{if eq .options.timezone "-7"}}selected{{end}}>(标准时-7:00) 山地时间(美国和加拿大)</option>
+                                                <option value="-6" {{if eq .options.timezone "-6"}}selected{{end}}>(标准时-6:00) 中部时间(美国和加拿大)、墨西哥城</option>
+                                                <option value="-5" {{if eq .options.timezone "-5"}}selected{{end}}>(标准时-5:00) 东部时间(美国和加拿大)、波哥大</option>
+                                                <option value="-4" {{if eq .options.timezone "-4"}}selected{{end}}>(标准时-4:00) 大西洋时间(加拿大)、加拉加斯</option>
+                                                <option value="-3.5" {{if eq .options.timezone "-3.5"}}selected{{end}}>(标准时-3:30) 纽芬兰</option>
+                                                <option value="-3" {{if eq .options.timezone "-3"}}selected{{end}}>(标准时-3:00) 巴西、布宜诺斯艾利斯、乔治敦</option>
+                                                <option value="-2" {{if eq .options.timezone "-2"}}selected{{end}}>(标准时-2:00) 中大西洋</option>
+                                                <option value="-1" {{if eq .options.timezone "-1"}}selected{{end}}>(标准时-1:00) 亚速尔群岛、佛得角群岛</option>
+                                                <option value="0" {{if eq .options.timezone "0"}}selected{{end}}>(格林尼治标准时) 西欧时间、伦敦、卡萨布兰卡</option>
+                                                <option value="1" {{if eq .options.timezone "1"}}selected{{end}}>(标准时+1:00) 中欧时间、安哥拉、利比亚</option>
+                                                <option value="2" {{if eq .options.timezone "2"}}selected{{end}}>(标准时+2:00) 东欧时间、开罗，雅典</option>
+                                                <option value="3" {{if eq .options.timezone "3"}}selected{{end}}>(标准时+3:00) 巴格达、科威特、莫斯科</option>
+                                                <option value="3.5" {{if eq .options.timezone "3.5"}}selected{{end}}>(标准时+3:30) 德黑兰</option>
+                                                <option value="4" {{if eq .options.timezone "4"}}selected{{end}}>(标准时+4:00) 阿布扎比、马斯喀特、巴库</option>
+                                                <option value="4.5" {{if eq .options.timezone "4.5"}}selected{{end}}>(标准时+4:30) 喀布尔</option>
+                                                <option value="5" {{if eq .options.timezone "5"}}selected{{end}}>(标准时+5:00) 叶卡捷琳堡、伊斯兰堡、卡拉奇</option>
+                                                <option value="5.5" {{if eq .options.timezone "5.5"}}selected{{end}}>(标准时+5:30) 孟买、加尔各答、新德里</option>
+                                                <option value="6" {{if eq .options.timezone "6"}}selected{{end}}>(标准时+6:00) 阿拉木图、 达卡、新亚伯利亚</option>
+                                                <option value="7" {{if eq .options.timezone "7"}}selected{{end}}>(标准时+7:00) 曼谷、河内、雅加达</option>
+                                                <option value="8" {{if eq .options.timezone "8"}}selected{{end}}>(北京时间) 北京、重庆、香港、新加坡</option>
+                                                <option value="9" {{if eq .options.timezone "9"}}selected{{end}}>(标准时+9:00) 东京、汉城、大阪、雅库茨克</option>
+                                                <option value="9.5" {{if eq .options.timezone "9.5"}}selected{{end}}>(标准时+9:30) 阿德莱德、达尔文</option>
+                                                <option value="10" {{if eq .options.timezone "10"}}selected{{end}}>(标准时+10:00) 悉尼、关岛</option>
+                                                <option value="11" {{if eq .options.timezone "11"}}selected{{end}}>(标准时+11:00) 马加丹、索罗门群岛</option>
+                                                <option value="12" {{if eq .options.timezone "12"}}selected{{end}}>(标准时+12:00) 奥克兰、惠灵顿、堪察加半岛</option>
+                                                </select>
+									<p class="form-control-static">当前UTC时间：{{date .now "Y-m-d H:i:s"}}</p>
+								</div>
+							</div>
+							<!-- /.col-lg-6 (nested) -->
+							<div class="col-lg-6">
+								<div class="form-group has-warning">
+									<label class="control-label" for="keywords">网站关键字</label>
+									<input type="text" class="form-control" name="keywords" value="{{.options.keywords}}" id="keywords">
+								</div>
+								<div class="form-group">
+									<label>网站描述</label>
+									<textarea class="form-control" name="description" rows="4">{{.options.description}}</textarea>
+								</div>
+								<div class="form-group  has-error">
+									<label class="control-label" for="stat">统计代码</label>
+									<textarea class="form-control" name="stat" rows="10" id="stat">{{.options.stat}}</textarea>
+								</div>
+							</div>
+							<!-- /.col-lg-6 (nested) -->
+						</div>
+						<!-- /.row (nested) -->
+					</div>
+					<!-- /.panel-body -->
+					<div class="panel-footer">
+						<button type="submit" class="btn btn-default">保存</button>
+						<button type="button" class="btn" onclick="javascript:history.back();">取消</button>
+					</div>
+					<!-- /.panel-footer -->
+				</div>
+				<!-- /.panel -->
+			</form>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+</div>
+<!-- /#page-wrapper -->

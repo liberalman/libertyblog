@@ -1,0 +1,167 @@
+<style>
+a,
+	a:hover,
+	.day {
+		color: #828d95;
+	}
+	
+	.sidelist li a,
+	.tag a,
+	.active {
+		background-color: #828d95;
+	}
+	
+	.day {
+		border-color: #828d95;
+	}
+	
+	.text blockquote {
+		border-left-color: #828d95;
+	}
+	
+	body {
+		background-color: #dfdfe1;
+		background-image: url("{{.root}}images/article_1.png");
+		background-attachment: fixed;
+	}
+	/*pre { /*调整字体，可以使得空格和字符宽度变得一致*/
+	
+	font-size:16px;
+	font-family:"隶书";
+}
+*/ .notes .action {
+	width: 500px;
+}
+#comment_frame {
+	width: 530px;
+}
+.video object,
+.video embed {
+	width: 530px;
+	height: 441px;
+}
+.notes .action {
+	width: 650px;
+}
+#comment_frame {
+	width: 680px;
+}
+.video object,
+.video embed {
+	width: 680px;
+	height: 566px;
+}
+</style>
+<link rel="stylesheet" href="{{.root}}css/style.css">
+<link rel="stylesheet" href="{{.root}}css/5629533619073584608.css">
+<link rel="stylesheet" href="/editor.md/css/editormd.preview.min.css" />
+
+<div class="g-bd">
+	<!-- background 背景层，占满中间放置内容部分的整个屏幕宽 -->
+	<div class="g-bdc">
+		<div class="box wid850 ">
+			<span>
+     <div class="selfinfo"> 
+      <div class="logo"> 
+       <a><img src="{{.post.Avatarurl}}" data-bd-imgshare-binded="1"><i></i></a> 
+      </div> 
+      <h1><a>{{.post.Title}}</a></h1> 
+      <div class="text"></div> 
+     </div>
+     <div class="side" style="float: right;" onclick="publish_time()"> 
+	     <div class="day">
+	      <a>{{date .post.Posttime "j"}}</a>
+	     </div> 
+	     <div class="month">
+	      <a>{{date .post.Posttime "m"}}</a>
+	     </div>
+	    </div>
+        </span>
+			<span>
+     <ul class="sidelist"> 
+      <li><a href="" rel="nofollow">发布时间：{{date .post.Posttime "Y-m-j"}}</a></li> 
+      <li><a href="">作者：{{.post.Username}}</a></li> 
+      <li><a href="">阅读：{{.post.Views}}</a></li>
+      {{if eq 1 .post.Pubtype}}<li><a href="">转载</a></li>{{end}}
+     </ul>
+     </span>
+		</div>
+		<div class="box wid850 ">
+
+			<div id="test-editormd-view2" style="padding:0px;">
+				<textarea id="append-test" style="display:none;">{{.post.Content}}</textarea>
+			</div>
+            
+			<div class="tag">
+				{{str2html .post.TagsLink}}
+			</div>
+			<div class="nextinfo">
+                <span>{{if eq 1 .post.Pubtype}}转载于：<a href="{{.post.Reprinturl}}">{{.post.Reprinturl}}</a>{{end}}</span>
+				{{if .pre}}
+				<p>上一篇：<a href="{{.pre.Link}}">{{.pre.Title}}</a></p>
+				{{end}} {{if .next}}
+				<p>下一篇：<a href="{{.next.Link}}">{{.next.Title}}</a></p>
+				{{end}}
+			</div>
+
+			<div class="ds-share" data-thread-key="{{.post.Id}}" data-title="{{.post.Title}}" data-images="http://api.liberalman.cn:40000/{{.post.Avatarurl}}" data-content="" data-url="http://api.liberalman.cn:40000/article/{{.post.Id}}">
+				<div class="ds-share-aside-left">
+					<div class="ds-share-aside-inner">
+					</div>
+					<div class="ds-share-aside-toggle">分享到</div>
+				</div>
+			</div>
+
+			<!-- 多说评论框 start -->
+			<div class="ds-thread" data-thread-key="{{.post.Id}}" data-title="{{.post.Title}}" data-url="http://api.liberalman.cn:40000/article/{{.post.Id}}"></div>
+			<!-- data-thread-key 这个参数如果去掉了，多说会自己生成一个字符串id -->
+
+		</div>
+
+	</div>
+	<!-- g-bdc 结束 -->
+</div>
+<!-- g-bd 结束 -->
+
+<script src="/editor.md/lib/marked.min.js"></script>
+<script src="/editor.md/lib/prettify.min.js"></script>
+<script src="/editor.md/lib/raphael.min.js"></script>
+<script src="/editor.md/lib/underscore.min.js"></script>
+<script src="/editor.md/lib/sequence-diagram.min.js"></script>
+<script src="/editor.md/lib/flowchart.min.js"></script>
+<script src="/editor.md/lib/jquery.flowchart.min.js"></script>
+<script src="/editor.md/editormd.min.js"></script>
+<script type="text/javascript">
+	function publish_time(){
+		toastr.info('本文作者：' + {{.post.Username}} + '<br/>发布时间：' + {{date .post.Posttime "Y-m-j"}});
+	}
+	$(function() {
+		var testEditormdView2;
+		testEditormdView2 = editormd.markdownToHTML("test-editormd-view2", {
+			htmlDecode: "style,script,iframe", // you can filter tags decode
+			emoji: true,
+			taskList: true,
+			tex: true, // 默认不解析
+			flowChart: true, // 默认不解析
+			sequenceDiagram: true, // 默认不解析
+		});
+
+	});
+</script>
+
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+	var duoshuoQuery = {
+		short_name: "liberalman"
+	};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';
+		ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+<!-- 多说公共JS代码 end -->
