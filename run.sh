@@ -4,9 +4,9 @@
 # Settings
 # =======================================
 
-APP=blog
-APP_DIR=/root/go/src/github.com/jxufeliujj/blog
-LOG_DIR=/root/go/src/github.com/jxufeliujj/blog
+APP=libertyblog
+APP_DIR=/data/gocode/src/libertyblog
+LOG_DIR=/data/gocode/src/libertyblog
 PID_FILE=$APP_DIR/pid
 
 # =======================================
@@ -20,7 +20,7 @@ PID_FILE=$APP_DIR/pid
 RETVAL=0
 
 start() {
-    run_cmd="$APP_DIR/blog"
+    run_cmd="$APP_DIR/libertyblog"
     taskset -c 0,15 nohup $run_cmd 2>&1 >> $LOG_DIR/stdout.log &
     echo $! > "$PID_FILE"
     success && echo "Starting $APP..."	
