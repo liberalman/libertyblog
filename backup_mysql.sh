@@ -3,17 +3,20 @@
 #2，为节省空间，删除超过3个月的所有备份数据；
 #3，删除超过7天的备份数据，保留3个月里的 10号 20号 30号的备份数据；
 
-#mysqldump -uroot -p123456 --all-databases  > /data/dbdata/mysqlbak/`date +%Y%m%d`.sql
+#mysqldump -u*** -p*** --all-databases  > /data/dbdata/mysqlbak/`date +%Y%m%d`.sql
 #find /data/dbdata/mysqlbak/ -mtime +7 -name '*[1-9].sql' -exec rm -rf {} \;
 #find /data/dbdata/mysqlbak/ -mtime +92 -name '*.sql' -exec rm -rf {} \;
 
-#创建定时任务
+#要手动到操作系统的crontab中创建定时任务
 #crontab –e
-#0 4 * * *  /data/dbdata/backup_mysql.sh
+#0 4 * * *  /data/gocode/src/libertyblog/backup_mysql.sh
 
 cd /data/gocode/src/libertyblog/
-mysqldump libertyblog > libertyblog.sql
+mysqldump -usocho -pLooks137 libertyblog > libertyblog.sql
 
-#先要关联leancloud的应用，只用关联一次就可以了，以后操作不用了
-#lean app add seaofheart 77FLlJI1rJm01PSAt8UKoovE-gzGzoHsz
+#先要安装lean工具，可以到leancloud官网上查看云引擎下的命令行CLI工具。这里我直接给链接
+#https://releases.leanapp.cn/leancloud/lean-cli/releases/download/v0.7.5/lean-linux-amd64
+#要先登录leancloud，具体操作看官网，步骤略，这里假设已经安装lean工具并登录初始化成功
+cd seaofheart
+#seaofheart是我在leancloud上建立的工程，下载到本地来，要进入这个工程目录，然后执行上传
 lean upload libertyblog.sql
