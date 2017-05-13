@@ -165,7 +165,7 @@ func (this *UserController) Ajax_qqLogin() {
 // 第三方登录回调地址
 func (this *UserController) Callback() {
 	//qq第三方登录回调 http://callback.liberalman.cn/?#access_token=7CECDDE66B653E9B715356050F1E4748&expires_in=7776000
-	this.Ctx.WriteString("<script type=\"text/javascript\" src=\"http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js\" charset=\"utf-8\" data-callback=\"true\"></script>")
+	this.Ctx.WriteString("<script type=\"text/javascript\" src=\"https://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js\" charset=\"utf-8\" data-callback=\"true\"></script>")
 }
 
 func (this *UserController) updateLoginStatus(user *models.User) {

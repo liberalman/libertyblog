@@ -40,3 +40,9 @@ d8953fde4a8f        docker.io/mysql/mysql-server   "/entrypoint.sh mysql"   6 se
 docker exec -it mysql bash
 ```
 
+### 功能
+
+#### 支持QQ第三方登录
+controllers/blog/user.go:Callback() 登录回调函数
+
+views/lofter/logincallback.html 登录回调页面

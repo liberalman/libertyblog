@@ -4091,9 +4091,9 @@ this.cqX = {
     window.setTimeout(function() {
         new(P("loft.w").bas);
         if ( !! loft.c.bzp) {
-            J.Ty("http://music.ph.126.net/ph.js?001")
+            J.Ty("https://music.ph.126.net/ph.js?001")
         }
-        J.Ty("http://analytics.163.com/ntes.js",
+        J.Ty("https://analytics.163.com/ntes.js",
         function() {
             window["_ntes_nacc"] = "lofter";
             window.neteaseTracker()
@@ -8564,7 +8564,7 @@ this.cqX = {
         if ( !! this.dsu) return;
         this.dsu = true;
         window.UEDITOR_HOME_URL = "";
-        var dst = "http://l.bst.126.net/rsc/js/ueditor/editor_config.js?v=" + this.coL;
+        var dst = "https://l.bst.126.net/rsc/js/ueditor/editor_config.js?v=" + this.coL;
         J.Iv(dst, {
             charset: "utf-8",
             onload: this.dss.bHk(this)
@@ -8574,7 +8574,7 @@ this.cqX = {
             window.ueditorloadmode = "syncload";
             cGx = "http://l.bst.126.net/rsc/js/ueditor/uesrc/editor_api.js"
         } else {
-            cGx = "http://l.bst.126.net/rsc/js/ueditor/output/r/ueditor_min.js?v=" + this.coL
+            cGx = "https://l.bst.126.net/rsc/js/ueditor/output/r/ueditor_min.js?v=" + this.coL
         }
         var dsr = {
             charset: "utf-8",
