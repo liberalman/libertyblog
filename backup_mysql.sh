@@ -19,4 +19,4 @@ mysqldump -usocho -pLooks137 libertyblog > libertyblog.sql
 #要先登录leancloud，具体操作看官网，步骤略，这里假设已经安装lean工具并登录初始化成功
 cd seaofheart
 #seaofheart是我在leancloud上建立的工程，下载到本地来，要进入这个工程目录，然后执行上传
-lean upload libertyblog.sql
+lean upload ../libertyblog.sql
