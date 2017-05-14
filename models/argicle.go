@@ -16,6 +16,7 @@ type Article struct {
 	Userid     int64
 	Username   string
 	Title      string
+	Digest     string
 	Color      string
 	Urlname    string
 	Urltype    int8

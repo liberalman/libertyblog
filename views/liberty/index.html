@@ -23,7 +23,7 @@
 <br/>
 
 {{range $k, $v := .list}}
-<!-- 遍历文章短讯 -->
+<!-- 遍历文章短讯文摘 -->
 <div class="panel panel-default">
 	<div class="panel-body" style="padding:2% 5%;">
 		<div class="row">
@@ -42,11 +42,13 @@
 				</div>
 			</div>
 			<div class="col-md-9">
-				<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>
+				<!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
+                <p class="wrap">{{$v.Digest}}</p>
 			</div>
 			{{else}}
 			<div class="col-md-12">
-				<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>
+				<!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
+                <p class="wrap">{{$v.Digest}}</p>
 			</div>
 			{{end}}
 		</div>

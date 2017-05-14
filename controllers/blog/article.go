@@ -86,7 +86,7 @@ func (this *ArticleController) Index() {
 	this.display("article", 1)
 }
 
-// 评论 http://api.liberalman.cn:40000/article/comment
+// 评论 http://www.liberalman.cn/article/comment
 // 插入 curl -d "flag=1&article_id=76&content=test" "http://localhost/article/comment"
 // 更新 curl -d "flag=2&article_id=76&content=test1&id=1" "http://localhost/article/comment"
 // 删除 curl -d "flag=3&id=1" "http://localhost/article/comment"

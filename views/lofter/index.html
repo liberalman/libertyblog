@@ -62,7 +62,7 @@
      </div> 
      <!-- 中间内容 -->
      
-    {{range $k, $v := .list}} <!-- 遍历文章短讯 -->
+    {{range $k, $v := .list}} <!-- 遍历文章短讯文摘 -->
     <div class="m-mlist">
        <div class="mlistimg js-729009">
          <div class="w-img" style="z-index:1;">
@@ -114,7 +114,8 @@
                 {{end}}
                 <style>.wrap{table-layout:fixed; word-break: break-all; overflow:hidden;}</style>
                 <div class="txt js-36206">
-	               <p>{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>
+	               <!--<p>{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
+                   <p>{{$v.Digest}}</p>
 	            </div>
               </div>
              </div>

@@ -14,6 +14,7 @@ type Post struct {
 	Id         int64
 	Userid     int64  `orm:"index"`
 	Title      string `orm:"size(100)"`
+	Digest     string `orm:"size(255)"`
 	Color      string `orm:"size(7)"`
 	Urlname    string `orm:"size(100);index"`
 	Urltype    int8
@@ -34,6 +35,7 @@ type Post1 struct {
 	Userid int64
 	//Author     string
 	Title      string
+	Digest     string
 	Color      string
 	Urlname    string
 	Urltype    int8
@@ -163,7 +165,7 @@ func (m *Post1) TagsLink() string {
 	return buf.String()
 }
 
-//摘要
+//摘要,截取文章内容，不过现在用不上了，用Digest字段代替了
 func (m *Post) Excerpt() string {
 	if i := strings.Index(m.Content, "_ueditor_page_break_tag_"); i != -1 {
 		return m.Content[:i]
@@ -192,24 +194,27 @@ func (post *Post) GetPreAndNext() (pre, next *Post) {
 	return
 }
 */
+// 获取首页文章列表
 func PostIndex(page int, pagesize int) ([]Article, int) {
 	var count int = 0
 	var list []Article
 	o := orm.NewOrm()
-	o.Raw("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid order by p.istop desc,p.id desc limit ?,?", (page-1)*pagesize, pagesize).QueryRows(&list)
+	o.Raw("select p.id,p.userid,u.username,p.title,p.digest,p.color,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid order by p.istop desc,p.id desc limit ?,?", (page-1)*pagesize, pagesize).QueryRows(&list)
 	o.Raw("select count(id) from tb_post").QueryRow(&count)
 	return list, count
 }
 
+// 获取某人的所有文章列表
 func GetSomeoneArticleList(userid int, page int, pagesize int) ([]Article, int) {
 	var count int = 0
 	var list []Article
 	o := orm.NewOrm()
-	o.Raw("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.userid=? order by p.istop desc,p.id desc limit ?,?", userid, (page-1)*pagesize, pagesize).QueryRows(&list)
+	o.Raw("select p.id,p.userid,u.username,p.title,p.digest,p.color,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.userid=? order by p.istop desc,p.id desc limit ?,?", userid, (page-1)*pagesize, pagesize).QueryRows(&list)
 	o.Raw("select count(id) from tb_post").QueryRow(&count)
 	return list, count
 }
 
+// 获取某一篇文章内容
 func (this *Post1) GetOneArticle() {
 	o := orm.NewOrm()
 	err := o.Raw("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.posttime,p.views,p.status,p.tags,p.pubtype,p.reprinturl,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id=?", this.Id).QueryRow(this)

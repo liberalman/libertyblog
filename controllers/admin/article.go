@@ -171,6 +171,7 @@ func (this *ArticleController) Save() {
 	var (
 		id       int64  = 0
 		title    string = strings.TrimSpace(this.GetString("title"))
+		digest   string = strings.TrimSpace(this.GetString("digest"))
 		content  string = this.GetString("content")
 		tags     string = strings.TrimSpace(this.GetString("tags"))
 		urlname  string = strings.TrimSpace(this.GetString("urlname"))
@@ -271,6 +272,7 @@ func (this *ArticleController) Save() {
 	}
 	post.Status = int8(status)
 	post.Title = title
+	post.Digest = digest
 	post.Color = color
 	post.Istop = istop
 	post.Coverurl = coverurl
@@ -281,9 +283,9 @@ func (this *ArticleController) Save() {
 	post.Pubtype = pubtype
 	if 1 == post.Pubtype {
 		post.Reprinturl = strings.TrimSpace(this.GetString("reprinturl"))
-		post.Update("tags", "status", "title", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype", "reprinturl")
+		post.Update("tags", "status", "title", "digest", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype", "reprinturl")
 	} else {
-		post.Update("tags", "status", "title", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype")
+		post.Update("tags", "status", "title", "digest", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype")
 	}
 	// 更新用户信息缓存，主要是为了更新文章数量
 	models.GetUser(this.userid)
