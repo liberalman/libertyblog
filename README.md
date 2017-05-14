@@ -17,7 +17,7 @@ go get github.com/nfnt/resize
 go get github.com/yunge/sphinx
 ```
 
-#### 数据库
+### 数据库
 
 我的数据库是基于docker建立的mysql镜像，所以需要先安装docker，然后使用docker拉取mysql-server镜像
 ```
@@ -40,6 +40,12 @@ d8953fde4a8f        docker.io/mysql/mysql-server   "/entrypoint.sh mysql"   6 se
 docker exec -it mysql bash
 ```
 
+
+#### 表
+
+##### tb_user
+用户表，存储用户名称、密码、第三方登录等信息
+
 ### 功能
 
 #### 支持QQ第三方登录
@@ -50,7 +56,7 @@ views/lofter/logincallback.html 登录回调页面
 #### 定时备份mysql数据库
 在操作系统crontab中添加一个定时任务
 ```
-0 4 * * *  /data/gocode/src/libertyblog/backup_mysql.sh
+0 4 * * *  sh /data/gocode/src/libertyblog/backup_mysql.sh >/dev/null &
 ```
 每天凌晨4点会调用此脚本备份数据库为一个sql文件，然后将此文件上传到我的leancloud上。
 
