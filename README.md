@@ -49,6 +49,8 @@ docker exec -it mysql bash
 ### 功能
 
 #### 支持QQ第三方登录
+QQ第三方登录配置地址https://connect.qq.com/manage.html#/appinfo/web/101345272
+
 controllers/blog/user.go:Callback() 登录回调函数
 
 views/lofter/logincallback.html 登录回调页面
