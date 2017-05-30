@@ -65,7 +65,8 @@ func (this *baseController) Prepare() {
 	}
 
 	this.Data["root"] = "/" + beego.BConfig.WebConfig.ViewsPath + "/" + this.theme + "/"
-	this.Data["staticPath"] = "https://o9gqjr7iy.bkt.clouddn.com/libertyblog/"
+	//this.Data["staticPath"] = "https://o9gqjr7iy.bkt.clouddn.com/libertyblog/"
+	this.Data["staticPath"] = "/"
 }
 
 //渲染模版
