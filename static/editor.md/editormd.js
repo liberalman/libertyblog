@@ -2,7 +2,7 @@
  * Editor.md
  *
  * @file        editormd.js 
- * @version     v1.5.0 
+ * @version     v1.5.0-lbt
  * @description Open source online markdown editor.
  * @license     MIT License
  * @author      Pandao
@@ -461,11 +461,6 @@
                     editormd.$katex = katex;
                 }
                 
-                if (typeof mermaid !== "undefined") 
-                {
-                    editormd.$mermaid = mermaid;
-                }
-                
                 if (settings.searchReplace && !settings.readOnly) 
                 {
                     editormd.loadCSS(settings.path + "codemirror/addon/dialog/dialog");
@@ -504,6 +499,13 @@
             var _this        = this;
             var settings     = this.settings;
             var loadPath     = settings.path;
+            
+            ////////////////////
+            editormd.loadScript(loadPath + "mermaid.min", function() {  
+                editormd.$mermaid = mermaid;
+            });
+			editormd.loadCSS(loadPath + "mermaid.min");
+			///////////////////
                                 
             var loadFlowChartOrSequenceDiagram = function() {
                 
@@ -513,13 +515,6 @@
                     
                     return ;
                 }
-                
-                ////////////////////
-                editormd.loadScript(loadPath + "mermaid.min", function() {  
-                    //_this.loadedDisplay();
-                });
-				editormd.loadCSS(loadPath + "mermaid.min");
-				///////////////////
 
                 if (settings.flowChart || settings.sequenceDiagram) 
                 {
@@ -1534,50 +1529,18 @@
             var $this            = this;
             var settings         = this.settings;
             var previewContainer = this.previewContainer;
-            
-            if (editormd.isIE8) {
-                return this;
-            }
 
             if (settings.mermaid) {
                 if (mermaidTimer === null) {
                     return this;
                 }
                 
-                //console.info(previewContainer.find(".mermaid"));
                 previewContainer.find(".mermaid").each(function(){
-                	    var mermaid = $(this);console.info(mermaid);
-                	    //editormd.$mermaid.render(null, mermaid.text(), null, mermaid[0]); // render的函数实现，见mermaid.js中的global.mermaid内的定义function render(id, text, callback, element)
+                	    var mermaid = $(this);
+                	    //console.info(editormd.$mermaid.version());
+                	    // init的函数实现，见mermaid.js中的global.mermaid内的定义function init()
+                	    editormd.$mermaid.init();
                 });
-            }
-            
-            var preview    = $this.preview;
-            var codeMirror = $this.codeMirror;
-            var codeView   = codeMirror.find(".CodeMirror-scroll");
-
-            var height    = codeView.height();
-            var scrollTop = codeView.scrollTop();                    
-            var percent   = (scrollTop / codeView[0].scrollHeight);
-            var tocHeight = 0;
-
-            preview.find(".markdown-toc-list").each(function(){
-                tocHeight += $(this).height();
-            });
-
-            var tocMenuHeight = preview.find(".editormd-toc-menu").height(); 
-            tocMenuHeight = (!tocMenuHeight) ? 0 : tocMenuHeight;
-
-            if (scrollTop === 0) 
-            {
-                preview.scrollTop(0);
-            } 
-            else if (scrollTop + height >= codeView[0].scrollHeight - 16)
-            { 
-                preview.scrollTop(preview[0].scrollHeight);                        
-            } 
-            else
-            {                  
-                preview.scrollTop((preview[0].scrollHeight + tocHeight + tocMenuHeight) * percent);
             }
 
             return this;
@@ -2162,19 +2125,6 @@
                         _this.mermaidRender();
                         mermaidTimer = null;
                     }, 10);
-                   /*if (!editormd.mermaidLoaded && settings.autoLoadModules) 
-                    {
-                        editormd.loadMermaid(function() {
-                            editormd.$mermaid = mermaid;
-                            editormd.mermaidLoaded = true;
-                            _this.mermaidRender();
-                        });
-                    } 
-                    else 
-                    {
-                        editormd.$mermaid = mermaid;
-                        this.mermaidRender();
-                    }*/
                 }
                 
                 if (settings.flowChart || settings.sequenceDiagram)
@@ -3179,24 +3129,6 @@
                 cm.setCursor(cursor.line, cursor.ch + 2);
             }
         },
-        
-        mermaid : function() {
-            if (!this.settings.mermaid)
-            {
-                alert("settings.mermaid === false");
-                return this;
-            }
-            
-            var cm        = this.cm;
-            var cursor    = cm.getCursor();
-            var selection = cm.getSelection();
-
-            cm.replaceSelection("$$" + selection + "$$");
-
-            if(selection === "") {
-                cm.setCursor(cursor.line, cursor.ch + 2);
-            }
-        },
 
         link : function() {
             this.executePlugin("linkDialog", "link-dialog/link-dialog");
@@ -3744,18 +3676,17 @@
             else if ( lang === "flow")
             {
                 return "<div class=\"flowchart\">" + code + "</div>";
-            } 
+            }
+            else if ( lang === "mermaid")
+            {
+                return "<div class=\"mermaid\">" + code + "</div>";
+            }
             else if ( lang === "math" || lang === "latex" || lang === "katex")
             {
                 return "<p class=\"" + editormd.classNames.tex + "\">" + code + "</p>";
-            } 
-            else if ( lang === "mermaid")
-            {
-                return "<p class=\"mermaid\">" + code + "</p>";
-            } 
+            }
             else 
             {
-
                 return marked.Renderer.prototype.code.apply(this, arguments);
             }
         };
@@ -4025,7 +3956,6 @@
             markdownSourceCode   : false,
             htmlDecode           : false,
             autoLoadKaTeX        : true,
-            autoLoadMermaid      : true,
             pageBreak            : true,
             atLink               : true,    // for @link
             emailLink            : true,    // for mail address auto link
@@ -4060,7 +3990,6 @@
             taskList             : settings.taskList,
             emoji                : settings.emoji,
             tex                  : settings.tex,
-            mermaid              : settings.mermaid,
             pageBreak            : settings.pageBreak,
             atLink               : settings.atLink,           // for @link
             emailLink            : settings.emailLink,        // for mail address auto link
@@ -4132,10 +4061,6 @@
             if (settings.sequenceDiagram) {
                 div.find(".sequence-diagram").sequenceDiagram({theme: "simple"});
             }
-            
-            if (settings.mermaid) {
-                div.find(".mermaid"); alert("i don't know");
-            }
         }
 
         if (settings.tex)
@@ -4159,30 +4084,6 @@
             else
             {
                 katexHandle();
-            }
-        }
-        
-        if (settings.mermaid)
-        {
-            var mermaidHandle = function() {
-                div.find(".mermaid").each(function(){
-                    var mermaid  = $(this);
-                    alert("not got it");
-                    mermaid.render(null, mermaid.html().replace(/&lt;/g, "<").replace(/&gt;/g, ">"), null, mermaid[0]);                    
-                });
-            };
-            
-            if (settings.autoLoadMermaid && !editormd.$mermaid && !editormd.mermaidLoaded)
-            {
-                this.loadMermaid(function() {
-                    editormd.$mermaid      = mermaid;
-                    editormd.mermaidLoaded = true;
-                    mermaidHandle();
-                });
-            }
-            else
-            {
-                mermaidHandle();
             }
         }
         
@@ -4337,13 +4238,6 @@
     
     editormd.kaTeXLoaded = false;
     
-    editormd.mermaidURL  = {
-        css : "//unpkg.com/mermaid@7.0.3/dist/mermaid.min",
-        js  : "//unpkg.com/mermaid@7.0.3/dist/mermaid.min"
-    };
-    
-    editormd.mermaidLoaded = false;
-    
     /**
      * 加载KaTeX文件
      * load KaTeX files
@@ -4354,19 +4248,6 @@
     editormd.loadKaTeX = function (callback) {
         editormd.loadCSS(editormd.katexURL.css, function(){
             editormd.loadScript(editormd.katexURL.js, callback || function(){});
-        });
-    };
-    
-    /**
-     * 加载Mermaid文件
-     * load Mermaid files
-     * 
-     * @param {Function} [callback=function()]  加载成功后执行的回调函数
-     */
-    
-    editormd.loadMermaid = function (callback) {
-        editormd.loadCSS(editormd.mermaidURL.css, function(){
-            editormd.loadScript(editormd.mermaidURL.js, callback || function(){});
         });
     };
         
