@@ -42,27 +42,9 @@
             </header>
             <div id="test-editormd">
                 <textarea style="display:none;" name="content">
+    本文使用的markdown编辑器，不熟悉语法的，下面已经列出来了，照这个做就OK了！
 
-```mermaid
-graph LR;
-　　A-->B;
-　　A-->C;
-　　B-->D;
-　　C-->D;
-```
-
-```mermaid
-sequenceDiagram
-        Merchant->>Customer: "foo#b"
-        Note left of Person:One row for the a
-        Note right of Person: Bob thinks a long long time, so long that the text does not fit In a row. Bob thinks a long long time, so long that the text does not fit In a row. Bob thinks a long long time, so long that the text does not fit In a row. Bob thinks a long long time, so long that the text does not fit In a row.
-
-        Person-->>Customer: bar
-
-        Note left of Person: Foo checks up on him
-```
-
-    官网 http://pandao.github.io/editor.md/
+    编辑器官网 http://pandao.github.io/editor.md/
 ### 主要特性
 
 - 支持“标准”Markdown / CommonMark和Github风格的语法，也可变身为代码编辑器；
@@ -411,6 +393,27 @@ Andrew->China: Says Hello
 Note right of China: China thinks\nabout it 
 China-->Andrew: How are you? 
 Andrew->>China: I am good thanks!
+```
+
+### mermaid绘图插件支持
+
+```mermaid
+graph LR;
+　　A-->B;
+　　A-->C;
+　　B-->D;
+　　C-->D;
+```
+
+```mermaid
+sequenceDiagram
+        Merchant->>Customer: "foo#b"
+        Note left of Person:One row for the a
+        Note right of Person: Bob thinks a long long time, so long that the text does not fit In a row. Bob thinks a long long time, so long that the text does not fit In a row. Bob thinks a long long time, so long that the text does not fit In a row. Bob thinks a long long time, so long that the text does not fit In a row.
+
+        Person-->>Customer: bar
+
+        Note left of Person: Foo checks up on him
 ```
 
 ### End
