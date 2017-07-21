@@ -37,7 +37,7 @@
                                     </thead>
                                     <tbody>
                                     {{range $k, $v := .list}}
-                                        <tr class="gradeA">
+                                        <tr {{if eq $v.Id 1}} class="success" {{else}} class="gradeA" {{end}}>
                                             <td><input type="checkbox" name="ids[]" value="{{$v.Id}}" /></td>
                                             <td>{{$v.Id}}</td>
                                             <td>{{$v.Username}}</td>
@@ -75,12 +75,63 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+			<div class="row">
+				<!-- /.col-lg-6 -->
+				<div class="col-lg-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">Context Classes</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>First Name</th>
+											<th>Last Name</th>
+											<th>Username</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="success">
+											<td>1</td>
+											<td>Mark</td>
+											<td>Otto</td>
+											<td>@mdo</td>
+										</tr>
+										<tr class="info">
+											<td>2</td>
+											<td>Jacob</td>
+											<td>Thornton</td>
+											<td>@fat</td>
+										</tr>
+										<tr class="warning">
+											<td>3</td>
+											<td>Larry</td>
+											<td>the Bird</td>
+											<td>@twitter</td>
+										</tr>
+										<tr class="danger">
+											<td>4</td>
+											<td>John</td>
+											<td>Smith</td>
+											<td>@jsmith</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- /.table-responsive -->
+						</div>
+						<!-- /.panel-body -->
+					</div>
+					<!-- /.panel -->
+				</div>
+				<!-- /.col-lg-6 -->
+			</div>
+			<!-- /.row -->
 
         </div>
         <!-- /#page-wrapper -->
-
-    
-
 
     <!-- DataTables JavaScript -->
     <script src="/js/jquery.dataTables.min.js"></script>
