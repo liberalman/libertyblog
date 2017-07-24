@@ -85,17 +85,17 @@ func (this *UserController) Register() {
 //登录
 func (this *UserController) Login() {
 	if "POST" == this.Ctx.Request.Method { // 如果是post,表明提交登录信息
-		account := strings.TrimSpace(this.GetString("account"))
+		username := strings.TrimSpace(this.GetString("username"))
 		password := strings.TrimSpace(this.GetString("password"))
 		remember := this.GetString("remember") // 是否需要记住登录状态7天
-		if account != "" && password != "" {
+		if username != "" && password != "" {
 			var user models.User
 			// 先检查用户名
-			user.Username = account
+			user.Username = username
 			fmt.Println("a1", user.Read("username"))
 			if nil != user.Read("username") { // Read 返回nil说明成功
 				// 无此用户名，接下来检查邮箱
-				user.Email = account
+				user.Email = username
 				if nil != user.Read("email") {
 					// 无此Email
 					//this.Data["errmsg"] = "无此邮箱/帐号"
