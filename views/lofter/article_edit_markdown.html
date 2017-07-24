@@ -61,7 +61,7 @@
         </div>
     </form>
         <script src="{{.staticPath}}/js/jquery-2.1.3.min.js"></script>
-        <script src="/editor.md/editormd.min.js"></script>
+        <script src="/editor.md/editormd.js"></script>
         <script type="text/javascript">
 			var testEditor;
 
@@ -98,6 +98,9 @@
                     flowChart : true, //流程图
                     tex  : true, // 科学公式语言
                     sequenceDiagram : true, // 序列图
+                    mermaid : true, // mermaid图
+				    htmlDecode : true, // 解析html标签
+				    codeFold : true, // 运行编辑的时候代码折叠
                 });
 				
 				// 发布类型

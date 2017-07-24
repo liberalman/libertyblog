@@ -431,7 +431,7 @@ sequenceDiagram
             $(function() {
                 testEditor = editormd("test-editormd", {
                     width   : "100%",
-                    autoHeight : true,
+                    height  : 960,
                     syncScrolling : "single",
                     path    : "/editor.md/lib/",
                     emoji   : true, // 启用表情包
@@ -460,10 +460,10 @@ sequenceDiagram
                     
                     flowChart : true, //流程图
                     tex  : true, // 科学公式语言
-					 mermaid : true, // mermaid图
+				    mermaid : true, // mermaid图
                     sequenceDiagram : true, // 序列图
-					 htmlDecode : true, // 解析html标签
-					 codeFold : true, // 运行编辑的时候代码折叠
+				    htmlDecode : true, // 解析html标签
+				    codeFold : true, // 运行编辑的时候代码折叠
 					
 					// 这些配置的默认值，参见editormd.js中的 editormd.defaults 的定义
 					// mermaid标签的解析，查找这行 ( lang === "mermaid")

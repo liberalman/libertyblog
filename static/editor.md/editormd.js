@@ -502,7 +502,7 @@
             
             ////////////////////
             editormd.loadScript(loadPath + "mermaid.min", function() {  
-                editormd.$mermaid = mermaid;
+                editormd.$mermaid = mermaid;editormd.$mermaid.init();
             });
 			editormd.loadCSS(loadPath + "mermaid.min");
 			///////////////////
@@ -1534,13 +1534,12 @@
                 if (mermaidTimer === null) {
                     return this;
                 }
-                
-                previewContainer.find(".mermaid").each(function(){
-                	    var mermaid = $(this);
+                editormd.$mermaid.init();
+                //previewContainer.find(".mermaid").each(function(){
                 	    //console.info(editormd.$mermaid.version());
                 	    // init的函数实现，见mermaid.js中的global.mermaid内的定义function init()
-                	    editormd.$mermaid.init();
-                });
+                	    //editormd.$mermaid.init();
+                //});
             }
 
             return this;
@@ -4061,7 +4060,7 @@
             if (settings.sequenceDiagram) {
                 div.find(".sequence-diagram").sequenceDiagram({theme: "simple"});
             }
-        }
+        }  
 
         if (settings.tex)
         {
