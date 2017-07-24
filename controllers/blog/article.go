@@ -42,7 +42,7 @@ func (this *ArticleController) SomeoneList() {
 	this.display("article_list", 0)
 }
 
-func (this *ArticleController) Edit1() {
+func (this *ArticleController) EditMarkdown() {
 	id, _ := this.GetInt64("id")
 	post := models.Post{Id: id}
 	if post.Read() != nil {

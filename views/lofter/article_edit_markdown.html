@@ -58,6 +58,14 @@
             <div id="test-editormd">
                 <textarea style="display:none;" name="content">{{.post.Content}}</textarea>
             </div>
+            <div class="form-group">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="input-group">
+                    <input type="submit" value="Just do it!" class="btn btn-danger"/>
+                </div>
+            </div>
+            </br>
+            </br>
         </div>
     </form>
         <script src="{{.staticPath}}/js/jquery-2.1.3.min.js"></script>
@@ -68,7 +76,6 @@
             $(function() {
                 testEditor = editormd("test-editormd", {
                     width   : "100%",
-                    height  : 960,
                     syncScrolling : "single",
                     path    : "/editor.md/lib/",
                     emoji   : true, // 启用表情包
