@@ -338,7 +338,7 @@
     editormd.$CodeMirror  = null;
     editormd.$prettyPrint = null;
     
-    var timer, flowchartTimer, mermaidTimer;
+    var timer, flowchartTimer;
 
     editormd.prototype    = editormd.fn = {
         state : {
@@ -499,13 +499,6 @@
             var _this        = this;
             var settings     = this.settings;
             var loadPath     = settings.path;
-            
-            ////////////////////
-            editormd.loadScript(loadPath + "mermaid.min", function() {  
-                editormd.$mermaid = mermaid;editormd.$mermaid.init();
-            });
-			editormd.loadCSS(loadPath + "mermaid.min");
-			///////////////////
                                 
             var loadFlowChartOrSequenceDiagram = function() {
                 
@@ -1526,22 +1519,13 @@
          */
         
         mermaidRender : function() {
-            var $this            = this;
-            var settings         = this.settings;
-            var previewContainer = this.previewContainer;
-
-            if (settings.mermaid) {
-                if (mermaidTimer === null) {
-                    return this;
-                }
-                editormd.$mermaid.init();
-                //previewContainer.find(".mermaid").each(function(){
-                	    //console.info(editormd.$mermaid.version());
-                	    // init的函数实现，见mermaid.js中的global.mermaid内的定义function init()
-                	    //editormd.$mermaid.init();
-                //});
+            if (timer === null)
+            {
+                return this;
             }
-
+            
+            editormd.$mermaid.init();
+            
             return this;
         },
         
@@ -2119,11 +2103,19 @@
                 
                 if (settings.mermaid)
                 {
-                    mermaidTimer = setTimeout(function(){
-                        clearTimeout(mermaidTimer);
-                        _this.mermaidRender();
-                        mermaidTimer = null;
-                    }, 10);
+                    if (!editormd.mermaidLoaded && settings.autoLoadModules) 
+                    {
+                        editormd.loadMermaid(function() {
+                            editormd.$mermaid = mermaid;
+                            editormd.mermaidLoaded = true;
+                            _this.mermaidRender();
+                        });
+                    } 
+                    else 
+                    {
+                        editormd.$mermaid = mermaid;
+                        this.mermaidRender();
+                    }
                 }
                 
                 if (settings.flowChart || settings.sequenceDiagram)
@@ -4237,6 +4229,13 @@
     
     editormd.kaTeXLoaded = false;
     
+    editormd.mermaidURL  = {
+        css : "//unpkg.com/mermaid@7.0.3/dist/mermaid.min",
+        js  : "//unpkg.com/mermaid@7.0.3/dist/mermaid.min"
+    };
+    
+    editormd.mermaidLoaded = false;
+    
     /**
      * 加载KaTeX文件
      * load KaTeX files
@@ -4247,6 +4246,19 @@
     editormd.loadKaTeX = function (callback) {
         editormd.loadCSS(editormd.katexURL.css, function(){
             editormd.loadScript(editormd.katexURL.js, callback || function(){});
+        });
+    };
+    
+    /**
+     * 加载mermaid文件
+     * load mermaid files
+     * 
+     * @param {Function} [callback=function()]  加载成功后执行的回调函数
+     */
+    
+    editormd.loadMermaid = function (callback) {
+        editormd.loadCSS(editormd.mermaidURL.css, function(){
+            editormd.loadScript(editormd.mermaidURL.js, callback || function(){});
         });
     };
         
