@@ -5,10 +5,10 @@
 # =======================================
 
 APP=libertyblog
-APP_DIR=/data/gocode/src/libertyblog
-LOG_DIR=/data/gocode/src/libertyblog
+APP_DIR=./
+LOG_DIR=./
 PID_FILE=$APP_DIR/pid
-
+#ps -ef|grep libertyblog|grep -v grep|awk '{print $2'}|xargs kill -9
 # =======================================
 # DO NOT CHANGE
 # =======================================
@@ -60,7 +60,7 @@ case "$1" in
   restart
   ;;
   status)
-  status -p $pid_file
+  status -p $PID_FILE
   RETVAL=$?
   ;;
   *)
