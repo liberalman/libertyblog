@@ -63,7 +63,7 @@ func (this *ArticleController) List() {
 	}
 	count, _ := query.Count()
 	if count > 0 {
-		query.OrderBy("-istop", "-posttime").Limit(pagesize, offset).All(&list)
+		query.OrderBy("-istop", "-updated").Limit(pagesize, offset).All(&list)
 	}
 
 	this.Data["searchtype"] = searchtype

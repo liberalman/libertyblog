@@ -83,6 +83,7 @@ a,
       <li><a href="" rel="nofollow">发布时间：{{date .post.Posttime "Y-m-j"}}</a></li> 
       <li><a href="">作者：{{.post.Username}}</a></li> 
       <li><a href="">阅读：{{.post.Views}}</a></li>
+      <li><a href="">最近更新：{{date .post.Updated "Y-m-d H:i:s"}} {{.post.Updated}}</a></li> 
       {{if eq 1 .post.Pubtype}}<li><a href="">转载</a></li>{{end}}
      </ul>
      </span>

@@ -78,7 +78,7 @@ func (m *Article) TagsLink() string {
 
 func (this *Article) GetOneArticle() {
 	o := orm.NewOrm()
-	err := o.Raw("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.posttime,p.views,p.status,p.tags,p.pubtype,p.reprinturl,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id=?", this.Id).QueryRow(this)
+	err := o.Raw("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.posttime,p.updated,p.views,p.status,p.tags,p.pubtype,p.reprinturl,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id=?", this.Id).QueryRow(this)
 	if err != nil {
 		beego.Error(err)
 	}
@@ -97,11 +97,11 @@ func (post *Article) GetPreAndNext(postid int64) (pre, next *Article) {
 	pre = new(Article)
 	next = new(Article)
 	o := orm.NewOrm()
-	err := o.Raw("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.status,p.views,p.posttime,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id<? and p.status=0 and p.urltype=0 order by p.id desc limit 1", postid).QueryRow(pre)
+	err := o.Raw("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.status,p.views,p.posttime,p.updated,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id<? and p.status=0 and p.urltype=0 order by p.id desc limit 1", postid).QueryRow(pre)
 	if err != nil {
 		beego.Error(err)
 	}
-	err = o.Raw("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.status,p.views,p.posttime,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id>? and p.status=0 and p.urltype=0 limit 1", postid).QueryRow(next)
+	err = o.Raw("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.status,p.views,p.posttime,p.updated,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id>? and p.status=0 and p.urltype=0 limit 1", postid).QueryRow(next)
 	if err != nil {
 		beego.Error(err)
 	}
@@ -113,6 +113,6 @@ func (post *Article) GetPreAndNext(postid int64) (pre, next *Article) {
 func GetArticlesByIds(article_ids string) []Article {
 	var list []Article
 	o := orm.NewOrm()
-	o.Raw(fmt.Sprintf("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id in (%s) order by p.istop desc,p.id desc", article_ids)).QueryRows(&list)
+	o.Raw(fmt.Sprintf("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.updated,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id in (%s) order by p.istop desc,p.id desc", article_ids)).QueryRows(&list)
 	return list
 }
