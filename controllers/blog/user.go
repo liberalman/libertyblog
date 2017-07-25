@@ -70,6 +70,15 @@ func (this *UserController) Register() {
 				this.Ctx.WriteString(err.Error())
 				return
 			}
+
+			// set login status
+			user.Logincount += 1
+			user.Lastip = this.getClientIp()
+			user.Lastlogin = this.getTime()
+			user.Update()
+			authkey := models.Md5([]byte(this.getClientIp() + "|" + user.Password))
+			this.Ctx.SetCookie("auth", strconv.FormatInt(user.Id, 10)+"|"+authkey)
+
 			//this.Redirect("/admin", 302)
 			this.Ctx.WriteString("0")
 			return

@@ -1,27 +1,28 @@
 <div class="page-container">
     <h1>Liberalman</h1>
     <form id="form-login">
-        <input type="text" name="username" id="username" placeholder="用户名/邮箱" value="zscchina@163.com">
-        <input type="password" name="password" id="password" placeholder="密码" value="1234567">
+        <input type="text" name="username" id="username" placeholder="用户名/邮箱">
+        <input type="password" name="password" id="password" placeholder="密码">
+        <div style="margin-top:20px; padding:10px; background: rgba(45,45,45,.25);-moz-border-radius: 8px;-webkit-border-radius: 8px;border-radius: 8px;">
+        	    <span id="qqLoginBtn"></span>
+        	    &nbsp;&nbsp;
+            <input type="checkbox" class="checkbox" name="remember" id="remember" style="width:auto; height:auto; margin-top: 0px;">
+            记住7天
+        </div>
         <button type="submit">登录</button>
-        <div class="error"><span>+</span></div>
     </form>
     <form id="form-register" style="display:none;">
         <input type="text" name="username" id="username" placeholder="用户名" value="aaa">
         <input type="text" name="email" id="email" placeholder="email" value="zscchina@163.com">
-        <input type="password" name="password" id="password" placeholder="密码" value="1234567">
+        <input type="password" name="password" id="password" placeholder="密码" value="123456">
+        <input type="password" name="password_confirm" id="password_confirm" placeholder="确认密码" value="123456">
         <button type="submit">注册</button>
         <div class="error"><span>+</span></div>
     </form>
     </br>
     <a id="btn-register" href="#">注册</a>
-    <div class="connect">
-        <p>Or connect with:</p>
-        <p>
-            <a class="facebook" href=""></a>
-            <a class="twitter" href=""></a>
-        </p>
-    </div>
+    </br>
+    </br>
 </div>
 <div align="center">背景作品来自：<a href="http://liberalman.lofter.com" target="_blank" title="liberalman">liberalman</a></div>
 
@@ -131,7 +132,7 @@ $(document).ready(function() {
         errorPlacement: function(error, element) {
             toastr.error(error[0].innerText);
             $(element).closest("form").find("input").removeClass('error'); //这个1.8.2版本的jquery和validate配合有问题，这里需要去除下error，不然input框会被删除。
-            //$(element).closest("form").find("input[name='" + element.attr("id") + "']").append(error);
+            //$(element).closest("form").find("input[name='" + element.attr("id") + "']").append(error); //追加到某个input之后
         }
     });
     
@@ -147,8 +148,126 @@ $(document).ready(function() {
             $(this).html('注册');
             islogin = 1;
         }
-        
+    });
+    
+    $("#form-register").validate({
+        rules: {
+			username: {
+				required: true,
+				minlength: 1
+			},
+			email: {
+				required: true,
+				email: true
+			},
+			password: {
+				required: true,
+				minlength: 6
+	        },
+            password_confirm: {
+                required: true,
+                minlength: 6,
+                equalTo: "#form-register #password"
+            }
+		},
+        messages: {
+            username: {
+                required: '<font color="red">请输入用户名!</font>',
+                minlength: '<font color="red">用户名长度不能小于 2 个字母!</font>'
+            },
+            email: "请输入一个正确的邮箱",
+            password: {
+                required: '<font color="red">请输入密码!</font>',
+                minlength: '<font color="red">密码长度不能小于 6 个字母!</font>'
+            },
+            password_confirm: {
+		        required: "请输入密码",
+		        minlength: "密码长度不能小于 6 个字母",
+		        equalTo: "两次密码输入不一致"
+		      }
+        },
+        // 使用 ajax 方式提交
+        submitHandler: function(form) {
+			$.post('/register',
+                $(form).serialize(),
+                function(data) {
+                    if ("0" != data) { // 返回0代表成功，其他失败
+                        toastr.error(data);
+                    } else {
+                        toastr.success('注册成功，等待跳转');
+                        setTimeout(function(){
+                        	    
+                        },500); //500ms延迟
+                        window.location = "/"; //跳转
+                    }
+                });
+        },
+        // 指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
+        errorPlacement: function(error, element) {
+            toastr.error(error[0].innerText);
+            $(element).closest("form").find("input").removeClass('error'); //这个1.8.2版本的jquery和validate配合有问题，这里需要去除下error，不然input框会被删除。
+            //$(element).closest("form").find("input[name='" + element.attr("id") + "']").append(error);
+        }
     });
 });
+</script>
+
+<!-- QQ第三方登录 -->
+<script type="text/javascript" src="https://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101345272" data-redirecturi="https://www.liberalman.cn/login/callback" charset="utf-8"></script>
+<script type="text/javascript">
+	QC.Login({
+		btnId: "qqLoginBtn",
+		size: "B_M"
+	}, function(oInfo, oOpts) {
+		//console.info(oInfo); // 昵称
+		//console.info(oOpts); // 点击登录的按钮Id
+		QC.Login.getMe(function(openId, accessToken) {
+			// 提交登录信息到本人网站
+			$.post('/login/qqlogin', {
+				openid: openId,
+				accesstoken: accessToken,
+				nickname: oInfo.nickname,
+				avatarUrl: oInfo.figureurl_qq_2
+			}, function(data) {
+				if ('0' != data) {
+					toastr.error(data);
+				} else {
+					toastr.success('登录成功');
+					window.location = "/"; //跳转到首页
+				}
+
+			});
+
+		});
+
+	});
+
+	/*//调用QC.Login方法，指定btnId参数将按钮绑定在容器节点中
+		   QC.Login({
+		       //btnId：插入按钮的节点id，必选
+		       btnId:"qqLoginBtn",    
+		       //用户需要确认的scope授权项，可选，默认all
+		       scope:"all",
+		       //按钮尺寸，可用值[A_XL| A_L| A_M| A_S|  B_M| B_S| C_S]，可选，默认B_S
+		       size: "A_XL"
+		   }, function(reqData, opts){//登录成功
+		   	
+		       //根据返回数据，更换按钮显示状态方法
+		       var dom = document.getElementById(opts['btnId']),
+		       _logoutTemplate=[
+		            //头像
+		            '<span><img src="{figureurl}" class="{size_key}"/></span>',
+		            //昵称
+		            '<span>{nickname}</span>',
+		            //退出
+		            '<span><a href="javascript:QC.Login.signOut();">退出</a></span>'    
+		       ].join("");
+		       dom && (dom.innerHTML = QC.String.format(_logoutTemplate, {
+		           nickname : QC.String.escHTML(reqData.nickname), //做xss过滤
+		           figureurl : reqData.figureurl
+		       }));
+		   }, function(opts){//注销成功
+		         alert('QQ登录 注销成功');
+		   });*/
 </script>
 
