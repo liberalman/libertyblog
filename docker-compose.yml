@@ -21,7 +21,7 @@ db:
     - "/data/gocode/src/libertyblog/conf/my.cnf:/etc/mysql/my.cnf"
     - "/var/lib/mysql:/var/lib/mysql"
   ports:
-    - "10899:3306"
+    - "3306"
   environment:
     MYSQL_ROOT_PASSWORD: Looks137
     MYSQL_DATABASE: libertyblog
@@ -33,10 +33,13 @@ loadbalancer:
   hostname: nginx
   volumes:
     - "/data/gocode/src/libertyblog/conf/nginx-docker.conf:/etc/consul-templates/nginx.conf"
+    - "/data/gocode/src/libertyblog/conf/server.key:/etc/nginx/server.key"
+    - "/data/gocode/src/libertyblog/conf/server.crt:/etc/nginx/server.crt"
   links:
     - consul-server:consul
   ports:
     - "80:80"
+    - "443:443"
 
 consul-server:
   image: progrium/consul:latest
@@ -44,14 +47,14 @@ consul-server:
     SERVICE_TAGS: my consul servers
   hostname: consul
   ports:
-    - "8300:8300"
-    - "8301:8301"
-    - "8301:8301/udp"
-    - "8302:8302"
-    - "8302:8302/udp"
-    - "8400:8400"
+#    - "8300:8300"
+#    - "8301:8301"
+#    - "8301:8301/udp"
+#    - "8302:8302"
+#    - "8302:8302/udp"
+#    - "8400:8400"
     - "8500:8500"
-    - "53:53/udp"
+#    - "53:53/udp"
   command: -server -ui-dir /ui -advertise 118.89.191.176 -bootstrap
 
 # listen on local docker sock to register the container with public ports to the consul service
