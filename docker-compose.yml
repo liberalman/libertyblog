@@ -1,0 +1,67 @@
+# backend web application, scale this with docker-compose scale web=3
+web:
+  image: liberalman/libertyblog:latest
+  hostname: libertyblog
+  environment:
+    SERVICE_80_NAME: libertyblog
+    SERVICE_TAGS: backend
+  links:
+    - db
+  volumes:
+    - "/data/gocode/src/libertyblog/conf/app-docker.conf:/data/conf/app.conf"
+    - "/data/gocode/src/libertyblog/views/:/data/views/"
+    - "/data/gocode/src/libertyblog/static/:/data/static/"
+  ports:
+    - "80"
+
+db:
+  image: mysql/mysql-server
+  hostname: mysql
+  volumes:
+    - "/data/gocode/src/libertyblog/conf/my.cnf:/etc/mysql/my.cnf"
+    - "/var/lib/mysql:/var/lib/mysql"
+  ports:
+    - "10899:3306"
+  environment:
+    MYSQL_ROOT_PASSWORD: Looks137
+    MYSQL_DATABASE: libertyblog
+
+
+# load balancer will automatically update the config using consul-template
+loadbalancer:
+  image: liberalman/nginx-consul-template:latest
+  hostname: nginx
+  volumes:
+    - "/data/gocode/src/libertyblog/conf/nginx-docker.conf:/etc/consul-templates/nginx.conf"
+  links:
+    - consul-server:consul
+  ports:
+    - "80:80"
+
+consul-server:
+  image: progrium/consul:latest
+  environment:
+    SERVICE_TAGS: my consul servers
+  hostname: consul
+  ports:
+    - "8300:8300"
+    - "8301:8301"
+    - "8301:8301/udp"
+    - "8302:8302"
+    - "8302:8302/udp"
+    - "8400:8400"
+    - "8500:8500"
+    - "53:53/udp"
+  command: -server -ui-dir /ui -advertise 118.89.191.176 -bootstrap
+
+# listen on local docker sock to register the container with public ports to the consul service
+registrator:
+  image: gliderlabs/registrator:master
+  hostname: registrator
+  links:
+    - consul-server:consul
+  volumes:
+    - "/var/run/docker.sock:/tmp/docker.sock"
+  command: -internal consul://consul:8500
+#  command: -ip 118.89.191.176 consul://118.89.191.176:8500
+
