@@ -9,13 +9,32 @@ Author: liberalman
 
 首先要安装golang，配置GOROOT和GOPATH环境；还有要安装git工具，以便下载代码。
 
-#### 依赖库
+#### 下载代码
+```
+git clone -depth=1 https://github.com/liberalman/libertyblog.git
+```
+#### 下载依赖库
 该项目依赖一些golang的第三方库，执行以下命令安装
 ```
 go get github.com/go-sql-driver/mysql
 go get github.com/nfnt/resize
 go get github.com/yunge/sphinx
 ```
+
+#### 编译
+```
+cd libertyblog
+go build
+```
+无意外的话，会生成一个libertyblog的可执行文件
+#### 安装mysql
+安装mysql服务，配置好访用户名密码后，创建数据库，名称叫libertyblog，导入libertyblog.sql脚本文件。这个过程就
+
+
+
+
+
+
 
 ### 数据库
 
@@ -65,7 +84,6 @@ views/lofter/logincallback.html 登录回调页面
 要上传到leancloud，首先需要安装lean工具，详情去leancloud官网查看云引擎下的命令行CLI工具。
 
 连接：https://releases.leanapp.cn/leancloud/lean-cli/releases/download/v0.7.5/lean-linux-amd64
-
 
 
 
