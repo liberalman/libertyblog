@@ -5,13 +5,11 @@ MAINTAINER libertyblog <www.liberalman.cn>
 RUN apk add --update bash && \
     rm -rf /var/cache/apk/*
 
-COPY libertyblog /
-RUN mkdir -p /conf/
-COPY conf/app.conf conf/
-COPY conf/server.crt conf/
-COPY conf/server.key conf/
+WORKDIR /data
+COPY libertyblog /data/
+RUN mkdir -p /data/conf/
 
-EXPOSE 80
+ENV PATH $PATH:/data/
 
-ENTRYPOINT ["libertyblog"]
+ENTRYPOINT ["./libertyblog"]
 
