@@ -7,12 +7,14 @@ web:
     SERVICE_TAGS: backend
   links:
     - db
+    - sphinx
   volumes:
     - "/data/gocode/src/libertyblog/conf/app-docker.conf:/data/conf/app.conf"
     - "/data/gocode/src/libertyblog/views/:/data/views/"
     - "/data/gocode/src/libertyblog/static/:/data/static/"
   ports:
     - "80"
+  restart: always
 
 db:
   image: mysql/mysql-server
@@ -25,6 +27,7 @@ db:
   environment:
     MYSQL_ROOT_PASSWORD: Looks137
     MYSQL_DATABASE: libertyblog
+  restart: always
 
 
 # load balancer will automatically update the config using consul-template
@@ -67,4 +70,22 @@ registrator:
     - "/var/run/docker.sock:/tmp/docker.sock"
   command: -internal consul://consul:8500
 #  command: -ip 118.89.191.176 consul://118.89.191.176:8500
+
+sphinx:
+#  image: romeoz/docker-sphinxsearch
+  image: liberalman/sphinx
+  hostname: sphinx
+#  environment:
+#    SPHINX_MODE: "indexing"
+  ports:
+    - "9312"
+    - "9306"
+  links:
+    - db
+  volumes:
+    - "/var/lib/sphinx/:/var/lib/sphinx/"
+#  container_name: sphinx_test
+#  net: sphinx_net
+#  restart: always
+
 
