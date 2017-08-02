@@ -28,60 +28,46 @@
 
 {{range $k, $v := .list}}
 <!-- 遍历文章短讯文摘 -->
-<div class="">
-<div class="row">
-    {{if $v.Coverurl}}
-    <div class="col-md-8">
-        <div class="row">
-            <div class="col-md-1">
-                <a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
-            </div>
-            <div class="col-md-8"><a href="#" onclick="author({{$v.Username}})"><h4>{{$v.Username}}</h4></a></div>
+<div style="padding: %2 %5;">
+    <div class="row">
+        <div class="col-md-1">
+            <a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
         </div>
-    {{else}}
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-1">
-                <a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
-            </div>
-            <div class="col-md-8"><a href="#" onclick="author({{$v.Username}})"><h4>{{$v.Username}}</h4></a></div>
-        </div>
-    {{end}}
-        <div class="row">
-            <div class="col-md-12">
-                <p><a href="{{$v.Link}}" target="_blank"><h3>{{str2html $v.Title}}</h3></a></p>
-                <!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
-                <p class="wrap">{{$v.Digest}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <ul class="nav nav-pills navbar-left">
-                <li>{{str2html $v.TagsLink}}</li>
-                <li><a hidefocus="true" title="关注" onclick="follow({{$v.Username}})">关注</a></li>
-                <li><a href="#">{{date $v.Posttime "Y-m-j"}}</a></li>
-                <li>
-                    <a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
-                </li>
-                <li>
-                    <a href="https://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
-                </li>
-                <li>
-                    <a href="#">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</a>
-                </li>
-            </ul>
-        </div>
+        <div class="col-md-8"><a href="#" onclick="author({{$v.Username}})"><h4>{{$v.Username}}</h4></a></div>
     </div>
-    {{if $v.Coverurl}}
-    <div class="col-md-4">
-        <div class="imgc">
-            <a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
+    <div class="row">
+        <div {{if $v.Coverurl}} class="col-md-8" {{else}} class="col-md-12" {{end}}>
+            <p><a href="{{$v.Link}}" target="_blank"><h3>{{str2html $v.Title}}</h3></a></p>
+            <!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
+            <p class="wrap">{{$v.Digest}}</p>
         </div>
+        {{if $v.Coverurl}}
+        <div class="col-md-4">
+            <div class="imgc">
+                <a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
+            </div>
+        </div>
+        {{end}}
     </div>
-    {{end}}
-</div>
+    <div class="row">
+        <ul class="nav nav-pills navbar-left">
+            <li>{{str2html $v.TagsLink}}</li>
+            <li><a hidefocus="true" title="关注" onclick="follow({{$v.Username}})">关注</a></li>
+            <li><a href="#">{{date $v.Posttime "Y-m-j"}}</a></li>
+            <li>
+                <a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
+            </li>
+            <li>
+                <a href="https://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
+            </li>
+            <li>
+                <a href="#">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</a>
+            </li>
+        </ul>
+    </div>
 </div>
 
-<hr />
+<hr/>
 {{end}}
 
 <div class="row">{{str2html .pagebar}}</div>
