@@ -1,3 +1,7 @@
+<style>
+
+</style>
+
 <div class="row">
 	<!--<div class="col-md-1">
 		<a href="/user/someone?key=" target="_blank"><img class="img-rounded" width="100% \9;" src="{{.avatarurl}}" /></a>
@@ -24,58 +28,58 @@
 
 {{range $k, $v := .list}}
 <!-- 遍历文章短讯文摘 -->
-
-    <div class="row">
-        {{if $v.Coverurl}}
-        <div class="col-md-8">
-            <div class="row">
-                <div class="col-md-2">
-                    <a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
-                </div>
-                <div class="col-md-8"><a href="#" onclick="author({{$v.Username}})"><h4>{{$v.Username}}</h4></a></div>
-                <div class="col-md-2">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</div>
+<div class="">
+<div class="row">
+    {{if $v.Coverurl}}
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-1">
+                <a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
             </div>
-        {{else}}
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-1">
-                    <a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
-                </div>
-                <div class="col-md-9"><a href="#" onclick="author({{$v.Username}})"><h4>{{$v.Username}}</h4></a></div>
-                <div class="col-md-2">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</div>
-            </div>
-        {{end}}
-            <div class="row">
-                <div class="col-md-12">
-                    <p><a href="{{$v.Link}}" target="_blank"><h3>{{str2html $v.Title}}</h3></a></p>
-                    <!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
-                    <p class="wrap">{{$v.Digest}}</p>
-                </div>
-            </div>
-            <div class="row">
-                
-                    <ul class="nav nav-pills navbar-left">
-                        <li>{{str2html $v.TagsLink}}</li>
-                        <li><a hidefocus="true" title="关注" onclick="follow({{$v.Username}})">关注</a></li>
-                        <li><a href="#">{{date $v.Posttime "Y-m-j"}}</a></li>
-                        <li>
-                            <a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
-                        </li>
-                        <li>
-                            <a href="https://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
-                        </li>
-                    </ul>
-                
-            </div>
-            </div>
-            {{if $v.Coverurl}}
-            <div class="col-md-4">
-                <div class="imgc" >
-                        <a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
-                    </div>
-            </div>
-            {{end}}
+            <div class="col-md-8"><a href="#" onclick="author({{$v.Username}})"><h4>{{$v.Username}}</h4></a></div>
         </div>
+    {{else}}
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-1">
+                <a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
+            </div>
+            <div class="col-md-8"><a href="#" onclick="author({{$v.Username}})"><h4>{{$v.Username}}</h4></a></div>
+        </div>
+    {{end}}
+        <div class="row">
+            <div class="col-md-12">
+                <p><a href="{{$v.Link}}" target="_blank"><h3>{{str2html $v.Title}}</h3></a></p>
+                <!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
+                <p class="wrap">{{$v.Digest}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <ul class="nav nav-pills navbar-left">
+                <li>{{str2html $v.TagsLink}}</li>
+                <li><a hidefocus="true" title="关注" onclick="follow({{$v.Username}})">关注</a></li>
+                <li><a href="#">{{date $v.Posttime "Y-m-j"}}</a></li>
+                <li>
+                    <a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
+                </li>
+                <li>
+                    <a href="https://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
+                </li>
+                <li>
+                    <a href="#">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {{if $v.Coverurl}}
+    <div class="col-md-4">
+        <div class="imgc">
+            <a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
+        </div>
+    </div>
+    {{end}}
+</div>
+</div>
 
 <hr />
 {{end}}
@@ -84,21 +88,21 @@
 <br />
 <script type="text/javascript">
 	/*
-													// toastr的配置，也可以不配置，使用默认值。
-													toastr.options = {
-													        "closeButton": false, //是否显示关闭按钮
-													        "debug": false, //是否使用debug模式
-													        "positionClass": "toast-top-right",//弹出窗的位置
-													        "showDuration": "300",//显示的动画时间
-													        "hideDuration": "1000",//消失的动画时间
-													        "timeOut": "5000", //展现时间
-													        "extendedTimeOut": "1000",//加长展示时间
-													        "showEasing": "swing",//显示时的动画缓冲方式
-													        "hideEasing": "linear",//消失时的动画缓冲方式
-													        "showMethod": "fadeIn",//显示时的动画方式
-													        "hideMethod": "fadeOut" //消失时的动画方式
-													       };
-													       */
+	// toastr的配置，也可以不配置，使用默认值。
+	toastr.options = {
+	        "closeButton": false, //是否显示关闭按钮
+	        "debug": false, //是否使用debug模式
+	        "positionClass": "toast-top-right",//弹出窗的位置
+	        "showDuration": "300",//显示的动画时间
+	        "hideDuration": "1000",//消失的动画时间
+	        "timeOut": "5000", //展现时间
+	        "extendedTimeOut": "1000",//加长展示时间
+	        "showEasing": "swing",//显示时的动画缓冲方式
+	        "hideEasing": "linear",//消失时的动画缓冲方式
+	        "showMethod": "fadeIn",//显示时的动画方式
+	        "hideMethod": "fadeOut" //消失时的动画方式
+	       };
+	       */
 	function author(name) {
 		toastr.info('作者：' + name);
 	}
