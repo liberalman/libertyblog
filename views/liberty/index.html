@@ -20,58 +20,64 @@
 	</div>
 </div>
 
-<br/>
+<hr />
 
 {{range $k, $v := .list}}
 <!-- 遍历文章短讯文摘 -->
-<div class="panel panel-default">
-	<div class="panel-body" style="padding:2% 5%;">
-		<div class="row">
-			<div class="col-md-1">
-				<a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
-			</div>
-			<div class="col-md-9"><a href="{{$v.Link}}" target="_blank"><h4>{{str2html $v.Title}}</h4></a></div>
-			<div class="col-md-2">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</div>
-		</div>
-		<hr />
-		<div class="row">
-			{{if $v.Coverurl}}
-			<div class="col-md-3">
-				<div class="imgc" style="height: auto;">
-					<a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
-				</div>
-			</div>
-			<div class="col-md-9">
-				<!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
-                <p class="wrap">{{$v.Digest}}</p>
-			</div>
-			{{else}}
-			<div class="col-md-12">
-				<!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
-                <p class="wrap">{{$v.Digest}}</p>
-			</div>
-			{{end}}
-		</div>
-		<hr />
-		<div class="row">
-			<div class="col-md-12">
-				<ul class="nav nav-pills navbar-right">
-					<li><a href="#" onclick="author({{$v.Username}})">{{$v.Username}}</a></li>
-					<li><a hidefocus="true" title="关注" onclick="follow({{$v.Username}})">关注</a></li>
-					<li>{{str2html $v.TagsLink}}</li>
-					<li><a href="#">{{date $v.Posttime "Y-m-j"}}</a></li>
-					<li><a href="{{$v.Link}}" hidefocus="true">查看全文</a></li>
-					<li>
-						<a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
-					</li>
-					<li>
-						<a href="https://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</div>
+
+    <div class="row">
+        {{if $v.Coverurl}}
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
+                </div>
+                <div class="col-md-8"><a href="#" onclick="author({{$v.Username}})"><h4>{{$v.Username}}</h4></a></div>
+                <div class="col-md-2">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</div>
+            </div>
+        {{else}}
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-1">
+                    <a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
+                </div>
+                <div class="col-md-9"><a href="#" onclick="author({{$v.Username}})"><h4>{{$v.Username}}</h4></a></div>
+                <div class="col-md-2">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</div>
+            </div>
+        {{end}}
+            <div class="row">
+                <div class="col-md-12">
+                    <p><a href="{{$v.Link}}" target="_blank"><h3>{{str2html $v.Title}}</h3></a></p>
+                    <!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
+                    <p class="wrap">{{$v.Digest}}</p>
+                </div>
+            </div>
+            <div class="row">
+                
+                    <ul class="nav nav-pills navbar-left">
+                        <li>{{str2html $v.TagsLink}}</li>
+                        <li><a hidefocus="true" title="关注" onclick="follow({{$v.Username}})">关注</a></li>
+                        <li><a href="#">{{date $v.Posttime "Y-m-j"}}</a></li>
+                        <li>
+                            <a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
+                        </li>
+                        <li>
+                            <a href="https://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
+                        </li>
+                    </ul>
+                
+            </div>
+            </div>
+            {{if $v.Coverurl}}
+            <div class="col-md-4">
+                <div class="imgc" >
+                        <a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
+                    </div>
+            </div>
+            {{end}}
+        </div>
+
+<hr />
 {{end}}
 
 <div class="row">{{str2html .pagebar}}</div>
