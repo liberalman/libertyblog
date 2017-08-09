@@ -11,7 +11,9 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
 		<link href="{{.staticPath}}/favicon.ico" rel="icon">
 		<link href="{{.staticPath}}/css/bootstrap.min.css" rel="stylesheet">
+		<link href="{{.staticPath}}/css/flat-ui.min.css" rel="stylesheet">
 		<link href="{{.staticPath}}/css/toastr.min.css" type="text/css" media="all" rel="stylesheet" />
+		<link href="{{.staticPath}}/css/grumble.min.css" rel="stylesheet">
 		<link href="/css/style1.css" rel="stylesheet">
 		<script type="text/javascript" src="{{.staticPath}}/js/jquery-3.1.0.min.js"></script>
 		{{str2html .hidejs}}
@@ -47,7 +49,27 @@
 		</div>
 		{{.footer}}
 		<script type="text/javascript" src="{{.staticPath}}/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="{{.staticPath}}/js/jquery.grumble.min.js"></script>
 		<script type="text/javascript" src="{{.staticPath}}/js/toastr.min.js"></script>
+		<script type="text/javascript" src="{{.staticPath}}/js/jquery.pin.js"></script>
+		<!--<script type="text/javascript" src="{{.staticPath}}/js/stickUp.min.js"></script>
+		<script type="text/javascript">
+              jQuery(function($) {
+                $(document).ready( function() {
+                  //enabling stickUp on the '.navbar-wrapper' class
+                  $('#my_album').stickUp();
+                });
+              });
+      </script>-->
+      
+      
+      <script type="text/javascript">
+        // 将某元素“钉”在容器内
+        $(".pin2").pin({
+		      containerSelector: ".pin1"
+		});
+		</script>
+
 	</body>
 
 </html>

@@ -5,11 +5,12 @@
         <title>编辑文章</title>
         <link rel="stylesheet" href="/editor.md/css/style.css" />
         <link rel="stylesheet" href="/editor.md/css/editormd.min.css" />
+		<link rel="stylesheet" href="/editor.md/s.css" />
         <link rel="stylesheet" href="{{.staticPath}}/css/bootstrap.min.css" />
         <link rel="shortcut icon" href="{{.staticPath}}/favicon.ico" type="image/x-icon" />
     </head>
     <body>
-    <form class="form-inline" method="post" action="/admin/article/save">
+    <form class="form-inline" method="post" action="/admin/article/save" id="form_article">
         <div id="layout">
             <header>
                 <div class="form-group">
@@ -31,17 +32,19 @@
                       </span>
                       <input type="text" class="form-control" aria-label="..." value="置顶文章" size="4">
                     </div><!-- /input-group -->
-                    <span class="input-append date" id="datetimepicker" data-date="{{.posttime}}" data-date-format="yyyy-mm-dd HH:ii:ss">
-					    <input class="span2" name="posttime" size="16" type="text" value="{{.posttime}}">
-					    <span class="add-on"><i class="icon-remove"></i></span>
-					    <span class="add-on"><i class="icon-th"></i></span>
-					</span> 
+                    <input class="form-control" placeholder="发布时间" name="posttime" size="16" type="text"  id="datetimepicker" data-date-format="yyyy-mm-dd HH:ii:ss">
+                    <input name="coverurl" placeholder="封面图片" class="form-control" id="coverurl" value="{{.post.Coverurl}}" type="hidden"/>
                     <input type="submit" value="Just do it!" class="btn btn-danger"/>
+                    </br>
+                    </br>
+                    <textarea name="digest" placeholder="文章摘要(80个字内)" class="form-control" cols="160"/></textarea>
                 </div>
             </header>
             <div id="test-editormd">
                 <textarea style="display:none;" name="content">
-    官网 http://pandao.github.io/editor.md/
+    本文使用的markdown编辑器，不熟悉语法的，下面已经列出来了，照这个做就OK了！
+
+    编辑器官网 http://pandao.github.io/editor.md/
 ### 主要特性
 
 - 支持“标准”Markdown / CommonMark和Github风格的语法，也可变身为代码编辑器；
@@ -55,7 +58,7 @@
 
 # Editor.md
 
-![](http://api.liberalman.cn:40000/static/upload/smallpic/20151008/1444238136469360800.jpg)
+![](http://www.liberalman.cn/static/upload/smallpic/20151008/1444238136469360800.jpg)
 
 **目录 (Table of Contents)**
 
@@ -392,20 +395,52 @@ China-->Andrew: How are you?
 Andrew->>China: I am good thanks!
 ```
 
+### mermaid绘图插件支持
+
+mermaid网站：http://knsv.github.io/mermaid/
+
+api 手册 https://github.com/knsv/mermaid/blob/master/docs/content/usage.md
+
+```mermaid
+graph LR;
+　　A-->B;
+　　A-->C;
+　　B-->D;
+　　C-->D;
+```
+
+```mermaid
+sequenceDiagram
+        Merchant->>Customer: "foo#b"
+        Note left of Person:One row for the a
+        Note right of Person: Bob thinks a long long time, so long that the text does not fit In a row. Bob thinks a long long time, so long that the text does not fit In a row. Bob thinks a long long time, so long that the text does not fit In a row. Bob thinks a long long time, so long that the text does not fit In a row.
+
+        Person-->>Customer: bar
+
+        Note left of Person: Foo checks up on him
+```
+
 ### End
                 </textarea>
             </div>
+            <div class="form-group">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="input-group">
+                    <input type="submit" value="Just do it!" class="btn btn-danger"/>
+                </div>
+            </div>
+            </br>
+            </br>
         </div>
     </form>
         <script src="{{.staticPath}}/js/jquery-2.1.3.min.js"></script>
-        <script src="/editor.md/editormd.min.js"></script>
+        <script src="/editor.md/editormd.js"></script>
         <script type="text/javascript">
 			var testEditor;
 
             $(function() {
                 testEditor = editormd("test-editormd", {
                     width   : "100%",
-                    height  : 960,
                     syncScrolling : "single",
                     path    : "/editor.md/lib/",
                     emoji   : true, // 启用表情包
@@ -424,7 +459,7 @@ Andrew->>China: I am good thanks!
                      */
                      
                      // 提交表单的时候用
-                    appendMarkdown : "test-editormd",
+                    //appendMarkdown : "test-editormd",
                     saveHTMLToTextarea : true,
                     
                     // 内容发生变化的时候打印下日志
@@ -434,7 +469,15 @@ Andrew->>China: I am good thanks!
                     
                     flowChart : true, //流程图
                     tex  : true, // 科学公式语言
+				    mermaid : true, // mermaid图
                     sequenceDiagram : true, // 序列图
+				    htmlDecode : true, // 解析html标签
+				    codeFold : true, // 运行编辑的时候代码折叠
+					
+					// 这些配置的默认值，参见editormd.js中的 editormd.defaults 的定义
+					// mermaid标签的解析，查找这行 ( lang === "mermaid")
+					// 加载文件mermaid.min
+					// mermaid.js中的global.mermaid是定义函数的地方，可以看到init，render等函数
                 });
 				
 				// 日历
@@ -468,6 +511,39 @@ Andrew->>China: I am good thanks!
 					} else {
 						$("input[name='reprinturl']").css('display', 'none');
 					}
+				});
+				
+				$('#form_article').submit(function(){
+			        /* 获取src和alt的代码
+			        var re = /<img([^>]+?)>/ig;
+				    var s = document.getElementById("test-editormd").innerHTML;
+				    var str=""
+				    var tempImg=""
+				    var re1=/alt\s*=\s*([^\s]+)/i
+				    var re2=/src\s*=\s*(["'])([^"']+)\1/i
+				    while(re.exec(s))
+				    {
+				        tempImg=RegExp.$1
+				        str+=((re1.test(tempImg))?RegExp.$1:"")+","
+				        re2.test(tempImg)
+				        str+=((re2.test(tempImg))?RegExp.$2:"")+"\r\n"
+				    }
+				    console.info(str);*/
+				   var re = /<img([^>]+?)>/ig;
+				    var s = document.getElementById("test-editormd").innerHTML;
+				    var str=""
+				    var tempImg=""
+				    var re1=/alt\s*=\s*([^\s]+)/i
+				    var re2=/src\s*=\s*(["'])([^"']+)\1/i
+				    while(re.exec(s))
+				    {
+				        tempImg=RegExp.$1
+				        re2.test(tempImg)
+				        str+=((re2.test(tempImg))?RegExp.$2:"");
+				        break; // 只获取第一条就行了
+				    }
+				    //console.info(str);
+				    $('#coverurl').val(str);
 				});
             });
         </script>

@@ -1,4 +1,17 @@
 <style>
+.ex {
+			display:inline-block;
+			width: 150px;
+			padding-left:3px;
+			height:20px;
+			border:1px solid #ddd;
+			font-size: 12px;
+			font-family: Consolas, "Lucida Console", monospace;
+			}
+			
+		.grumble-button {
+			font-size:11px;
+			}
 
 </style>
 
@@ -28,16 +41,16 @@
 
 {{range $k, $v := .list}}
 <!-- 遍历文章短讯文摘 -->
-<div style="padding: %2 %5;">
-    <div class="row">
+<div class="pin1" style="padding: %2 %5;">
+    <div class="row pin2">
         <div class="col-md-1">
             <a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
         </div>
-        <div class="col-md-8"><a href="#" onclick="author({{$v.Username}})"><h4>{{$v.Username}}</h4></a></div>
+        <div class="col-md-8"><a href="#" onclick="author({{$v.Username}})">{{$v.Username}}</a></div>
     </div>
     <div class="row">
         <div {{if $v.Coverurl}} class="col-md-8" {{else}} class="col-md-12" {{end}}>
-            <p><a href="{{$v.Link}}" target="_blank"><h3>{{str2html $v.Title}}</h3></a></p>
+            <p><a href="{{$v.Link}}" target="_blank"><h6>{{str2html $v.Title}}</h6></a></p>
             <!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
             <p class="wrap">{{$v.Digest}}</p>
         </div>
@@ -51,9 +64,12 @@
     </div>
     <div class="row">
         <ul class="nav nav-pills navbar-left">
-            <li>{{str2html $v.TagsLink}}</li>
-            <li><a hidefocus="true" title="关注" onclick="follow({{$v.Username}})">关注</a></li>
+        	<li><a href="#"><span class="fui-time"></span></a></li>
+        	<li><a href="#"><span class="fui-photo"></span></a></li>
+        	<li><a href="#" title="关注" onclick="follow({{$v.Username}})"><span class="fui-heart"></span></a></li>
+        	<li><a href="#" class="darkside"><span class="fui-eye"></span></a></li>
             <li><a href="#">{{date $v.Posttime "Y-m-j"}}</a></li>
+            <li>{{str2html $v.TagsLink}}</li>
             <li>
                 <a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
             </li>
@@ -155,4 +171,31 @@
 	3.warning，警告，橙色
 	4.error，错误，深红色
 	其中第一个参数为显示的内容，第二个参数为显示的标题，标题可以省略*/
+	
+	$('.darkside').click(function(e){
+		var $me = $(this), interval;
+		
+		e.preventDefault();
+		
+		$me.grumble(
+			{
+				angle: 130,
+				text: 'Look at me!',
+				type: 'alt-', 
+				distance: 10,
+				hideOnClick: true,
+				hasHideButton: true,
+				onShow: function(){
+					var angle = 130, dir = 1;
+					interval = setInterval(function(){
+						(angle > 220 ? (dir=-1, angle--) : ( angle < 130 ? (dir=1, angle++) : angle+=dir));
+						$me.grumble('adjust',{angle: angle});
+					},25);
+				},
+				onHide: function(){
+					clearInterval(interval);
+				}
+			}
+		);
+	});
 </script>
