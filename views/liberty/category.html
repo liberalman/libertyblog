@@ -21,9 +21,9 @@
 	{{range $k, $v := .list}}
 	<!-- 遍历文章短讯 -->
 
-	<div class="row">
+	<div class="row pin1">
 		<div class="col-md-1">
-			<div class="row" align="center">
+			<div class="row pin2" align="center">
 				<a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
 				<a href="#" onclick="author({{$v.Username}})">{{$v.Username}}</a>
 			</div>
@@ -67,6 +67,8 @@
 		</div>
 	</div>
 
-	{{end}} {{str2html .pagebar}}
+	{{end}}
+	
+	{{str2html .pagebar}}
 
 <hr />
