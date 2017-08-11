@@ -1,110 +1,107 @@
-<style>
-.ex {
-			display:inline-block;
-			width: 150px;
-			padding-left:3px;
-			height:20px;
-			border:1px solid #ddd;
-			font-size: 12px;
-			font-family: Consolas, "Lucida Console", monospace;
-			}
-			
-		.grumble-button {
-			font-size:11px;
-			}
-
-</style>
-
 <div class="row">
-	<!--<div class="col-md-1">
-		<a href="/user/someone?key=" target="_blank"><img class="img-rounded" width="100% \9;" src="{{.avatarurl}}" /></a>
-	</div>-->
-	<div class="col-md-11">
-		<ul class="nav nav-pills">
-			<li role="presentation">
-				<a class="nav1 active" href="/article/add1"><label>发布文章</label></a>
+	<ul class="nav">
+		<li class="nav-item">
+			<a class="nav-link active" href="/article/add1">发布文章</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="/article/add">广场新</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="/admin/article/add">发布文章</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link disabled" href="/user/o2bar">刷新</a>
+		</li>
+	</ul>
+</div>
+
+<hr /> {{range $k, $v := .list}}
+
+      
+<!-- 遍历文章短讯文摘 -->
+<div class="row pin1">
+	<div class="row pin2">
+		<div class="col-md-2">
+			<a href="/user/someone?key=" target="_blank"><img class="rounded-circle" src="{{$v.Avatarurl}}" /></a>
+		</div>
+		<div class="col-md-10">
+			<ul class="nav nav-pills navbar-left">
+				<li>
+					<a onclick="author({{$v.Username}})">{{$v.Username}}</a>
+				</li>
+				<li>
+					<a title="关注" onclick="follow({{$v.Username}})"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!--<div class="row">
+		<div {{if $v.Coverurl}} class="col-md-8" {{else}} class="col-md-12" {{end}}>
+			<p>
+				<a href="{{$v.Link}}" target="_blank">
+					<h4>{{str2html $v.Title}}</h4></a>
+			</p>
+			<p class="wrap">{{$v.Digest}}</p>
+			
+		</div>
+		{{if $v.Coverurl}}
+		<div class="col-md-4">
+			<div class="imgc">
+				<a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
+			</div>
+		</div>
+		{{end}}
+	</div>--> <!--{{substr (html2str $v.Excerpt) 0 300|str2html }}-->
+	<div class="row featurette">
+        <div {{if $v.Coverurl}} class="col-md-7" {{else}} class="col-md-12" {{end}}>
+          <h2 class="featurette-heading">{{str2html $v.Title}} <span class="text-muted">It'll blow your mind.</span></h2>
+          <p class="lead">{{$v.Digest}}</p>
+        </div>
+        {{if $v.Coverurl}}
+        <div class="col-md-5">
+          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="aaaa"  src="{{$v.Coverurl}}" data-holder-rendered="true">
+        </div>
+        {{end}}
+      </div>
+	<div class="row">
+		<ul class="nav nav-pills navbar-left">
+			<li>
+				<a href="#">{{date $v.Posttime "Y-m-j"}}</a>
 			</li>
-			<li role="presentation">
-				<a class="nav1" href="/article/add"><label>广场新</label></a>
+			<li>{{str2html $v.TagsLink}}</li>
+			<li>
+				<a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
 			</li>
-			<li role="presentation">
-				<a class="nav1" href="/admin/article/add"><label>发布文章</label></a>
+			<li>
+				<a href="https://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
 			</li>
-			<li role="presentation">
-				<a class="nav1" href="/user/o2bar"><label>刷新</label></a>
+			<li>
+				<a href="#">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</a>
 			</li>
 		</ul>
 	</div>
 </div>
-
-<hr />
-
-{{range $k, $v := .list}}
-<!-- 遍历文章短讯文摘 -->
-<div class="pin1" style="padding: %2 %5;">
-    <div class="row pin2">
-        <div class="col-md-1">
-            <a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
-        </div>
-        <div class="col-md-8"><a href="#" onclick="author({{$v.Username}})">{{$v.Username}}</a></div>
-    </div>
-    <div class="row">
-        <div {{if $v.Coverurl}} class="col-md-8" {{else}} class="col-md-12" {{end}}>
-            <p><a href="{{$v.Link}}" target="_blank"><h6>{{str2html $v.Title}}</h6></a></p>
-            <!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
-            <p class="wrap">{{$v.Digest}}</p>
-        </div>
-        {{if $v.Coverurl}}
-        <div class="col-md-4">
-            <div class="imgc">
-                <a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
-            </div>
-        </div>
-        {{end}}
-    </div>
-    <div class="row">
-        <ul class="nav nav-pills navbar-left">
-        	<li><a href="#"><span class="fui-time"></span></a></li>
-        	<li><a href="#"><span class="fui-photo"></span></a></li>
-        	<li><a href="#" title="关注" onclick="follow({{$v.Username}})"><span class="fui-heart"></span></a></li>
-        	<li><a href="#" class="darkside"><span class="fui-eye"></span></a></li>
-            <li><a href="#">{{date $v.Posttime "Y-m-j"}}</a></li>
-            <li>{{str2html $v.TagsLink}}</li>
-            <li>
-                <a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
-            </li>
-            <li>
-                <a href="https://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
-            </li>
-            <li>
-                <a href="#">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</a>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<hr/>
-{{end}}
+<hr/> {{end}}
 
 <div class="row">{{str2html .pagebar}}</div>
 <br />
 <script type="text/javascript">
 	/*
-	// toastr的配置，也可以不配置，使用默认值。
-	toastr.options = {
-	        "closeButton": false, //是否显示关闭按钮
-	        "debug": false, //是否使用debug模式
-	        "positionClass": "toast-top-right",//弹出窗的位置
-	        "showDuration": "300",//显示的动画时间
-	        "hideDuration": "1000",//消失的动画时间
-	        "timeOut": "5000", //展现时间
-	        "extendedTimeOut": "1000",//加长展示时间
-	        "showEasing": "swing",//显示时的动画缓冲方式
-	        "hideEasing": "linear",//消失时的动画缓冲方式
-	        "showMethod": "fadeIn",//显示时的动画方式
-	        "hideMethod": "fadeOut" //消失时的动画方式
-	       };
-	       */
+		// toastr的配置，也可以不配置，使用默认值。
+		toastr.options = {
+		        "closeButton": false, //是否显示关闭按钮
+		        "debug": false, //是否使用debug模式
+		        "positionClass": "toast-top-right",//弹出窗的位置
+		        "showDuration": "300",//显示的动画时间
+		        "hideDuration": "1000",//消失的动画时间
+		        "timeOut": "5000", //展现时间
+		        "extendedTimeOut": "1000",//加长展示时间
+		        "showEasing": "swing",//显示时的动画缓冲方式
+		        "hideEasing": "linear",//消失时的动画缓冲方式
+		        "showMethod": "fadeIn",//显示时的动画方式
+		        "hideMethod": "fadeOut" //消失时的动画方式
+		       };
+		       */
 	function author(name) {
 		toastr.info('作者：' + name);
 	}
@@ -171,31 +168,33 @@
 	3.warning，警告，橙色
 	4.error，错误，深红色
 	其中第一个参数为显示的内容，第二个参数为显示的标题，标题可以省略*/
-	
-	$('.darkside').click(function(e){
-		var $me = $(this), interval;
-		
+
+	$('.darkside').click(function(e) {
+		var $me = $(this),
+			interval;
+
 		e.preventDefault();
-		
-		$me.grumble(
-			{
-				angle: 130,
-				text: 'Look at me!',
-				type: 'alt-', 
-				distance: 10,
-				hideOnClick: true,
-				hasHideButton: true,
-				onShow: function(){
-					var angle = 130, dir = 1;
-					interval = setInterval(function(){
-						(angle > 220 ? (dir=-1, angle--) : ( angle < 130 ? (dir=1, angle++) : angle+=dir));
-						$me.grumble('adjust',{angle: angle});
-					},25);
-				},
-				onHide: function(){
-					clearInterval(interval);
-				}
+
+		$me.grumble({
+			angle: 130,
+			text: 'Look at me!',
+			type: 'alt-',
+			distance: 10,
+			hideOnClick: true,
+			hasHideButton: true,
+			onShow: function() {
+				var angle = 130,
+					dir = 1;
+				interval = setInterval(function() {
+					(angle > 220 ? (dir = -1, angle--) : (angle < 130 ? (dir = 1, angle++) : angle += dir));
+					$me.grumble('adjust', {
+						angle: angle
+					});
+				}, 25);
+			},
+			onHide: function() {
+				clearInterval(interval);
 			}
-		);
+		});
 	});
 </script>

@@ -38,55 +38,34 @@
 	}
 </style>
 
-<div class="list-group">
-	<a href="" class="list-group-item"><img class="img-circle center-block img-responsive" width="40%" src="{{.avatarurl}}" name="avatorUrl" /></a>
-	<a href="/articles/{{.userid}}" class="list-group-item" onclick="publish({{.stateCount}})">我的帖子<span class="badge" name="stateCount">{{.stateCount}}</span></a>
-	<a href="/articles/{{.userid}}" class="list-group-item" onclick="followed({{.followingCnt}})">粉丝<span class="badge" name="followingCnt">{{.followingCnt}}</span></a>
+
+<div class="card" >
+  <img class="card-img-top" src="{{.avatarurl}}" alt="Card image cap">
+  <div class="card-body">
+    <h4 class="card-title">Card title</h4>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Cras justo odio</li>
+    <li class="list-group-item">Dapibus ac facilisis in</li>
+    <li class="list-group-item">Vestibulum at eros</li>
+  </ul>
+  <div class="card-body">
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
 </div>
 
-<div class="todo">
-            <div class="todo-search">
-              <input class="todo-search-field" type="search" value="" placeholder="Search">
-            </div>
-            <ul>
-              <li class="todo-done">
-                <div class="todo-icon fui-user"></div>
-                <div class="todo-content">
-                  <h4 class="todo-name">
-                    Meet <strong>Adrian</strong> at <strong>6pm</strong>
-                  </h4>
-                  Times Square
-                </div>
-              </li>
-              <li>
-                <div class="todo-icon fui-list"></div>
-                <div class="todo-content">
-                  <h4 class="todo-name">
-                    Chat with <strong>V.Kudinov</strong>
-                  </h4>
-                  Skype conference an 9 am
-                </div>
-              </li>
-              <li>
-                <div class="todo-icon fui-eye"></div>
-                <div class="todo-content">
-                  <h4 class="todo-name">
-                    Watch <strong>Iron Man</strong>
-                  </h4>
-                  1998 Broadway
-                </div>
-              </li>
-              <li>
-                <div class="todo-icon fui-time"></div>
-                <div class="todo-content">
-                  <h4 class="todo-name">
-                    Fix bug on a <strong>Website</strong>
-                  </h4>
-                  As soon as possible
-                </div>
-              </li>
-            </ul>
-          </div>
+
+<div class="list-group">
+	<a href="" class="list-group-item">
+		<img class="img-circle center-block img-responsive" width="40%" src="{{.avatarurl}}" name="avatorUrl" />
+		<span>{{.username}}</span>
+		<p>I'm so good!</p>
+	</a>
+	<a class="list-group-item" onclick="publish({{.post_count}})">我的帖子<span class="badge" name="stateCount">{{.post_count}}</span></a>
+	<a class="list-group-item" onclick="followed({{.follow_count}})">粉丝<span class="badge" name="followingCnt">{{.follow_count}}</span></a>
+</div>
 
 <div>
 	<ul class="list-group">

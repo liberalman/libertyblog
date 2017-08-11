@@ -1,3 +1,13 @@
+/*
+body {
+				background-color: #eee;
+				background-color: #dfdfe1;
+				background-image: url("{{.staticPath}}/img/article_1.png");
+				background-attachment: fixed;
+			}
+*/
+
+
 /*==== 翻页样式 start ====*/
 
 .page {
