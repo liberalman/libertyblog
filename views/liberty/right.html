@@ -38,96 +38,72 @@
 	}
 </style>
 
-
-<div class="card" >
-  <img class="card-img-top" src="{{.avatarurl}}" alt="Card image cap">
-  <div class="card-body">
-    <h4 class="card-title">Card title</h4>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Cras justo odio</li>
-    <li class="list-group-item">Dapibus ac facilisis in</li>
-    <li class="list-group-item">Vestibulum at eros</li>
-  </ul>
-  <div class="card-body">
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
+<div class="panel panel-info">
+	<div class="panel-body">
+		<div style="text-align:center;">
+			<div>
+				<a href="/admin"><img class="img-circle center-block img-responsive" width="40%" src="{{.avatarurl}}" name="avatorUrl" /></a>
+			</div>
+			<h3><a href="/admin">{{.username}}</a></h3>
+			<p>
+				<h3>Hi</h3></p>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-md-6">
+				<a href="#" class="thumbnail">
+					<img src="/img/aboutphoto.jpg" alt="...">
+				</a>
+			</div>
+			<div class="col-xs-6 col-md-6">
+				<a href="#" class="thumbnail">
+					<img src="/img/avatar.png" alt="...">
+				</a>
+			</div>
+			<div class="col-xs-6 col-md-6">
+				<a href="#" class="thumbnail">
+					<img src="{{.staticPath}}/img/avatarher.jpg" alt="...">
+				</a>
+			</div>
+			<div class="col-xs-6 col-md-6">
+				<a href="#" class="thumbnail">
+					<img src="/img/article_header.jpg" alt="...">
+				</a>
+			</div>
+		</div>
+		<div class="btn">
+			<a class="w-gz2 xtag radarlnk" href="http://www.liberalman.cn/login" id="radarlnk"><span>关注</span></a>
+			<a class="radarlnk-actived f-dn" id="radarlnk-actived">已关注</a>
+		</div>
+	</div>
+	<div class="panel-footer">
+		Hi，i'm footer.
+	</div>
 </div>
-
 
 <div class="list-group">
-	<a href="" class="list-group-item">
-		<img class="img-circle center-block img-responsive" width="40%" src="{{.avatarurl}}" name="avatorUrl" />
-		<span>{{.username}}</span>
-		<p>I'm so good!</p>
-	</a>
 	<a class="list-group-item" onclick="publish({{.post_count}})">我的帖子<span class="badge" name="stateCount">{{.post_count}}</span></a>
 	<a class="list-group-item" onclick="followed({{.follow_count}})">粉丝<span class="badge" name="followingCnt">{{.follow_count}}</span></a>
+	<a class="list-group-item" href="/admin">后台管理</a>
 </div>
 
-<div>
-	<ul class="list-group">
-		<li class="list-group-item disabled">最新文章</li>
-		{{range $k,$v := .latestblog}}
-		<li class="list-group-item"><a href="{{$v.Link}}" class="mi xtag"><span class="icn icn-4"></span><span class="txt"><span class="us xtag">{{$v.Title}}</span><span class="s-fc2 f-fs0 xtag">{{$v.Views}}阅读</span></span></a></li>
-		{{end}}
-	</ul>
+<div class="list-group">
+	<span class="list-group-item disabled">最新文章</span> {{range $k,$v := .latestblog}}
+	<a class="list-group-item" href="{{$v.Link}}" title="{{$v.Digest}}">
+		<span class="us xtag">{{$v.Title}}</span><span class="badge">{{$v.Views}}</span>
+	</a>
+	{{end}}
 </div>
 
 <div class="panel">
 	{{.banner}}
 </div>
 
-<div class="panel panel-info">
-	<div class="panel-body">
-		
-			<div style="text-align:center;">
-				<div>
-					<a href="#" ><img class="img-circle" width="40%" src="{{.avatarurl}}" name="avatorUrl" /></a>
-				</div>
-				<h3 ><a href="#">我的相册</a></h3>
-				<p><h3 >Hi</h3></p>
-			</div>
-			
-				<div class="row">
-					<div class="col-xs-6 col-md-6">
-						<a href="#" class="thumbnail">
-							<img src="/img/aboutphoto.jpg" alt="...">
-						</a>
-					</div>
-					<div class="col-xs-6 col-md-6">
-						<a href="#" class="thumbnail">
-							<img src="/img/avatar.png" alt="...">
-						</a>
-					</div>
-					<div class="col-xs-6 col-md-6">
-						<a href="#" class="thumbnail">
-							<img src="{{.staticPath}}/img/avatarher.jpg" alt="...">
-						</a>
-					</div>
-					<div class="col-xs-6 col-md-6">
-						<a href="#" class="thumbnail">
-							<img src="/img/article_header.jpg" alt="...">
-						</a>
-					</div>
-				</div>
-			
-			<div class="btn">
-				<a class="w-gz2 xtag radarlnk" href="http://www.liberalman.cn/login" id="radarlnk"><span>关注</span></a>
-				<a class="radarlnk-actived f-dn" id="radarlnk-actived">已关注</a>
-			</div>
-		
-	</div>
-</div>
-<div>
-	<ul class="list-group">
-		<li class="list-group-item disabled">阅读排行</li>
-		{{range $k,$v := .hotblog}}
-		<li class="list-group-item"><a href="{{$v.Link}}" title="{{$v.Title}}">{{str2html $v.Title}}</a></li>
-		{{end}}
-	</ul>
+<div class="list-group">
+	<span class="list-group-item disabled">阅读排行</span> {{range $k,$v := .hotblog}}
+	<a class="list-group-item" href="{{$v.Link}}" title="{{$v.Digest}}">
+		<span class="us xtag">{{str2html $v.Title}}</span><span class="badge">{{$v.Views}}</span>
+	</a>
+	{{end}}
 </div>
 <div>
 	<h3><p>最近访客</p></h3>
@@ -137,7 +113,7 @@
 </div>
 
 <script type="text/javascript">
-  function publish(count) {
+	function publish(count) {
 		toastr.success('发帖：' + count + '条');
 	}
 

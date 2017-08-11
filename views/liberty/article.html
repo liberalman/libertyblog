@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="/editor.md/css/editormd.preview.min.css" />
 
 <div class="container" role="main">
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
 	<div class="panel panel-default shadow" style="border-radius:10px;">
 		<div class="panel-body" style="padding:2% 5%;">
 			<div class="row">
@@ -26,7 +28,7 @@
 						</div>
 					</div>
 					<div class="col-md-8">
-						<h6>{{.post.Title}}</h6>
+						<h1>{{.post.Title}}</h1>
 					</div>
 					<div class="col-md-2">
 						<div class="side">
@@ -55,7 +57,7 @@
 	<div class="panel panel-default shadow" style="border-radius:10px;">
 		<div class="panel-body" style="padding:2% 5%;">
 			<div class="row">
-				<div id="test-editormd-view2">
+				<div id="test-editormd-view2" style="font-size: 1.2em; line-height:2em;">
 					<textarea id="append-test" style="display:none;">{{str2html .post.Content}}</textarea>
 				</div>
 			</div>
@@ -66,21 +68,18 @@
 			</div>
 			{{if eq 1 .post.Pubtype}}
 			<div class="row">
-				<div class="col-md-1">转载于：</div>
-				<div class="col-md-11">
+				<div class="col-md-12">转载于：
 					<a href="{{.post.Reprinturl}}">{{.post.Reprinturl}}</a>
 				</div>
 			</div>
 			{{end}} {{if .pre}}
 			<div class="row">
-				<div class="col-md-2">上一篇：</div>
-				<div class="col-md-10">
+				<div class="col-md-12">上一篇：
 					<a href="{{.pre.Link}}">{{str2html .pre.Title}}</a>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-2">下一篇：</div>
-				<div class="col-md-10">
+				<div class="col-md-12">下一篇：
 					<a href="{{.next.Link}}">{{str2html .next.Title}}</a>
 				</div>
 			</div>
@@ -90,6 +89,8 @@
 			</div>
 		</div>
 	</div>
+	</div>
+	<div class="col-md-2"></div>
 </div>
 
 <script src="/editor.md/lib/marked.min.js"></script>
@@ -110,6 +111,7 @@
 			tex: true, // 默认不解析
 			flowChart: true, // 默认不解析
 			sequenceDiagram: true, // 默认不解析
+			mermaid : true, // mermaid图
 		});
 
 	});

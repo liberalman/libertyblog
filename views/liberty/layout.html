@@ -10,15 +10,14 @@
 		<meta name="description" content="{{.description}}">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link href="{{.staticPath}}/favicon.ico" rel="icon">
-		
-		<link href="https://cdn.bootcss.com/tether/1.4.0/css/tether.min.css" rel="stylesheet">
-		<link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 		<!--<link href="{{.staticPath}}/css/flat-ui.min.css" rel="stylesheet">-->
 		<link href="https://cdn.bootcss.com/toastr.js/latest/toastr.min.css" rel="stylesheet">
 		<!--<link href="{{.staticPath}}/css/grumble.min.css" rel="stylesheet">-->
-		<!--<link href="./css/style1.css" rel="stylesheet">-->
-		<!--<link href="/css/style-1.less" rel="stylesheet/less" type="text/css">-->
-		
+		<link href="./css/style1.css" rel="stylesheet">
+		<!--<link href="./css/style-1.less" rel="stylesheet/less" type="text/css">-->
+
 		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 		{{str2html .hidejs}}
 		{{str2html .options.stat}}
@@ -29,28 +28,26 @@
 		<div class="container">
 			<div class="row">
 				{{if .no_right}}
-					<!-- 主窗口 -->
+				<!-- 主窗口 -->
+				{{.LayoutContent}} {{else}}
+				<div class="col-md-9">
+					<!-- 左侧主窗口 -->
 					{{.LayoutContent}}
-				{{else}}
-					<div class="col-md-9">
-						<!-- 左侧主窗口 -->
-						{{.LayoutContent}}
-					</div>
-					<div class="col-md-3">
-						<!-- 右侧边栏窗口 -->
-						{{.right}}
-					</div>
+				</div>
+				<div class="col-md-3">
+					<!-- 右侧边栏窗口 -->
+					{{.right}}
+				</div>
 				{{end}}
 			</div>
 		</div>
 		{{.footer}}
-		<script src="https://cdn.bootcss.com/tether/1.4.0/js/tether.min.js"></script>
-		<script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script>
-		
-		<!--<script src="{{.staticPath}}/js/jquery.grumble.min.js"></script>
-		
-		<script src="https://cdn.bootcss.com/jquery.pin/1.0.1/jquery.pin.min.js"></script>-->
+		<!-- must use this， i modify it -->
+		<script src="/js/jquery.pin.min.js"></script>
+
+		<!--<script src="{{.staticPath}}/js/jquery.grumble.min.js"></script>-->
 		<!--<script src="https://cdn.bootcss.com/less.js/3.0.0-pre.4/less.min.js"></script>-->
 		<!--<script type="text/javascript" src="{{.staticPath}}/js/stickUp.min.js"></script>
 		<script type="text/javascript">
@@ -60,15 +57,14 @@
                   $('#my_album').stickUp();
                 });
               });
-      </script>-->
-      
-      
-      <!--<script type="text/javascript">
-        // 将某元素“钉”在容器内
-        $(".pin2").pin({
-		      containerSelector: ".pin1"
-		});
-		</script>-->
+        </script>-->
+
+		<script type="text/javascript">
+			// 将某元素“钉”在容器内
+			$(".pin2").pin({
+				containerSelector: ".pin1"
+			});
+		</script>
 
 	</body>
 
