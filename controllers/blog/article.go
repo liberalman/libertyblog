@@ -59,7 +59,6 @@ func (this *ArticleController) Index() {
 	urlname := this.Ctx.Input.Param(":urlname")
 	if urlname != "" {
 		article.Urlname = urlname
-
 	} else {
 		id, _ := strconv.Atoi(this.Ctx.Input.Param(":id"))
 		article.Id = int64(id)
@@ -77,6 +76,15 @@ func (this *ArticleController) Index() {
 	this.Data["smalltitle"] = "文章内容"
 	if urlname == "about.html" {
 		this.Data["smalltitle"] = "关于我"
+	}
+	this.Data["showEditBtn"] = 0
+	arr := strings.Split(this.Ctx.GetCookie("auth"), "|")
+	if len(arr) == 2 {
+		idstr, _ := arr[0], arr[1]
+		userid, _ := strconv.ParseInt(idstr, 10, 0)
+		if article.Userid == userid {
+			this.Data["showEditBtn"] = 1
+		}
 	}
 
 	this.right = "" // 去掉右侧边栏

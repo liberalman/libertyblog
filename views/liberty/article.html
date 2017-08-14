@@ -10,87 +10,78 @@
 	}
 </style>
 
-<link rel="stylesheet" href="/css/style1.css">
+<link rel="stylesheet" href="/css/style-liberty.css">
 <link rel="stylesheet" href="/editor.md/css/editormd.preview.min.css" />
+<link rel="stylesheet" href="/editor.md/lib/mermaid.min.css" />
 
-<div class="container" role="main">
-	<div class="col-md-2"></div>
-	<div class="col-md-8">
-	<div class="panel panel-default shadow" style="border-radius:10px;">
-		<div class="panel-body" style="padding:2% 5%;">
-			<div class="row">
-				<div class="row">
-					<div class="col-md-2">
-						<div class="selfinfo">
-							<div class="logo">
-								<a><img class="img-circle" src="{{.post.Avatarurl}}"></a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-8">
-						<h1>{{.post.Title}}</h1>
-					</div>
-					<div class="col-md-2">
-						<div class="side">
-							<div class="day">
-								<a>{{date .post.Posttime "j"}}</a>
-							</div>
-							<div class="month">
-								<a>&nbsp;&nbsp;&nbsp;{{date .post.Posttime "m"}}</a>
-							</div>
-						</div>
-					</div>
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-md-1 pin2">
+		<div class="pin1">
+			<a><img class="img-rounded" width="80em" src="{{.post.Avatarurl}}"></a>
+			<hr/>
+			<div class="side">
+				<div class="day">
+					<a>{{date .post.Posttime "j"}}</a>
 				</div>
-				<div class="row">
-					<div class="col-xs-10">
-						<span class="label label-info">发布时间：{{date .post.Posttime "Y-m-j"}}</span>
-						<span class="label label-primary">作者：{{.post.Username}}</span>
-						<span class="label label-success">阅读：{{.post.Views}}</span>
-						<span class="label label-warning">{{if eq 1 .post.Pubtype}}转载{{else}}原创{{end}}</span>
-					</div>
+				<div class="month">
+					<a>&nbsp;&nbsp;&nbsp;{{date .post.Posttime "m"}}</a>
 				</div>
-
+				<div class="year">
+					<a>{{date .post.Posttime "Y"}}</a>
+				</div>
 			</div>
 		</div>
 	</div>
+	<div class="col-md-9">
+		<div class="panel panel-default shadow" style="border-radius:10px;">
+			<div class="panel-body" style="padding:2% 5%;">
+					<h2>{{.post.Title}}</h2>
+					<span class="label label-info">发布时间：{{date .post.Posttime "Y-m-j"}}</span>
+					<span class="label label-primary">作者：{{.post.Username}}</span>
+					<span class="label label-success">阅读：{{.post.Views}}</span>
+					<span class="label label-warning">{{if eq 1 .post.Pubtype}}转载{{else}}原创{{end}}</span>
+					{{if eq 1 .showEditBtn}}<span class="label label-info">编辑</span>{{end}}
+			</div>
+		</div>
 
-	<div class="panel panel-default shadow" style="border-radius:10px;">
-		<div class="panel-body" style="padding:2% 5%;">
-			<div class="row">
-				<div id="test-editormd-view2" style="font-size: 1.2em; line-height:2em;">
-					<textarea id="append-test" style="display:none;">{{str2html .post.Content}}</textarea>
+		<div class="panel panel-default shadow" style="border-radius:10px;">
+			<div class="panel-body" style="padding:2% 5%;">
+				<div class="row">
+					<div id="test-editormd-view2" style="font-size: 1.2em; line-height:2em;">
+						<textarea id="append-test" style="display:none;">{{str2html .post.Content}}</textarea>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="page-header">
-					{{str2html .post.TagsLink}}
+				<div class="row">
+					<div class="page-header">
+						{{str2html .post.TagsLink}}
+					</div>
 				</div>
-			</div>
-			{{if eq 1 .post.Pubtype}}
-			<div class="row">
-				<div class="col-md-12">转载于：
-					<a href="{{.post.Reprinturl}}">{{.post.Reprinturl}}</a>
+				{{if eq 1 .post.Pubtype}}
+				<div class="row">
+					<div class="col-md-12">转载于：
+						<a href="{{.post.Reprinturl}}">{{.post.Reprinturl}}</a>
+					</div>
 				</div>
-			</div>
-			{{end}} {{if .pre}}
-			<div class="row">
-				<div class="col-md-12">上一篇：
-					<a href="{{.pre.Link}}">{{str2html .pre.Title}}</a>
+				{{end}} {{if .pre}}
+				<div class="row">
+					<div class="col-md-12">上一篇：
+						<a href="{{.pre.Link}}">{{str2html .pre.Title}}</a>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">下一篇：
-					<a href="{{.next.Link}}">{{str2html .next.Title}}</a>
+				<div class="row">
+					<div class="col-md-12">下一篇：
+						<a href="{{.next.Link}}">{{str2html .next.Title}}</a>
+					</div>
 				</div>
-			</div>
-			{{end}}
-			<div class="row duoshuo">
-				<div class="ds-thread" style="width:95%;"></div>
+				{{end}}
+				<div class="row duoshuo">
+					<div class="ds-thread" style="width:95%;"></div>
+				</div>
 			</div>
 		</div>
 	</div>
-	</div>
-	<div class="col-md-2"></div>
+	<div class="col-md-1"></div>
 </div>
 
 <script src="/editor.md/lib/marked.min.js"></script>
@@ -100,6 +91,7 @@
 <script src="/editor.md/lib/sequence-diagram.min.js"></script>
 <script src="/editor.md/lib/flowchart.min.js"></script>
 <script src="/editor.md/lib/jquery.flowchart.min.js"></script>
+<script src="/editor.md/lib/mermaid.min.js"></script>
 <script src="/editor.md/editormd.min.js"></script>
 <script type="text/javascript">
 	$(function() {
@@ -111,9 +103,8 @@
 			tex: true, // 默认不解析
 			flowChart: true, // 默认不解析
 			sequenceDiagram: true, // 默认不解析
-			mermaid : true, // mermaid图
+			mermaid: true, // mermaid图
 		});
-
 	});
 
 	var ua = navigator.userAgent.toLowerCase();
@@ -129,29 +120,29 @@
 	 *
 	 */
 	var browser = {
-		versions: function() {
-			var u = navigator.userAgent,
-				app = navigator.appVersion;
-			return { //移动终端浏览器版本信息
-				trident: u.indexOf('Trident') > -1, //IE内核
-				presto: u.indexOf('Presto') > -1, //opera内核
-				webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-				gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-				mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
-				ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-				android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-				iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
-				iPad: u.indexOf('iPad') > -1, //是否iPad
-				webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-			};
-		}(),
-		language: (navigator.browserLanguage || navigator.language).toLowerCase()
-	}
-	/*document.writeln("语言版本: "+browser.language + '</br>');
-	document.writeln(" 是否为移动终端: "+ browser.versions.mobile + '</br>');
-	document.writeln(" ios终端: "+browser.versions.ios + '</br>');
-	document.writeln(" android终端: "+browser.versions.android + '</br>');
-	document.writeln(" 是否为iPhone: "+browser.versions.iPhone + '</br>');
-	document.writeln(" 是否iPad: "+browser.versions.iPad + '</br>');
-	document.writeln(navigator.userAgent + '</br>');*/
+			versions: function() {
+				var u = navigator.userAgent,
+					app = navigator.appVersion;
+				return { //移动终端浏览器版本信息
+					trident: u.indexOf('Trident') > -1, //IE内核
+					presto: u.indexOf('Presto') > -1, //opera内核
+					webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+					gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+					mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
+					ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+					android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+					iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+					iPad: u.indexOf('iPad') > -1, //是否iPad
+					webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+				};
+			}(),
+			language: (navigator.browserLanguage || navigator.language).toLowerCase()
+		}
+		/*document.writeln("语言版本: "+browser.language + '</br>');
+		document.writeln(" 是否为移动终端: "+ browser.versions.mobile + '</br>');
+		document.writeln(" ios终端: "+browser.versions.ios + '</br>');
+		document.writeln(" android终端: "+browser.versions.android + '</br>');
+		document.writeln(" 是否为iPhone: "+browser.versions.iPhone + '</br>');
+		document.writeln(" 是否iPad: "+browser.versions.iPad + '</br>');
+		document.writeln(navigator.userAgent + '</br>');*/
 </script>
