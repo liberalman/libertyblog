@@ -10,13 +10,6 @@ $(document).ready(function() {
 			<button class="btn btn-warning" type="button" data-dismiss="modal">关闭</button>\
 		</div>\
 	</div>');
-	
-	$('#myModal').on('hidden.bs.modal', function (e) {
-		setTimeout(function(){
-			document.refresh();
-		}, 1000);
-	    
-	});
 });
 
 function edit_article(id) {

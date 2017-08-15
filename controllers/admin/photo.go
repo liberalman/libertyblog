@@ -111,8 +111,8 @@ func (this *PhotoController) UploadPhoto() {
 		out["url"] = filename[1:]
 
 	}
-	//albumid, _ := this.GetInt64("albumid")
-	//this.Insert(albumid, header.Filename, out["url"])
+	albumid, _ := this.GetInt64("albumid")
+	this.Insert(albumid, header.Filename, out["url"])
 	fmt.Println(out)
 	this.Data["json"] = out
 	this.ServeJSONP()
