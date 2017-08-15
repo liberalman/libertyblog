@@ -40,7 +40,7 @@
                       <span class="input-group-addon">
                         <input type="checkbox" aria-label="..." value="1" name="istop">
                       </span>
-                      <input type="text" class="form-control" aria-label="..." value="置顶文章" size="4">
+                      <input type="text" class="form-control" aria-label="..." value="置顶" size="4">
                     </div><!-- /input-group -->
 					<input class="form-control" placeholder="发布时间" name="posttime" value="{{.posttime}}" size="16" type="text"  id="datetimepicker" data-date-format="yyyy-mm-dd HH:ii:ss">
                     <div class="input-group">
@@ -83,7 +83,7 @@
                      // 上传图片
                     imageUpload : true,
                     imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                    imageUploadURL : "./php/upload.php?test=dfdf",
+                    imageUploadURL : "/admin/photo/uploadphoto",
                     /*
                      上传的后台只需要返回一个 JSON 数据，结构如下：
                      {
@@ -180,6 +180,8 @@
 				    }
 				    //console.info(str);
 				    $('#coverurl').val(str);
+				    
+				    	$('#myModal', parent.document).click(); // 关闭父页面的编辑窗口
 				});
             });
         </script>

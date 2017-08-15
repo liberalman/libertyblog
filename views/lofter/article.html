@@ -24,12 +24,13 @@ a,
 		background-image: url("{{.root}}images/article_1.png");
 		background-attachment: fixed;
 	}
-	/*pre { /*调整字体，可以使得空格和字符宽度变得一致*/
-	
+	/*调整字体，可以使得空格和字符宽度变得一致*/
+	/*pre {
 	font-size:16px;
 	font-family:"隶书";
 }
-*/ .notes .action {
+*/
+.notes .action {
 	width: 500px;
 }
 #comment_frame {
@@ -85,6 +86,7 @@ a,
       <li><a href="">阅读：{{.post.Views}}</a></li>
       <li><a href="">最近更新：{{date .post.Updated "Y-m-d H:i:s"}}</a></li> 
       {{if eq 1 .post.Pubtype}}<li><a href="">转载</a></li>{{end}}
+      {{if eq 1 .showEditBtn}}<li><a href="" onclick="edit_article({{.post.Id}})">编辑</a></li>{{end}}
      </ul>
      </span>
 		</div>

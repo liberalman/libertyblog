@@ -46,7 +46,7 @@
 									<td class="center">{{date $v.Posttime "Y-m-d H:i:s"}}</td>
 									<td class="center">{{date $v.Updated "Y-m-d H:i:s"}}</td>
 									<td>
-										<a href="#" onclick="edit({{$v.Id}})"><i class="fa fa-edit fa-fw"></i></a> |
+										<a href="#" onclick="edit_article({{$v.Id}})"><i class="fa fa-edit fa-fw"></i></a> |
 										<a href="/admin/article/delete?id={{$v.Id}}" onclick="return del_confirm()">删除</a></td>
 										
 									<!-- <a href="/article/edit1?id={{$v.Id}}" data-toggle="modal" data-target="#myModal" onclick="edit({{$v.Id}})">编辑1</a> -->
@@ -83,20 +83,12 @@
 	<!-- /.row -->
 </div>
 <!-- /#page-wrapper -->
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-	
-	<div class="modal-body">
-		<div id="toedit"></div>
-	</div>
-	<div class="modal-footer">
-		<button class="btn btn-warning" type="button" data-dismiss="modal">关闭</button>
-	</div>
-</div>
+
 <!-- DataTables JavaScript -->
 <script src="/js/jquery.dataTables.min.js"></script>
 <script src="/js/dataTables.bootstrap.min.js"></script>
 <script src="/js/dataTables.responsive.min.js"></script>
+<script src="/js/common.js"></script>
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
 	$(document).ready(function() {
@@ -106,11 +98,4 @@
 			responsive: true
 		});*/
 	});
-
-	function edit(id) {
-		// document.documentElement.clientHeight 可见区域高度 
-		var height = document.documentElement.clientHeight * 0.93;
-		$('#toedit').html('<iframe width="100%" height="' + height + '" frameborder="0" src="/article/editmarkdown?id=' + id + '"></iframe>');
-		$('#myModal').modal('show');
-	}
 </script>

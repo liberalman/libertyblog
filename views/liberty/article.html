@@ -41,7 +41,7 @@
 					<span class="label label-primary">作者：{{.post.Username}}</span>
 					<span class="label label-success">阅读：{{.post.Views}}</span>
 					<span class="label label-warning">{{if eq 1 .post.Pubtype}}转载{{else}}原创{{end}}</span>
-					{{if eq 1 .showEditBtn}}<span class="label label-info">编辑</span>{{end}}
+					{{if eq 1 .showEditBtn}}<span class="label label-info" onclick="edit_article({{.post.Id}})">编辑</span>{{end}}
 			</div>
 		</div>
 
@@ -93,6 +93,7 @@
 <script src="/editor.md/lib/jquery.flowchart.min.js"></script>
 <script src="/editor.md/lib/mermaid.min.js"></script>
 <script src="/editor.md/editormd.min.js"></script>
+<script src="/js/common.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var testEditormdView2;
