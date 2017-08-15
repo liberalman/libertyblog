@@ -23,7 +23,7 @@ db:
     - "/data/gocode/src/libertyblog/conf/my.cnf:/etc/mysql/my.cnf"
     - "/var/lib/mysql:/var/lib/mysql"
   ports:
-    - "3306:27893"
+    - "27893:3306"
   environment:
     MYSQL_ROOT_PASSWORD: Looks137
     MYSQL_DATABASE: libertyblog
