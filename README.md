@@ -91,3 +91,10 @@ docker exec -it mysql bash
 ```
 
 
+my cmd
+```
+docker run -it -v /data/gocode:/data/gocode -e GOPATH=/data/gocode --rm demo/go-build:latest /bin/bash
+nginx -p `pwd`/ -c conf/nginx.conf
+docker build -t liberalman/libertyblog .
+```
+
