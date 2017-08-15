@@ -7,12 +7,17 @@ package blog
 "strconv"
 "github.com/nfnt/resize"*/
 import (
+	"fmt"
+	"image/jpeg"
+	"io"
 	"libertyblog/models"
+	"os"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/astaxie/beego"
+	"github.com/nfnt/resize"
 	//	"github.com/astaxie/beego/orm"
 )
 
@@ -20,13 +25,7 @@ type ArticleController struct {
 	baseController
 }
 
-func (this *ArticleController) Add() {
-	//this.Data["posttime"] = this.getTime().Format("2006-01-02 15:04:05")
-	this.right = "" // 去掉右侧边栏
-	this.display("article_add", 0)
-}
-
-func (this *ArticleController) Add1() {
+func (this *ArticleController) AddMarkdown() {
 	this.auth()
 	this.display_no_layout("article_add_markdown")
 }
@@ -162,4 +161,79 @@ func (this *ArticleController) Comment() {
 	} else {
 		this.Ctx.WriteString("must be POST")
 	}
+}
+
+//上传文件(用于文章图片上传，文章封面，说说封面)
+func (this *ArticleController) Upload() {
+	var success int = 1
+	var url string
+	var message string
+
+	file, header, err := this.GetFile("editormd-image-file") //upfile
+	utype := this.GetString("type")
+	if utype == "" {
+		utype = "1"
+	}
+	index, _ := strconv.Atoi(utype)
+
+	ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
+	//fileType = ext
+	//image_original = header.Filename
+
+	if err != nil {
+		success = -1
+		message = err.Error()
+	} else {
+		savepath := pathArr[index] + time.Now().Format("20060102")
+		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
+			success = -2
+			message = err.Error()
+		} else {
+			filename := fmt.Sprintf("%s/%d%s", savepath, time.Now().UnixNano(), ext)
+			if this.GetString("type") == "2" {
+				w, _ := strconv.Atoi(this.GetString("w"))
+				h, _ := strconv.Atoi(this.GetString("h"))
+				err = createSmallPic(file, filename, w, h)
+				if err != nil {
+					success = -3
+					message = err.Error()
+				}
+			} else {
+				if err = this.SaveToFile("editormd-image-file", filename); err != nil {
+					success = -4
+					message = err.Error()
+				}
+			}
+			url = filename[1:]
+		}
+	}
+
+	this.Ctx.WriteString(fmt.Sprintf("{\"success\":%d,\"url\":\"%s\",\"message\":\"%s\"}", success, url, message))
+}
+
+func createSmallPic(file io.Reader, fileSmall string, w, h int) error {
+	// decode jpeg into image.Image
+	img, err := jpeg.Decode(file)
+	if err != nil {
+		return err
+	}
+	b := img.Bounds()
+	if w > b.Dx() {
+		w = b.Dx()
+	}
+	if h > b.Dy() {
+		h = b.Dy()
+	}
+	// resize to width 1000 using Lanczos resampling
+	// and preserve aspect ratio
+	m := resize.Resize(uint(w), uint(h), img, resize.Lanczos3)
+
+	out, err := os.Create(fileSmall)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	// write new image to file
+	return jpeg.Encode(out, m, nil)
 }

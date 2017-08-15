@@ -10,6 +10,14 @@ import (
 	"github.com/astaxie/beego"
 )
 
+const (
+	BIG_PIC_PATH   = "./static/upload/bigpic/"
+	SMALL_PIC_PATH = "./static/upload/smallpic/"
+	FILE_PATH      = "./static/upload/attachment/"
+)
+
+var pathArr []string = []string{"", BIG_PIC_PATH, SMALL_PIC_PATH, FILE_PATH}
+
 type baseController struct {
 	beego.Controller
 	options        map[string]string

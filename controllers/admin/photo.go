@@ -64,16 +64,19 @@ func (this *PhotoController) Cover() {
 
 //上传照片)
 func (this *PhotoController) UploadPhoto() {
-	file, header, err := this.GetFile("upfile")
+	file, header, err := this.GetFile("editormd-image-file") //upfile
 	ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
 	out := make(map[string]string)
 	out["url"] = ""
 	out["fileType"] = ext
 	out["original"] = header.Filename
 	out["state"] = "SUCCESS"
+	out["success"] = "1"
 	filename := ""
 	if err != nil {
 		out["state"] = err.Error()
+		out["success"] = "2"
+		out["message"] = err.Error()
 	} else {
 		t := time.Now().UnixNano()
 		day := time.Now().Format("20060102")
@@ -82,27 +85,35 @@ func (this *PhotoController) UploadPhoto() {
 		savepath := pathArr[2] + day
 		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
 			out["state"] = err.Error()
+			out["success"] = "3"
+			out["message"] = err.Error()
 		}
 		filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
 		err = createSmallPic(file, filename, 220, 150)
 		if err != nil {
 			out["state"] = err.Error()
+			out["success"] = "4"
+			out["message"] = err.Error()
 		}
 
 		//大图
 		savepath = pathArr[1] + day
 		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
 			out["state"] = err.Error()
+			out["message"] = err.Error()
 		}
 		filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
-		if err = this.SaveToFile("upfile", filename); err != nil {
+		if err = this.SaveToFile("editormd-image-file", filename); err != nil {
 			out["state"] = err.Error()
+			out["success"] = "5"
+			out["message"] = err.Error()
 		}
 		out["url"] = filename[1:]
 
 	}
-	albumid, _ := this.GetInt64("albumid")
-	this.Insert(albumid, header.Filename, out["url"])
+	//albumid, _ := this.GetInt64("albumid")
+	//this.Insert(albumid, header.Filename, out["url"])
+	fmt.Println(out)
 	this.Data["json"] = out
 	this.ServeJSONP()
 }
