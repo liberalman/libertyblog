@@ -74,8 +74,9 @@ func (this *baseController) Prepare() {
 
 	this.Data["root"] = "/" + beego.BConfig.WebConfig.ViewsPath + "/" + this.theme + "/"
 	//this.Data["staticPath"] = "https://o9gqjr7iy.bkt.clouddn.com/libertyblog/"
-	this.Data["staticPath"] = "https://www.liberalman.cn/"
+	//this.Data["staticPath"] = "https://www.liberalman.cn/"
 	//this.Data["staticPath"] = "http://localhost/static"
+	this.Data["staticPath"] = beego.AppConfig.String("staticPath")
 }
 
 //渲染模版
@@ -109,15 +110,6 @@ func (this *baseController) display_reg_login(tpl string) {
 	this.TplName = this.theme + "/" + tpl + ".html"
 }
 
-/*
-func (this *baseController) display_no_right(tpl string) {
-	this.Layout = this.theme + "/layout_no_right.html"
-	this.LayoutSections = make(map[string]string)
-	this.LayoutSections["header"] = this.theme + "/header.html" // 头
-	this.TplName = this.theme + "/" + tpl + ".html"             // 中间
-	this.LayoutSections["footer"] = this.theme + "/footer.html" // 尾
-}
-*/
 func (this *baseController) getOption(name string) string {
 	if v, ok := this.options[name]; ok {
 		return v

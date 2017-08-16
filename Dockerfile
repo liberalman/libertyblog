@@ -12,5 +12,5 @@ RUN mkdir -p /data/log/
 
 ENV PATH $PATH:/data/
 
-ENTRYPOINT ["./libertyblog", " > libertylog.log"]
+ENTRYPOINT ["./libertyblog"]
 
