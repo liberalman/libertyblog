@@ -210,7 +210,7 @@ func (this *baseController) isPost() bool {
 
 //获取用户IP地址
 func (this *baseController) getClientIp() string {
-	ip := this.Ctx.Request.Header.Get("x-forwarded-for")
+	/*ip := this.Ctx.Request.Header.Get("x-forwarded-for")
 	if 0 == len(ip) || "unknown" == ip {
 		ip = this.Ctx.Request.Header.Get("proxy-client-ip")
 	}
@@ -220,7 +220,8 @@ func (this *baseController) getClientIp() string {
 	if 0 == len(ip) || "unknown" == ip {
 		//ip = (strings.Split(this.Ctx.Request.RemoteAddr, ":"))[0]
 		ip = this.Ctx.Request.RemoteAddr
-	}
+	}*/
+	ip := (strings.Split(this.Ctx.Request.RemoteAddr, ":"))[0]
 	return ip
 }
 
