@@ -5,6 +5,7 @@ import (
 	_ "libertyblog/routers"
 
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 )
 
 func main() {
@@ -14,5 +15,6 @@ func main() {
 	//	beego.SetStaticPath("/fonts", "static/fonts")
 	//	beego.SetStaticPath("/editor.md", "static/editor.md")
 	//	beego.SetStaticPath("/xiaojing", "static/xiaojing")
+	beego.SetLogger(logs.AdapterFile, `{"filename":"libertyblog.log", "level":6}`)
 	beego.Run()
 }
