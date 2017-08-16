@@ -16,7 +16,8 @@ func main() {
 	//	beego.SetStaticPath("/fonts", "static/fonts")
 	//	beego.SetStaticPath("/editor.md", "static/editor.md")
 	//	beego.SetStaticPath("/xiaojing", "static/xiaojing")
-	logcfg := fmt.Sprintf(`{"filename":"%s", "level":6}`, beego.AppConfig.String("LogPath"))
+	logLevel, _ := beego.AppConfig.Int("LogLevel")
+	logcfg := fmt.Sprintf(`{"filename":"%s", "level":%d}`, beego.AppConfig.String("LogPath"), logLevel)
 	beego.SetLogger(logs.AdapterFile, logcfg)
 	beego.Run()
 }
