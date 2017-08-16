@@ -16,6 +16,7 @@ git clone -depth=1 https://github.com/liberalman/libertyblog.git
 #### 下载依赖库
 该项目依赖一些golang的第三方库，执行以下命令安装
 ```
+go get -u github.com/astaxie/beego
 go get github.com/go-sql-driver/mysql
 go get github.com/nfnt/resize
 go get github.com/yunge/sphinx
@@ -93,8 +94,9 @@ docker exec -it mysql bash
 
 my cmd
 ```
-docker run -it -v /data/gocode:/data/gocode -e GOPATH=/data/gocode --rm demo/go-build:latest /bin/bash
-nginx -p `pwd`/ -c conf/nginx.conf
+docker run -it -v /data/gocode:/data/gocode -e GOPATH=/data/gocode --rm demo/go-build:latest /bin/bash -c "cd /data/gocode/src/libertyblog && go build"
 docker build -t liberalman/libertyblog .
+
+nginx -p `pwd`/ -c conf/nginx.conf
 ```
 
