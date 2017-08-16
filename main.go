@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	_ "libertyblog/models"
 	_ "libertyblog/routers"
 
@@ -15,6 +16,7 @@ func main() {
 	//	beego.SetStaticPath("/fonts", "static/fonts")
 	//	beego.SetStaticPath("/editor.md", "static/editor.md")
 	//	beego.SetStaticPath("/xiaojing", "static/xiaojing")
-	beego.SetLogger(logs.AdapterFile, `{"filename":"libertyblog.log", "level":6}`)
+	logcfg := fmt.Sprintf(`{"filename":"%s", "level":6}`, beego.AppConfig.String("LogPath"))
+	beego.SetLogger(logs.AdapterFile, logcfg)
 	beego.Run()
 }
