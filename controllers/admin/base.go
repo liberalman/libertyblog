@@ -137,8 +137,8 @@ func setLayout(this *baseController) {
 }
 func setLayout1(this *baseController) {
 	if 1 == this.userid {
-		this.Layout = this.theme + "/layout1_admin.html"
+		this.Layout = this.theme + "/layout_super_admin.html"
 	} else {
-		this.Layout = this.theme + "/layout1.html"
+		this.Layout = this.theme + "/layout1_admin.html"
 	}
 }

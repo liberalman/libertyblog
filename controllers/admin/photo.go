@@ -27,7 +27,7 @@ func (this *PhotoController) List() {
 	}
 	this.Data["list"] = list
 	this.Data["albumid"] = albumid
-	this.display()
+	this.display1()
 }
 
 //插入照片

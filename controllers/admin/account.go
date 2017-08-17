@@ -2,52 +2,11 @@ package admin
 
 import (
 	"libertyblog/models"
-	"strconv"
 	"strings"
-
-	//"github.com/astaxie/beego"
 )
 
 type AccountController struct {
 	baseController
-}
-
-//登录
-func (this *AccountController) Login() {
-	if this.GetString("dosubmit") == "yes" {
-		account := strings.TrimSpace(this.GetString("account"))
-		password := strings.TrimSpace(this.GetString("password"))
-		remember := this.GetString("remember")
-		if account != "" && password != "" {
-			var user models.User
-			user.Username = account
-			if user.Read("username") != nil || user.Password != models.Md5([]byte(password)) {
-				this.Data["errmsg"] = "帐号或密码错误"
-			} else if user.Active == 0 {
-				this.Data["errmsg"] = "该帐号未激活"
-			} else {
-				user.Logincount += 1
-				user.Lastip = this.getClientIp()
-				user.Lastlogin = this.getTime()
-				user.Update()
-				authkey := models.Md5([]byte(this.getClientIp() + "|" + user.Password))
-				if remember == "yes" {
-					this.Ctx.SetCookie("auth", strconv.FormatInt(user.Id, 10)+"|"+authkey, 7*86400)
-				} else {
-					this.Ctx.SetCookie("auth", strconv.FormatInt(user.Id, 10)+"|"+authkey)
-				}
-
-				this.Redirect("/admin", 302)
-			}
-		}
-	}
-	this.TplName = "admin/account_login.html"
-}
-
-//退出登录
-func (this *AccountController) Logout() {
-	this.Ctx.SetCookie("auth", "")
-	this.Redirect("/admin/login", 302)
 }
 
 //资料修改
@@ -87,7 +46,6 @@ func (this *AccountController) Profile() {
 		return
 	}
 	this.Data["user"] = user // 获取个人信息页面
-	//this.display()
 	this.display1("account_profile")
 }
 

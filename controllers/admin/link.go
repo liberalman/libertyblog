@@ -15,7 +15,7 @@ func (this *LinkController) List() {
 	var link models.Link
 	link.Query().OrderBy("-rank").All(&list)
 	this.Data["list"] = list
-	this.display()
+	this.display1()
 }
 
 //添加友链
@@ -34,7 +34,7 @@ func (this *LinkController) Add() {
 		this.Redirect("/admin/link/list", 302)
 
 	}
-	this.display()
+	this.display1()
 }
 
 //编辑友链
@@ -56,7 +56,7 @@ func (this *LinkController) Edit() {
 		this.Redirect("/admin/link/list", 302)
 	}
 	this.Data["link"] = link
-	this.display()
+	this.display1()
 }
 
 //删除友链

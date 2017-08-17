@@ -130,6 +130,7 @@ func (this *UserController) Login() {
 				user.Update()
 				authkey := models.Md5([]byte(this.getClientIp() + "|" + user.Password))
 				if remember == "yes" {
+					// 记住我一周 按钮被勾选
 					this.Ctx.SetCookie("auth", strconv.FormatInt(user.Id, 10)+"|"+authkey, 7*86400)
 				} else {
 					this.Ctx.SetCookie("auth", strconv.FormatInt(user.Id, 10)+"|"+authkey)

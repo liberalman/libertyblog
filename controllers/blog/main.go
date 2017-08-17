@@ -25,6 +25,7 @@ type MainController struct {
 	this.display("index")
 }*/
 
+// @router /:* [get]
 func (this *MainController) Index() {
 	var count int = 0
 	this.Data["list"], count = models.PostIndex(this.page, this.pagesize)

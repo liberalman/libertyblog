@@ -29,7 +29,7 @@ func (this *MoodController) List() {
 
 	this.Data["list"] = list
 	this.Data["pagebar"] = models.NewPager(page, count, pagesize, "/admin/mood/list?page=%d").ToString()
-	this.display()
+	this.display1()
 }
 
 //发表说说
@@ -48,7 +48,7 @@ func (this *MoodController) Add() {
 		this.Redirect("/admin/mood/list", 302)
 
 	}
-	this.display()
+	this.display1()
 }
 
 //删除说说

@@ -10,8 +10,10 @@ import (
 
 func init() {
 
+	beego.Include(&blog.MainController{})
+
 	//前台路由
-	beego.Router("/", &blog.MainController{}, "*:Index")
+	//beego.Router("/", &blog.MainController{}, "*:Index")
 	beego.Router("/404.html", &blog.MainController{}, "*:Go404")
 	beego.Router("/index:page:int.html", &blog.MainController{}, "*:Index")
 
@@ -54,8 +56,8 @@ func init() {
 	//后台路由
 	beego.Router("/admin", &admin.IndexController{}, "*:Index")
 	beego.Router("/admin1", &admin.IndexController{}, "*:Index1")
-	beego.Router("/admin/login", &admin.AccountController{}, "*:Login")
-	beego.Router("/admin/logout", &admin.AccountController{}, "*:Logout")
+	//beego.Router("/admin/login", &admin.AccountController{}, "*:Login")
+	//beego.Router("/admin/logout", &admin.AccountController{}, "*:Logout")
 	beego.Router("/admin/account/profile", &admin.AccountController{}, "*:Profile")
 	beego.Router("/admin/account/updateprofile", &admin.AccountController{}, "*:UpdateProfile")
 	//系统管理
