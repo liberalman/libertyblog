@@ -17,9 +17,9 @@
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon">
-                            <label>ID</label>
-                        </span>
-							<input name="id" class="form-control" size="2em" value="{{.post.Id}}" disabled="disabled"/>
+	                            <label>ID</label>
+	                        </span>
+							<input name="id" class="form-control" size="2em" value="{{.post.Id}}"/>
 						</div>
 						<input name="title" placeholder="文章标题，要起的大气点！" class="form-control" size="60" value="{{.post.Title}}" />
 						<input type="text" name="tags" class="form-control" placeholder="分类,多个用英文逗号‘,’分隔" value="{{.post.Tags}}" />
@@ -44,7 +44,7 @@
                       </span>
 							<input type="text" class="form-control" aria-label="..." value="置顶" size="4">
 						</div>
-						<input class="form-control" placeholder="发布时间" name="posttime" value="{{.posttime}}" size="16" type="text" id="datetimepicker" data-date-format="yyyy-mm-dd HH:ii:ss" disabled="disabled">
+						<input class="form-control" placeholder="发布时间" name="posttime" value="{{.posttime}}" size="16" type="text" id="datetimepicker" data-date-format="yyyy-mm-dd HH:ii:ss">
 						<div class="input-group">
 							<span class="input-group-addon">
                             <img src="{{.post.Coverurl}}" height="6%"/>
