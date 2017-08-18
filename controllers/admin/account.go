@@ -100,7 +100,6 @@ func (this *AccountController) PutAvatar() {
 			message = err.Error()
 		} else {
 			filename := fmt.Sprintf("%s/%d%s", savepath, time.Now().UnixNano(), fileType)
-			fmt.Println("socho", filename)
 			if err = this.SaveToFile("editormd-image-file", filename); err != nil {
 				success = -4
 				message = err.Error()

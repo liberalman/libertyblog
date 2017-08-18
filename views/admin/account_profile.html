@@ -370,6 +370,7 @@
 
 		$('#avatar').click(function() {
 			// https://github.com/fengyuanchen/cropper
+			// https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toBlob
 			var dataURL = $('#image').cropper('getCroppedCanvas');
 			dataURL.toBlob(function(blob) {
 				var formData = new FormData();
@@ -384,14 +385,14 @@
 					contentType: false,
 					processData: false,
 					success: function(result) {
-						//alert(result);
-						toastr.success('修改成功！' + result);
+						toastr.success('修改成功！');
+						$('#myModal1').click();
 					},
 					error: function(result) {
 						toastr.error(result);
 					}
 				});
-			});
+			}, 'image/png', 0.5);
 		});
 	});
 </script>
