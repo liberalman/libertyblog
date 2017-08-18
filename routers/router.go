@@ -11,6 +11,7 @@ import (
 func init() {
 
 	beego.Include(&blog.MainController{})
+	beego.Include(&admin.AccountController{})
 
 	//前台路由
 	//beego.Router("/", &blog.MainController{}, "*:Index")

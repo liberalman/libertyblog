@@ -1,8 +1,12 @@
 package admin
 
 import (
+	"fmt"
 	"libertyblog/models"
+	"os"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type AccountController struct {
@@ -63,4 +67,61 @@ func (this *AccountController) UpdateProfile() {
 	} else {
 		this.Ctx.WriteString("0") // 成功返回0
 	}
+}
+
+// @router /admin/acccount/put_avatar [post]
+func (this *AccountController) PutAvatar() {
+	var success int = 1
+	var url string
+	var message string
+	var savepath string
+
+	// 验证身份
+	user := models.User{Id: this.userid}
+	if err := user.Read(); err != nil {
+		this.Ctx.WriteString(err.Error())
+		return
+	}
+
+	utype := this.GetString("type")
+	if utype == "" {
+		utype = "1"
+	}
+	index, _ := strconv.Atoi(utype)
+	_, header, err := this.GetFile("editormd-image-file")
+	if err != nil {
+		success = -1
+		message = err.Error()
+	} else {
+		fileType := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
+		savepath = pathArr[index] + time.Now().Format("20060102")
+		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
+			success = -2
+			message = err.Error()
+		} else {
+			filename := fmt.Sprintf("%s/%d%s", savepath, time.Now().UnixNano(), fileType)
+			fmt.Println("socho", filename)
+			if err = this.SaveToFile("editormd-image-file", filename); err != nil {
+				success = -4
+				message = err.Error()
+			}
+			url = filename[1:]
+		}
+	}
+
+	if 1 == success {
+		oldAvatarurl := user.Avatarurl
+		user.Avatarurl = url
+		if err := user.Update("avatarurl"); err != nil {
+			success = -5
+			message = err.Error()
+		} else {
+			// delete old avatar file。 don't forget to add '.' to old avatar
+			if err := os.Remove("." + oldAvatarurl); nil != err {
+				message = err.Error()
+			}
+		}
+	}
+
+	this.Ctx.WriteString(fmt.Sprintf("{\"success\":%d,\"url\":\"%s\",\"message\":\"%s\"}", success, url, message))
 }
