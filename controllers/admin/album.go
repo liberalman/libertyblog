@@ -31,7 +31,7 @@ func (this *AlbumController) List() {
 
 	this.Data["list"] = list
 	this.Data["pagebar"] = models.NewPager(page, count, pagesize, "/admin/album/list?page=%d").ToString()
-	this.display1()
+	this.display()
 }
 
 //创建相册
@@ -49,7 +49,7 @@ func (this *AlbumController) Add() {
 		this.Redirect("/admin/album/list", 302)
 
 	}
-	this.display1()
+	this.display()
 }
 
 //删除相册
@@ -81,5 +81,5 @@ func (this *AlbumController) Edit() {
 		this.Redirect("/admin/album/list", 302)
 	}
 	this.Data["album"] = album
-	this.display1()
+	this.display()
 }

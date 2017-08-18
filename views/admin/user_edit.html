@@ -1,46 +1,78 @@
-<fieldset>
-	<legend>编辑用户</legend>
+<script type="text/javascript">
+{{if .errmsg.username}}
+        toastr.error({{.errmsg.username}});
+    {{else if .errmsg.password}}
+        toastr.error({{.errmsg.password}});
+    {{else if .errmsg.password2}}
+        toastr.error({{.errmsg.password2}});
+    {{else if .errmsg.email}}
+        toastr.error({{.errmsg.email}});
+{{end}}
+</script>
+<div id="page-wrapper">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">编辑用户</h1>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					只有超级管理员才能操作
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-6">
+							<form role="form" method="post">
+								<input type="hidden" name="id" value="{{.user.Id}}" />
+								<div class="form-group input-group">
+									<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;用户名</span>
+									<input type="text" class="form-control" name="username" value="{{.user.Username}}" />
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码</span>
+									<input type="password" class="form-control" name="password"/>
+								</div>
 
-	<form class="form-horizontal" method="post">
-	<input type="hidden" name="id" value="{{.user.Id}}" />
-	<table class="table table-form">
-		<tbody>
-		<tr>
-			<th class="span2">用户名：</th>
-			<td><input name="username" disabled value="{{.user.Username}}" class="input" type="text" /></td>
-		</tr>
-		<tr>
-			<th>密码：</th>
-			<td><input name="password" value="" class="input" type="password" /> <span class="text-error">{{.errmsg.password}}</span></td>
-		</tr>
-		<tr>
-			<th>确认密码：</th>
-			<td><input name="password2" value="" class="input" type="password" /> <span class="text-error">{{.errmsg.password2}}</span></td>
-		</tr>
-		<tr>
-			<th>邮箱：</th>
-			<td><input name="email" value="{{.user.Email}}" class="input" type="text" /> <span class="text-error">{{.errmsg.email}}</span></td>
-		</tr>
-		</tr>
-		<tr>
-			<th>激活状态：</th>
-			<td>
-			<input type="radio" name="active" value="0" id="data_active_0" {{if eq .user.Active 0}}checked{{end}} />
-			<label for="data_active_0" class="help-inline">未激活</label>&nbsp;&nbsp;
-			<input type="radio" name="active" value="1" id="data_active_1" {{if eq .user.Active 1}}checked{{end}} />
-			<label for="data_active_1" class="help-inline">已激活</label>&nbsp;&nbsp;</td>
-		</tr>
-		</tbody>
-		<tfoot>
-			<tr>
-				<th></th>
-				<td>
-				<button type="submit" class="btn"><i class="icon-ok"></i> 保存</button>
-				<button type="button" class="btn" onclick="javascript:history.back();">取消</button>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
-	</form>
+								<div class="form-group input-group">
+									<span class="input-group-addon">确认密码</span>
+									<input type="password" class="form-control" name="password2"/>
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱</span>
+									<input type="text" class="form-control" name="email" value="{{.user.Email}}" />
+								</div>
+								<div class="form-group">
+									<label>激活状态</label>
+									<label class="radio-inline">
+                                                <input type="radio" name="active" id="data_active_0" value="0" {{if eq .user.Active 0}}checked{{end}}>未激活
+                                            </label>
+									<label class="radio-inline">
+                                                <input type="radio" name="active" id="data_active_1" value="1" {{if eq .user.Active 1}}checked{{end}}>已激活
+                                            </label>
+								</div>
+								<button type="submit" class="btn btn-default">保存</button>
+								<button type="button" class="btn" onclick="javascript:history.back();">取消</button>
+							</form>
+						</div>
+						<!-- /.col-lg-6 (nested) -->
+						<div class="col-lg-6">
+							<h1>Hello world!</h1>
 
-</fieldset>
+						</div>
+						<!-- /.col-lg-6 (nested) -->
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+</div>
+<!-- /#page-wrapper -->

@@ -30,8 +30,7 @@ func (this *UserController) List() {
 
 	this.Data["list"] = list
 	this.Data["pagebar"] = models.NewPager(page, count, pagesize, "/admin/user/list?page=%d").ToString()
-	//this.display()
-	this.display1("user_list")
+	this.display("user_list")
 }
 
 //添加用户
@@ -96,8 +95,7 @@ func (this *UserController) Add() {
 
 	this.Data["input"] = input
 	this.Data["errmsg"] = errmsg
-	//this.display()
-	this.display1("user_add")
+	this.display("user_add")
 }
 
 //编辑用户

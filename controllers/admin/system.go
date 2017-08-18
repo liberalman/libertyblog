@@ -41,10 +41,9 @@ func (this *SystemController) Setting() {
 
 	this.Data["now"] = this.getTime()
 	this.Data["options"] = options
-	//this.display()
-	this.display1("system_setting")
+	this.display("system_setting")
 }
 
 func (this *SystemController) History() {
-	this.display1("history")
+	this.display("history")
 }

@@ -66,7 +66,6 @@ func init() {
 	beego.Router("/admin/article/add", &admin.ArticleController{}, "*:Add")
 	beego.Router("/article/addmarkdown", &blog.ArticleController{}, "*:AddMarkdown")
 	beego.Router("/article/editmarkdown", &blog.ArticleController{}, "*:EditMarkdown")
-	beego.Router("/admin/article/edit", &admin.ArticleController{}, "*:Edit")
 	beego.Router("/admin/article/save", &admin.ArticleController{}, "post:Save")
 	beego.Router("/admin/article/delete", &admin.ArticleController{}, "*:Delete")
 	beego.Router("/admin/article/batch", &admin.ArticleController{}, "*:Batch")

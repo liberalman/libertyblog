@@ -34,7 +34,7 @@ func (this *IndexController) Index() {
 		}
 		this.Data["tag_list"] = list
 
-		this.display1("index")
+		this.display("index")
 		return
 	} else { // 普通用户
 		this.Redirect("/admin/account/profile", 302)

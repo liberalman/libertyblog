@@ -50,7 +50,7 @@ func (this *AccountController) Profile() {
 		return
 	}
 	this.Data["user"] = user // 获取个人信息页面
-	this.display1("account_profile")
+	this.display("account_profile")
 }
 
 func (this *AccountController) UpdateProfile() {

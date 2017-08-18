@@ -70,20 +70,6 @@ func (this *baseController) display(tpl ...string) {
 	this.Data["version"] = beego.AppConfig.String("AppVer")
 	this.Data["adminid"] = this.userid
 	this.Data["adminname"] = this.username
-	setLayout(this)
-	this.TplName = tplname
-}
-
-func (this *baseController) display1(tpl ...string) {
-	var tplname string
-	if len(tpl) == 1 {
-		tplname = this.theme + "/" + tpl[0] + ".html"
-	} else {
-		tplname = this.theme + "/" + this.controllerName + "_" + this.actionName + ".html"
-	}
-	this.Data["version"] = beego.AppConfig.String("AppVer")
-	this.Data["adminid"] = this.userid
-	this.Data["adminname"] = this.username
 	setLayout1(this)
 	this.TplName = tplname
 }

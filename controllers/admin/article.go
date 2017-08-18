@@ -73,8 +73,7 @@ func (this *ArticleController) List() {
 	this.Data["status"] = status
 	this.Data["list"] = list
 	this.Data["pagebar"] = models.NewPager(page, count, pagesize, fmt.Sprintf("/admin/article/list?status=%d&searchtype=%s&keyword=%s&page=%s", status, searchtype, keyword, "%d")).ToString()
-	//this.display()
-	this.display1("article_list")
+	this.display("article_list")
 }
 
 func (this *ArticleController) set_args(history *models.History) {
@@ -145,25 +144,12 @@ func (this *ArticleController) History() {
 			query.OrderBy("-dotime").Limit(pagesize, offset).All(&list)
 		}
 		this.Data["list"] = list
-		this.display1("history")
+		this.display("history")
 	}
 }
 
 func (this *ArticleController) Flot() {
-	this.display1("flot")
-}
-
-//编辑
-func (this *ArticleController) Edit() {
-	id, _ := this.GetInt64("id")
-	post := models.Post{Id: id}
-	if post.Read() != nil {
-		this.Abort("404")
-	}
-	post.Tags = strings.Trim(post.Tags, ",")
-	this.Data["post"] = post
-	this.Data["posttime"] = post.Posttime.Format("2006-01-02 15:04:05")
-	this.display()
+	this.display("flot")
 }
 
 //保存
