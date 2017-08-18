@@ -70,7 +70,7 @@ func (this *baseController) display(tpl ...string) {
 	this.Data["version"] = beego.AppConfig.String("AppVer")
 	this.Data["adminid"] = this.userid
 	this.Data["adminname"] = this.username
-	setLayout1(this)
+	setLayout(this)
 	this.TplName = tplname
 }
 
@@ -116,15 +116,8 @@ func (this *baseController) getTime() time.Time {
 // 用户id是1的，给展示超级管理员，否则是用个个人的管理页面
 func setLayout(this *baseController) {
 	if 1 == this.userid {
-		this.Layout = this.theme + "/layout_admin.html"
-	} else {
-		this.Layout = this.theme + "/layout.html"
-	}
-}
-func setLayout1(this *baseController) {
-	if 1 == this.userid {
 		this.Layout = this.theme + "/layout_super_admin.html"
 	} else {
-		this.Layout = this.theme + "/layout1_admin.html"
+		this.Layout = this.theme + "/layout_admin.html"
 	}
 }
