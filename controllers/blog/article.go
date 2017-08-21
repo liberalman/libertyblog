@@ -4,9 +4,9 @@ import (
 	"libertyblog/models"
 	"strconv"
 	"strings"
-	"time"
+	//"time"
 
-	"github.com/astaxie/beego"
+	//"github.com/astaxie/beego"
 	//	"github.com/astaxie/beego/orm"
 )
 
@@ -75,79 +75,11 @@ func (this *ArticleController) Index() {
 		}
 	}
 
-	this.right = "" // 去掉右侧边栏
 	this.setHeadFootMetas(article.Title, strings.Trim(article.Tags, ","), article.Title)
 
-	//this.display_no_right("article")
-	this.display("article", 1)
-}
+	var count int = 0
+	this.Data["comments"], count = models.QueryComments(article.Id, this.page, this.pagesize)
+	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(this.pagesize), "/index%d.html").ToString()
 
-// 评论 http://www.liberalman.cn/article/comment
-// 插入 curl -d "flag=1&article_id=76&content=test" "http://localhost/article/comment"
-// 更新 curl -d "flag=2&article_id=76&content=test1&id=1" "http://localhost/article/comment"
-// 删除 curl -d "flag=3&id=1" "http://localhost/article/comment"
-func (this *ArticleController) Comment() {
-	beego.Info("action:" + this.GetString("action") + " signature:" + this.GetString("signature"))
-	/*if this.userid <= 0 {
-		this.Ctx.WriteString("{\"code\":-1,\"errorMessage\":\"please login\"}")
-		return
-	}*/
-	if this.Ctx.Input.IsPost() {
-		flag, _ := this.GetInt("flag")
-		var comment models.Comment
-		switch flag {
-		case 1: // 新增
-			comment.User_id = this.userid
-			comment.Article_id, _ = this.GetInt64("article_id")
-			comment.Ref_comm_id, _ = this.GetInt64("ref_comm_id")
-			comment.Content = this.GetString("content")
-			comment.Create_time = time.Now()
-			if err := comment.Insert(); nil != err {
-				this.Ctx.WriteString(err.Error())
-				return
-			}
-			break
-		case 2: // 修改
-			comment.Id, _ = this.GetInt64("id") // 评论id
-			if err := comment.Read("id"); nil != err {
-				this.Ctx.WriteString(err.Error())
-				return
-			}
-			if comment.User_id != this.userid {
-				this.Ctx.WriteString("this is not your comment,you can not update!")
-				return
-			}
-			comment.User_id = this.userid
-			comment.Article_id, _ = this.GetInt64("article_id")
-			comment.Ref_comm_id, _ = this.GetInt64("ref_comm_id")
-			comment.Content = this.GetString("content")
-			comment.Create_time = time.Now()
-			if err := comment.Update(); nil != err {
-				this.Ctx.WriteString(err.Error())
-				return
-			}
-			break
-		case 3:
-			comment.Id, _ = this.GetInt64("id") // 评论id
-			if err := comment.Read("id"); nil != err {
-				this.Ctx.WriteString(err.Error())
-				return
-			}
-			if comment.User_id != this.userid {
-				this.Ctx.WriteString("this is not your comment,you can not delete!")
-				return
-			}
-			if err := comment.Delete(); nil != err {
-				this.Ctx.WriteString(err.Error())
-				return
-			}
-			break
-		default:
-			this.Ctx.WriteString("no this flag")
-			return
-		}
-		this.Ctx.WriteString("{\"code\":0}")
-	} else {
-		this.Ctx.WriteString("must be POST")
-	}
+	this.display("article", 1) // 去掉右侧边栏
 }

@@ -12,15 +12,16 @@ func init() {
 
 	beego.Include(&blog.MainController{})
 	beego.Include(&admin.AccountController{})
+	beego.Include(&admin.ArticleController{})
 
 	//前台路由
 	//beego.Router("/", &blog.MainController{}, "*:Index")
 	beego.Router("/404.html", &blog.MainController{}, "*:Go404")
 	beego.Router("/index:page:int.html", &blog.MainController{}, "*:Index")
 
-	beego.Router("/article/:id:int", &blog.ArticleController{}, "*:Index")            //ID访问
-	beego.Router("/article/:urlname(.+)", &blog.ArticleController{}, "*:Index")       //别名访问文章
-	beego.Router("/article/comment", &blog.ArticleController{}, "*:Comment")          // 评论文章
+	beego.Router("/article/:id:int", &blog.ArticleController{}, "*:Index")      //ID访问
+	beego.Router("/article/:urlname(.+)", &blog.ArticleController{}, "*:Index") //别名访问文章
+	//beego.Router("/article/comment", &blog.ArticleController{}, "*:Comment")          // 评论文章
 	beego.Router("/articles/:userid:int", &blog.ArticleController{}, "*:SomeoneList") //访问某个用户的文章列表
 	beego.Router("/articles/:userid:int/index:page:int.html", &blog.ArticleController{}, "*:SomeoneList")
 

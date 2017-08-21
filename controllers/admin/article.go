@@ -397,3 +397,69 @@ func createSmallPic(file io.Reader, fileSmall string, w, h int) error {
 	// write new image to file
 	return jpeg.Encode(out, m, nil)
 }
+
+// 评论
+// 插入 curl -d "flag=1&article_id=76&to_user_id=1&content=test" "http://localhost/admin/article/comment"
+// 更新 curl -d "flag=2&content=test1&id=1" "http://localhost/admin/article/comment"
+// 删除 curl -d "flag=3&id=1" "http://localhost/admin/article/comment"
+// @router /admin/article/comment [post]
+func (this *ArticleController) Comment() {
+	if this.Ctx.Input.IsPost() {
+		flag, _ := this.GetInt("flag")
+		var comment models.Comment
+		switch flag {
+		case 1: // 新增
+			comment.User_id = this.userid
+			comment.Article_id, _ = this.GetInt64("article_id")
+			comment.Ref_comm_id, _ = this.GetInt64("ref_comm_id")
+			comment.Content = this.GetString("content")
+			comment.To_user_id, _ = this.GetInt64("to_user_id")
+			comment.Dislike, _ = this.GetInt("dislike")
+			comment.Like, _ = this.GetInt("like")
+			comment.Create_time = time.Now()
+			if err := comment.Insert(); nil != err {
+				this.Ctx.WriteString(err.Error())
+				return
+			}
+			break
+		case 2: // 修改
+			comment.Id, _ = this.GetInt64("id") // 评论id
+			if err := comment.Read("id"); nil != err {
+				this.Ctx.WriteString(err.Error())
+				return
+			}
+			if comment.User_id != this.userid {
+				this.Ctx.WriteString("{\"code\":-1,\"errorMessage\":\"this is not your comment,you can not update!\"}")
+				return
+			}
+			comment.Content = this.GetString("content")
+			comment.Create_time = time.Now()
+			if err := comment.Update(); nil != err {
+				this.Ctx.WriteString(err.Error())
+				return
+			}
+			break
+		case 3:
+			comment.Id, _ = this.GetInt64("id") // 评论id
+			if err := comment.Read("id"); nil != err {
+				this.Ctx.WriteString(err.Error())
+				return
+			}
+			if comment.User_id != this.userid {
+				this.Ctx.WriteString("{\"code\":-1,\"errorMessage\":\"this is not your comment,you can not delete!\"}")
+				return
+			}
+			if err := comment.Delete(); nil != err {
+				this.Ctx.WriteString(err.Error())
+				return
+			}
+			break
+		default:
+			this.Ctx.WriteString("{\"code\":-1,\"errorMessage\":\"no this flag\"}")
+			return
+		}
+		this.Ctx.WriteString("{\"code\":0}")
+	} else {
+		this.Ctx.WriteString("{\"code\":-1,\"errorMessage\":\"must be POST\"}")
+	}
+}

@@ -1,8 +1,7 @@
 $(document).ready(function() {
 
 	// load edit_article window
-	$("body").append('<!-- Modal -->\
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">\
+	$("body").append('<div class="modal fade" id="myModal" tabindex="-1" role="dialog">\
 		<div class="modal-body">\
 			<div id="toedit"></div>\
 		</div>\

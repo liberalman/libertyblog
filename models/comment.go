@@ -14,10 +14,27 @@ import (
 type Comment struct {
 	Id          int64
 	User_id     int64
+	To_user_id  int64
 	Ref_comm_id int64
 	Article_id  int64
 	Create_time time.Time
 	Content     string
+	Like        int
+	Dislike     int
+}
+
+type CommentDetail struct {
+	Id          int64
+	User_id     int64
+	To_user_id  int64
+	Ref_comm_id int64
+	Article_id  int64
+	Create_time time.Time
+	Content     string
+	Like        int
+	Dislike     int
+	Avatarurl   string
+	Username    string
 }
 
 func (m *Comment) TableName() string {
@@ -54,4 +71,14 @@ func (m *Comment) Delete() error {
 		return err
 	}
 	return nil
+}
+
+func QueryComments(article_id int64, page int, pagesize int) ([]CommentDetail, int) {
+	var count int = 0
+	var list []CommentDetail
+	o := orm.NewOrm()
+	o.Raw("select p.id,p.user_id,p.to_user_id,p.ref_comm_id,p.article_id,p.create_time,p.like,p.dislike,p.content,u.avatarurl,u.username from tb_comments p,tb_user u where p.article_id=? and p.user_id=u.id order by p.create_time desc limit ?,?",
+		article_id, (page-1)*pagesize, pagesize).QueryRows(&list)
+	o.Raw("select count(id) from tb_comments where article_id=?", article_id).QueryRow(&count)
+	return list, count
 }

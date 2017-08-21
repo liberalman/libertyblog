@@ -36,12 +36,11 @@
 	<div class="col-md-9">
 		<div class="panel panel-default shadow" style="border-radius:10px;">
 			<div class="panel-body" style="padding:2% 5%;">
-					<h2>{{.post.Title}}</h2>
-					<span class="label label-info">发布时间：{{date .post.Posttime "Y-m-j"}}</span>
-					<span class="label label-primary">作者：{{.post.Username}}</span>
-					<span class="label label-success">阅读：{{.post.Views}}</span>
-					<span class="label label-warning">{{if eq 1 .post.Pubtype}}转载{{else}}原创{{end}}</span>
-					{{if eq 1 .showEditBtn}}<span class="label label-info" onclick="edit_article({{.post.Id}})">编辑</span>{{end}}
+				<h2>{{.post.Title}}</h2>
+				<span class="label label-info">发布时间：{{date .post.Posttime "Y-m-j"}}</span>
+				<span class="label label-primary">作者：{{.post.Username}}</span>
+				<span class="label label-success">阅读：{{.post.Views}}</span>
+				<span class="label label-warning">{{if eq 1 .post.Pubtype}}转载{{else}}原创{{end}}</span> {{if eq 1 .showEditBtn}}<span class="label label-info" onclick="edit_article({{.post.Id}})">编辑</span>{{end}}
 			</div>
 		</div>
 
@@ -78,6 +77,58 @@
 				<div class="row duoshuo">
 					<div class="ds-thread" style="width:95%;"></div>
 				</div>
+
+				<hr />
+
+				<div class="row">
+					<form id="echo" action="/admin/article/comment" method="post">
+						<div class="form-group input-group has-success">
+							<input class="hidden" name="id" value="{{.post.Id}}" />
+							<input class="hidden" name="article_id" value="{{.post.Id}}" />
+							<input class="hidden" name="flag" value="1" />
+							<input class="hidden" name="to_user_id" value="{{.post.Userid}}" />
+							<input type="text" class="form-control" placeholder="回复" name="content" />
+							<span class="input-group-btn">
+								        <button id="btn_echo" class="btn btn-default" type="button">发表!</button>
+								     </span>
+						</div>
+					</form>
+
+					{{range $k, $v := .comments}}
+					<div class="media">
+						<div class="media-left">
+							<a href="#">
+								<img class="media-object" data-src="holder.js/32x32" src="{{$v.Avatarurl}}" alt="..." style="width: 32px; height: 32px;" data-holder-rendered="true">
+							</a>
+						</div>
+						<div class="media-body">
+							<h6 class="media-heading">{{$v.Username}}</h6> {{$v.Content}}
+							<a>{{date $v.Create_time "Y-m-j"}}</a>
+							{{if eq $v.User_id $.post.Userid}}
+							<a onclick="del_comment({{$v.Id}})">删除</a>{{end}}
+							<a role="button" data-toggle="collapse" href="#collapseExample_{{$v.Id}}" aria-expanded="false" aria-controls="collapseExample">回复</a>
+							<form class="collapse" id="collapseExample_{{$v.Id}}" action="/admin/article/comment" method="post">
+								<br/>
+								<input class="hidden" name="id" value="{{$v.Id}}" />
+								<input class="hidden" name="article_id" value="{{$v.Article_id}}" />
+								<input class="hidden" name="flag" value="1" />
+								<input class="hidden" name="to_user_id" value="{{$v.To_user_id}}" />
+								<input class="hidden" name="ref_comm_id" value="{{$v.Id}}" />
+								<input class="hidden" name="like" value="{{$v.Like}}" />
+								<input class="hidden" name="dislike" value="{{$v.Dislike}}" />
+								<div class="form-group input-group has-success">
+									<input type="text" class="form-control" placeholder="回复:{{$v.Username}}" name="content" />
+									<span class="input-group-btn">
+								        <button class="btn btn-default" type="submit">发表!</button>
+								     </span>
+								</div>
+							</form>
+						</div>
+					</div>
+					{{end}}
+				</div>
+				<div class="row">{{str2html .pagebar}}</div>
+
 			</div>
 		</div>
 	</div>
@@ -122,29 +173,61 @@
 	 *
 	 */
 	var browser = {
-			versions: function() {
-				var u = navigator.userAgent,
-					app = navigator.appVersion;
-				return { //移动终端浏览器版本信息
-					trident: u.indexOf('Trident') > -1, //IE内核
-					presto: u.indexOf('Presto') > -1, //opera内核
-					webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-					gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-					mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
-					ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-					android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-					iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
-					iPad: u.indexOf('iPad') > -1, //是否iPad
-					webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-				};
-			}(),
-			language: (navigator.browserLanguage || navigator.language).toLowerCase()
+		versions: function() {
+			var u = navigator.userAgent,
+				app = navigator.appVersion;
+			return { //移动终端浏览器版本信息
+				trident: u.indexOf('Trident') > -1, //IE内核
+				presto: u.indexOf('Presto') > -1, //opera内核
+				webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+				gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+				mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
+				ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+				android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+				iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+				iPad: u.indexOf('iPad') > -1, //是否iPad
+				webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+			};
+		}(),
+		language: (navigator.browserLanguage || navigator.language).toLowerCase()
+	}
+	/*document.writeln("语言版本: "+browser.language + '</br>');
+	document.writeln(" 是否为移动终端: "+ browser.versions.mobile + '</br>');
+	document.writeln(" ios终端: "+browser.versions.ios + '</br>');
+	document.writeln(" android终端: "+browser.versions.android + '</br>');
+	document.writeln(" 是否为iPhone: "+browser.versions.iPhone + '</br>');
+	document.writeln(" 是否iPad: "+browser.versions.iPad + '</br>');
+	document.writeln(navigator.userAgent + '</br>');*/
+
+	function del_comment(id) {
+		if(confirm("确定删除？")) {
+			$.post('/admin/article/comment', {
+					id: id,
+					flag: 3
+				},
+				function(data) {
+					var obj = JSON.parse(data);
+					if("0" != obj.code) { // 返回0代表成功，其他失败
+						toastr.error(data);
+					} else {
+						toastr.success('成功');
+						location.reload();
+					}
+				});
 		}
-		/*document.writeln("语言版本: "+browser.language + '</br>');
-		document.writeln(" 是否为移动终端: "+ browser.versions.mobile + '</br>');
-		document.writeln(" ios终端: "+browser.versions.ios + '</br>');
-		document.writeln(" android终端: "+browser.versions.android + '</br>');
-		document.writeln(" 是否为iPhone: "+browser.versions.iPhone + '</br>');
-		document.writeln(" 是否iPad: "+browser.versions.iPad + '</br>');
-		document.writeln(navigator.userAgent + '</br>');*/
+	}
+
+	$("#btn_echo").click(function() {
+		$.post('/admin/article/comment',
+			$("#echo").serialize(),
+			function(data) {
+				var obj = JSON.parse(data);
+				if("0" != obj.code) { // 返回0代表成功，其他失败
+					toastr.error(data);
+				} else {
+					toastr.success('成功');
+					location.reload();
+				}
+			});
+	});
 </script>
