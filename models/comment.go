@@ -35,6 +35,7 @@ type CommentDetail struct {
 	Dislike     int
 	Avatarurl   string
 	Username    string
+	Tousername  string
 }
 
 func (m *Comment) TableName() string {
@@ -77,7 +78,7 @@ func QueryComments(article_id int64, page int, pagesize int) ([]CommentDetail, i
 	var count int = 0
 	var list []CommentDetail
 	o := orm.NewOrm()
-	o.Raw("select p.id,p.user_id,p.to_user_id,p.ref_comm_id,p.article_id,p.create_time,p.like,p.dislike,p.content,u.avatarurl,u.username from tb_comments p,tb_user u where p.article_id=? and p.user_id=u.id order by p.create_time desc limit ?,?",
+	o.Raw("select p.id,p.user_id,p.to_user_id,p.ref_comm_id,p.article_id,p.create_time,p.like,p.dislike,p.content,u.avatarurl,u.username,(select username from tb_user where id=p.to_user_id) tousername from tb_comments p,tb_user u where p.article_id=? and p.user_id=u.id order by p.create_time desc limit ?,?",
 		article_id, (page-1)*pagesize, pagesize).QueryRows(&list)
 	o.Raw("select count(id) from tb_comments where article_id=?", article_id).QueryRow(&count)
 	return list, count

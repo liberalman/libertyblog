@@ -81,7 +81,7 @@
 				<hr />
 
 				<div class="row">
-					<form id="echo" action="/admin/article/comment" method="post">
+					<form id="btn_echo2article" action="/admin/article/comment" method="post">
 						<div class="form-group input-group has-success">
 							<input class="hidden" name="id" value="{{.post.Id}}" />
 							<input class="hidden" name="article_id" value="{{.post.Id}}" />
@@ -102,20 +102,22 @@
 							</a>
 						</div>
 						<div class="media-body">
-							<h6 class="media-heading">{{$v.Username}}</h6> {{$v.Content}}
+							<h6 class="media-heading">
+								<a role="button" href="/user/{{$v.User_id}}">{{$v.Username}}</a> 回复 <a role="button" href="/user/{{$v.To_user_id}}">{{$v.Tousername}}</a>
+							</h6>
+							<p>
+							{{$v.Content}}</p>
 							<a>{{date $v.Create_time "Y-m-j"}}</a>
 							{{if eq $v.User_id $.post.Userid}}
-							<a onclick="del_comment({{$v.Id}})">删除</a>{{end}}
+							<a role="button" onclick="del_comment({{$v.Id}})">删除</a>{{end}}
 							<a role="button" data-toggle="collapse" href="#collapseExample_{{$v.Id}}" aria-expanded="false" aria-controls="collapseExample">回复</a>
-							<form class="collapse" id="collapseExample_{{$v.Id}}" action="/admin/article/comment" method="post">
+							<form class="collapse echo2someone" id="collapseExample_{{$v.Id}}" method="post">
 								<br/>
 								<input class="hidden" name="id" value="{{$v.Id}}" />
-								<input class="hidden" name="article_id" value="{{$v.Article_id}}" />
+								<input class="hidden" name="article_id" value="{{$.post.Id}}" />
 								<input class="hidden" name="flag" value="1" />
-								<input class="hidden" name="to_user_id" value="{{$v.To_user_id}}" />
+								<input class="hidden" name="to_user_id" value="{{$v.User_id}}" />
 								<input class="hidden" name="ref_comm_id" value="{{$v.Id}}" />
-								<input class="hidden" name="like" value="{{$v.Like}}" />
-								<input class="hidden" name="dislike" value="{{$v.Dislike}}" />
 								<div class="form-group input-group has-success">
 									<input type="text" class="form-control" placeholder="回复:{{$v.Username}}" name="content" />
 									<span class="input-group-btn">
@@ -217,7 +219,7 @@
 		}
 	}
 
-	$("#btn_echo").click(function() {
+	$("#btn_echo2article").click(function() {
 		$.post('/admin/article/comment',
 			$("#echo").serialize(),
 			function(data) {
@@ -229,5 +231,26 @@
 					location.reload();
 				}
 			});
+	});
+
+	$(".echo2someone").submit(function(e) {
+		e.preventDefault();
+		$.ajax({
+			url: "/admin/article/comment",
+			type: "POST",
+			cache: false,
+			async: false,
+			data: $(this).serialize(),
+			success: function(data) {
+				var obj = JSON.parse(data);
+				if("0" != obj.code) { // 返回0代表成功，其他失败
+					toastr.error(data);
+				} else {
+					toastr.success('成功');
+					location.reload();
+				}
+			}
+		});
+		return false; // 要使用 return false 拦截页面提交
 	});
 </script>
