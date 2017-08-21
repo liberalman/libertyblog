@@ -34,27 +34,6 @@ func (this *MainController) Index() {
 	this.display("index", 0)
 }
 
-//blog分页显示
-func (this *MainController) BlogList() {
-	var list []*models.Post
-	query := new(models.Post).Query().Filter("status", 0).Filter("urltype", 0)
-	count, _ := query.Count()
-	if count > 0 {
-		query.OrderBy("-istop", "-posttime").Limit(this.pagesize, (this.page-1)*this.pagesize).All(&list)
-	}
-	this.Data["list"] = list
-	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(this.pagesize), "/life%d.html").ToString()
-	this.setHeadFootMetas("成长录")
-	this.display("life", 0)
-}
-
-//留言板
-func (this *MainController) Book() {
-	this.setHeadFootMetas("留言板")
-	this.right = "about.html"
-	this.display("book", 0)
-}
-
 //留404页面
 func (this *MainController) Go404() {
 	this.setHeadFootMetas("Sorry 404页面没找到")

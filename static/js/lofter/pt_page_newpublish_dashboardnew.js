@@ -4136,7 +4136,7 @@ this.cqX = {
     function test() {
         var dyi = "just for update!!!"
     }
-    loft.x.dwZ("/src/css/retina/style.css");
+    loft.x.dwZ("/css/lofter/retina/style.css");
     loft.x.dwI();
     if (window.isInDashboard || window.isInTagSearch) { (function() {
             var bJ = P("loft.m.g");

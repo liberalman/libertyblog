@@ -27,9 +27,6 @@ func init() {
 	beego.Router("/category/:name(.+?)", &blog.MainController{}, "*:Category")
 	beego.Router("/category/:name(.+?)/page/:page:int", &blog.MainController{}, "*:Category")
 
-	beego.Router("/life:page:int.html", &blog.MainController{}, "*:BlogList")
-	beego.Router("/life.html", &blog.MainController{}, "*:BlogList")
-
 	beego.Router("/mood.html", &blog.MainController{}, "*:Mood")
 	beego.Router("/mood:page:int.html", &blog.MainController{}, "*:Mood")
 
@@ -42,7 +39,6 @@ func init() {
 	beego.Router("/album1.html", &blog.MainController{}, "*:Album1")
 	beego.Router("/album:page:int.html", &blog.MainController{}, "*:Album")
 
-	beego.Router("/book.html", &blog.MainController{}, "*:Book")
 	beego.Router("/:urlname(.+)", &blog.ArticleController{}, "*:Index") //别名访问
 
 	beego.Router("/register", &blog.UserController{}, "*:Register")
