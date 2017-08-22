@@ -40,21 +40,6 @@ func (this *MainController) Go404() {
 	this.display("404", 0)
 }
 
-//说说
-func (this *MainController) Mood() {
-	var list []*models.Mood
-	query := new(models.Mood).Query()
-	count, _ := query.Count()
-	if count > 0 {
-		query.OrderBy("-posttime").Limit(this.pagesize, (this.page-1)*this.pagesize).All(&list) // "-"号是desc，不加符号是asc
-	}
-	this.Data["list"] = list
-	this.setHeadFootMetas("碎言碎语")
-	this.right = ""
-	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(this.pagesize), "/mood%d.html").ToString()
-	this.display("mood", 0)
-}
-
 //照片展示
 func (this *MainController) Photo() {
 	album := new(models.Album)

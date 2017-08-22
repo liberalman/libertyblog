@@ -134,11 +134,12 @@ func (this *ArticleController) History() {
 	} else {
 		// 查询操作
 		var query orm.QuerySeter
-		if 1 == this.userid { // 如果是管理员用户id，则是查看所有的帖子
+		/*if 1 == this.userid { // 如果是管理员用户id，则是查看所有的帖子
 			query = history.Query()
 		} else {
 			query = history.Query().Filter("userid", this.userid)
-		}
+		}*/
+		query = history.Query().Filter("userid", this.userid)
 		count, _ := query.Count()
 		if count > 0 {
 			query.OrderBy("-dotime").Limit(pagesize, offset).All(&list)

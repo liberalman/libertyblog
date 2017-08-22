@@ -209,7 +209,7 @@
 				},
 				function(data) {
 					if(0 != data.Code) { // 返回0代表成功，其他失败
-						toastr.error("Code:" + data.Code + " Error:" + data.Message);
+						toastr.error("Code: " + data.Code + " Error: " + data.Message);
 					} else {
 						toastr.success(data.Message);
 						location.reload();
@@ -223,7 +223,7 @@
 			$("#form_echo2article").serialize(),
 			function(data) {
 				if(0 != data.Code) { // 返回0代表成功，其他失败
-					toastr.error("Code:" + data.Code + " Error:" + data.Message);
+					toastr.error("Code: " + data.Code + " Error: " + data.Message);
 				} else {
 					toastr.success(data.Message);
 					location.reload();
@@ -241,7 +241,7 @@
 			data: $(this).serialize(),
 			success: function(data) {
 				if(0 != data.Code) { // 返回0代表成功，其他失败
-					toastr.error("Code:" + data.Code + " Error:" + data.Message);
+					toastr.error("Code: " + data.Code + " Error: " + data.Message);
 				} else {
 					toastr.success(data.Message);
 					location.reload();

@@ -106,26 +106,21 @@ func (this *UserController) Login() {
 				// 无此用户名，接下来检查邮箱
 				user.Email = username
 				if nil != user.Read("email") {
-					// 无此Email
-					//this.Data["errmsg"] = "无此邮箱/帐号"
 					this.Ctx.WriteString("无此邮箱/帐号")
 					return
-					//goto show
 				}
 			}
 
 			//账户和邮箱任填一个就行，会分别去查询是否存在
 			if user.Password != models.Md5([]byte(password)) {
-				//this.Data["errmsg"] = "密码错误"
 				this.Ctx.WriteString("密码错误")
 				return
 			} else if user.Active == 0 {
-				//this.Data["errmsg"] = "该帐号未激活"
 				this.Ctx.WriteString("该帐号未激活")
 				return
 			} else {
 				user.Logincount += 1
-				user.Lastip = this.getClientIp()
+				user.Lastip = this.getClientRealIp()
 				user.Lastlogin = this.getTime()
 				user.Update()
 				authkey := models.Md5([]byte(this.getClientIp() + "|" + user.Password))
@@ -135,14 +130,11 @@ func (this *UserController) Login() {
 				} else {
 					this.Ctx.SetCookie("auth", strconv.FormatInt(user.Id, 10)+"|"+authkey)
 				}
-				//this.Data["errmsg"] = "success"
-				//this.Redirect("/", 302) // 登录成功跳转到首页
 				this.Ctx.WriteString("0")
 				return
 			}
 		}
 	}
-	//show:
 	this.display_reg_login("login") // 显示登录页面
 }
 

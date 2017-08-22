@@ -37,9 +37,6 @@ func init() {
 	beego.Router("/category/:name(.+?)", &blog.MainController{}, "*:Category")
 	beego.Router("/category/:name(.+?)/page/:page:int", &blog.MainController{}, "*:Category")
 
-	beego.Router("/mood.html", &blog.MainController{}, "*:Mood")
-	beego.Router("/mood:page:int.html", &blog.MainController{}, "*:Mood")
-
 	//照片展示
 	beego.Router("/photo.html", &blog.MainController{}, "*:Photo")
 	beego.Router("/photo:page:int.html", &blog.MainController{}, "*:Photo")
@@ -79,11 +76,6 @@ func init() {
 	beego.Router("/admin/tag", &admin.TagController{}, "*:Index")
 	beego.Router("/admin/flot", &admin.ArticleController{}, "*:Flot")
 	beego.Router("/admin/history", &admin.ArticleController{}, "*:History")
-
-	//说说管理
-	beego.Router("/admin/mood/add", &admin.MoodController{}, "*:Add")
-	beego.Router("/admin/mood/list", &admin.MoodController{}, "*:List")
-	beego.Router("/admin/mood/delete", &admin.MoodController{}, "*:Delete")
 
 	//相册管理
 	beego.Router("/admin/album/add", &admin.AlbumController{}, "*:Add")

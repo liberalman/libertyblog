@@ -21,31 +21,23 @@ func (this *AccountController) Profile() {
 	}
 	if this.Ctx.Request.Method == "POST" {
 		var errmsg string
-		//errmsg := make(map[string]string)
 		password := strings.TrimSpace(this.GetString("password"))
 		newpassword := strings.TrimSpace(this.GetString("newpassword"))
 		newpassword2 := strings.TrimSpace(this.GetString("newpassword2"))
-		//updated := false
 		if newpassword != "" {
 			if password == "" || models.Md5([]byte(password)) != user.Password {
-				//errmsg["password"] = "当前密码错误"
 				errmsg = "当前密码错误"
 			} else if len(newpassword) < 6 {
-				//errmsg["newpassword"] = "密码长度不能少于6个字符"
 				errmsg = "密码长度不能少于6个字符"
 			} else if newpassword != newpassword2 {
-				//errmsg["newpassword2"] = "两次输入的密码不一致"
 				errmsg = "两次输入的密码不一致"
 			}
 			if len(errmsg) == 0 { // 无错误
 				user.Password = models.Md5([]byte(newpassword))
 				user.Update("password")
-				//updated = true
 				errmsg = "0" // 成功返回0
 			}
 		}
-		//this.Data["updated"] = updated
-		//this.Data["errmsg"] = errmsg
 		this.Ctx.WriteString(errmsg)
 		return
 	}
