@@ -402,8 +402,14 @@ func createSmallPic(file io.Reader, fileSmall string, w, h int) error {
 // 插入 curl -d "flag=1&article_id=76&to_user_id=1&content=test" "http://localhost/admin/article/comment"
 // 更新 curl -d "flag=2&content=test1&id=1" "http://localhost/admin/article/comment"
 // 删除 curl -d "flag=3&id=1" "http://localhost/admin/article/comment"
+// @Title 评论
+// @Description 插入,更新,删除 评论
+// @Param	objectId		path 	string	true		"the objectid you want to get"
+// @Success 200 {object} models.User
+// @Failure 403 :objectId is empty
 // @router /admin/article/comment [post]
 func (this *ArticleController) Comment() {
+	ret := models.Ret{Code: -1, Message: "success", Data: ""}
 	if this.Ctx.Input.IsPost() {
 		flag, _ := this.GetInt("flag")
 		var comment models.Comment
@@ -418,48 +424,60 @@ func (this *ArticleController) Comment() {
 			comment.Like, _ = this.GetInt("like")
 			comment.Create_time = time.Now()
 			if err := comment.Insert(); nil != err {
-				this.Ctx.WriteString(err.Error())
+				ret.Code = -9
+				ret.Message = err.Error()
 				return
 			}
 			break
 		case 2: // 修改
 			comment.Id, _ = this.GetInt64("id") // 评论id
 			if err := comment.Read("id"); nil != err {
-				this.Ctx.WriteString(err.Error())
+				ret.Code = -8
+				ret.Message = err.Error()
 				return
 			}
 			if comment.User_id != this.userid {
-				this.Ctx.WriteString("{\"code\":-1,\"errorMessage\":\"this is not your comment,you can not update!\"}")
+				ret.Code = -7
+				ret.Message = "this is not your comment,you can not update!"
 				return
 			}
 			comment.Content = this.GetString("content")
 			comment.Create_time = time.Now()
 			if err := comment.Update(); nil != err {
-				this.Ctx.WriteString(err.Error())
+				ret.Code = -6
+				ret.Message = err.Error()
 				return
 			}
 			break
 		case 3:
 			comment.Id, _ = this.GetInt64("id") // 评论id
 			if err := comment.Read("id"); nil != err {
-				this.Ctx.WriteString(err.Error())
+				ret.Code = -5
+				ret.Message = err.Error()
 				return
 			}
 			if comment.User_id != this.userid {
-				this.Ctx.WriteString("{\"code\":-1,\"errorMessage\":\"this is not your comment,you can not delete!\"}")
+				//this.Ctx.WriteString("{\"code\":-1,\"errorMessage\":\"this is not your comment,you can not delete!\"}")
+				ret.Code = -4
+				ret.Message = "this is not your comment,you can not delete!"
 				return
 			}
 			if err := comment.Delete(); nil != err {
-				this.Ctx.WriteString(err.Error())
+				ret.Code = -3
+				ret.Message = err.Error()
 				return
 			}
 			break
 		default:
-			this.Ctx.WriteString("{\"code\":-1,\"errorMessage\":\"no this flag\"}")
+			ret.Code = -2
+			ret.Message = "no this flag"
 			return
 		}
-		this.Ctx.WriteString("{\"code\":0}")
+		ret.Code = 0
 	} else {
-		this.Ctx.WriteString("{\"code\":-1,\"errorMessage\":\"must be POST\"}")
+		ret.Code = -1
+		ret.Message = "must be POST"
 	}
+	this.Data["json"] = ret
+	this.ServeJSON()
 }

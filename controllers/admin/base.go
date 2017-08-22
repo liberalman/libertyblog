@@ -54,7 +54,13 @@ func (this *baseController) auth() {
 			}
 		}
 		if this.userid == 0 {
-			this.Redirect("/login", 302)
+			if this.IsAjax() {
+				ret := models.Ret{Code: -1, Message: "please login!", Data: ""}
+				this.Data["json"] = ret
+				this.ServeJSON()
+			} else {
+				this.Redirect("/login", 302)
+			}
 		}
 	}
 }

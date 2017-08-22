@@ -81,7 +81,7 @@
 				<hr />
 
 				<div class="row">
-					<form id="btn_echo2article" action="/admin/article/comment" method="post">
+					<form id="form_echo2article" action="/admin/article/comment" method="post">
 						<div class="form-group input-group has-success">
 							<input class="hidden" name="id" value="{{.post.Id}}" />
 							<input class="hidden" name="article_id" value="{{.post.Id}}" />
@@ -89,7 +89,7 @@
 							<input class="hidden" name="to_user_id" value="{{.post.Userid}}" />
 							<input type="text" class="form-control" placeholder="回复" name="content" />
 							<span class="input-group-btn">
-								        <button id="btn_echo" class="btn btn-default" type="button">发表!</button>
+								        <button id="btn_echo2article" class="btn btn-default" type="button">发表!</button>
 								     </span>
 						</div>
 					</form>
@@ -106,7 +106,7 @@
 								<a role="button" href="/user/{{$v.User_id}}">{{$v.Username}}</a> 回复 <a role="button" href="/user/{{$v.To_user_id}}">{{$v.Tousername}}</a>
 							</h6>
 							<p>
-							{{$v.Content}}</p>
+								{{$v.Content}}</p>
 							<a>{{date $v.Create_time "Y-m-j"}}</a>
 							{{if eq $v.User_id $.post.Userid}}
 							<a role="button" onclick="del_comment({{$v.Id}})">删除</a>{{end}}
@@ -208,11 +208,10 @@
 					flag: 3
 				},
 				function(data) {
-					var obj = JSON.parse(data);
-					if("0" != obj.code) { // 返回0代表成功，其他失败
-						toastr.error(data);
+					if(0 != data.Code) { // 返回0代表成功，其他失败
+						toastr.error("Code:" + data.Code + " Error:" + data.Message);
 					} else {
-						toastr.success('成功');
+						toastr.success(data.Message);
 						location.reload();
 					}
 				});
@@ -221,13 +220,12 @@
 
 	$("#btn_echo2article").click(function() {
 		$.post('/admin/article/comment',
-			$("#echo").serialize(),
+			$("#form_echo2article").serialize(),
 			function(data) {
-				var obj = JSON.parse(data);
-				if("0" != obj.code) { // 返回0代表成功，其他失败
-					toastr.error(data);
+				if(0 != data.Code) { // 返回0代表成功，其他失败
+					toastr.error("Code:" + data.Code + " Error:" + data.Message);
 				} else {
-					toastr.success('成功');
+					toastr.success(data.Message);
 					location.reload();
 				}
 			});
@@ -242,11 +240,10 @@
 			async: true,
 			data: $(this).serialize(),
 			success: function(data) {
-				var obj = JSON.parse(data);
-				if("0" != obj.code) { // 返回0代表成功，其他失败
-					toastr.error(data);
+				if(0 != data.Code) { // 返回0代表成功，其他失败
+					toastr.error("Code:" + data.Code + " Error:" + data.Message);
 				} else {
-					toastr.success('成功');
+					toastr.success(data.Message);
 					location.reload();
 				}
 			}

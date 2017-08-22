@@ -17,6 +17,7 @@ git clone -depth=1 https://github.com/liberalman/libertyblog.git
 该项目依赖一些golang的第三方库，执行以下命令安装
 ```
 go get -u github.com/astaxie/beego
+go get -u github.com/beego/bee
 go get github.com/go-sql-driver/mysql
 go get github.com/nfnt/resize
 go get github.com/yunge/sphinx

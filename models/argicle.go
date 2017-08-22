@@ -105,8 +105,6 @@ func (post *Article) GetPreAndNext(postid int64) (pre, next *Article) {
 	if err != nil {
 		beego.Error(err)
 	}
-	//beego.Info(pre)
-	//beego.Info(next)
 	return
 }
 

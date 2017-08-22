@@ -10,6 +10,15 @@ import (
 
 func init() {
 
+	ns := beego.NewNamespace("/v1",
+		beego.NSNamespace("/object",
+			beego.NSInclude(
+				&blog.ObjectController{},
+			),
+		),
+	)
+	beego.AddNamespace(ns)
+
 	beego.Include(&blog.MainController{})
 	beego.Include(&admin.AccountController{})
 	beego.Include(&admin.ArticleController{})
