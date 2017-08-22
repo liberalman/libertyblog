@@ -398,15 +398,14 @@ func createSmallPic(file io.Reader, fileSmall string, w, h int) error {
 	return jpeg.Encode(out, m, nil)
 }
 
-// 评论
+// @Title 评论
+// @Description 插入,更新,删除 评论
 // 插入 curl -d "flag=1&article_id=76&to_user_id=1&content=test" "http://localhost/admin/article/comment"
 // 更新 curl -d "flag=2&content=test1&id=1" "http://localhost/admin/article/comment"
 // 删除 curl -d "flag=3&id=1" "http://localhost/admin/article/comment"
-// @Title 评论
-// @Description 插入,更新,删除 评论
-// @Param	objectId		path 	string	true		"the objectid you want to get"
+// @Param	flag		path 	string	true		"the objectid you want to get"
 // @Success 200 {object} models.User
-// @Failure 403 :objectId is empty
+// @Failure 403 :flag is empty
 // @router /admin/article/comment [post]
 func (this *ArticleController) Comment() {
 	ret := models.Ret{Code: -1, Message: "success", Data: ""}

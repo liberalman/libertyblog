@@ -1,0 +1,61 @@
+swagger: "2.0"
+info: {}
+basePath: /v1
+paths:
+  /object/get_user:objectId:
+    get:
+      tags:
+      - object
+      description: find object by objectid
+      operationId: ObjectController.Get
+      parameters:
+      - in: path
+        name: objectId
+        description: the objectid you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.User'
+        "403":
+          description: :objectId is empty
+definitions:
+  models.User:
+    title: User
+    type: object
+    properties:
+      Active:
+        type: integer
+        format: int32
+      Authkey:
+        type: string
+      Avatarurl:
+        type: string
+      Email:
+        type: string
+      Follow_count:
+        type: integer
+        format: int64
+      Id:
+        type: integer
+        format: int64
+      Lastip:
+        type: string
+      Lastlogin:
+        type: string
+        format: string
+      Logincount:
+        type: integer
+        format: int64
+      Password:
+        type: string
+      Post_count:
+        type: integer
+        format: int64
+      Qq_accesstoken:
+        type: string
+      Qq_openid:
+        type: string
+      Username:
+        type: string

@@ -17,7 +17,6 @@ git clone -depth=1 https://github.com/liberalman/libertyblog.git
 该项目依赖一些golang的第三方库，执行以下命令安装
 ```
 go get -u github.com/astaxie/beego
-go get -u github.com/beego/bee
 go get github.com/go-sql-driver/mysql
 go get github.com/nfnt/resize
 go get github.com/yunge/sphinx
@@ -29,6 +28,17 @@ cd libertyblog
 go build
 ```
 无意外的话，会生成一个libertyblog的可执行文件
+
+另外一种执行方式，安装了bee工具
+```
+go get -u github.com/beego/bee
+``
+然后
+```
+bee run -downdoc=true -gendoc=true
+```
+其中-gendoc=true是指生成/swagger下的api文档，-downdoc=true是当文档目录/swagger下内容有改动的时候热更新。
+
 #### 安装mysql
 安装mysql服务，配置好访用户名密码后，创建数据库，名称叫libertyblog，导入libertyblog.sql脚本文件。关于mysql安装配置这个过程就不详述了，请自行百度
 
