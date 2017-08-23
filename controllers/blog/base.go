@@ -41,9 +41,6 @@ func (this *baseController) Prepare() {
 	this.options = models.GetOptions()
 	this.Data["options"] = this.options
 	this.Data["links"] = models.GetLinks()
-	this.Data["hidejs"] = `<!--[if lt IE 9]>
-  <script src="/views/double/js/modernizr.js"></script>
-  <![endif]-->`
 
 	if page, err = strconv.Atoi(this.Ctx.Input.Param(":page")); err != nil || page < 1 {
 		page = 1
@@ -159,31 +156,8 @@ func (this *baseController) ResetUser() {
 		this.Data["userid"] = user.Id
 		this.Data["post_count"] = user.Post_count     //发帖数量
 		this.Data["follow_count"] = user.Follow_count //粉丝数量
+		this.Data["information"] = user.Information
 	}
-	/*var user *models.User = new(models.User)
-	auth := this.Ctx.GetCookie("auth")
-	result := regexp.MustCompile("[0-9]+").FindAllString(auth, -1)
-	if nil != result {
-		sid := result[0]
-		key_username := "user_" + sid + "_username"
-		key_email := "user_" + sid + "_email"
-		key_avatarurl := "user_" + sid + "_avatarurl"
-		this.Data["username"] = models.Cache.Get(key_username).(string)
-		this.Data["email"] = models.Cache.Get(key_email).(string)
-		this.Data["avatarurl"] = models.Cache.Get(key_avatarurl).(string)
-		this.Data["userid"] = sid
-		if "" == this.Data["email"] {
-			id, _ := strconv.Atoi(sid)
-			user.Id = int64(id)
-			user.Read()
-			models.Cache.Put(key_username, user.Username)
-			models.Cache.Put(key_email, user.Email)
-			models.Cache.Put(key_avatarurl, user.Avatarurl)
-			this.Data["username"] = user.Username
-			this.Data["email"] = user.Email
-			this.Data["avatarurl"] = user.Avatarurl
-		}
-	}*/
 }
 
 //显示错误提示

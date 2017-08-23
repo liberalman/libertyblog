@@ -112,6 +112,7 @@ func (this *UserController) Edit() {
 		password := strings.TrimSpace(this.GetString("password"))
 		password2 := strings.TrimSpace(this.GetString("password2"))
 		email := strings.TrimSpace(this.GetString("email"))
+		information := strings.TrimSpace(this.GetString("information"))
 		active, _ := this.GetInt64("active")
 		valid := validation.Validation{}
 
@@ -130,6 +131,9 @@ func (this *UserController) Edit() {
 			errmsg["email"] = "Email无效"
 		} else {
 			user.Email = email
+		}
+		if information != "" {
+			user.Information = information
 		}
 
 		if active > 0 {

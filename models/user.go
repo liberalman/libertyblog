@@ -22,6 +22,7 @@ type User struct {
 	Post_count     int
 	Qq_openid      string `orm:"size(64)"`
 	Qq_accesstoken string `orm:"size(64)"`
+	Information    string `orm:"size(1024)"`
 }
 
 func (m *User) TableName() string {

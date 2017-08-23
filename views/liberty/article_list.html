@@ -1,225 +1,79 @@
-<!--<h2 class="title_tj">
-    <p>文章<span>推荐</span></p>
-</h2>
-<div class="bloglist left">
-  {{range $k, $v := .list}}
-      <h3><a href="{{$v.Link}}"  target="_blank">{{str2html $v.Title}}</a></h3>
-      <figure><a href="{{$v.Link}}"><img src="{{$v.Coverurl}}"></a></figure>
-      <ul>
-        <p>{{str2html $v.Excerpt}}</p>
-        <a title="阅读全文" href="{{$v.Link}}" target="_blank" class="readmore">阅读全文>></a>
-      </ul>
-      <p class="lifedateview"><span>{{date $v.Posttime "Y-m-j"}}</span><span>作者：{{$v.Username}}</span><span>所属分类：[{{str2html $v.TagsLink}}]</span></p>
-  {{end}}
-  {{str2html .pagebar}}
-</div>-->
-<div class="g-mn" id="main">
-     <div id="publishBarArea" class="publishBarArea"> 
-      <ul id="publishPostBar" class="m-nav2"> 
-       <li class="user"> <a href="/me"><img name="avatorUrl" src="{{.avatarurl}}" /></a></li> 
-       <li><a class="publishlink n21" href="/admin/article/add" bakhref="/admin/article/add">发布文章</a></li> 
-       <li><a class="publishlink n22" href="/user/square" bakhref="/user/square">广场新</a></li> 
-       <li><a class="publishlink n23" href="/user/o2bar" bakhref="/user/o2bar">氧气吧</a></li>
-       <li><a class="publishlink n24" href="/user/o2bar" bakhref="/user/o2bar">刷新</a></li>
-       <!-- <li id="refresh"></li> -->
-      </ul> 
-     </div> 
-     <div style="display:none" id="tempSaveTipArea" class="tempSaveTipArea"> 
-      <div class="tempsavetipwrap">
-        你还有一篇未发布的文章。 
-       <a class="gotemppost" href="http://www.liberalman.cn/login?urschecked=true#">查看</a> 
-       <a class="closetip icon2-8" href="http://www.liberalman.cn/login?urschecked=true#" hidefocus="true">&nbsp;</a> 
-      </div> 
-     </div>
-     <div style="display:none" id="bulletinTipArea" class="tempSaveTipArea"> 
-      <div class="tempsavetipwrap"> 
-       <div class="bulletincontain"> 
-        <span class="ztag bulletintxt"></span> 
-        <a class="gotemppost ztag" href="http://www.liberalman.cn/login?urschecked=true#" target="_blank">查看</a> 
-       </div> 
-       <a class="closetip icon2-8 ztag" href="http://www.liberalman.cn/login?urschecked=true#" hidefocus="true">&nbsp;</a> 
-      </div> 
-     </div> 
-     <div id="noticetip" class="a-slide a-slide-do"> 
-      <div class="m-mlist slide" style="display:none;"> 
-       <div class="mlistcnt"> 
-        <div class="isay"> 
-         <div class="isayt3"></div> 
-         <div class="isaym3 mtag"> 
-          <div class="isayh"> 
-           <h3>通知</h3> 
-           <a class="w-close2 mtag" href="http://www.liberalman.cn/login" title="关闭">关闭</a> 
-          </div> 
-         </div> 
-         <div class="isayb"></div> 
-        </div> 
-       </div> 
-      </div> 
-     </div> 
-     <div class="w-load2" id="loadfirst" style="display: none;"> 
-      <div class="load">
-        加载中 
-      </div> 
-     </div> 
-     <!-- 中间内容 -->
-     
-    {{range $k, $v := .list}} <!-- 遍历文章短讯 -->
-    <div class="m-mlist">
-       <div class="mlistimg js-729009">
-         <div class="w-img" style="z-index:1;">
-          <a href="/user/someone?key=" target="_blank"><img class="js-729009" src="{{$v.Avatarurl}}" /></a>
-          <div class="w-img w-img-1" style="display: none;">
-           <a href="http://www.lofter.com/login?urschecked=true#" target="_blank"><img class="js-729009" /></a>
-          </div>
-         </div>
-        </div>
-        <div class="mlistimg js-729009" style="display: none;">
-         <div class="w-img w-img-2 js-729009">
-          <div class="time js-729009">
-           <strong></strong>
-          </div>
-         </div>
-        </div>
-        <div class="mlistcnt">
-         <div class="isay">
-          <div class="isayt">
-           <a class="isayc js-729009" href="{{$v.Link}}" title="查看全文" target="_blank">打开新页</a>
-           <span class="isayc js-729009" style="display:none;"></span>
-          </div>
-          <div class="isaym">
-           <div class="w-who">
-            <a href="{{$v.Link}}" class="publishernick js-729009" target="_blank">{{str2html $v.Title}}</a>
-            <a href="#" class="js-729009 w-icn2 w-icn2-3 a-followicon icontag494080207" title="关注" onclick="follow({{$v.Username}})">关注</a>
-            <div class="unpromote">
-                "-"
-             <a href="javascript:"><span class="nocare-hvlayer"></span></a>
-            </div>
-            <span class="whosep js-729009">- 作者&nbsp;<a href="#" class="js-729009" onclick="author({{$v.Username}})">{{$v.Username}}</a> </span>
-            <span class="whosep js-729009" style="float: right;">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</span>
-           </div>
-           <div class="js-729009">
-            <div class="m-icnt">
-             <div class="cnt">
-              <!--<div class="img js-36206">
-               <div class="imgc" style="height: auto;">
-                <a href="' + parseImages(obj.data.list[i].avatorUrl) + '" data-lightbox="example-1" hidefocus="true"> <img width="164" src="{{$v.Coverurl}}"/> <span class="total"> <span class="totalbg"></span><span class="totalnum"></span> </span> </a>
-               </div>
-              </div>-->
-              <div class="txt js-36206">
-               <p>{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>
-              </div>
-             </div>
-            </div>
-           </div>
-           <div class="w-opt">
-            <div class="opta js-729009" style="width: 198px;">
-             &nbsp;&nbsp;&nbsp;&nbsp;{{str2html $v.TagsLink}}
-            </div>
-            <div class="optb">
-            <span class="opti">{{date $v.Posttime "Y-m-j"}}<span class="opticrt"></span></span>
-             <span class="opti"><a href="{{$v.Link}}" class="js-729009" hidefocus="true">查看全文</a><span class="opticrt"></span></span>
-             <span class="opti opti-reblog"><a href="http://www.lofter.com/reblog/2c9c66_823f958" class="js-729009" target="_blank">转载</a></span>
-             <span class="opti"><a class="w-icn w-icn-0b js-729009" hidefocus="true" href="#" title="喜欢" onclick="likeit()">喜欢<span></span><span></span></a> </span>
-            </div>
-           </div>
-          </div>
-          <div class="a-isaym2">
-           <div class="isaym2 isaym2-open js-729009" style="margin-top:-81px;"></div>
-          </div>
-          <div class="a-isaym2">
-           <div class="isaym2 isaym2-open js-729009" style="margin-top:-81px;"></div>
-          </div>
-          <div class="a-isaym2 a-isaym2-shareTo">
-           <div class="isaym2 isaym2-open js-729009" style="margin-top:-125px;"></div>
-          </div>
-          <div class="isayb"></div>
-         </div>
-        </div>
-       </div>
-    {{end}}
-    <!-- 分页 -->
-    {{str2html .pagebar}}
-</div> <!-- g-mn 结束 -->
+<div class="pin_outer">
+	<div class="row">
+		<div class="col-md-1">
+			<div class="pin_inner">
+				<a href="/user/someone?key={{.userid}}" target="_blank"><img class="img-rounded" width="100% \9;" src="{{.avatarurl}}" /></a>
+			</div>
+		</div>
+		<div class="col-md-11">
+			<h5>{{.username}}</h5>
+			<p>{{.information}}</p>
+		</div>
+	</div>
+
+	<hr /> {{range $k, $v := .list}}
+	<!-- 遍历文章短讯文摘 -->
+	<div class="row" style="padding: %2 %5;">
+		<div class="col-md-1"></div>
+		<div class="col-md-11">
+			<div class="row">
+				<div {{if $v.Coverurl}} class="col-md-8" {{else}} class="col-md-12" {{end}}>
+					<p>
+						<a href="{{$v.Link}}" target="_blank">
+							<h4>{{str2html $v.Title}}</h4></a>
+					</p>
+					<!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
+					<p class="wrap" style="font-size: 1.2em; line-height:2em;">{{$v.Digest}}</p>
+				</div>
+				{{if $v.Coverurl}}
+				<div class="col-md-4">
+					<div class="imgc">
+						<a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
+					</div>
+				</div>
+				{{end}}
+			</div>
+			<div class="row">
+				<ul class="nav nav-pills navbar-left">
+					<li>
+						<a href="#">{{date $v.Posttime "Y-m-j"}}</a>
+					</li>
+					<li>{{str2html $v.TagsLink}}</li>
+					<li>
+						<a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
+					</li>
+					<li>
+						<a href="#" title="关注此用户" onclick="follow({{$v.Username}})" class="glyphicon glyphicon glyphicon-plus"></a>
+					</li>
+					<li>
+						<a href="https://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
+					</li>
+					<li>
+						<a>{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<hr/> {{end}}
+
+	<div class="row">{{str2html .pagebar}}</div>
+
+</div>
+
+<br />
 <script type="text/javascript">
-/*
-// toastr的配置，也可以不配置，使用默认值。
-toastr.options = {
-        "closeButton": false, //是否显示关闭按钮
-        "debug": false, //是否使用debug模式
-        "positionClass": "toast-top-right",//弹出窗的位置
-        "showDuration": "300",//显示的动画时间
-        "hideDuration": "1000",//消失的动画时间
-        "timeOut": "5000", //展现时间
-        "extendedTimeOut": "1000",//加长展示时间
-        "showEasing": "swing",//显示时的动画缓冲方式
-        "hideEasing": "linear",//消失时的动画缓冲方式
-        "showMethod": "fadeIn",//显示时的动画方式
-        "hideMethod": "fadeOut" //消失时的动画方式
-       };
-       */
-	function author(name){
+	function author(name) {
 		toastr.info('作者：' + name);
 	}
-	
-	function follow(name){
+
+	function follow(name) {
 		toastr.warning('+关注：' + name);
 	}
-	
-	function likeit(){
+
+	function likeit(myself) {
 		toastr.success('喜欢此文！');
+		$(myself).removeClass("glyphicon-heart-empty").addClass("glyphicon-heart");
 	}
-
-/*可供选择的设置选项
-closeButton: true
-是否在通知弹窗上面显示关闭按钮，true：显示；false：不显示
-
-debug: true
-是否开起debug
-
-progressBar: false
-是否显示进度条，当为false时候不显示；当为true时候，显示进度条，当进度条缩短到0时候，消息通知弹窗消失
-
-positionClass: 'toast-top-right'
-位置信息，消息弹窗显示的位置，可以显示的位置对应的值
-1.toast-top-right
-2.toast-botton-right
-3.toash-bottom-left
-4.toast-top-left
-5.toast-top-full-width 这个是在网页顶端，宽度铺满整个屏幕
-6.toast-bottom-full-width
-7.toast-top-center顶端中间
-8.toast-bottom-center
-
-onclick: null
-showDuration: "300"
-显示动作（从无到有这个动作）持续的时间
-
-hideDuration: "1000"
-隐藏动作持续的时间
-
-timeOut: "5000"
-间隔的时间
-
-
-extendedTimeOut: "1000"
-
-showEasing: "swing",
-hideEasing: "linear",
-showMethod: "fadeIn"
-
-显示的方式，和jquery相同，可以是show()
-
-
-hideMethod: "fadeOut"
-隐藏的方式，和jquery相同，可以是hide()
-
-
-
-toastr['error']('I am yanying', 'title');
-其中的error为显示的通知的样式类型，有4种选择
-1.success 成功，绿色
-2.info 信息，蓝色
-3.warning，警告，橙色
-4.error，错误，深红色
-其中第一个参数为显示的内容，第二个参数为显示的标题，标题可以省略*/
 </script>

@@ -101,7 +101,6 @@ func init() {
 
 	//test部分
 	beego.Router("/test", &test.MainController{}, "*:Index")
-	beego.Router("/login.html", &test.MainController{}, "*:Login")
 	beego.Router("/box.html", &test.MainController{}, "*:Box")
 	beego.Router("/slicebox3d.html", &test.MainController{}, "*:Slicebox3d")
 }
