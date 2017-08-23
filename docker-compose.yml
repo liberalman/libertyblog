@@ -74,11 +74,12 @@ registrator:
 
 sphinx:
   image: liberalman/coreseek
-#  image: docker.io/arkii/centos65-csft3214
   hostname: sphinx
   ports:
     - "23890:9312"
     - "9306"
+#  environment:
+#    SPHINX_MODE: indexing
   links:
     - db
   volumes:
