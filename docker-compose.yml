@@ -78,10 +78,10 @@ sphinx:
   ports:
     - "23890:9312"
     - "9306"
-#  environment:
-#    SPHINX_MODE: indexing
+  environment:
+    SPHINX_MODE: indexing
   links:
-    - db
+    - db:mysql
   volumes:
     - "/var/coreseek/:/usr/local/coreseek/var/"
     - "/var/coreseek/log/:/usr/local/coreseek/var/log/"
