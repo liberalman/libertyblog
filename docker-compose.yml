@@ -82,6 +82,5 @@ sphinx:
   links:
     - db
   volumes:
-    - "/var/log/:/usr/local/coreseek/var/log/"
-    - "/var/coreseek/data/:/usr/local/coreseek/var/data/"
-
+    - "/var/coreseek/:/usr/local/coreseek/var/"
+    - "/var/coreseek/log/:/usr/local/coreseek/var/log/"
