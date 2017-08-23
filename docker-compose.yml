@@ -73,20 +73,15 @@ registrator:
 #  command: -ip 118.89.191.176 consul://118.89.191.176:8500
 
 sphinx:
-#  image: romeoz/docker-sphinxsearch
-  image: liberalman/sphinx
+  image: liberalman/coreseek
   hostname: sphinx
-#  environment:
-#    SPHINX_MODE: "indexing"
   ports:
-    - "9312"
+    - "23890:9312"
     - "9306"
+#  environment:
+#    SPHINX_MODE: indexing
   links:
     - db
   volumes:
-    - "/var/lib/sphinx/:/var/lib/sphinx/"
-#  container_name: sphinx_test
-#  net: sphinx_net
-#  restart: always
-
-
+    - "/var/coreseek/:/usr/local/coreseek/var/"
+    - "/var/coreseek/log/:/usr/local/coreseek/var/log/"
