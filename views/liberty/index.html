@@ -24,9 +24,9 @@
 
 {{range $k, $v := .list}}
 <!-- 遍历文章短讯文摘 -->
-<div class="row pin1" style="padding: %2 %5;">
+<div class="row pin_outer" style="padding: %2 %5;">
 	<div class="col-md-1">
-		<div class="pin2">
+		<div class="pin_inner">
 	        <a onclick="author({{$v.Username}})" title="{{$v.Username}}" data-toggle="tooltip" data-placement="top">
 	        	    <img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" />
 	        </a>
