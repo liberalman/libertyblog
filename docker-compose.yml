@@ -77,7 +77,7 @@ sphinx:
 #  image: docker.io/arkii/centos65-csft3214
   hostname: sphinx
   ports:
-    - "9312"
+    - "23890:9312"
     - "9306"
   links:
     - db
