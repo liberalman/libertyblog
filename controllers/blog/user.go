@@ -13,85 +13,104 @@ type UserController struct {
 	baseController
 }
 
+// @Title Register
+// @Description register
+// @Param	username		path 	string	true		"username"
+// @Param	password		path 	string	true		"password"
+// @Param	password_confirmation		path 	string	true		"password confirmation, must be equal to password"
+// @Param	email		path 	string	true		"email"
+// @Success 200 {object} models.User
+// @Failure 403 :objectId is empty
+// @router /register [post]
 func (this *UserController) Register() {
-	input := make(map[string]string)
-	errmsg := make(map[string]string)
-	if this.Ctx.Request.Method == "POST" {
-		username := strings.TrimSpace(this.GetString("username"))
-		password := strings.TrimSpace(this.GetString("password"))
-		password_confirm := strings.TrimSpace(this.GetString("password_confirm"))
-		email := strings.TrimSpace(this.GetString("email"))
-		//active, _ := this.GetInt64("active")
+	ret := models.Ret{Code: 0, Message: "success", Data: ""}
 
-		input["username"] = username
-		input["password"] = password
-		input["password_confirm"] = password_confirm
-		input["email"] = email
+	var user models.User
+	var authkey string
 
-		valid := validation.Validation{}
+	username := strings.TrimSpace(this.GetString("username"))
+	password := strings.TrimSpace(this.GetString("password"))
+	password_confirmation := strings.TrimSpace(this.GetString("password_confirmation"))
+	email := strings.TrimSpace(this.GetString("email"))
+	//active, _ := this.GetInt64("active")
 
-		if v := valid.Required(username, "username"); !v.Ok {
-			this.showmsg("请输入用户名", "/register")
-		} else if v := valid.MaxSize(username, 15, "username"); !v.Ok {
-			this.showmsg("用户名长度不能大于15个字符")
-		}
+	valid := validation.Validation{}
 
-		if v := valid.Required(password, "password"); !v.Ok {
-			this.showmsg("请输入密码")
-		}
-
-		if v := valid.Required(password_confirm, "password_confirm"); !v.Ok {
-			this.showmsg("请再次输入密码")
-		} else if password != password_confirm {
-			this.showmsg("两次输入的密码不一致")
-		}
-
-		if v := valid.Required(email, "email"); !v.Ok {
-			this.showmsg("请输入email地址")
-		} else if v := valid.Email(email, "email"); !v.Ok {
-			this.showmsg("Email无效")
-		}
-
-		/*if active > 0 {
-			active = 1
-		} else {
-			active = 0
-		}*/
-
-		if len(errmsg) == 0 {
-			var user models.User
-			user.Username = username
-			user.Password = models.Md5([]byte(password))
-			user.Email = email
-			//user.Active = int8(active)
-			user.Active = 1
-			if err := user.Insert(); err != nil {
-				//this.showmsg(err.Error())
-				this.Ctx.WriteString(err.Error())
-				return
-			}
-
-			// set login status
-			user.Logincount += 1
-			user.Lastip = this.getClientIp()
-			user.Lastlogin = this.getTime()
-			user.Update()
-			authkey := models.Md5([]byte(this.getClientIp() + "|" + user.Password))
-			this.Ctx.SetCookie("auth", strconv.FormatInt(user.Id, 10)+"|"+authkey)
-
-			//this.Redirect("/admin", 302)
-			this.Ctx.WriteString("0")
-			return
-		}
-		this.Ctx.WriteString("0")
-		return
+	if v := valid.Required(username, "username"); !v.Ok {
+		ret.Code = -1
+		ret.Message = "请输入用户名"
+		goto end
+	} else if v := valid.MaxSize(username, 15, "username"); !v.Ok {
+		ret.Code = -2
+		ret.Message = "用户名长度不能大于15个字符"
+		goto end
 	}
 
-	this.Data["input"] = input
-	this.display_reg_login("register")
+	if v := valid.Required(password, "password"); !v.Ok {
+		ret.Code = -3
+		ret.Message = "请输入密码"
+		goto end
+	}
+
+	if v := valid.Required(password_confirmation, "password_confirmation"); !v.Ok {
+		ret.Code = -4
+		ret.Message = "请再次输入密码"
+		goto end
+	} else if password != password_confirmation {
+		ret.Code = -5
+		ret.Message = "两次输入的密码不一致"
+		goto end
+	}
+
+	if v := valid.Required(email, "email"); !v.Ok {
+		ret.Code = -6
+		ret.Message = "请输入email地址"
+		goto end
+	} else if v := valid.Email(email, "email"); !v.Ok {
+		ret.Code = -7
+		ret.Message = "Email无效"
+		goto end
+	}
+
+	/*if active > 0 {
+		active = 1
+	} else {
+		active = 0
+	}*/
+
+	user.Username = username
+	user.Password = models.Md5([]byte(password))
+	user.Email = email
+	//user.Active = int8(active)
+	user.Active = 1
+	if err := user.Insert(); err != nil {
+		ret.Code = -8
+		ret.Message = err.Error()
+		goto end
+	}
+
+	// set login status
+	user.Logincount += 1
+	user.Lastip = this.getClientIp()
+	user.Lastlogin = this.getTime()
+	user.Update()
+	authkey = models.Md5([]byte(this.getClientIp() + "|" + user.Password))
+	this.Ctx.SetCookie("auth", strconv.FormatInt(user.Id, 10)+"|"+authkey)
+
+	ret.Code = 0
+
+end:
+	this.Data["json"] = ret
+	this.ServeJSON()
 }
 
-//登录
+// @Title Login
+// @Description Login
+// @Param	username		path 	string	true		"username or email"
+// @Param	password		path 	string	true		"password"
+// @Success 200 {object} models.User
+// @Failure 403 :objectId is empty
+// @router /login [get,post]
 func (this *UserController) Login() {
 	if "POST" == this.Ctx.Request.Method { // 如果是post,表明提交登录信息
 		username := strings.TrimSpace(this.GetString("username"))
@@ -134,8 +153,9 @@ func (this *UserController) Login() {
 				return
 			}
 		}
+	} else {
+		this.display_reg_login1("login") // 显示登录页面
 	}
-	this.display_reg_login("login") // 显示登录页面
 }
 
 //退出登录

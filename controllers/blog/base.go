@@ -110,6 +110,10 @@ func (this *baseController) display_reg_login(tpl string) {
 	this.TplName = this.theme + "/" + tpl + ".html"
 }
 
+func (this *baseController) display_reg_login1(tpl string) {
+	this.TplName = this.theme + "/" + tpl + ".html"
+}
+
 func (this *baseController) getOption(name string) string {
 	if v, ok := this.options[name]; ok {
 		return v
