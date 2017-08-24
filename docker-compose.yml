@@ -78,8 +78,8 @@ sphinx:
   ports:
     - "23890:9312"
     - "9306"
-  environment:
-    SPHINX_MODE: indexing
+#  environment:
+#    SPHINX_MODE: indexing
   links:
     - db:mysql
   volumes:
