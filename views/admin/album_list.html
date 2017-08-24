@@ -20,6 +20,7 @@
 									<th>ID</th>
 									<th>相册名</th>
 									<th>封面</th>
+									<th>内容</th>
 									<th>创建时间</th>
 									<th>排序值</th>
 									<th>操作</th>
@@ -36,6 +37,7 @@
 											<img class="img-rounded" src="{{$v.Cover}}" width="170" height="80" />
 										</a>
 									</td>
+									<td>{{$v.Content}}</td>
 									<td class="center">{{date $v.Posttime "Y-m-d H:i:s"}}</td>
 									<td>{{$v.Rank}}</td>
 									<td>
@@ -49,7 +51,7 @@
 								</tr>{{end}}</tbody>
 							<tfoot>
 								<tr>
-									<td colspan="21">{{str2html .pagebar}}</td>
+									<td colspan="22">{{str2html .pagebar}}</td>
 								</tr>
 								<tr>
 									<td width="30">
@@ -62,7 +64,7 @@
 											<option value="totrash">移至回收站</option>
 											<option value="delete">删除</option>
 										</select>
-										<td colspan="20">
+										<td colspan="21">
 											<button type="submit" class="btn btn-default">应用</button></td>
 									</td>
 								</tr>

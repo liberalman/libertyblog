@@ -25,13 +25,13 @@ type MainController struct {
 	this.display("index")
 }*/
 
-// @router /:* [get]
+// @router / [get]
 func (this *MainController) Index() {
 	var count int = 0
 	this.Data["list"], count = models.PostIndex(this.page, this.pagesize)
 	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(this.pagesize), "/index%d.html").ToString()
 	this.setHeadFootMetas()
-	this.display("index", 0)
+	this.display("index", HAS_RIGHT)
 }
 
 //留404页面
@@ -75,8 +75,7 @@ func (this *MainController) Album() {
 	this.right = ""
 	this.Data["list"] = list
 	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(pagesize), "/album%d.html").ToString()
-	//this.display_no_right("album")
-	this.display("album", 1)
+	this.display("album", HAS_RIGHT)
 }
 
 //相册展示1
@@ -126,7 +125,12 @@ func (this *MainController) Category() {
 	this.display("category", 0)
 }
 
-// 搜索
+// @Title Search
+// @Description Search article or user
+// @Param	key		query 	int64	true		"article id or user id"
+// @Success 200 {int} models.User.Id
+// @Failure 403 body is empty
+// @router /search [get]
 func (this *MainController) Search() {
 	article_ids := models.SearchArticle(this.GetString("key"), "test1")
 

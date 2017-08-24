@@ -4,9 +4,6 @@ import (
 	"libertyblog/models"
 	"strconv"
 	"strings"
-	//"time"
-	//"github.com/astaxie/beego"
-	//	"github.com/astaxie/beego/orm"
 )
 
 type ArticleController struct {
@@ -26,7 +23,7 @@ func (this *ArticleController) SomeoneList() {
 	this.Data["list"], count = models.GetSomeoneArticleList(userid, this.page, this.pagesize)
 	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(this.pagesize), "/articles/"+s_userid+"/index%d.html").ToString()
 	this.setHeadFootMetas()
-	this.display("article_list", 0)
+	this.display("article_list", HAS_RIGHT)
 }
 
 func (this *ArticleController) EditMarkdown() {
@@ -80,5 +77,5 @@ func (this *ArticleController) Index() {
 	this.Data["comments"], count = models.QueryComments(article.Id, this.page, this.pagesize)
 	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(this.pagesize), "/index%d.html").ToString()
 
-	this.display("article", 1) // 去掉右侧边栏
+	this.display("article", NO_RIGHT) // 去掉右侧边栏
 }

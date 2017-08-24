@@ -5,6 +5,119 @@
     },
     "basePath": "/v1",
     "paths": {
+        "/": {
+            "get": {
+                "tags": [
+                    "libertyblog/controllers/blogMainController"
+                ]
+            }
+        },
+        "/comment": {
+            "post": {
+                "tags": [
+                    "libertyblog/controllers/adminCommentController"
+                ],
+                "description": "插入,更新,删除 评论",
+                "operationId": "CommentController.Comment",
+                "parameters": [
+                    {
+                        "in": "form",
+                        "name": "flag",
+                        "description": "flag: 1 new, 2 update, 3 delete",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "form",
+                        "name": "article_id",
+                        "description": "article id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "response a json, Code=0 success",
+                        "schema": {
+                            "$ref": "#/definitions/models.Ret"
+                        }
+                    },
+                    "403": {
+                        "description": ":flag is empty"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "get": {
+                "tags": [
+                    "libertyblog/controllers/blogUserController"
+                ],
+                "description": "Login",
+                "operationId": "UserController.Login",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "username",
+                        "description": "username or email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "password",
+                        "description": "password",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "libertyblog/controllers/blogUserController"
+                ],
+                "description": "Login",
+                "operationId": "UserController.Login",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "username",
+                        "description": "username or email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "password",
+                        "description": "password",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            }
+        },
         "/object/get_user:objectId": {
             "get": {
                 "tags": [
@@ -32,9 +145,104 @@
                     }
                 }
             }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "libertyblog/controllers/blogUserController"
+                ],
+                "description": "register",
+                "operationId": "UserController.Register",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "username",
+                        "description": "username",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "password",
+                        "description": "password",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "password_confirmation",
+                        "description": "password confirmation, must be equal to password",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "email",
+                        "description": "email",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            }
+        },
+        "/search": {
+            "get": {
+                "tags": [
+                    "libertyblog/controllers/blogMainController"
+                ],
+                "description": "Search article or user",
+                "operationId": "MainController.Search",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "key",
+                        "description": "article id or user id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int} models.User.Id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        ".false": {
+            "type": "object"
+        },
+        "models.Ret": {
+            "title": "Ret",
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "data": {
+                    "$ref": "#/definitions/22509.0xc4205002a0.false"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "models.User": {
             "title": "User",
             "type": "object",
@@ -59,6 +267,9 @@
                 "Id": {
                     "type": "integer",
                     "format": "int64"
+                },
+                "Information": {
+                    "type": "string"
                 },
                 "Lastip": {
                     "type": "string"

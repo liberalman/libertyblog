@@ -81,7 +81,7 @@
 				<hr />
 
 				<div class="row">
-					<form id="form_echo2article" action="/admin/article/comment" method="post">
+					<form id="form_echo2article" action="/comment" method="post">
 						<div class="form-group input-group has-success">
 							<input class="hidden" name="id" value="{{.post.Id}}" />
 							<input class="hidden" name="article_id" value="{{.post.Id}}" />
@@ -203,15 +203,15 @@
 
 	function del_comment(id) {
 		if(confirm("确定删除？")) {
-			$.post('/admin/article/comment', {
+			$.post('/comment', {
 					id: id,
 					flag: 3
 				},
 				function(data) {
-					if(0 != data.Code) { // 返回0代表成功，其他失败
-						toastr.error("Code: " + data.Code + " Error: " + data.Message);
+					if(0 != data.code) { // 返回0代表成功，其他失败
+						toastr.error("code: " + data.code + " message: " + data.message);
 					} else {
-						toastr.success(data.Message);
+						toastr.success(data.message);
 						location.reload();
 					}
 				});
@@ -219,13 +219,13 @@
 	}
 
 	$("#btn_echo2article").click(function() {
-		$.post('/admin/article/comment',
+		$.post('/comment',
 			$("#form_echo2article").serialize(),
 			function(data) {
-				if(0 != data.Code) { // 返回0代表成功，其他失败
-					toastr.error("Code: " + data.Code + " Error: " + data.Message);
+				if(0 != data.code) { // 返回0代表成功，其他失败
+					toastr.error("code: " + data.code + " message: " + data.message);
 				} else {
-					toastr.success(data.Message);
+					toastr.success(data.message);
 					location.reload();
 				}
 			});
@@ -234,16 +234,16 @@
 	$(".echo2someone").submit(function(e) {
 		e.preventDefault();
 		$.ajax({
-			url: "/admin/article/comment",
+			url: "/comment",
 			type: "POST",
 			cache: false,
 			async: true,
 			data: $(this).serialize(),
 			success: function(data) {
-				if(0 != data.Code) { // 返回0代表成功，其他失败
-					toastr.error("Code: " + data.Code + " Error: " + data.Message);
+				if(0 != data.code) { // 返回0代表成功，其他失败
+					toastr.error("code: " + data.code + " message: " + data.message);
 				} else {
-					toastr.success(data.Message);
+					toastr.success(data.message);
 					location.reload();
 				}
 			}

@@ -14,6 +14,8 @@ const (
 	BIG_PIC_PATH   = "./static/upload/bigpic/"
 	SMALL_PIC_PATH = "./static/upload/smallpic/"
 	FILE_PATH      = "./static/upload/attachment/"
+	NO_RIGHT       = 1
+	HAS_RIGHT      = 0
 )
 
 var pathArr []string = []string{"", BIG_PIC_PATH, SMALL_PIC_PATH, FILE_PATH}
@@ -59,8 +61,11 @@ func (this *baseController) Prepare() {
 	// 检查是手机还是pc端
 	// pc chrome [Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36]
 	// iphone 微信浏览器 [Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G34 MicroMessenger/6.3.23 NetType/WIFI Language/zh_CN]
-	reg := regexp.MustCompile(`iPhone|Android`)                     // 检查是否是从Android和ios上访问的
-	if reg.MatchString(this.Ctx.Request.Header.Get("User-Agent")) { // 是手机访问
+
+	// 检查是否是从Android和ios上访问的
+	reg := regexp.MustCompile(`iPhone|Android`)
+	if reg.MatchString(this.Ctx.Request.Header.Get("User-Agent")) {
+		// 是手机访问
 		this.theme = "mobile"
 	} else {
 		this.theme = "default"
@@ -84,7 +89,7 @@ func (this *baseController) display(tpl string, no_right int) {
 	this.TplName = this.theme + "/" + tpl + ".html"             // 中间
 	this.LayoutSections["footer"] = this.theme + "/footer.html" // 尾
 
-	if 1 == no_right { // 1代表无右侧边栏
+	if NO_RIGHT == no_right { // 1代表无右侧边栏
 		this.Data["no_right"] = true
 	} else {
 		// 右侧内容
@@ -158,27 +163,6 @@ func (this *baseController) ResetUser() {
 		this.Data["follow_count"] = user.Follow_count //粉丝数量
 		this.Data["information"] = user.Information
 	}
-}
-
-//显示错误提示
-func (this *baseController) showmsg(msg ...string) {
-	if len(msg) == 1 {
-		msg = append(msg, this.Ctx.Request.Referer())
-	}
-	this.Data["msg"] = msg[0]
-	this.Data["redirect"] = msg[1]
-
-	theme := "default"
-	if v, ok := this.options["theme"]; ok && v != "" {
-		theme = v
-	}
-	this.Layout = theme + "/layout_reg_login.html"
-	this.LayoutSections = make(map[string]string)
-	this.LayoutSections["head"] = theme + "/head_reg_login.html"
-	this.LayoutSections["foot"] = theme + "/foot_reg_login.html"
-	this.TplName = theme + "/" + "showmsg.html"
-	this.Render()
-	this.StopRun()
 }
 
 //是否post提交

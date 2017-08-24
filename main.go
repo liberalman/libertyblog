@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"libertyblog/controllers"
 	_ "libertyblog/models"
 	_ "libertyblog/routers"
 
@@ -23,5 +24,6 @@ func main() {
 	logLevel, _ := beego.AppConfig.Int("LogLevel")
 	logcfg := fmt.Sprintf(`{"filename":"%s", "level":%d}`, beego.AppConfig.String("LogPath"), logLevel)
 	beego.SetLogger(logs.AdapterFile, logcfg)
+	beego.ErrorController(&controllers.ErrorController{})
 	beego.Run()
 }

@@ -16,6 +16,16 @@ func init() {
 				&blog.ObjectController{},
 			),
 		),
+		beego.NSInclude(
+			&blog.MainController{},
+		),
+		beego.NSInclude(
+			&blog.UserController{},
+		),
+
+		beego.NSInclude(
+			&admin.CommentController{},
+		),
 	)
 	beego.AddNamespace(ns)
 
@@ -23,9 +33,9 @@ func init() {
 	beego.Include(&blog.UserController{})
 	beego.Include(&admin.AccountController{})
 	beego.Include(&admin.ArticleController{})
+	beego.Include(&admin.CommentController{})
 
 	//前台路由
-	//beego.Router("/", &blog.MainController{}, "*:Index")
 	beego.Router("/404.html", &blog.MainController{}, "*:Go404")
 	beego.Router("/index:page:int.html", &blog.MainController{}, "*:Index")
 
@@ -51,9 +61,6 @@ func init() {
 	beego.Router("/login/callback", &blog.UserController{}, "*:Callback")
 	beego.Router("/login/qqlogin", &blog.UserController{}, "*:Ajax_qqLogin")
 	beego.Router("/user/logout", &blog.UserController{}, "*:Logout")
-
-	// 搜索
-	beego.Router("/user/search", &blog.MainController{}, "*:Search")
 
 	//后台路由
 	beego.Router("/admin", &admin.IndexController{}, "*:Index")

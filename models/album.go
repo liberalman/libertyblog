@@ -1,8 +1,9 @@
 package models
 
 import (
-	"github.com/astaxie/beego/orm"
 	"time"
+
+	"github.com/astaxie/beego/orm"
 )
 
 //相册表
@@ -14,6 +15,7 @@ type Album struct {
 	Ishide   int8
 	Rank     int8
 	Photonum int64
+	Content  string `orm:"size(1024)"`
 }
 
 func (m *Album) TableName() string {
