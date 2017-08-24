@@ -6,6 +6,25 @@ paths:
     get:
       tags:
       - libertyblog/controllers/blogMainController
+  /admin/photo/upload:
+    post:
+      tags:
+      - libertyblog/controllers/adminPhotoController
+      description: upload photos
+      operationId: PhotoController.upload photos
+      parameters:
+      - in: path
+        name: userid
+        description: userid
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.User'
+        "403":
+          description: :userid is empty
   /comment:
     post:
       tags:

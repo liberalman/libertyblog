@@ -22,9 +22,11 @@ func init() {
 		beego.NSInclude(
 			&blog.UserController{},
 		),
-
 		beego.NSInclude(
 			&admin.CommentController{},
+		),
+		beego.NSInclude(
+			&admin.PhotoController{},
 		),
 	)
 	beego.AddNamespace(ns)
@@ -34,6 +36,7 @@ func init() {
 	beego.Include(&admin.AccountController{})
 	beego.Include(&admin.ArticleController{})
 	beego.Include(&admin.CommentController{})
+	beego.Include(&admin.PhotoController{})
 
 	//前台路由
 	beego.Router("/404.html", &blog.MainController{}, "*:Go404")
