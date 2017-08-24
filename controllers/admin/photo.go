@@ -49,6 +49,12 @@ func (this *PhotoController) Delete() {
 	photo := models.Photo{Id: id}
 	if photo.Read() == nil {
 		photo.Delete()
+		if err := os.Remove("." + photo.Url); nil != err {
+			//
+		}
+		if err := os.Remove("." + photo.Urlthumb); nil != err {
+			//
+		}
 	}
 	this.Redirect("/admin/photo/list?albumid="+albumid, 302)
 }
@@ -156,6 +162,7 @@ func (this *PhotoController) UploadPhotos() {
 			out["success"] = "4"
 			out["message"] = err.Error()
 		}
+		out["urlthumb"] = filename[1:]
 
 		//大图
 		savepath = pathArr[1] + day

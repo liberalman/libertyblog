@@ -96,6 +96,7 @@ func (this *baseController) display(tpl string, no_right int) {
 		this.ResetUser()
 		this.Data["latestblog"] = models.GetLatestBlog()
 		this.Data["hotblog"] = models.GetHotBlog() // 阅读排行
+		this.LayoutSections["banner"] = this.theme + "/banner.html"
 		this.LayoutSections["right"] = this.theme + "/right.html"
 	}
 }

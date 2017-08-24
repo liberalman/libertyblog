@@ -37,7 +37,8 @@
 		<div class="row">
 			<div {{if $v.Coverurl}} class="col-md-8" {{else}} class="col-md-12" {{end}}>
 				<p>
-					<a href="{{$v.Link}}" target="_blank"><h4>{{str2html $v.Title}}</h4></a>
+					<a href="{{$v.Link}}" target="_blank">
+						<h4>{{str2html $v.Title}}</h4></a>
 				</p>
 				<!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
 				<p class="wrap" style="font-size: 1.2em; line-height:2em;">{{$v.Digest}}</p>
@@ -52,7 +53,9 @@
 		</div>
 		<div class="row">
 			<ul class="nav nav-pills navbar-left">
-				<li><a><time class="timeago" datetime={{date $v.Posttime "Y-m-j"}}>about 8 hours ago</time></a></li>
+				<li>
+					<a><time class="timeago" datetime={{date $v.Posttime "Y-m-j"}}>about 8 hours ago</time></a>
+				</li>
 				<li>
 					<a href="#">{{date $v.Posttime "Y-m-j"}}</a>
 				</li>
@@ -79,6 +82,7 @@
 <div class="row">{{str2html .pagebar}}</div>
 <br />
 
+<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		var nodes = $('.timeago');
@@ -169,4 +173,40 @@
 	3.warning，警告，橙色
 	4.error，错误，深红色
 	其中第一个参数为显示的内容，第二个参数为显示的标题，标题可以省略*/
+
+    
+    // 将当前页面打快照截图
+	html2canvas(document.body).then(function(canvas) {
+		//document.body.appendChild(canvas); // 追加到body后面
+
+		// 图片导出为 png 格式
+		var type = "png";
+		var imgData = canvas.toDataURL(type);
+		//location = imgData; // 浏览器查看效果
+
+		// 获取mimeType
+		var _fixType = function(type) {
+			type = type.toLowerCase().replace(/jpg/i, 'jpeg');
+			var r = type.match(/png|jpeg|bmp|gif/)[0];
+			return 'image/' + r;
+		};
+
+		// 加工image data，替换mime type
+		imgData = imgData.replace(_fixType(type), 'image/octet-stream');
+
+		// 在本地进行文件保存
+		var saveFile = function(data, filename) {
+			var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+			save_link.href = data;
+			save_link.download = filename;
+
+			var event = document.createEvent('MouseEvents');
+			event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+			save_link.dispatchEvent(event);
+		};
+
+		// 下载后的问题名
+		var filename = 'baidufe_' + (new Date()).getTime() + '.' + type;
+		saveFile(imgData, filename);
+	});
 </script>

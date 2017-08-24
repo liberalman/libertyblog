@@ -1,8 +1,9 @@
 package models
 
 import (
-	"github.com/astaxie/beego/orm"
 	"time"
+
+	"github.com/astaxie/beego/orm"
 )
 
 //相册表
@@ -12,6 +13,7 @@ type Photo struct {
 	Des      string    `orm:"size(100)"`
 	Posttime time.Time `orm:"type(datetime);index"`
 	Url      string    `orm:"size(70)"`
+	Urlthumb string    `orm:"size(70)"`
 	Small    string    `orm:"-"`
 }
 
