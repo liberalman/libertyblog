@@ -1,3 +1,6 @@
+<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.min.js"></script>
+<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.locales.min.js"></script>
+
 <div class="row">
 	<!--<div class="col-md-1">
 		<a href="/user/someone?key=" target="_blank"><img class="img-rounded" width="100% \9;" src="{{.avatarurl}}" /></a>
@@ -20,58 +23,69 @@
 	</div>
 </div>
 
-<hr />
-
-{{range $k, $v := .list}}
+<hr /> {{range $k, $v := .list}}
 <!-- 遍历文章短讯文摘 -->
 <div class="row pin_outer" style="padding: %2 %5;">
 	<div class="col-md-1">
 		<div class="pin_inner">
-	        <a onclick="author({{$v.Username}})" title="{{$v.Username}}" data-toggle="tooltip" data-placement="top">
-	        	    <img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" />
-	        </a>
-        </div>
+			<a onclick="author({{$v.Username}}, {{$v.Userid}})" title="{{$v.Username}}" data-toggle="tooltip" data-placement="top">
+				<img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" />
+			</a>
+		</div>
 	</div>
 	<div class="col-md-11">
-	    <div class="row">
-	        <div {{if $v.Coverurl}} class="col-md-8" {{else}} class="col-md-12" {{end}}>
-	            <p><a href="{{$v.Link}}" target="_blank"><h4>{{str2html $v.Title}}</h4></a></p>
-	            <!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
-	            <p class="wrap" style="font-size: 1.2em; line-height:2em;">{{$v.Digest}}</p>
-	        </div>
-	        {{if $v.Coverurl}}
-	        <div class="col-md-4">
-	            <div class="imgc">
-	                <a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
-	            </div>
-	        </div>
-	        {{end}}
-	    </div>
-	    <div class="row">
-	        <ul class="nav nav-pills navbar-left">
-	            <li><a href="#">{{date $v.Posttime "Y-m-j"}}</a></li>
-	            <li>{{str2html $v.TagsLink}}</li>
-	            <li>
-	                <a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
-	            </li>
-	            <li><a href="#" title="关注此用户" onclick="follow({{$v.Username}})" class="glyphicon glyphicon glyphicon-plus"></a></li>
-	            <li>
-	                <a href="https://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
-	            </li>
-	            <li>
-	                <a>{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</a>
-	            </li>
-	        </ul>
-	    </div>
-    </div>
+		<div class="row">
+			<div {{if $v.Coverurl}} class="col-md-8" {{else}} class="col-md-12" {{end}}>
+				<p>
+					<a href="{{$v.Link}}" target="_blank"><h4>{{str2html $v.Title}}</h4></a>
+				</p>
+				<!--<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>-->
+				<p class="wrap" style="font-size: 1.2em; line-height:2em;">{{$v.Digest}}</p>
+			</div>
+			{{if $v.Coverurl}}
+			<div class="col-md-4">
+				<div class="imgc">
+					<a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
+				</div>
+			</div>
+			{{end}}
+		</div>
+		<div class="row">
+			<ul class="nav nav-pills navbar-left">
+				<li><a><time class="timeago" datetime={{date $v.Posttime "Y-m-j"}}>about 8 hours ago</time></a></li>
+				<li>
+					<a href="#">{{date $v.Posttime "Y-m-j"}}</a>
+				</li>
+				<li>{{str2html $v.TagsLink}}</li>
+				<li>
+					<a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
+				</li>
+				<li>
+					<a href="#" title="关注此用户" onclick="follow({{$v.Username}})" class="glyphicon glyphicon glyphicon-plus"></a>
+				</li>
+				<li>
+					<a href="https://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
+				</li>
+				<li>
+					<a>{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>
 
-<hr/>
-{{end}}
+<hr/> {{end}}
 
 <div class="row">{{str2html .pagebar}}</div>
 <br />
+
 <script type="text/javascript">
+	$(document).ready(function() {
+		var nodes = $('.timeago');
+		var timeagoInstance = timeago();
+		timeagoInstance.render(nodes, 'zh_CN');
+		timeago.cancel();
+	});
 	/*
 	// toastr的配置，也可以不配置，使用默认值。
 	toastr.options = {
@@ -88,8 +102,9 @@
 	        "hideMethod": "fadeOut" //消失时的动画方式
 	       };
 	       */
-	function author(name) {
+	function author(name, userid) {
 		toastr.info('作者：' + name);
+		window.location.href = "/user/" + userid;
 	}
 
 	function follow(name) {
@@ -154,31 +169,4 @@
 	3.warning，警告，橙色
 	4.error，错误，深红色
 	其中第一个参数为显示的内容，第二个参数为显示的标题，标题可以省略*/
-	
-	$('.darkside').click(function(e){
-		var $me = $(this), interval;
-		
-		e.preventDefault();
-		
-		$me.grumble(
-			{
-				angle: 130,
-				text: 'Look at me!',
-				type: 'alt-', 
-				distance: 10,
-				hideOnClick: true,
-				hasHideButton: true,
-				onShow: function(){
-					var angle = 130, dir = 1;
-					interval = setInterval(function(){
-						(angle > 220 ? (dir=-1, angle--) : ( angle < 130 ? (dir=1, angle++) : angle+=dir));
-						$me.grumble('adjust',{angle: angle});
-					},25);
-				},
-				onHide: function(){
-					clearInterval(interval);
-				}
-			}
-		);
-	});
 </script>

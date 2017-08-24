@@ -1,0 +1,55 @@
+<link href="/css/grumble.min.css" rel="stylesheet">
+<div class="jumbotron">
+	<h1 id="darkside">{{.user.Username}}</h1>
+	<div class="row">
+		<div class="col-sm-5 col-md-3">
+			<img class="img-rounded" src="{{.user.Avatarurl}}" alt="...">
+		</div>
+	</div>
+	<p>{{.user.Information}}</p>
+	<p>粉丝:{{.user.Follow_count}} 发文:{{.user.Post_count}}</p>
+</div>
+<script src="/js/jquery.grumble.min.js"></script>
+<script>
+	$('#darkside').click(function(e) {
+		var $me = $(this),
+			interval;
+
+		e.preventDefault();
+
+		/*
+	 	text：气泡提示框中的文本。
+		angle：气泡提示框的旋转角度。
+		distance：气泡提示框距离目标的距离。
+		showAfter：显示气泡提示框之前的延迟时间。
+		hideAfter：多长时间之后隐藏气泡提示框。
+		hasHideButton：是否显示关闭按钮。
+		buttonHideText：关闭按钮的文本。
+		type：气泡提示框的类型。
+		onShow：显示提示框时的回调函数。
+		onBeginHide：开始隐藏提示框时的回调函数。
+		onHide：隐藏提示框之后的回调函数。
+	 	*/
+
+		$me.grumble({
+			angle: 130,
+			text: 'Look at me!',
+			type: 'alt-',
+			distance: 10,
+			hideOnClick: true,
+			onShow: function() {
+				var angle = 130,
+					dir = 1;
+				interval = setInterval(function() {
+					(angle > 220 ? (dir = -1, angle--) : (angle < 130 ? (dir = 1, angle++) : angle += dir));
+					$me.grumble('adjust', {
+						angle: angle
+					});
+				}, 25);
+			},
+			onHide: function() {
+				clearInterval(interval);
+			}
+		});
+	});
+</script>

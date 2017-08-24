@@ -27,9 +27,7 @@ paths:
         format: int64
       responses:
         "200":
-          description: response a json, Code=0 success
-          schema:
-            $ref: '#/definitions/models.Ret'
+          description: '{code:0,message:""}'
         "403":
           description: :flag is empty
   /login:
@@ -146,20 +144,26 @@ paths:
           description: '{int} models.User.Id'
         "403":
           description: body is empty
-definitions:
-  .false:
-    type: object
-  models.Ret:
-    title: Ret
-    type: object
-    properties:
-      code:
+  /user/{userid:int}:
+    get:
+      tags:
+      - libertyblog/controllers/blogUserController
+      description: get user Details
+      operationId: UserController.get user Details
+      parameters:
+      - in: path
+        name: userid
+        description: userid
+        required: true
         type: integer
         format: int64
-      data:
-        $ref: '#/definitions/22509.0xc4205002a0.false'
-      message:
-        type: string
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.User'
+        "403":
+          description: :userid is empty
+definitions:
   models.User:
     title: User
     type: object

@@ -8,7 +8,6 @@ import (
 )
 
 func SearchArticle(key string, index string) string {
-	//beego.Info(key, index)
 	SphinxClient = sphinx.NewClient().SetServer(Sphinx_host, Sphinx_port).SetConnectTimeout(5000)
 	if err := SphinxClient.Error(); err != nil {
 		beego.Error("sphinx err 1", err)

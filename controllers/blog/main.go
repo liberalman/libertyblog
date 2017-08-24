@@ -1,7 +1,6 @@
 package blog
 
 import (
-	//"fmt"
 	"libertyblog/models"
 	"strconv"
 	"strings"
@@ -37,7 +36,7 @@ func (this *MainController) Index() {
 //留404页面
 func (this *MainController) Go404() {
 	this.setHeadFootMetas("Sorry 404页面没找到")
-	this.display("404", 0)
+	this.display("404", HAS_RIGHT)
 }
 
 //照片展示
@@ -122,7 +121,7 @@ func (this *MainController) Category() {
 	this.Data["list"] = articles
 	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(this.pagesize), "/category/"+tag.Name+"/page/%d").ToString()
 	this.setHeadFootMetas(tag.Name, tag.Name, tag.Name)
-	this.display("category", 0)
+	this.display("category", HAS_RIGHT)
 }
 
 // @Title Search
@@ -133,13 +132,11 @@ func (this *MainController) Category() {
 // @router /search [get]
 func (this *MainController) Search() {
 	article_ids := models.SearchArticle(this.GetString("key"), "test1")
-
 	ids_len := len(article_ids)
 	if ids_len > 0 {
-		//fmt.Println(article_ids[:ids_len-1])
 		this.Data["list"] = models.GetArticlesByIds(article_ids[:ids_len-1])
 	}
 	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(0), int64(this.pagesize), "/index%d.html").ToString()
 	this.setHeadFootMetas()
-	this.display("index", 0)
+	this.display("index", HAS_RIGHT)
 }

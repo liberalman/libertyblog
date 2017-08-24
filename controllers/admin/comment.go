@@ -16,7 +16,7 @@ type CommentController struct {
 // 删除 curl -d "flag=3&id=1" "http://localhost/comment"
 // @Param	flag		form 	int64	true		"flag: 1 new, 2 update, 3 delete"
 // @Param	article_id		form 	int64	true		"article id"
-// @Success 200 {object} models.Ret response a json, Code=0 success
+// @Success 200 {code:0,message:""}
 // @Failure 403 :flag is empty
 // @router /comment [post]
 func (this *CommentController) Comment() {

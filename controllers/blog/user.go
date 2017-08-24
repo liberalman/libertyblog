@@ -199,3 +199,22 @@ func (this *UserController) updateLoginStatus(user *models.User) {
 	this.Ctx.SetCookie("auth", strconv.FormatInt(user.Id, 10)+"|"+authkey)
 	this.Ctx.WriteString("0") // 登录成功
 }
+
+// @Title get user Details
+// @Description get user Details
+// @Param	userid		path 	int64	true		"userid"
+// @Success 200 {object} models.User
+// @Failure 403 :userid is empty
+// @router /user/:userid:int [get]
+func (this *UserController) User() {
+	userid, _ := strconv.Atoi(this.Ctx.Input.Param(":userid"))
+	user := models.GetUser(int64(userid))
+	if this.IsAjax() {
+		ret := models.NewRet(0, "", user)
+		this.Data["json"] = ret
+		this.ServeJSON()
+	} else {
+		this.Data["user"] = user
+		this.display("user", HAS_RIGHT)
+	}
+}
