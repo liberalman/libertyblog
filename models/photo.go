@@ -13,7 +13,6 @@ type Photo struct {
 	Des      string    `orm:"size(100)"`
 	Posttime time.Time `orm:"type(datetime);index"`
 	Url      string    `orm:"size(70)"`
-	Urlthumb string    `orm:"size(70)"`
 	Small    string    `orm:"-"`
 }
 

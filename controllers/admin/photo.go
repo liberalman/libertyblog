@@ -52,7 +52,8 @@ func (this *PhotoController) Delete() {
 		if err := os.Remove("." + photo.Url); nil != err {
 			//
 		}
-		if err := os.Remove("." + photo.Urlthumb); nil != err {
+		photo.Small = strings.Replace(photo.Url, "bigpic", "smallpic", 1)
+		if err := os.Remove("." + photo.Small); nil != err {
 			//
 		}
 	}
@@ -131,19 +132,19 @@ func (this *PhotoController) UploadPhoto() {
 // @Failure 403 :userid is empty
 // @router /admin/photo/upload [post]
 func (this *PhotoController) UploadPhotos() {
+	var albumid int64
 	file, header, err := this.GetFile("file")
 	ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
 	out := make(map[string]string)
 	out["url"] = ""
 	out["fileType"] = ext
 	out["original"] = header.Filename
-	out["state"] = "SUCCESS"
 	out["success"] = "1"
 	filename := ""
 	if err != nil {
-		out["state"] = err.Error()
 		out["success"] = "2"
 		out["message"] = err.Error()
+		goto end
 	} else {
 		t := time.Now().UnixNano()
 		day := time.Now().Format("20060102")
@@ -151,36 +152,37 @@ func (this *PhotoController) UploadPhotos() {
 		//小图
 		savepath := pathArr[2] + day
 		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
-			out["state"] = err.Error()
 			out["success"] = "3"
 			out["message"] = err.Error()
+			goto end
 		}
 		filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
 		err = createSmallPic(file, filename, 220, 150)
 		if err != nil {
-			out["state"] = err.Error()
 			out["success"] = "4"
 			out["message"] = err.Error()
+			goto end
 		}
-		out["urlthumb"] = filename[1:]
 
 		//大图
 		savepath = pathArr[1] + day
 		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
-			out["state"] = err.Error()
+			out["success"] = "5"
 			out["message"] = err.Error()
+			goto end
 		}
 		filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
 		if err = this.SaveToFile("file", filename); err != nil {
-			out["state"] = err.Error()
-			out["success"] = "5"
+			out["success"] = "6"
 			out["message"] = err.Error()
+			goto end
 		}
 		out["url"] = filename[1:]
 
 	}
-	albumid, _ := this.GetInt64("albumid")
+	albumid, _ = this.GetInt64("albumid")
 	this.Insert(albumid, header.Filename, out["url"])
+end:
 	fmt.Println(out)
 	this.Data["json"] = out
 	//this.ServeJSONP() // 这个函数还要模板文件，好麻烦
