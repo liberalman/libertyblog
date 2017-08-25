@@ -1,6 +1,3 @@
-<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.min.js"></script>
-<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.locales.min.js"></script>
-
 <div class="row">
 	<!--<div class="col-md-1">
 		<a href="/user/someone?key=" target="_blank"><img class="img-rounded" width="100% \9;" src="{{.avatarurl}}" /></a>
@@ -82,14 +79,9 @@
 <div class="row">{{str2html .pagebar}}</div>
 <br />
 
-<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+<!--<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>-->
 <script type="text/javascript">
-	$(document).ready(function() {
-		var nodes = $('.timeago');
-		var timeagoInstance = timeago();
-		timeagoInstance.render(nodes, 'zh_CN');
-		timeago.cancel();
-	});
+	
 	/*
 	// toastr的配置，也可以不配置，使用默认值。
 	toastr.options = {

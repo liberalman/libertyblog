@@ -17,7 +17,7 @@
 <div class="row pin_outer">
 	<div class="col-md-1"></div>
 	<div class="col-md-1">
-		<div class="pin_inner">
+		<div class="pin_inner" style="padding-top: 1em;">
 			<a><img class="img-rounded" width="80em" src="{{.post.Avatarurl}}"></a>
 			<hr/>
 			<div class="side">
@@ -37,10 +37,11 @@
 		<div class="panel panel-default shadow" style="border-radius:10px;">
 			<div class="panel-body" style="padding:2% 5%;">
 				<h2>{{.post.Title}}</h2>
+				<span class="label label-danger"><time class="timeago" datetime={{date .post.Posttime "Y-m-j"}}></time></span>
 				<span class="label label-info">发布时间：{{date .post.Posttime "Y-m-j"}}</span>
 				<span class="label label-primary">作者：{{.post.Username}}</span>
 				<span class="label label-success">阅读：{{.post.Views}}</span>
-				<span class="label label-warning">{{if eq 1 .post.Pubtype}}转载{{else}}原创{{end}}</span> {{if eq 1 .showEditBtn}}<span class="label label-info" onclick="edit_article({{.post.Id}})">编辑</span>{{end}}
+				<span class="label label-warning">{{if eq 1 .post.Pubtype}}转载{{else}}原创{{end}}</span> {{if eq 1 .showEditBtn}}<span class="label label-default" onclick="edit_article({{.post.Id}})">编辑</span>{{end}}
 			</div>
 		</div>
 

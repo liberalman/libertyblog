@@ -47,6 +47,8 @@
 		描述：原来的jquery.pin.min.js中的load函数没改造，我改造了之后，使得它适应jquery1.9之后的版本
 	    -->
 		<script src="/js/jquery.pin.liberalman.min.js"></script>
+		<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.min.js"></script>
+		<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.locales.min.js"></script>
 
 		<!--<script src="https://cdn.bootcss.com/less.js/3.0.0-pre.4/less.min.js"></script>-->
 		<!--<script type="text/javascript" src="{{.staticPath}}/js/stickUp.min.js"></script>
@@ -63,6 +65,13 @@
 			// 将某元素“钉”在容器内
 			$(".pin_inner").pin({
 				containerSelector: ".pin_outer"
+			});
+
+			$(document).ready(function() {
+				var nodes = $('.timeago');
+				var timeagoInstance = timeago();
+				timeagoInstance.render(nodes, 'zh_CN');
+				timeago.cancel();
 			});
 		</script>
 
