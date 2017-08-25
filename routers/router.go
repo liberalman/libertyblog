@@ -23,6 +23,9 @@ func init() {
 			&blog.UserController{},
 		),
 		beego.NSInclude(
+			&blog.PhotoController{},
+		),
+		beego.NSInclude(
 			&admin.CommentController{},
 		),
 		beego.NSInclude(
@@ -36,6 +39,7 @@ func init() {
 
 	beego.Include(&blog.MainController{})
 	beego.Include(&blog.UserController{})
+	beego.Include(&blog.PhotoController{})
 	beego.Include(&admin.AccountController{})
 	beego.Include(&admin.ArticleController{})
 	beego.Include(&admin.CommentController{})

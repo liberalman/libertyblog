@@ -1,74 +1,185 @@
-<!--<h1 class="t_nav">
-  <span>“慢生活”不是懒惰，放慢速度不是拖延时间，而是让我们在生活中寻找到平衡。</span>
-  <a href="/" class="n1">网站首页</a>
-  <a href="/life.html" class="n2">成长录</a>
-</h1>
-<div class="bloglist left">
-  {{range $k, $v := .list}}
-      <h3><a href="{{$v.Link}}"  target="_blank">{{str2html $v.Title}}</a></h3>
-      <figure><a href="{{$v.Link}}"><img src="{{$v.Coverurl}}"></a></figure>
-      <ul>
-        <p>{{str2html $v.Excerpt}}</p>
-        <a title="阅读全文" href="{{$v.Link}}"  target="_blank" class="readmore">阅读全文>></a>
-      </ul>
-      <p class="lifedateview"><span>{{date $v.Posttime "Y-m-j"}}</span><span>作者：{{$v.Username}}</span><span>所属分类：[{{str2html $v.TagsLink}}]</span></p>
-  {{end}}
-  {{str2html .pagebar}}
-</div>-->
-<link rel="stylesheet" href="/css/style1.css">
+<div class="page-header">
+  <h1>{{.tag.Name}} <small>{{.tag.Count}} 篇文章</small></h1>
+</div>
 
-	<!-- 中间内容 -->
-	{{range $k, $v := .list}}
-	<!-- 遍历文章短讯 -->
-
-	<div class="row pin1">
-		<div class="col-md-1">
-			<div class="row pin2" align="center">
-				<a href="/user/someone?key=" target="_blank"><img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" /></a>
-				<a href="#" onclick="author({{$v.Username}})">{{$v.Username}}</a>
-			</div>
-		</div>
-		<div class="col-md-11">
-			<div class="panel">
-				<div class="panel-body" style="padding:2% 5%;">
-					<div class="row">
-						<div class="col-md-10"><a href="{{$v.Link}}" target="_blank"><h6>{{str2html $v.Title}}</h6></a></div>
-						<div class="col-md-2">{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</div>
-					</div>
-					<hr />
-
-					<div class="row">
-						<!--<div class="img js-36206">
-               <div class="imgc" style="height: auto;">
-                <a href="' + parseImages(obj.data.list[i].avatorUrl) + '" data-lightbox="example-1" hidefocus="true"> <img width="164" src="{{$v.Coverurl}}"/> <span class="total"> <span class="totalbg"></span><span class="totalnum"></span> </span> </a>
-               </div>
-             </div>-->
-
-						<p class="wrap">{{substr (html2str $v.Excerpt) 0 300|str2html }}</p>
-					</div>
-
-					<hr />
-					<div class="row">
-						<ul class="nav nav-pills navbar-right">
-							<li><a hidefocus="true" title="关注" onclick="follow({{$v.Username}})">关注</a></li>
-							<li>{{str2html $v.TagsLink}}</li>
-							<li><a href="#">{{date $v.Posttime "Y-m-j"}}</a></li>
-							<li><a href="{{$v.Link}}" hidefocus="true">查看全文</a></li>
-							<li>
-								<a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
-							</li>
-							<li>
-								<a href="http://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
+{{range $k, $v := .list}}
+<!-- 遍历文章短讯文摘 -->
+<div class="row pin_outer" style="padding: %2 %5;">
+	<div class="col-md-1">
+		<div class="pin_inner">
+			<a onclick="author({{$v.Username}}, {{$v.Userid}})" title="{{$v.Username}}" data-toggle="tooltip" data-placement="top">
+				<img class="img-circle img-responsive center-block" src="{{$v.Avatarurl}}" />
+			</a>
 		</div>
 	</div>
+	<div class="col-md-11">
+		<div class="row">
+			<div {{if $v.Coverurl}} class="col-md-8" {{else}} class="col-md-12" {{end}}>
+				<p>
+					<a href="{{$v.Link}}" target="_blank">
+						<h4>{{str2html $v.Title}}</h4></a>
+				</p>
+				<p class="wrap" style="font-size: 1.2em; line-height:2em;">{{$v.Digest}}</p>
+			</div>
+			{{if $v.Coverurl}}
+			<div class="col-md-4">
+				<div class="imgc">
+					<a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
+				</div>
+			</div>
+			{{end}}
+		</div>
+		<div class="row">
+			<ul class="nav nav-pills navbar-left">
+				<li>
+					<a><time class="timeago" datetime={{date $v.Posttime "Y-m-j"}}>about 8 hours ago</time></a>
+				</li>
+				<li>
+					<a href="#">{{date $v.Posttime "Y-m-j"}}</a>
+				</li>
+				<li>{{str2html $v.TagsLink}}</li>
+				<li>
+					<a href="" hidefocus="true" title="喜欢" onclick="likeit(this)" class="glyphicon glyphicon-heart-empty"></a>
+				</li>
+				<li>
+					<a href="#" title="关注此用户" onclick="follow({{$v.Username}})" class="glyphicon glyphicon glyphicon-plus"></a>
+				</li>
+				<li>
+					<a href="https://www.liberalman.cn" target="_blank" title="分享" class="glyphicon glyphicon-share"></a>
+				</li>
+				<li>
+					<a>{{if eq $v.Pubtype 1}} 【转载】 {{else}} 【原创】 {{end}}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
 
-	{{end}}
+<hr/> {{end}}
+
+<div class="row">{{str2html .pagebar}}</div>
+<br />
+
+<!--<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>-->
+<script type="text/javascript">
 	
-	{{str2html .pagebar}}
+	/*
+	// toastr的配置，也可以不配置，使用默认值。
+	toastr.options = {
+	        "closeButton": false, //是否显示关闭按钮
+	        "debug": false, //是否使用debug模式
+	        "positionClass": "toast-top-right",//弹出窗的位置
+	        "showDuration": "300",//显示的动画时间
+	        "hideDuration": "1000",//消失的动画时间
+	        "timeOut": "5000", //展现时间
+	        "extendedTimeOut": "1000",//加长展示时间
+	        "showEasing": "swing",//显示时的动画缓冲方式
+	        "hideEasing": "linear",//消失时的动画缓冲方式
+	        "showMethod": "fadeIn",//显示时的动画方式
+	        "hideMethod": "fadeOut" //消失时的动画方式
+	       };
+	       */
+	function author(name, userid) {
+		toastr.info('作者：' + name);
+		window.location.href = "/user/" + userid;
+	}
 
-<hr />
+	function follow(name) {
+		toastr.warning('+关注：' + name);
+	}
+
+	function likeit(myself) {
+		toastr.success('喜欢此文！');
+		$(myself).removeClass("glyphicon-heart-empty").addClass("glyphicon-heart");
+	}
+
+	/*可供选择的设置选项
+	closeButton: true
+	是否在通知弹窗上面显示关闭按钮，true：显示；false：不显示
+
+	debug: true
+	是否开起debug
+
+	progressBar: false
+	是否显示进度条，当为false时候不显示；当为true时候，显示进度条，当进度条缩短到0时候，消息通知弹窗消失
+
+	positionClass: 'toast-top-right'
+	位置信息，消息弹窗显示的位置，可以显示的位置对应的值
+	1.toast-top-right
+	2.toast-botton-right
+	3.toash-bottom-left
+	4.toast-top-left
+	5.toast-top-full-width 这个是在网页顶端，宽度铺满整个屏幕
+	6.toast-bottom-full-width
+	7.toast-top-center顶端中间
+	8.toast-bottom-center
+
+	onclick: null
+	showDuration: "300"
+	显示动作（从无到有这个动作）持续的时间
+
+	hideDuration: "1000"
+	隐藏动作持续的时间
+
+	timeOut: "5000"
+	间隔的时间
+
+
+	extendedTimeOut: "1000"
+
+	showEasing: "swing",
+	hideEasing: "linear",
+	showMethod: "fadeIn"
+
+	显示的方式，和jquery相同，可以是show()
+
+
+	hideMethod: "fadeOut"
+	隐藏的方式，和jquery相同，可以是hide()
+
+
+
+	toastr['error']('I am yanying', 'title');
+	其中的error为显示的通知的样式类型，有4种选择
+	1.success 成功，绿色
+	2.info 信息，蓝色
+	3.warning，警告，橙色
+	4.error，错误，深红色
+	其中第一个参数为显示的内容，第二个参数为显示的标题，标题可以省略*/
+
+    
+    /*// 将当前页面打快照截图
+	html2canvas(document.body).then(function(canvas) {
+		//document.body.appendChild(canvas); // 追加到body后面
+
+		// 图片导出为 png 格式
+		var type = "png";
+		var imgData = canvas.toDataURL(type);
+		//location = imgData; // 浏览器查看效果
+
+		// 获取mimeType
+		var _fixType = function(type) {
+			type = type.toLowerCase().replace(/jpg/i, 'jpeg');
+			var r = type.match(/png|jpeg|bmp|gif/)[0];
+			return 'image/' + r;
+		};
+
+		// 加工image data，替换mime type
+		imgData = imgData.replace(_fixType(type), 'image/octet-stream');
+
+		// 在本地进行文件保存
+		var saveFile = function(data, filename) {
+			var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+			save_link.href = data;
+			save_link.download = filename;
+
+			var event = document.createEvent('MouseEvents');
+			event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+			save_link.dispatchEvent(event);
+		};
+
+		// 下载后的问题名
+		var filename = 'baidufe_' + (new Date()).getTime() + '.' + type;
+		saveFile(imgData, filename);
+	});*/
+</script>

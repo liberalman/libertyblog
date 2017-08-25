@@ -49,6 +49,10 @@ paths:
             $ref: '#/definitions/models.User'
         "403":
           description: :userid is empty
+  /blog/photo/all:
+    get:
+      tags:
+      - libertyblog/controllers/blogPhotoController
   /comment:
     post:
       tags:

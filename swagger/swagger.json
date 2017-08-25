@@ -76,6 +76,13 @@
                 }
             }
         },
+        "/blog/photo/all": {
+            "get": {
+                "tags": [
+                    "libertyblog/controllers/blogPhotoController"
+                ]
+            }
+        },
         "/comment": {
             "post": {
                 "tags": [
