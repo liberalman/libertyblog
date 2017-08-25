@@ -74,7 +74,7 @@ func (this *MainController) Album() {
 	this.right = ""
 	this.Data["list"] = list
 	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(pagesize), "/album%d.html").ToString()
-	this.display("album", HAS_RIGHT)
+	this.display("album", NO_RIGHT)
 }
 
 //相册展示1

@@ -215,13 +215,20 @@ func (this *ArticleController) Save() {
 	}
 
 	if id < 1 {
+		// this is add article
 		post.Userid = this.userid
 		//post.Author = this.username
 		post.Posttime = this.getTime()
 		post.Updated = this.getTime()
+		if posttime, err := time.Parse("2006-01-02 15:04:05", timestr); err != nil {
+			post.Posttime, _ = time.Parse("2006-01-02 15:04:05", post.Posttime.Format("2006-01-02 15:04:05"))
+		} else {
+			post.Posttime = posttime
+		}
 		post.Insert()
 		models.Cache.Delete("latestblog")
 	} else {
+		// this is update article
 		post.Id = id
 		if post.Read() != nil {
 			goto RD
@@ -235,6 +242,7 @@ func (this *ArticleController) Save() {
 			//删掉tag_post表的记录
 			tagpostobj.Query().Filter("postid", post.Id).Delete()
 		}
+
 	}
 
 	if len(addtags) > 0 {
@@ -252,11 +260,7 @@ func (this *ArticleController) Save() {
 		}
 		post.Tags = "," + strings.Join(addtags, ",") + ","
 	}
-	if posttime, err := time.Parse("2006-01-02 15:04:05", timestr); err == nil {
-		post.Posttime = posttime
-	} else {
-		post.Posttime, _ = time.Parse("2006-01-02 15:04:05", post.Posttime.Format("2006-01-02 15:04:05"))
-	}
+
 	post.Status = int8(status)
 	post.Title = title
 	post.Digest = digest
