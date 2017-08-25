@@ -19,26 +19,28 @@
 							<form role="form" method="post" action="/admin/album/edit">
 								<input type="text" name="albumid" value="{{.album.Id}}" hidden="hidden" />
 								<div class="form-group input-group">
-									<span class="input-group-addon">相册名称</span>
-									<input type="text" class="form-control" name="albumname" value="{{.album.Name}}" />
+									<!--<span class="input-group-addon">相册封面</span>
+									<input type="text" class="form-control" name="cover" value="{{.album.Cover}}" id="cover" />-->
+									<img class="img-thumbnail" src="{{.album.Cover}}" onerror="onerror=null;src='/static/upload/defaultcover.png'" />
 								</div>
 								<div class="form-group input-group">
-									<span class="input-group-addon">相册封面</span>
-									<input type="text" class="form-control" name="cover" value="{{.album.Cover}}" id="cover" />
+									<span class="input-group-addon">相册名称</span>
+									<input type="text" class="form-control" name="albumname" value="{{.album.Name}}" />
 								</div>
 								<div class="form-group input-group">
 									<span class="input-group-addon">内容</span>
 									<input type="text" class="form-control" name="content" value="{{.album.Content}}" />
 								</div>
-								<div class="form-group input-group">
+								<!--<div class="form-group input-group">
 									<input id="editormd-image-file" name="editormd-image-file" type="file" class="file" />
-								</div>
+								</div>-->
 								<div class="form-group input-group">
 									<span class="input-group-addon">展示排序</span>
 									<input type="text" class="form-control" name="rank" value="{{.album.Rank}}" />
 									<span class="input-group-addon">值越大越排前</span>
 								</div>
 								<button type="submit" class="btn btn-default">保存</button>
+								<button type="button" class="btn btn-primary" onclick="del_album({{.album.Id}})">删除</button>
 								<button type="button" class="btn" onclick="javascript:history.back();">取消</button>
 							</form>
 						</div>
@@ -93,7 +95,27 @@
 			}
 		});
 	}
-	
+
 	//初始化fileinput控件（第一次初始化）
-	initFileInput("editormd-image-file", "/admin/article/upload", {{.album.Cover}});
+	//initFileInput("editormd-image-file", "/admin/article/upload", {{.album.Cover}});
+
+	function del_album(albumid) {
+		if(confirm("确定要删除吗？")) {
+			$.ajax({
+				url: '/admin/album/delete',
+				data: {
+					albumid: albumid
+				},
+				type: 'DELETE',
+				success: function(result) {
+					console.info(result);
+					if (0 != result.code) {
+						toastr.error(result.message);
+					} else {
+						toastr.success(result.message);
+					}
+				}
+			});
+		}
+	}
 </script>

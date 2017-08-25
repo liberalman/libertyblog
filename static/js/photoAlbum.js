@@ -56,20 +56,23 @@
 				tmp = document.querySelectorAll('.lucas-album img');
 			}
 		}
-		for (var i = 0; i < tmp.length; i++) {
-			imgArray[i] = tmp[i].getAttribute('src');
-			imgSize[i] = {
-				height: window.getComputedStyle(tmp[i],null).height,
-				width :window.getComputedStyle(tmp[i],null).width
-			};
-			ratio = parseInt(imgSize[i].width)/parseInt(imgSize[i].height);
-			imgRatio[i] = {
-				id: i,
-				ratio: parseFloat(ratio.toFixed(3))
-			};
-
-			contentElement.removeChild(tmp[i]);
+		if(null != tmp) {
+			for (var i = 0; i < tmp.length; i++) {
+				imgArray[i] = tmp[i].getAttribute('src');
+				imgSize[i] = {
+					height: window.getComputedStyle(tmp[i],null).height,
+					width :window.getComputedStyle(tmp[i],null).width
+				};
+				ratio = parseInt(imgSize[i].width)/parseInt(imgSize[i].height);
+				imgRatio[i] = {
+					id: i,
+					ratio: parseFloat(ratio.toFixed(3))
+				};
+	
+				contentElement.removeChild(tmp[i]);
+			}
 		}
+		
 		layout = this.LAYOUT[contentElement.getAttribute('category')];
 		imageCount = imgArray.length;
 		return contentElement;

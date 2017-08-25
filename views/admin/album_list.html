@@ -34,7 +34,7 @@
 									<td class="hl_author">{{$v.Name}}</td>
 									<td>
 										<a href="/admin/photo/list?albumid={{$v.Id}}">
-											<img class="img-rounded" src="{{$v.Cover}}" width="170" height="80" />
+											<img class="img-rounded" src="{{$v.Cover}}" onerror="onerror=null;src='/static/upload/defaultcover.png'" width="170" height="80" />
 										</a>
 									</td>
 									<td>{{$v.Content}}</td>

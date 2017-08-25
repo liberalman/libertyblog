@@ -434,7 +434,9 @@
 				case 'finish':
 					stats = uploader.getStats();
 					if(stats.successNum) {
-						alert('上传成功');
+						//alert('上传成功');
+						toastr.success('上传成功');
+				        location.reload(); 
 					} else {
 						// 没有成功的图片，重设
 						state = 'done';
@@ -484,7 +486,6 @@
 
 		// 当某个文件上传到服务端响应后，会派送此事件来询问服务端响应是否有效。如果此事件handler返回值为false, 则此文件将派送server类型的uploadError事件。
 		uploader.onUploadAccept = function(object, ret) {
-			console.info(ret);
 			if("1" != ret.success) {
 				alert(ret.message);
 				return false;

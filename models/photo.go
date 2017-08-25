@@ -52,6 +52,13 @@ func (m *Photo) Query() orm.QuerySeter {
 	return orm.NewOrm().QueryTable(m)
 }
 
+func QueryPhotoListOfAlbum(albumid int64) []Photo {
+	var list []Photo
+	o := orm.NewOrm()
+	o.Raw("select p.id,p.albumid,p.des,p.posttime,p.url from tb_album a left join tb_photo p on a.id=p.albumid where a.id=? order by p.posttime desc", albumid).QueryRows(&list)
+	return list
+}
+
 // get photos of all over the site
 func QueryAllPhotoList(page int, pagesize int) ([]Photo, int) {
 	var count int = 0

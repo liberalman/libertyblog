@@ -1,8 +1,9 @@
 package admin
 
 import (
+	"fmt"
 	"libertyblog/models"
-	"strconv"
+	"os"
 	"strings"
 	"time"
 )
@@ -40,7 +41,8 @@ func (this *AlbumController) Add() {
 		rank, _ := this.GetInt("rank")
 		var album models.Album
 		album.Name = strings.TrimSpace(this.GetString("albumname"))
-		album.Cover = strings.TrimSpace(this.GetString("cover"))
+		//album.Cover = strings.TrimSpace(this.GetString("cover"))
+		album.Cover = "/static/upload/defaultcover.png"
 		album.Content = strings.TrimSpace(this.GetString("content"))
 		album.Rank = int8(rank)
 		album.Posttime = time.Now()
@@ -53,17 +55,55 @@ func (this *AlbumController) Add() {
 	this.display()
 }
 
-//删除相册
+// @Title Delete album
+// @Description Delete album
+// @Param	albumid		query 	int64	true		"albumid"
+// @Success 200 body album list page
+// @Failure 403 :albumid is empty
+// @router /admin/album/delete [delete]
 func (this *AlbumController) Delete() {
-	id, _ := this.GetInt64("albumid")
-	album := models.Album{Id: id}
-	h, _ := strconv.Atoi(this.GetString("ishide"))
-	album.Ishide = int8(h)
-	if err := album.Update("ishide"); err != nil {
-		this.showmsg(err.Error())
-		return
+	// 判断是否是自己的相册
+	ret := models.Ret{Code: 0, Message: "success"}
+	albumid, _ := this.GetInt64("albumid")
+	photo := models.Photo{Id: 0}
+	album := models.Album{Id: albumid}
+	if album.Read() != nil {
+		potos := models.QueryPhotoListOfAlbum(album.Id)
+		for _, v := range potos {
+			// 删除硬盘上的图片
+			if err := os.Remove("." + v.Url); nil != err {
+				ret.Code = -3
+				ret.Message += err.Error()
+				goto end
+			}
+			v.Small = strings.Replace(v.Url, "bigpic", "smallpic", 1)
+			if err := os.Remove("." + v.Small); nil != err {
+				ret.Code = -2
+				ret.Message += err.Error()
+				goto end
+			}
+			// 删除数据库记录
+			photo.Id = v.Id
+			if err := photo.Delete(); err != nil {
+				ret.Code = -4
+				ret.Message += err.Error()
+				goto end
+			}
+		}
+		// 删除相册
+		if err := album.Delete(); err != nil {
+			ret.Code = -1
+			ret.Message += err.Error()
+			goto end
+		}
+	} else {
+		ret.Code = -5
+		ret.Message = fmt.Sprintf("no this albumid=%d.", albumid)
+		goto end
 	}
-	this.Redirect("/admin/album/list", 302)
+end:
+	this.Data["json"] = ret
+	this.ServeJSON()
 }
 
 // @Title Hide album
@@ -93,7 +133,7 @@ func (this *AlbumController) Edit() {
 	}
 	if this.Ctx.Request.Method == "POST" {
 		rank, _ := this.GetInt("rank")
-		album.Cover = strings.TrimSpace(this.GetString("cover"))
+		//album.Cover = strings.TrimSpace(this.GetString("cover"))
 		album.Name = strings.TrimSpace(this.GetString("albumname"))
 		album.Content = strings.TrimSpace(this.GetString("content"))
 		album.Rank = int8(rank)
