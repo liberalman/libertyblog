@@ -16,26 +16,25 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-lg-6">
-							<form role="form" method="post" action="/admin/article/upload?type=2&w=220&h=150">
+							<form role="form" method="post" action="/admin/album/add">
 								<div class="form-group input-group">
 									<span class="input-group-addon">相册名称</span>
-									<input type="text" class="form-control" name="albumname"/>
+									<input type="text" class="form-control" name="albumname" />
 								</div>
 								<div class="form-group input-group">
 									<span class="input-group-addon">相册封面</span>
-									<input type="text" class="form-control" name="cover"/>
+									<input type="text" class="form-control" name="cover" id="cover"/>
 								</div>
 								<div class="form-group input-group">
 									<span class="input-group-addon">内容</span>
-									<input type="text" class="form-control" name="content"/>
+									<input type="text" class="form-control" name="content" />
 								</div>
 								<div class="form-group input-group">
-									<span class="input-group-addon">选择图片</span>
 									<input id="editormd-image-file" name="editormd-image-file" type="file" class="file" />
 								</div>
 								<div class="form-group input-group">
 									<span class="input-group-addon">展示排序</span>
-									<input type="text" class="form-control" name="rank"/>
+									<input type="text" class="form-control" name="rank" />
 									<span class="input-group-addon">值越大越排前</span>
 								</div>
 								<button type="submit" class="btn btn-default">保存</button>
@@ -57,3 +56,40 @@
 		<!-- /.col-lg-12 -->
 	</div>
 </div>
+<script>
+	//初始化fileinput控件（第一次初始化）
+	function initFileInput(ctrlName, uploadUrl, preViewImageurl) {
+		var control = $('#' + ctrlName);
+		control.fileinput({
+			language: 'zh', //设置语言
+			uploadUrl: uploadUrl, //上传的地址
+			allowedFileExtensions: ['jpg', 'png', 'gif'], //接收的文件后缀
+			showUpload: true, //是否显示上传按钮
+			showCaption: true, //是否显示标题
+			browseClass: "btn btn-primary", //按钮样式             
+			previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+			uploadExtraData: {
+				type: 2,
+				w: 220,
+				h: 150,
+			},
+		}).on("fileuploaded", function(event, data) {
+			console.info(data);
+			if(data.response) {
+				if(1 == data.response.success) {
+					$('#cover')[0].value = data.response.url;
+				} else {
+					toastr.error(data.response.message);
+					return false;
+				}
+
+			} else {
+				toastr.error(data);
+				return false;
+			}
+		});
+	}
+	
+	//初始化fileinput控件（第一次初始化）
+	initFileInput("editormd-image-file", "/admin/article/upload", {{.album.Cover}});
+</script>

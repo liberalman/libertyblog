@@ -12,6 +12,41 @@
                 ]
             }
         },
+        "/admin/album/hide": {
+            "get": {
+                "tags": [
+                    "libertyblog/controllers/adminAlbumController"
+                ],
+                "description": "Hide album, just you can see it.",
+                "operationId": "AlbumController.Hide album",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "albumid",
+                        "description": "albumid",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "albumid",
+                        "description": "ishide",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "body album list page"
+                    },
+                    "403": {
+                        "description": ":userid is empty"
+                    }
+                }
+            }
+        },
         "/admin/photo/upload": {
             "post": {
                 "tags": [

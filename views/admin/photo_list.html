@@ -1,7 +1,8 @@
 <link href="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.css" rel="stylesheet">
 <script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.min.js"></script>
 
--<link href="/css/liberty/webuploader-liberty.css" rel="stylesheet">
+-
+<link href="/css/liberty/webuploader-liberty.css" rel="stylesheet">
 
 <script src="/js/photoAlbum.js"></script>
 <link href="/css/photoAlbum.css" rel="stylesheet">
@@ -38,27 +39,29 @@
 								</div>
 							</td>
 						</tr>
-						<tr>
-							<td>
-								<ul id="auto-loop" class="gallery list-unstyled">
-									{{range $k, $v := .list}}
-									<li data-desc="{{$v.Des}}">
-										<a href="#">
-											<img src="{{$v.Small}}" />
-										</a>
-										<a href="/admin/photo/cover?cover={{$v.Small}}&albumid={{$v.Albumid}}">设为封面</a>
-										<a href="/admin/photo/delete?id={{$v.Id}}&albumid={{$v.Albumid}}" onclick="return del_confirm()">删除</a>
-									</li>
-									{{end}}
-								</ul>
-							</td>
-						</tr>
 					</tbody>
 
 				</table>
 			</form>
 
 		</fieldset>
+	</div>
+
+	<div class="row">
+		{{range $k, $v := .list}}
+		<div class="col-sm-5 col-md-3">
+			<div class="thumbnail">
+				<img src="{{$v.Small}}" alt="{{$v.Small}}" title="{{$v.Des}}" />
+				<div class="caption">
+					<p>{{$v.Des}}</p>
+					<p>
+						<a class="btn btn-primary" role="button" href="/admin/photo/cover?cover={{$v.Small}}&albumid={{$v.Albumid}}">设为封面</a>
+						<a class="btn btn-default" role="button" href="/admin/photo/delete?id={{$v.Id}}&albumid={{$v.Albumid}}" onclick="return del_confirm()">删除</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		{{end}}
 	</div>
 
 	<div class="row">
@@ -148,7 +151,7 @@
 				extensions: 'gif,jpg,jpeg,bmp,png',
 				mimeTypes: 'image/*'
 			},
-			
+
 			formData: {
 				albumid: {{.albumid}}
 			},
@@ -469,11 +472,11 @@
 			updateTotalProgress();
 
 		};
-		
+
 		// 当某个文件上传到服务端响应后，会派送此事件来询问服务端响应是否有效。如果此事件handler返回值为false, 则此文件将派送server类型的uploadError事件。
 		uploader.onUploadAccept = function(object, ret) {
 			console.info(ret);
-			if ("1" != ret.success){
+			if("1" != ret.success) {
 				alert(ret.message);
 				return false;
 			}

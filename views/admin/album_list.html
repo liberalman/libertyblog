@@ -42,9 +42,9 @@
 									<td>{{$v.Rank}}</td>
 									<td>
 										{{if $v.Ishide}}
-										<a href="/admin/album/delete?albumid={{$v.Id}}&ishide=0">显示</a>
+										<a href="/admin/album/hide?albumid={{$v.Id}}&ishide=0">显示</a>
 										{{else}}
-										<a href="/admin/album/delete?albumid={{$v.Id}}&ishide=1">隐藏</a>
+										<a href="/admin/album/hide?albumid={{$v.Id}}&ishide=1">隐藏</a>
 										{{end}} |
 										<a href="/admin/album/edit?albumid={{$v.Id}}">修改</a>
 									</td>

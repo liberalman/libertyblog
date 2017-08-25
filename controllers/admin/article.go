@@ -336,19 +336,21 @@ func (this *ArticleController) Upload() {
 	var message string
 
 	file, header, err := this.GetFile("editormd-image-file")
-	utype := this.GetString("type")
-	if utype == "" {
-		utype = "1"
-	}
-	index, _ := strconv.Atoi(utype)
-
-	fileType := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
-	//image_original = header.Filename
-
 	if err != nil {
 		success = -1
 		message = err.Error()
 	} else {
+		utype := this.GetString("type")
+		if utype == "" {
+			utype = "1"
+		}
+		index, _ := strconv.Atoi(utype)
+		if index < 1 || index > 3 {
+			success = -5
+			message = "type=" + utype + " out of bound."
+			goto end
+		}
+		fileType := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
 		savepath := pathArr[index] + time.Now().Format("20060102")
 		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
 			success = -2
@@ -373,6 +375,7 @@ func (this *ArticleController) Upload() {
 		}
 	}
 
+end:
 	this.Ctx.WriteString(fmt.Sprintf("{\"success\":%d,\"url\":\"%s\",\"message\":\"%s\"}", success, url, message))
 }
 

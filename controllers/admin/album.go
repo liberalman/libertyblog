@@ -41,6 +41,7 @@ func (this *AlbumController) Add() {
 		var album models.Album
 		album.Name = strings.TrimSpace(this.GetString("albumname"))
 		album.Cover = strings.TrimSpace(this.GetString("cover"))
+		album.Content = strings.TrimSpace(this.GetString("content"))
 		album.Rank = int8(rank)
 		album.Posttime = time.Now()
 		if err := album.Insert(); err != nil {
@@ -65,6 +66,24 @@ func (this *AlbumController) Delete() {
 	this.Redirect("/admin/album/list", 302)
 }
 
+// @Title Hide album
+// @Description Hide album, just you can see it.
+// @Param	albumid		query 	int64	true		"albumid"
+// @Param	albumid		query 	int8	true		"ishide"
+// @Success 200 body album list page
+// @Failure 403 :userid is empty
+// @router /admin/album/hide [get]
+func (this *AlbumController) Hide() {
+	id, _ := this.GetInt64("albumid")
+	album := models.Album{Id: id}
+	album.Ishide, _ = this.GetInt8("ishide")
+	if err := album.Update("ishide"); err != nil {
+		this.showmsg(err.Error())
+		return
+	}
+	this.Redirect("/admin/album/list", 302)
+}
+
 //修改
 func (this *AlbumController) Edit() {
 	id, _ := this.GetInt64("albumid")
@@ -74,8 +93,9 @@ func (this *AlbumController) Edit() {
 	}
 	if this.Ctx.Request.Method == "POST" {
 		rank, _ := this.GetInt("rank")
-		album.Cover = this.GetString("cover")
-		album.Name = this.GetString("albumname")
+		album.Cover = strings.TrimSpace(this.GetString("cover"))
+		album.Name = strings.TrimSpace(this.GetString("albumname"))
+		album.Content = strings.TrimSpace(this.GetString("content"))
 		album.Rank = int8(rank)
 		album.Update()
 		this.Redirect("/admin/album/list", 302)
