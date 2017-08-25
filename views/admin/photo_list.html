@@ -1,3 +1,11 @@
+<style>
+.wrap {
+	/* 长英文自动换行 */
+	word-break: break-all;
+	table-layout: fixed;
+	overflow: hidden;
+}
+</style>
 <link href="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.css" rel="stylesheet">
 <script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.min.js"></script>
 <link href="/css/liberty/webuploader-liberty.css" rel="stylesheet">
@@ -41,7 +49,6 @@
 								</td>
 							</tr>
 						</tbody>
-
 					</table>
 				</form>
 			</fieldset>
@@ -55,7 +62,7 @@
 			<div class="thumbnail">
 				<img src="{{$v.Small}}" alt="{{$v.Small}}" title="{{$v.Des}}" />
 				<div class="caption">
-					<p>{{$v.Des}}</p>
+					<p class="wrap">{{$v.Des}}</p>
 					<p>
 						<a class="btn btn-primary" role="button" href="/admin/photo/cover?cover={{$v.Small}}&albumid={{$v.Albumid}}">设为封面</a>
 						<a class="btn btn-default" role="button" href="/admin/photo/delete?id={{$v.Id}}&albumid={{$v.Albumid}}" onclick="return del_confirm()">删除</a>
