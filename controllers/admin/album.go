@@ -6,6 +6,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/astaxie/beego"
 )
 
 type AlbumController struct {
@@ -72,26 +74,29 @@ func (this *AlbumController) Delete() {
 		ret.Message = fmt.Sprintf("no this albumid=%d.", albumid)
 		goto end
 	} else {
-		potos := models.QueryPhotoListOfAlbum(album.Id)
-		for _, v := range potos {
+		photos := models.QueryPhotoListOfAlbum(album.Id)
+		for _, v := range photos {
 			// 删除硬盘上的图片
 			if err := os.Remove("." + v.Url); nil != err {
-				ret.Code = -3
-				ret.Message = err.Error()
-				goto end
+				//ret.Code = -3
+				//ret.Message = err.Error()
+				//goto end
+				beego.Error("could not delete ", "."+v.Url, err.Error())
 			}
 			v.Small = strings.Replace(v.Url, "bigpic", "smallpic", 1)
 			if err := os.Remove("." + v.Small); nil != err {
-				ret.Code = -2
-				ret.Message = err.Error()
-				goto end
+				//ret.Code = -2
+				//ret.Message = err.Error()
+				//goto end
+				beego.Error("could not delete ", "."+v.Small, err.Error())
 			}
 			// 删除数据库记录
 			photo.Id = v.Id
 			if err := photo.Delete(); err != nil {
-				ret.Code = -4
-				ret.Message += err.Error()
-				goto end
+				//ret.Code = -4
+				//ret.Message += err.Error()
+				//goto end
+				beego.Error(err.Error())
 			}
 		}
 		// 删除相册
