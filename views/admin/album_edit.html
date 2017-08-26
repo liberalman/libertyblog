@@ -109,7 +109,7 @@
 				type: 'delete',
 				success: function(result) {
 					if(0 != result.code) {
-						toastr.error("code:" result.code + " message:" + result.message);
+						toastr.error("code:" + result.code + " message:" + result.message);
 					} else {
 						toastr.success(result.message);
 						window.local.href = "/admin/album/list";
