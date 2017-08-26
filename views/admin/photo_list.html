@@ -6,6 +6,7 @@
 	overflow: hidden;
 }
 </style>
+<link href="https://cdn.bootcss.com/lightbox2/2.9.0/css/lightbox.min.css" rel="stylesheet">
 <link href="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.css" rel="stylesheet">
 <script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.min.js"></script>
 <link href="/css/liberty/webuploader-liberty.css" rel="stylesheet">
@@ -60,10 +61,12 @@
 		{{range $k, $v := .list}}
 		<div class="col-sm-5 col-md-3">
 			<div class="thumbnail">
-				<img src="{{$v.Small}}" alt="{{$v.Small}}" title="{{$v.Des}}" />
+				<a href="{{$v.Url}}" data-lightbox="lightbox_" title="{{$v.Des}}">
+			    	<img src="{{$v.Small}}" alt="{{$v.Des}}">
+			    </a>
 				<div class="caption">
 					<p class="wrap">
-						<textarea class="photo_des" photoid="{{$v.Id}}">{{$v.Des}}</textarea>
+						<input class="photo_des form-control" photoid="{{$v.Id}}" value="{{$v.Des}}"/>
 					</p>
 					<p>
 						<a class="btn btn-primary" role="button" href="/admin/photo/cover?cover={{$v.Small}}&albumid={{$v.Albumid}}">设为封面</a>
@@ -83,6 +86,7 @@
 	</div>
 </div>
 
+<script src="https://cdn.bootcss.com/lightbox2/2.9.0/js/lightbox.min.js"></script>
 <script>
     $('.photo_des').change(function(){
     	$.ajax({
