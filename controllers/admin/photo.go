@@ -69,6 +69,25 @@ func (this *PhotoController) Cover() {
 	this.Redirect("/admin/album/list", 302)
 }
 
+// @Title edit photo
+// @Description edit photo
+// @Param	photoid		path 	int64	true		"photoid"
+// @Success 200 int 0
+// @Failure 403 :userid is empty
+// @router /admin/photo/edit [post]
+func (this *PhotoController) Edit() {
+	ret := models.Ret{Code: 0, Message: "success"}
+	id, _ := this.GetInt64("photoid")
+	des := this.GetString("des")
+	photo := models.Photo{Id: id, Des: des}
+	if err := photo.Update("des"); err != nil {
+		ret.Code = -1
+		ret.Message = err.Error()
+	}
+	this.Data["json"] = ret
+	this.ServeJSON()
+}
+
 //上传照片)
 func (this *PhotoController) UploadPhoto() {
 	file, header, err := this.GetFile("editormd-image-file") //upfile
