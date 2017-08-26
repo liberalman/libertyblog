@@ -26,7 +26,7 @@ func (this *AlbumController) List() {
 	}
 	offset := (page - 1) * pagesize
 
-	query := album.Query()
+	query := album.Query().Filter("userid", this.userid)
 	count, _ := query.Count()
 	if count > 0 {
 		query.OrderBy("-rank", "-posttime").Limit(pagesize, offset).All(&list)

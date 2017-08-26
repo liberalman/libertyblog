@@ -9,6 +9,7 @@ import (
 //相册表
 type Album struct {
 	Id       int64
+	Userid   int64
 	Name     string    `orm:"size(100)"`
 	Cover    string    `orm:"size(70)"`
 	Posttime time.Time `orm:"type(datetime);index"`
