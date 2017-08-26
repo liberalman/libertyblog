@@ -54,7 +54,8 @@ func (this *AccountController) UpdateProfile() {
 	}
 	user.Username = strings.TrimSpace(this.GetString("username"))
 	user.Email = strings.TrimSpace(this.GetString("email"))
-	if err := user.Update("username", "email"); err != nil {
+	user.Information = strings.TrimSpace(this.GetString("information"))
+	if err := user.Update("username", "email", "information"); err != nil {
 		this.Ctx.WriteString(err.Error())
 	} else {
 		this.Ctx.WriteString("0") // 成功返回0

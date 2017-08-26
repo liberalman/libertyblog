@@ -72,7 +72,7 @@
                 <em>9:49 AM</em></span>
 						</a>
 						<a href="#" class="list-group-item">
-							<i class="fa fa-money fa-fw"></i>Payment Received
+							<i class="fa fa-money fa-fw"></i> {{.user.Information}}
 							<span class="pull-right text-muted small">
                 <em>Yesterday</em></span>
 						</a>
@@ -176,18 +176,18 @@
 					<h4 class="modal-title" id="myModalLabel">修改用户名</h4>
 				</div>
 				<div class="modal-body">
-
 					<div class="input-group">
 						<span class="input-group-addon">用户名</span>
 						<input type="text" class="form-control" id="cusername" name="username" placeholder="用户名" value="{{.user.Username}}">
-						<label for="cusername" class="input-group-addon"></label>
 					</div><br />
 					<div class="input-group">
 						<span class="input-group-addon">&nbsp;&nbsp;Email</span>
 						<input type="text" class="form-control" id="cemail" name="email" placeholder="Email" value="{{.user.Email}}">
-						<label for="cemail" class="input-group-addon"></label>
+					</div><br />
+					<div class="input-group">
+						<span class="input-group-addon">个人信息</span>
+						<input type="text" class="form-control" id="cinformation" name="information" placeholder="Information" value="{{.user.Information}}">
 					</div>
-
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal" id="myclose">关闭</button>
