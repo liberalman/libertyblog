@@ -102,17 +102,17 @@
 	function del_album(albumid) {
 		if(confirm("确定要删除吗？")) {
 			$.ajax({
-				url: '/admin/album/delete',
+				url: '/admin/album/delete?albumid=' + albumid,
 				data: {
 					albumid: albumid
 				},
-				type: 'DELETE',
+				type: 'delete',
 				success: function(result) {
-					console.info(result);
-					if (0 != result.code) {
+					if(0 != result.code) {
 						toastr.error(result.message);
 					} else {
 						toastr.success(result.message);
+						window.local.href = "/admin/album/list";
 					}
 				}
 			});

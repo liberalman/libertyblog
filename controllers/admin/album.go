@@ -67,19 +67,23 @@ func (this *AlbumController) Delete() {
 	albumid, _ := this.GetInt64("albumid")
 	photo := models.Photo{Id: 0}
 	album := models.Album{Id: albumid}
-	if album.Read() != nil {
+	if err := album.Read(); err != nil {
+		ret.Code = -5
+		ret.Message = fmt.Sprintf("no this albumid=%d.", albumid)
+		goto end
+	} else {
 		potos := models.QueryPhotoListOfAlbum(album.Id)
 		for _, v := range potos {
 			// 删除硬盘上的图片
 			if err := os.Remove("." + v.Url); nil != err {
 				ret.Code = -3
-				ret.Message += err.Error()
+				ret.Message = err.Error()
 				goto end
 			}
 			v.Small = strings.Replace(v.Url, "bigpic", "smallpic", 1)
 			if err := os.Remove("." + v.Small); nil != err {
 				ret.Code = -2
-				ret.Message += err.Error()
+				ret.Message = err.Error()
 				goto end
 			}
 			// 删除数据库记录
@@ -96,10 +100,6 @@ func (this *AlbumController) Delete() {
 			ret.Message += err.Error()
 			goto end
 		}
-	} else {
-		ret.Code = -5
-		ret.Message = fmt.Sprintf("no this albumid=%d.", albumid)
-		goto end
 	}
 end:
 	this.Data["json"] = ret

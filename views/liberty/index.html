@@ -30,7 +30,7 @@
 			</a>
 		</div>
 	</div>
-	<div class="col-md-11">
+	<div class="col-md-11 pin_outer">
 		<div class="row">
 			<div {{if $v.Coverurl}} class="col-md-8" {{else}} class="col-md-12" {{end}}>
 				<p>
@@ -43,7 +43,7 @@
 			{{if $v.Coverurl}}
 			<div class="col-md-4">
 				<div class="imgc">
-					<a href="{{$v.Link}}"> <img class="img-rounded" width="100%" src="{{$v.Coverurl}}" /></a>
+					<a href="{{$v.Link}}"> <img class="img-rounded pin_inner" width="100%" src="{{$v.Coverurl}}" /></a>
 				</div>
 			</div>
 			{{end}}
