@@ -24,7 +24,7 @@
 </style>
 <div class="masonry-container">
 	{{range $k, $v := .list}}
-	<div class="grid-item">
+	<div class="grid-item" style="padding-left: 0.5em;">
 		<div class="thumbnail">
 			<a href="{{$v.Url}}" data-lightbox="lightbox_" title="{{$v.Des}}">
 				<img src="{{$v.Small}}" alt="{{$v.Des}}">
