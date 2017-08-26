@@ -24,10 +24,20 @@
 </style>
 <div class="masonry-container">
 	{{range $k, $v := .list}}
-    <div class="grid-item">
-	    <a href="{{$v.Url}}" data-lightbox="lightbox_" title="{{$v.Des}}">
-	    	<img src="{{$v.Small}}" alt="{{$v.Des}}">
-	    </a>
+	<div class="grid-item">
+		<div class="thumbnail">
+			<a href="{{$v.Url}}" data-lightbox="lightbox_" title="{{$v.Des}}">
+				<img src="{{$v.Small}}" alt="{{$v.Des}}">
+			</a>
+			<div class="caption">
+				<h3>E&middot;tinnn</h3>
+				<p>{{$v.Des}}</p>
+				<p>
+					<a><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+					<a><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
+				</p>
+			</div>
+		</div>
 	</div>
 	{{end}}
 </div>

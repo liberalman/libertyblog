@@ -40,14 +40,6 @@
 		margin-bottom: 5px;
 	}
 	/*=========瀑布流部分===========*/
-	/*.grid-item {
-		width: 200px;
-	}
-	
-	.grid-item--width2 {
-		width: 400px;
-	}*/
-	
 	.grid-item {
 		width: 25%;
 	}
@@ -465,15 +457,22 @@
 	<div class="tab-pane active" id="fourth-tab-alt">
 		<div class="section-content">
 			<br />
-			<div class="row masonry-container-1">
-
+			<div class="row masonry-container">
 				{{range $k, $v := .list}}
-				<div class="grid-item"><img src="{{$v.Cover}}" alt="{{$v.Name}}" /></div>
+				<div class="item">
+					<div class="thumbnail">
+						<img src="{{$v.Cover}}" alt="{{$v.Name}}" />
+						<div class="caption">
+							<h3>E&middot;tinnn</h3>
+							<p>{{$v.Name}}</p>
+							<p>
+								<a href="#" class="btn btn-primary" role="button">Button</a>
+								<a href="#" class="btn btn-default" role="button">Button</a>
+							</p>
+						</div>
+					</div>
+				</div>
 				{{end}}
-				<div class="grid-item"><img src="/static/upload/smallpic/20160714/1468426326469360888.jpg" alt="..." /></div>
-				<div class="grid-item"><img src="/static/upload/smallpic/20160714/1468426326469360367.jpg" alt="..." /></div>
-				...
-
 			</div>
 		</div>
 	</div>
@@ -489,7 +488,6 @@
 	//Initialize Masonry inside Bootstrap 3 Tab component 
 
 	(function($) {
-
 		var $container = $('.masonry-container');
 		$container.imagesLoaded(function() {
 			$container.masonry({
@@ -497,15 +495,7 @@
 				columnWidth: '.item'
 			});
 		});
-
-		var $container1 = $('.masonry-container-1');
-		$container1.imagesLoaded(function() {
-			$container1.masonry({
-				itemSelector: '.grid-item',
-				columnWidth: '.grid-item'
-			});
-		});
-
+		
 		//Reinitialize masonry inside each panel after the relative tab link is clicked - 
 		$('a[data-toggle=tab]').each(function() {
 			var $this = $(this);
@@ -518,48 +508,8 @@
 						itemSelector: '.item'
 					});
 				});
-
-				var $container1 = $('.masonry-container-1');
-				$container1.imagesLoaded(function() {
-					$container1.masonry({
-						itemSelector: '.grid-item',
-						columnWidth: '.grid-item'
-					});
-				});
-
 			}); //end shown
 		}); //end each
 
 	})(jQuery);
 </script>
-
-<!--<link href="{{.root}}css/photo.css" rel="stylesheet">
-<script>
-  $(document).ready(function() {
-    $("#auto-loop").lightGallery({
-    });
-</script>
-
-<h1 class="t_nav">
-  <span>每一个瞬间的摄影，都是无法复摹独一无二的</span>
-  <a href="/" class="n1">网站首页</a>
-  <a href="/album.html" class="n2">光影瞬间</a>
-</h1>
-<div class="photolist">
-    <ul id="auto-loop" class="gallery list-unstyled">
-        {{range $k, $v := .list}}
-            <li> 
-              <a href="/photo{{$v.Id}}.html">
-                <div class="box1" style="background:url({{$v.Cover}});">
-                    <div class="box2"><font size=6 face="Times" color="white">{{$v.Photonum}}</font></div>
-                </div>
-                <span>{{$v.Name}}</span>
-              </a> 
-            </li>
-       {{end}}
-    </ul>
-</div>
-{{str2html .pagebar}}
-<div class="comments">
-    <div class="ds-thread"></div>
-</div>-->
