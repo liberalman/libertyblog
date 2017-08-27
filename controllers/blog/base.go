@@ -96,6 +96,13 @@ func (this *baseController) display(tpl string, no_right int) {
 		this.ResetUser()
 		this.Data["latestblog"] = models.GetLatestBlog()
 		this.Data["hotblog"] = models.GetHotBlog() // 阅读排行
+		list, _ := models.QueryMyPhotoList(this.Data["userid"].(int64), 1, 10)
+		i := 0
+		for i < len(list) {
+			list[i].Small = strings.Replace(list[i].Url, "bigpic", "smallpic", 1)
+			i++
+		}
+		this.Data["photos"] = list
 		this.LayoutSections["banner"] = this.theme + "/banner.html"
 		this.LayoutSections["right"] = this.theme + "/right.html"
 	}

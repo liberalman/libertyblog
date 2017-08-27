@@ -1,43 +1,9 @@
-<!--<aside class="right">
-  <div class="weather">
-  <iframe width="260" scrolling="no" height="100" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=19&color=%23&bgc=%23&bdc=%23&icon=1&temp=0&num=2"></iframe>
-  </div>
-  <div class="news">
-    <h3><p>最新<span>文章</span></p></h3>
-    <ul class="rank">
-      {{range $k,$v := .latestblog}}
-          <li><a href="{{$v.Link}}" title="{{$v.Title}}">{{str2html $v.Title}}</a></li>
-     {{end}}
-    </ul>
-    <h3 class="ph"><p>点击<span>排行</span></p></h3>
-    <ul class="paih">
-      {{range $k,$v := .hotblog}}
-          <li><a href="{{$v.Link}}" title="{{$v.Title}}">{{str2html $v.Title}}</a></li>
-      {{end}}
-    </ul>
-
-    <h3 class="links">
-      <p>友情<span>链接</span></p>
-    </h3>
-    <ul class="website">
-      {{range $k,$v := .links}}
-      <li><a href="{{$v.Url}}" target="_blank" >{{$v.Sitename}}</a></li>
-      {{end}}
-    </ul>
-  
-  <a href="/" class="weixin"></a>
-  <div class="visitors">
-      <h3><p>最近访客</p></h3>
-      <ul class="ds-recent-visitors"  data-num-items="24"></ul>
-  </div>
-</aside>-->
 <style>
 	.banner {
 		background: url(../images/banner_top.jpg) top center;
 		overflow: hidden;
 	}
 </style>
-
 <div class="panel panel-info">
 	<div class="panel-body">
 		<div style="text-align:center;">
@@ -48,32 +14,9 @@
 			<p>
 				<h3>Hi</h3></p>
 		</div>
-		<div class="row">
-			<div class="col-xs-6 col-md-6">
-				<a href="#" class="thumbnail">
-					<img src="/img/aboutphoto.jpg" alt="...">
-				</a>
-			</div>
-			<div class="col-xs-6 col-md-6">
-				<a href="#" class="thumbnail">
-					<img src="/img/avatar.png" alt="...">
-				</a>
-			</div>
-			<div class="col-xs-6 col-md-6">
-				<a href="#" class="thumbnail">
-					<img src="{{.staticPath}}/img/avatarher.jpg" alt="...">
-				</a>
-			</div>
-			<div class="col-xs-6 col-md-6">
-				<a href="#" class="thumbnail">
-					<img src="/img/article_header.jpg" alt="...">
-				</a>
-			</div>
-		</div>
-		<div class="btn">
-			<a class="w-gz2 xtag radarlnk" href="http://www.liberalman.cn/login" id="radarlnk"><span>关注</span></a>
-			<a class="radarlnk-actived f-dn" id="radarlnk-actived">已关注</a>
-		</div>
+		
+			{{.banner}}
+		
 	</div>
 	<div class="panel-footer">
 		Hi，i'm footer.
@@ -84,10 +27,6 @@
 	<a class="list-group-item" onclick="publish({{.post_count}})">我的帖子<span class="badge" name="stateCount">{{.post_count}}</span></a>
 	<a class="list-group-item" onclick="followed({{.follow_count}})">粉丝<span class="badge" name="followingCnt">{{.follow_count}}</span></a>
 	<a class="list-group-item" href="/admin">后台管理</a>
-</div>
-
-<div class="panel">
-	{{.banner}}
 </div>
 
 <div class="list-group">
@@ -111,7 +50,6 @@
 
 	</ul>
 </div>
-
 <script type="text/javascript">
 	function publish(count) {
 		toastr.success('发帖：' + count + '条');

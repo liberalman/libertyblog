@@ -68,3 +68,13 @@ func QueryAllPhotoList(page int, pagesize int) ([]Photo, int) {
 	o.Raw("select count(p.id) from tb_album a left join tb_photo p on a.id=p.albumid where a.ishide<>1").QueryRow(&count)
 	return list, count
 }
+
+// get photos of all mine
+func QueryMyPhotoList(userid int64, page int, pagesize int) ([]Photo, int) {
+	var count int = 0
+	var list []Photo
+	o := orm.NewOrm()
+	o.Raw("select p.id,p.albumid,p.des,p.posttime,p.url from tb_album a left join tb_photo p on a.id=p.albumid where a.ishide<>1 and a.userid=? order by p.posttime desc limit ?,?", userid, (page-1)*pagesize, pagesize).QueryRows(&list)
+	o.Raw("select count(p.id) from tb_album a left join tb_photo p on a.id=p.albumid where a.ishide<>1 and a.userid=?", userid).QueryRow(&count)
+	return list, count
+}
