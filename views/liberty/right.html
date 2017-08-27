@@ -92,7 +92,7 @@
 
 <div class="list-group">
 	<span class="list-group-item disabled">最新文章</span> {{range $k,$v := .latestblog}}
-	<a class="list-group-item" href="{{$v.Link}}" title="{{$v.Digest}}">
+	<a class="list-group-item wrap" href="{{$v.Link}}" title="{{$v.Digest}}">
 		<span class="us xtag">{{$v.Title}}</span><span class="badge">{{$v.Views}}</span>
 	</a>
 	{{end}}
