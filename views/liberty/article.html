@@ -37,7 +37,7 @@
 		<div class="panel panel-default shadow" style="border-radius:10px;">
 			<div class="panel-body" style="padding:2% 5%;">
 				<h2>{{.post.Title}}</h2>
-				<span class="label label-danger"><time class="timeago" datetime={{date .post.Posttime "Y-m-j"}}></time></span>
+				<span class="label label-danger"><time class="timeago" datetime={{date .post.Updated "Y-m-j"}}></time></span>
 				<span class="label label-info">发布时间：{{date .post.Posttime "Y-m-j"}}</span>
 				<span class="label label-primary">作者：{{.post.Username}}</span>
 				<span class="label label-success">阅读：{{.post.Views}}</span>
