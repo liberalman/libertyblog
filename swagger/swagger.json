@@ -12,6 +12,33 @@
                 ]
             }
         },
+        "/admin/album/delete": {
+            "delete": {
+                "tags": [
+                    "libertyblog/controllers/adminAlbumController"
+                ],
+                "description": "Delete album",
+                "operationId": "AlbumController.Delete album",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "albumid",
+                        "description": "albumid",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "body album list page"
+                    },
+                    "403": {
+                        "description": ":albumid is empty"
+                    }
+                }
+            }
+        },
         "/admin/album/hide": {
             "get": {
                 "tags": [
@@ -40,6 +67,33 @@
                 "responses": {
                     "200": {
                         "description": "body album list page"
+                    },
+                    "403": {
+                        "description": ":userid is empty"
+                    }
+                }
+            }
+        },
+        "/admin/photo/edit": {
+            "post": {
+                "tags": [
+                    "libertyblog/controllers/adminPhotoController"
+                ],
+                "description": "edit photo",
+                "operationId": "PhotoController.edit photo",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "photoid",
+                        "description": "photoid",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "int 0"
                     },
                     "403": {
                         "description": ":userid is empty"

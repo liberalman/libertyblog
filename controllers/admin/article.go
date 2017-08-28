@@ -153,7 +153,12 @@ func (this *ArticleController) Flot() {
 	this.display("flot")
 }
 
-//保存
+// @Title article 保存
+// @Description article 保存
+// @Param	title		post 	string	true		"the objectid you want to get"
+// @Success 200 {object} models.User
+// @Failure 403 :flag is empty
+// @router /admin/article/save [post]
 func (this *ArticleController) Save() {
 	var (
 		id       int64  = 0
@@ -169,7 +174,9 @@ func (this *ArticleController) Save() {
 		istop    int8   = 0
 		urltype  int8   = 0
 		post     models.Post
-		pubtype  int8 = 0 //发布类型，0原创，1转载
+		pubtype  int8       = 0 //发布类型，0原创，1转载
+		ret      models.Ret = models.Ret{Code: 0, Message: "success"}
+		err      error      = nil
 	)
 
 	if title == "" {
@@ -219,19 +226,25 @@ func (this *ArticleController) Save() {
 		post.Userid = this.userid
 		//post.Author = this.username
 		post.Posttime = this.getTime()
-		post.Updated = this.getTime()
 		if posttime, err := time.Parse("2006-01-02 15:04:05", timestr); err != nil {
 			post.Posttime, _ = time.Parse("2006-01-02 15:04:05", post.Posttime.Format("2006-01-02 15:04:05"))
 		} else {
 			post.Posttime = posttime
 		}
-		post.Insert()
+		if err = post.Insert(); nil != err {
+			ret.Code = -1
+			ret.Message = err.Error()
+			goto end
+		}
 		models.Cache.Delete("latestblog")
 	} else {
 		// this is update article
 		post.Id = id
-		if post.Read() != nil {
-			goto RD
+		if err = post.Read(); err != nil {
+			ret.Code = -2
+			ret.Message = err.Error()
+			goto end
+
 		}
 		if post.Tags != "" {
 			var tagobj models.Tag
@@ -244,6 +257,7 @@ func (this *ArticleController) Save() {
 		}
 
 	}
+	post.Updated = this.getTime()
 
 	if len(addtags) > 0 {
 		for _, v := range addtags {
@@ -272,17 +286,47 @@ func (this *ArticleController) Save() {
 	post.Urltype = urltype
 	post.Updated = this.getTime()
 	post.Pubtype = pubtype
-	if 1 == post.Pubtype {
-		post.Reprinturl = strings.TrimSpace(this.GetString("reprinturl"))
-		post.Update("tags", "status", "title", "digest", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype", "reprinturl")
+	if id < 1 {
+		if 1 == post.Pubtype {
+			post.Reprinturl = strings.TrimSpace(this.GetString("reprinturl"))
+			if err = post.Update("tags", "status", "title", "digest", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype", "reprinturl"); nil != err {
+				ret.Code = -3
+				ret.Message = err.Error()
+				goto end
+			}
+		} else {
+			if err = post.Update("tags", "status", "title", "digest", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype"); nil != err {
+				ret.Code = -4
+				ret.Message = err.Error()
+				goto end
+			}
+		}
 	} else {
-		post.Update("tags", "status", "title", "digest", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype")
+		if 1 == post.Pubtype {
+			post.Reprinturl = strings.TrimSpace(this.GetString("reprinturl"))
+			if err = post.Update("tags", "status", "title", "digest", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "pubtype", "reprinturl"); nil != err {
+				ret.Code = -5
+				ret.Message = err.Error()
+				goto end
+			}
+		} else {
+			if err = post.Update("tags", "status", "title", "digest", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "pubtype"); nil != err {
+				ret.Code = -6
+				ret.Message = err.Error()
+				goto end
+			}
+		}
 	}
+
 	// 更新用户信息缓存，主要是为了更新文章数量
 	models.GetUser(this.userid)
 
-RD:
-	this.Redirect("/admin/article/list", 302)
+end:
+	this.Data["json"] = ret
+	this.ServeJSON()
+
+	//RD:
+	//this.Redirect("/admin/article/list", 302)
 }
 
 //删除

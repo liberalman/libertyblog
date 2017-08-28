@@ -39,6 +39,14 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["libertyblog/controllers/admin:ArticleController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:ArticleController"],
+		beego.ControllerComments{
+			Method: "Save",
+			Router: `/admin/article/save`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 	beego.GlobalControllerRouter["libertyblog/controllers/admin:CommentController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:CommentController"],
 		beego.ControllerComments{
 			Method: "Comment",

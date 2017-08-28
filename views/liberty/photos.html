@@ -17,7 +17,7 @@
 </style>
 
 <style>
-    body,
+	body,
 	textarea,
 	select,
 	input,
@@ -36,7 +36,7 @@
 		margin: 0 10px 20px 10px;
 		background: #fdfdfd;
 	}
-
+	
 	.m-post .userinfo {
 		height: 58px;
 		line-height: 58px;
@@ -76,6 +76,19 @@
 	}
 </style>
 
+<script src="https://cdn.bootcss.com/viz.js/1.8.0/viz-lite.js"></script>
+<textarea id="graphviz_data" rows="20" cols="80" width="100%" wrap="off">
+digraph G {
+  "Welcome" -> "To"
+  "To" -> "Web"
+  "To" -> "GraphViz!"
+}
+</textarea>
+<div id="graphviz_svg_div">
+  <!-- Target for dynamic svg generation -->
+</div>
+
+
 <div class="masonry-container">
 	{{range $k, $v := .list}}
 	<div class="grid-item">
@@ -110,6 +123,26 @@
 <script src="https://cdn.bootcss.com/masonry/4.2.0/masonry.pkgd.min.js"></script>
 <script type="text/javascript">
 	(function($) {
+		var graphviz_data_textarea = jQuery('#graphviz_data');
+		var svg_div = jQuery('#graphviz_svg_div');
+
+		function InsertGraphvizText(text) {
+			graphviz_data_textarea.val(text);
+		}
+
+		function UpdateGraphviz() {
+			svg_div.html("");
+			var data = graphviz_data_textarea.val();
+			// Generate the Visualization of the Graph into "svg".
+			var svg = Viz(data, "svg");
+			svg_div.html("<hr>" + svg);
+		}
+		UpdateGraphviz();
+		
+		
+		
+		
+
 		var $container = $('.masonry-container');
 		$container.imagesLoaded(function() {
 			$container.masonry({

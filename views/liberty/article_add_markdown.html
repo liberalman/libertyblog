@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="/editor.md/css/style.css" />
 		<link rel="stylesheet" href="/editor.md/css/editormd.min.css" />
 		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/toastr.js/latest/toastr.min.css" rel="stylesheet">
 		<link rel="shortcut icon" href="{{.staticPath}}/favicon.ico" type="image/x-icon" />
 	</head>
 
@@ -436,6 +437,8 @@ sequenceDiagram
 			</div>
 		</form>
 		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+			<script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script>
 		<script src="/editor.md/editormd.js"></script>
 		<script type="text/javascript">
 			var testEditor;
@@ -516,9 +519,23 @@ sequenceDiagram
 						$("input[name='reprinturl']").css('display', 'none');
 					}
 				});
-
-				$('#form_article').submit(function() {
-					/* 获取src和alt的代码
+				
+				$("#form_article").validate({
+					rules: {
+						digest: {
+							required: true,
+							maxlength: 255
+						},
+					},
+					messages: {
+						digest: {
+							required: '<font color="red">请输入用文章简介!</font>',
+							maxlength: '<font color="red">文章简介长度不能多于 80 个字符!</font>'
+						},
+					},
+					// 使用 ajax 方式提交
+					submitHandler: function(form) {
+						/* 获取src和alt的代码
 			        var re = /<img([^>]+?)>/ig;
 				    var s = document.getElementById("test-editormd").innerHTML;
 				    var str=""
@@ -549,6 +566,23 @@ sequenceDiagram
 					}
 					$('#coverurl').val(str);
 
+						$.post('/admin/article/save',
+							$(form).serialize(),
+							function(data) {
+								if(0 != data.code) { // 返回0代表成功，其他失败
+									toastr.error("code: " + data.code + " message: " + data.message);
+								} else {
+									toastr.success(data.message);
+									window.location = "/"; //跳转
+								}
+							});
+					},
+					// 指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
+					errorPlacement: function(error, element) {
+						toastr.error(error[0].innerText);
+						//$(element).closest("form").find("input").removeClass('error'); //这个1.8.2版本的jquery和validate配合有问题，这里需要去除下error，不然input框会被删除。
+						$(element).closest("form").find("input[name='" + element.attr("id") + "']").append(error);
+					}
 				});
 			});
 		</script>
