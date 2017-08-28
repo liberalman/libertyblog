@@ -45,6 +45,15 @@
 				</header>
 				<div id="test-editormd">
 					<textarea style="display:none;" name="content">
+```viz
+
+digraph G {
+  "Welcome" -> "To"
+  "To" -> "Web"
+  "To" -> "GraphViz!"
+}
+
+```
     本文使用的markdown编辑器，不熟悉语法的，下面已经列出来了，照这个做就OK了！
 
     编辑器官网 http://pandao.github.io/editor.md/
@@ -438,7 +447,7 @@ sequenceDiagram
 		</form>
 		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-			<script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script>
+		<script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script>
 		<script src="/editor.md/editormd.js"></script>
 		<script type="text/javascript">
 			var testEditor;
@@ -480,11 +489,14 @@ sequenceDiagram
 					sequenceDiagram: true, // 序列图
 					htmlDecode: true, // 解析html标签
 					codeFold: true, // 运行编辑的时候代码折叠
+					viz: true, // WebGraphviz
 
 					// 这些配置的默认值，参见editormd.js中的 editormd.defaults 的定义
 					// mermaid标签的解析，查找这行 ( lang === "mermaid")
 					// 加载文件mermaid.min
 					// mermaid.js中的global.mermaid是定义函数的地方，可以看到init，render等函数
+					
+					
 				});
 
 				// 日历
