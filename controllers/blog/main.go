@@ -3,7 +3,6 @@ package blog
 import (
 	"libertyblog/models"
 	"strconv"
-	"strings"
 )
 
 type MainController struct {
@@ -37,25 +36,6 @@ func (this *MainController) Index() {
 func (this *MainController) Go404() {
 	this.setHeadFootMetas("Sorry 404页面没找到")
 	this.display("404", HAS_RIGHT)
-}
-
-//照片展示
-func (this *MainController) Photo() {
-	album := new(models.Album)
-	album.Id = int64(this.page)
-	err := album.Read()
-	if err != nil || album.Ishide != 0 {
-		this.Redirect("/404.html", 302)
-	}
-	this.setHeadFootMetas("相册 " + album.Name + " 内的照片")
-	var list []*models.Photo
-	new(models.Photo).Query().Filter("albumid", this.page).All(&list)
-	this.right = ""
-	for _, v := range list {
-		v.Small = strings.Replace(v.Url, "bigpic", "smallpic", 1)
-	}
-	this.Data["list"] = list
-	this.display("photo", 0)
 }
 
 //相册展示

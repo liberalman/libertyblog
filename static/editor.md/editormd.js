@@ -4021,8 +4021,8 @@
 	editormd.kaTeXLoaded = false;
 
 	editormd.mermaidURL = {
-		css: "//unpkg.com/mermaid@7.0.3/dist/mermaid.min",
-		js: "//unpkg.com/mermaid@7.0.3/dist/mermaid.min"
+		css: "//cdn.bootcss.com/mermaid/7.0.0/mermaid.min",
+		js: "//cdn.bootcss.com/mermaid/7.0.0/mermaid.min"
 	};
 
 	editormd.mermaidLoaded = false;

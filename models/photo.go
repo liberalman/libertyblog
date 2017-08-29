@@ -16,6 +16,17 @@ type Photo struct {
 	Small    string    `orm:"-"`
 }
 
+type PhotoWholeSite struct {
+	Id        int64
+	Albumid   int64
+	Des       string    `orm:"size(100)"`
+	Posttime  time.Time `orm:"type(datetime);index"`
+	Url       string    `orm:"size(70)"`
+	Small     string    `orm:"-"`
+	Username  string
+	Albumname string
+}
+
 func (m *Photo) TableName() string {
 	return TableName("photo")
 }
@@ -60,11 +71,11 @@ func QueryPhotoListOfAlbum(albumid int64) []Photo {
 }
 
 // get photos of all over the site
-func QueryAllPhotoList(page int, pagesize int) ([]Photo, int) {
+func QueryAllPhotoList(page int, pagesize int) ([]PhotoWholeSite, int) {
 	var count int = 0
-	var list []Photo
+	var list []PhotoWholeSite
 	o := orm.NewOrm()
-	o.Raw("select p.id,p.albumid,p.des,p.posttime,p.url from tb_album a left join tb_photo p on a.id=p.albumid where a.ishide<>1 order by p.posttime desc limit ?,?", (page-1)*pagesize, pagesize).QueryRows(&list)
+	o.Raw("select p.id,p.albumid,p.des,p.posttime,p.url,a.name albumname from tb_album a left join tb_photo p on a.id=p.albumid where a.ishide<>1 order by p.posttime desc limit ?,?", (page-1)*pagesize, pagesize).QueryRows(&list)
 	o.Raw("select count(p.id) from tb_album a left join tb_photo p on a.id=p.albumid where a.ishide<>1").QueryRow(&count)
 	return list, count
 }

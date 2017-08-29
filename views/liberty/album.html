@@ -57,16 +57,13 @@
 <!-- 页头组件能够为 h1 标签增加适当的空间，并且与页面的其他部分形成一定的分隔。 -->
 <ul class="nav nav-tabs nav-justified">
 	<li>
-		<a href="#first-tab-alt" data-toggle="tab">浏览</a>
+		<a href="#first-tab-alt" data-toggle="tab">推荐</a>
 	</li>
-	<li>
-		<a href="#second-tab-alt" data-toggle="tab">话题</a>
+	<li class="active">
+		<a href="#second-tab-alt" data-toggle="tab">相册</a>
 	</li>
 	<li>
 		<a href="#third-tab-alt" data-toggle="tab">标签</a>
-	</li>
-	<li class="active">
-		<a href="#fourth-tab-alt" data-toggle="tab">瀑布流</a>
 	</li>
 </ul>
 
@@ -255,101 +252,24 @@
 			</div>
 		</div>
 	</div>
-	<div class="tab-pane" id="second-tab-alt">
+	<div class="tab-pane active" id="second-tab-alt">
 		<div class="section-content">
 			<br />
-			<div class="row">
-				<div class="col-sm-6 col-md-4">
+			<div class="row masonry-container">
+				{{range $k, $v := .list}}
+				<div class="item" style="margin: auto 0.5em;">
 					<div class="thumbnail">
-						<img src="/static/upload/smallpic/20160714/1468426326469360245.jpg" alt="..." />
+						<a href="/blog/album{{$v.Id}}.html"><img src="{{$v.Cover}}" alt="{{$v.Name}}" /></a>
 						<div class="caption">
-							<h3>孙忆雯Even</h3>
-							<p>...</p>
+							<h3>&middot;{{$v.Name}}</h3>
+							<p>{{$v.Content}}</p>
 							<p>
-								<a href="#" class="btn btn-primary" role="button">Button</a>
-								<a href="#" class="btn btn-default" role="button">Button</a>
+								<i class="fa fa-heart-o" aria-hidden="true"></i>
 							</p>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6 col-md-4">
-					<div class="thumbnail">
-						<img src="/static/upload/smallpic/20160714/1468426326469360789.gif" alt="..." />
-						<div class="caption">
-							<h3>Sasori-蠍子</h3>
-							<p>瞅瞅AA在SS身边如何“贤惠”“河东狮吼”“害羞”“母爱泛滥式”模式间自由切换的~~</p>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Button</a>
-								<a href="#" class="btn btn-default" role="button">Button</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4">
-					<div class="thumbnail">
-						<img src="/static/upload/smallpic/20160714/1468426326469360001.jpg" alt="..." />
-						<div class="caption">
-							<h3>小船的世界</h3>
-							<p>在春意中入眠，慕尼黑英国花园。 我看到白云移动，河水奔腾， 太阳的金色</p>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Button</a>
-								<a href="#" class="btn btn-default" role="button">Button</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4">
-					<div class="thumbnail">
-						<img src="/static/upload/smallpic/20160714/1468426326469360888.jpg" alt="..." />
-						<div class="caption">
-							<h3>Tim Fan</h3>
-							<p>月光之谷 Valley of Moonlight V.2 蓝山悬石Hanging Rock去年拍的的月升重</p>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Button</a>
-								<a href="#" class="btn btn-default" role="button">Button</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4">
-					<div class="thumbnail">
-						<img src="/static/upload/smallpic/20160714/1468426326469360444.jpg" alt="..." />
-						<div class="caption">
-							<h3>餓龍先生Dragon</h3>
-							<p>上中日出&#55357;&#56838;</p>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Button</a>
-								<a href="#" class="btn btn-default" role="button">Button</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4">
-					<div class="thumbnail">
-						<img src="/static/upload/smallpic/20160714/1468426326469360091.jpg" alt="..." />
-						<div class="caption">
-							<h3>Patrick&middot;FoPoTo</h3>
-							<p>站在云端看远处…从高处的角度观望着这个熟悉的城市，但却十分陌生的美景…感谢遇到云端的美景</p>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Button</a>
-								<a href="#" class="btn btn-default" role="button">Button</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4">
-					<div class="thumbnail">
-						<img src="/static/upload/smallpic/20160714/1468426326469360367.jpg" alt="..." />
-						<div class="caption">
-							<h3>E&middot;tinnn</h3>
-							<p>Sunset cliff at San Diego</p>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Button</a>
-								<a href="#" class="btn btn-default" role="button">Button</a>
-							</p>
-						</div>
-					</div>
-				</div>
+				{{end}}
 			</div>
 		</div>
 		<br />
@@ -454,39 +374,12 @@
 		</div>
 	</div>
 
-	<div class="tab-pane active" id="fourth-tab-alt">
-		<div class="section-content">
-			<br />
-			<div class="row masonry-container">
-				{{range $k, $v := .list}}
-				<div class="item">
-					<div class="thumbnail">
-						<img src="{{$v.Cover}}" alt="{{$v.Name}}" />
-						<div class="caption">
-							<h3>E&middot;tinnn</h3>
-							<p>{{$v.Name}}</p>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Button</a>
-								<a href="#" class="btn btn-default" role="button">Button</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				{{end}}
-			</div>
-		</div>
-	</div>
+
 </div>
 
 <script src="https://cdn.bootcss.com/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js"></script>
 <script src="https://cdn.bootcss.com/masonry/4.2.0/masonry.pkgd.min.js"></script>
 <script type="text/javascript">
-	/* Demo Scripts for Making Twitter Bootstrap 3 Tab Play Nicely With The Masonry Library
-	 * on SitePoint by Maria Antonietta Perna
-	 */
-
-	//Initialize Masonry inside Bootstrap 3 Tab component 
-
 	(function($) {
 		var $container = $('.masonry-container');
 		$container.imagesLoaded(function() {

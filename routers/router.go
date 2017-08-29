@@ -59,8 +59,8 @@ func init() {
 	beego.Router("/category/:name(.+?)/page/:page:int", &blog.MainController{}, "*:Category")
 
 	//照片展示
-	beego.Router("/photo.html", &blog.MainController{}, "*:Photo")
-	beego.Router("/photo:page:int.html", &blog.MainController{}, "*:Photo")
+	beego.Router("/blog/album.html", &blog.PhotoController{}, "*:Album")
+	beego.Router("/blog/album:page:int.html", &blog.PhotoController{}, "*:Album")
 
 	//相册展示
 	beego.Router("/album.html", &blog.MainController{}, "*:Album")
