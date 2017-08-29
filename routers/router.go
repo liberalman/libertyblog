@@ -59,13 +59,13 @@ func init() {
 	beego.Router("/category/:name(.+?)/page/:page:int", &blog.MainController{}, "*:Category")
 
 	//照片展示
-	beego.Router("/blog/album.html", &blog.PhotoController{}, "*:Album")
-	beego.Router("/blog/album:page:int.html", &blog.PhotoController{}, "*:Album")
+	beego.Router("/blog/album.html", &blog.PhotoController{}, "*:PhotosInAlbum")
+	beego.Router("/blog/album:page:int.html", &blog.PhotoController{}, "*:PhotosInAlbum")
 
 	//相册展示
-	beego.Router("/album.html", &blog.MainController{}, "*:Album")
+	beego.Router("/album.html", &blog.PhotoController{}, "*:Albums")
 	beego.Router("/album1.html", &blog.MainController{}, "*:Album1")
-	beego.Router("/album:page:int.html", &blog.MainController{}, "*:Album")
+	beego.Router("/album:page:int.html", &blog.PhotoController{}, "*:Albums")
 
 	beego.Router("/:urlname(.+)", &blog.ArticleController{}, "*:Index") //别名访问
 

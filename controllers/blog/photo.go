@@ -2,6 +2,7 @@ package blog
 
 import (
 	"libertyblog/models"
+	"strconv"
 	"strings"
 )
 
@@ -23,8 +24,27 @@ func (this *PhotoController) All() {
 	this.display("photos", NO_RIGHT)
 }
 
-//照片展示
-func (this *PhotoController) Album() {
+//相册列表展示
+func (this *PhotoController) Albums() {
+	pagesize, _ := strconv.Atoi(this.getOption("albumsize"))
+	if pagesize < 1 {
+		pagesize = 12
+	}
+	var list []*models.Album
+	query := new(models.Album).Query().Filter("ishide", 0)
+	count, _ := query.Count()
+	if count > 0 {
+		query.OrderBy("-rank", "-posttime").Limit(pagesize, (this.page-1)*pagesize).All(&list)
+	}
+	this.setHeadFootMetas("光影瞬间")
+	this.right = ""
+	this.Data["list"] = list
+	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(pagesize), "/album%d.html").ToString()
+	this.display("album", NO_RIGHT)
+}
+
+//单个相册中的照片展示
+func (this *PhotoController) PhotosInAlbum() {
 	album := new(models.Album)
 	album.Id = int64(this.page)
 	err := album.Read()
