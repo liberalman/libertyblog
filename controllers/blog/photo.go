@@ -21,7 +21,18 @@ func (this *PhotoController) All() {
 		i++
 	}
 	this.Data["list"] = list
-	this.display("photos", NO_RIGHT)
+	if this.IsAjax() {
+		ret := models.Ret{Code: 0, Message: "success"}
+		var obj map[string]interface{} = map[string]interface{}{"page": this.page, "pagesize": this.pagesize}
+		obj["list"] = list
+		obj["count"] = count
+		ret.Data = obj
+		this.Data["json"] = ret
+		this.ServeJSON()
+		return
+	} else {
+		this.display("photos", NO_RIGHT)
+	}
 }
 
 //相册列表展示
