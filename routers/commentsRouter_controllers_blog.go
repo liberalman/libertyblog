@@ -17,6 +17,14 @@ func init() {
 
 	beego.GlobalControllerRouter["libertyblog/controllers/blog:MainController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:MainController"],
 		beego.ControllerComments{
+			Method: "About",
+			Router: `/about`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/blog:MainController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:MainController"],
+		beego.ControllerComments{
 			Method: "Search",
 			Router: `/search`,
 			AllowHTTPMethods: []string{"get"},
@@ -35,6 +43,14 @@ func init() {
 		beego.ControllerComments{
 			Method: "All",
 			Router: `/blog/photo/all`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/blog:PhotoController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:PhotoController"],
+		beego.ControllerComments{
+			Method: "Recomend",
+			Router: `/blog/photo/recommend`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})

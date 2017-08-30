@@ -24,19 +24,7 @@
 		<link href="https://cdn.bootcss.com/toastr.js/latest/toastr.min.css" rel="stylesheet">
 
 		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-		<style>
-			.wrap {
-				/* 长英文自动换行 */
-				word-break: break-all;
-				table-layout: fixed;
-				overflow: hidden;
-			}
-			/* 去掉鼠标指向a标签时的下划线 */
-			
-			a:hover {
-				text-decoration: none;
-			}
-		</style>
+		<link href="/future/style.css" rel="stylesheet">
 	</head>
 
 	<body>
@@ -50,7 +38,7 @@
 				<nav class="links">
 					<ul>
 						<li>
-							<a href="/article/addmarkdown">Lorem</a>
+							<a href="/article/addmarkdown">发布文章</a>
 						</li>
 						<li>
 							<a href="/album.html">相册</a>
@@ -142,6 +130,9 @@
 			{{.right}} {{end}}
 
 		</div>
+		<div class="back-to-top">
+			<i class="fa fa-angle-up fa-3x"></i>
+		</div>
 
 		<!-- Scripts -->
 		<script src="/future/assets/js/skel.min.js"></script>
@@ -166,10 +157,29 @@
 					containerSelector: ".pin_outer"
 				});
 
+				// 解析时间
 				var nodes = $('.timeago');
 				var timeagoInstance = timeago();
 				timeagoInstance.render(nodes, 'zh_CN');
 				timeago.cancel();
+				
+				
+				// fade in .back-to-top
+				$(window).scroll(function() {
+					if($(this).scrollTop() > 500) {
+						$('.back-to-top').fadeIn();
+					} else {
+						$('.back-to-top').fadeOut();
+					}
+				});
+				// scroll body to 0px on click
+				$('.back-to-top').click(function() {
+					$('html, body').animate({
+						scrollTop: 0,
+						easing: 'swing'
+					}, 750);
+					return false;
+				});
 			});
 		</script>
 

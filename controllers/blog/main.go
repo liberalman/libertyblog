@@ -81,3 +81,8 @@ func (this *MainController) Search() {
 	this.setHeadFootMetas()
 	this.display("index", HAS_RIGHT)
 }
+
+// @router /about [get]
+func (this *MainController) About() {
+	this.display("about", NO_RIGHT)
+}
