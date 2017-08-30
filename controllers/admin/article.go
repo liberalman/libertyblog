@@ -167,7 +167,6 @@ func (this *ArticleController) Save() {
 		content  string = this.GetString("content")
 		tags     string = strings.TrimSpace(this.GetString("tags"))
 		urlname  string = strings.TrimSpace(this.GetString("urlname"))
-		color    string = strings.TrimSpace(this.GetString("color"))
 		coverurl string = strings.TrimSpace(this.GetString("coverurl"))
 		timestr  string = strings.TrimSpace(this.GetString("posttime"))
 		status   int64  = 0
@@ -278,7 +277,6 @@ func (this *ArticleController) Save() {
 	post.Status = int8(status)
 	post.Title = title
 	post.Digest = digest
-	post.Color = color
 	post.Istop = istop
 	post.Coverurl = coverurl
 	post.Content = content
@@ -289,13 +287,13 @@ func (this *ArticleController) Save() {
 	if id < 1 {
 		if 1 == post.Pubtype {
 			post.Reprinturl = strings.TrimSpace(this.GetString("reprinturl"))
-			if err = post.Update("tags", "status", "title", "digest", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype", "reprinturl"); nil != err {
+			if err = post.Update("tags", "status", "title", "digest", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype", "reprinturl"); nil != err {
 				ret.Code = -3
 				ret.Message = err.Error()
 				goto end
 			}
 		} else {
-			if err = post.Update("tags", "status", "title", "digest", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype"); nil != err {
+			if err = post.Update("tags", "status", "title", "digest", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype"); nil != err {
 				ret.Code = -4
 				ret.Message = err.Error()
 				goto end
@@ -304,13 +302,13 @@ func (this *ArticleController) Save() {
 	} else {
 		if 1 == post.Pubtype {
 			post.Reprinturl = strings.TrimSpace(this.GetString("reprinturl"))
-			if err = post.Update("tags", "status", "title", "digest", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "pubtype", "reprinturl"); nil != err {
+			if err = post.Update("tags", "status", "title", "digest", "coverurl", "istop", "content", "urlname", "urltype", "updated", "pubtype", "reprinturl"); nil != err {
 				ret.Code = -5
 				ret.Message = err.Error()
 				goto end
 			}
 		} else {
-			if err = post.Update("tags", "status", "title", "digest", "color", "coverurl", "istop", "content", "urlname", "urltype", "updated", "pubtype"); nil != err {
+			if err = post.Update("tags", "status", "title", "digest", "coverurl", "istop", "content", "urlname", "urltype", "updated", "pubtype"); nil != err {
 				ret.Code = -6
 				ret.Message = err.Error()
 				goto end

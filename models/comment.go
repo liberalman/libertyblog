@@ -1,12 +1,8 @@
 package models
 
 import (
-	//"bytes"
-	//"fmt"
-	//"strings"
 	"time"
 
-	//"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 )
 

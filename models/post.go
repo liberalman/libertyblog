@@ -15,7 +15,6 @@ type Post struct {
 	Userid     int64  `orm:"index"`
 	Title      string `orm:"size(100)"`
 	Digest     string `orm:"size(255)"`
-	Color      string `orm:"size(7)"`
 	Urlname    string `orm:"size(100);index"`
 	Urltype    int8
 	Content    string    `orm:"type(text)"`
@@ -31,12 +30,10 @@ type Post struct {
 }
 
 type Post1 struct {
-	Id     int64
-	Userid int64
-	//Author     string
+	Id         int64
+	Userid     int64
 	Title      string
 	Digest     string
-	Color      string
 	Urlname    string
 	Urltype    int8
 	Content    string
@@ -96,23 +93,6 @@ func (m *Post) Query() orm.QuerySeter {
 	return orm.NewOrm().QueryTable(m)
 }
 
-/*
-//带颜色的标题
-func (m *Post) ColorTitle() string {
-	if m.Color != "" {
-		return fmt.Sprintf("<span style=\"color:%s\">%s</span>", m.Color, m.Title)
-	} else {
-		return m.Title
-	}
-}
-func (m *Post1) ColorTitle() string {
-	if m.Color != "" {
-		return fmt.Sprintf("<span style=\"color:%s\">%s</span>", m.Color, m.Title)
-	} else {
-		return m.Title
-	}
-}
-*/
 //内容URL
 func (m *Post) Link() string {
 	if m.Urlname != "" {
@@ -123,6 +103,7 @@ func (m *Post) Link() string {
 	}
 	return fmt.Sprintf("/article/%d", m.Id)
 }
+
 func (m *Post1) Link() string {
 	if m.Urlname != "" {
 		if m.Urltype == 1 {
@@ -199,7 +180,7 @@ func PostIndex(page int, pagesize int) ([]Article, int) {
 	var count int = 0
 	var list []Article
 	o := orm.NewOrm()
-	o.Raw("select p.id,p.userid,u.username,p.title,p.digest,p.color,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.updated,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid order by p.istop desc,p.updated desc limit ?,?", (page-1)*pagesize, pagesize).QueryRows(&list)
+	o.Raw("select p.id,p.userid,u.username,p.title,p.digest,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.updated,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid order by p.istop desc,p.updated desc limit ?,?", (page-1)*pagesize, pagesize).QueryRows(&list)
 	o.Raw("select count(id) from tb_post").QueryRow(&count)
 	return list, count
 }
@@ -209,7 +190,7 @@ func GetSomeoneArticleList(userid int, page int, pagesize int) ([]Article, int) 
 	var count int = 0
 	var list []Article
 	o := orm.NewOrm()
-	o.Raw("select p.id,p.userid,u.username,p.title,p.digest,p.color,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.updated,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.userid=? order by p.istop desc,p.updated desc limit ?,?", userid, (page-1)*pagesize, pagesize).QueryRows(&list)
+	o.Raw("select p.id,p.userid,u.username,p.title,p.digest,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.updated,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.userid=? order by p.istop desc,p.updated desc limit ?,?", userid, (page-1)*pagesize, pagesize).QueryRows(&list)
 	o.Raw("select count(id) from tb_post").QueryRow(&count)
 	return list, count
 }
@@ -217,11 +198,10 @@ func GetSomeoneArticleList(userid int, page int, pagesize int) ([]Article, int) 
 // 获取某一篇文章内容
 func (this *Post1) GetOneArticle() {
 	o := orm.NewOrm()
-	err := o.Raw("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.posttime,p.updated,p.views,p.status,p.tags,p.pubtype,p.reprinturl,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id=?", this.Id).QueryRow(this)
+	err := o.Raw("select p.id,p.userid,u.username,p.title,p.urlname,p.urltype,p.content,p.posttime,p.updated,p.views,p.status,p.tags,p.pubtype,p.reprinturl,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id=?", this.Id).QueryRow(this)
 	if err != nil {
 		beego.Error(err)
 	}
-	//beego.Info(post)
 	this.Views++
 
 	//执行更新
@@ -237,15 +217,13 @@ func (post *Post1) GetPreAndNext(postid int64) (pre, next *Post1) {
 	pre = new(Post1)
 	next = new(Post1)
 	o := orm.NewOrm()
-	err := o.Raw("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.status,p.views,p.posttime,p.updated,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id<? and p.status=0 and p.urltype=0 order by p.id desc limit 1", postid).QueryRow(pre)
+	err := o.Raw("select p.id,p.userid,u.username,p.title,p.urlname,p.urltype,p.content,p.status,p.views,p.posttime,p.updated,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id<? and p.status=0 and p.urltype=0 order by p.id desc limit 1", postid).QueryRow(pre)
 	if err != nil {
 		beego.Error(err)
 	}
-	err = o.Raw("select p.id,p.userid,u.username,p.title,p.color,p.urlname,p.urltype,p.content,p.status,p.views,p.posttime,p.updated,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id>? and p.status=0 and p.urltype=0 limit 1", postid).QueryRow(next)
+	err = o.Raw("select p.id,p.userid,u.username,p.title,p.urlname,p.urltype,p.content,p.status,p.views,p.posttime,p.updated,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id>? and p.status=0 and p.urltype=0 limit 1", postid).QueryRow(next)
 	if err != nil {
 		beego.Error(err)
 	}
-	//beego.Info(pre)
-	//beego.Info(next)
 	return
 }
