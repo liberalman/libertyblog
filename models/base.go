@@ -6,8 +6,10 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/cache"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/yunge/sphinx"
@@ -16,6 +18,13 @@ import (
 var SphinxClient *sphinx.Client
 var Sphinx_port int
 var Sphinx_host string
+var Cache1 cache.Cache
+
+const (
+	CACHE_TIME_OUT          time.Duration = 86400 // seconds
+	CACHE_KEY_TB_USER       string        = "tb_user:"
+	CACHE_KEY_TB_USER_TOTAL string        = "tb_user:total:"
+)
 
 func init() {
 	// mysql
@@ -32,6 +41,12 @@ func init() {
 	orm.RegisterModel(new(User), new(Post), new(Tag), new(Option), new(TagPost), new(Photo), new(Album), new(Link), new(Article), new(History), new(Statistics), new(Comment))
 	if beego.AppConfig.String("runmode") == "dev" {
 		orm.Debug = true
+	}
+
+	var err error
+	Cache1, err = cache.NewCache("memory", `{"interval":60}`) // memory 在内存中做缓存，每 60s 会进行一次过期清理
+	if nil != err {
+		beego.Error(err.Error())
 	}
 
 	// sphinx

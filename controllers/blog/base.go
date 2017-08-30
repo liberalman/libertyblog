@@ -71,6 +71,7 @@ func (this *baseController) Prepare() {
 		this.theme = "default"
 		if v, ok := this.options["theme"]; ok && v != "" {
 			this.theme = v
+			beego.Error(this.theme)
 		}
 	}
 

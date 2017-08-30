@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<!--
+	Future Imperfect by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+	<head>
+		<title>{{.title}}</title>
+		<meta charset="utf-8" />
+		<meta name="keywords" content="{{.keywords}}">
+		<meta name="description" content="{{.description}}">
+		<link href="favicon.ico" rel="icon">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/future/assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<style>
+			.wrap {
+				/* 长英文自动换行 */
+				word-break: break-all;
+				table-layout: fixed;
+				overflow: hidden;
+			}
+			/* 去掉鼠标指向a标签时的下划线 */
+			
+			a:hover {
+				text-decoration: none;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!-- Wrapper -->
+		<div id="wrapper">
+
+			<!-- Header -->
+			<header id="header">
+				<h1><a href="/">Liberalman</a></h1>
+				<nav class="links">
+					<ul>
+						<li>
+							<a href="/article/addmarkdown">Lorem</a>
+						</li>
+						<li>
+							<a href="/album.html">相册</a>
+						</li>
+						<li>
+							<a href="/blog/photo/all">photo all</a>
+						</li>
+						<li>
+							<a href="#">Tempus</a>
+						</li>
+						<li>
+							<a href="#">{{.username}}</a>
+						</li>
+					</ul>
+				</nav>
+				<nav class="main">
+					<ul>
+						<li class="search">
+							<a class="fa-search" href="#search">Search</a>
+							<form id="search" method="get" action="/search">
+								<input type="text" name="key" placeholder="Search" />
+							</form>
+						</li>
+						<li class="menu">
+							<a class="fa-bars" href="#menu">Menu</a>
+						</li>
+					</ul>
+				</nav>
+			</header>
+
+			<!-- Menu -->
+			<section id="menu">
+
+				<!-- Search -->
+				<section>
+					<form class="search" method="get" action="#">
+						<input type="text" name="query" placeholder="Search" />
+					</form>
+				</section>
+
+				<!-- Links -->
+				<section>
+					<ul class="links">
+						<li>
+							<a href="#">
+								<h3>Lorem ipsum</h3>
+								<p>Feugiat tempus veroeros dolor</p>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<h3>Dolor sit amet</h3>
+								<p>Sed vitae justo condimentum</p>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<h3>Feugiat veroeros</h3>
+								<p>Phasellus sed ultricies mi congue</p>
+							</a>
+						</li>
+						<li>
+							<a href="/logout">
+								<h3>Log Out</h3>
+								<p>Porta lectus amet ultricies</p>
+							</a>
+						</li>
+					</ul>
+				</section>
+
+				<!-- Actions -->
+				<section>
+					<ul class="actions vertical">
+						<li>
+							{{if .username}}
+							<!-- if null == .useraname -->
+							<a href="/user/logout" class="button big fit">Log Out</a>
+							{{else}}
+							<a href="/login" class="button big fit">Log In</a>
+							{{end}}
+						</li>
+					</ul>
+				</section>
+
+			</section>
+
+			{{.LayoutContent}} {{if .no_right}} {{else}}
+			<!-- no_right不为空的时候，显示侧边栏窗口 -->
+			{{.right}} {{end}}
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="/future/assets/js/skel.min.js"></script>
+		<script src="/future/assets/js/util.js"></script>
+		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+		<script src="/future/assets/js/main.js"></script>
+
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script>
+		<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.min.js"></script>
+		<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.locales.min.js"></script>
+		<!--
+		作者：zscchina@163.com
+		时间：2017-08-23
+		描述：原来的jquery.pin.min.js中的load函数没改造，我改造了之后，使得它适应jquery1.9之后的版本
+	    -->
+		<script src="/js/jquery.pin.liberalman.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				// 将某元素“钉”在容器内
+				$(".pin_inner").pin({
+					containerSelector: ".pin_outer"
+				});
+
+				var nodes = $('.timeago');
+				var timeagoInstance = timeago();
+				timeagoInstance.render(nodes, 'zh_CN');
+				timeago.cancel();
+			});
+		</script>
+
+	</body>
+
+</html>

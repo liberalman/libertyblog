@@ -180,8 +180,33 @@ func PostIndex(page int, pagesize int) ([]Article, int) {
 	var count int = 0
 	var list []Article
 	o := orm.NewOrm()
-	o.Raw("select p.id,p.userid,u.username,p.title,p.digest,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.updated,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid order by p.istop desc,p.updated desc limit ?,?", (page-1)*pagesize, pagesize).QueryRows(&list)
-	o.Raw("select count(id) from tb_post").QueryRow(&count)
+
+	var ids []string
+	o.Raw("select p.id from tb_user u,tb_post p where u.id=p.userid order by p.istop desc,p.updated desc limit ?,?", (page-1)*pagesize, pagesize).QueryRows(&ids)
+	for _, id := range ids {
+		key := CACHE_KEY_TB_USER + id
+		tmp := Cache1.Get(key)
+		if nil == tmp {
+			var article Article
+			err := o.Raw("select p.id,p.userid,u.username,p.title,p.digest,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.updated,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id=?", id).QueryRow(&article)
+			if nil != err {
+				beego.Error(err.Error()) // 查不到数据的时候，也会报"<QuerySeter> no row found"的错误
+			} else {
+				Cache1.Put(key, article, CACHE_TIME_OUT*time.Second)
+				list = append(list, article)
+			}
+		} else {
+			list = append(list, tmp.(Article))
+		}
+	}
+
+	total := Cache1.Get(CACHE_KEY_TB_USER_TOTAL)
+	if nil == total {
+		o.Raw("select count(id) from tb_post").QueryRow(&count)
+		Cache1.Put(CACHE_KEY_TB_USER_TOTAL, count, CACHE_TIME_OUT*time.Second)
+	} else {
+		count = total.(int)
+	}
 	return list, count
 }
 
