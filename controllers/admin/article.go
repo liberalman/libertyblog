@@ -18,12 +18,6 @@ type ArticleController struct {
 	baseController
 }
 
-//添加
-func (this *ArticleController) Add() {
-	this.Data["posttime"] = this.getTime().Format("2006-01-02 15:04:05")
-	this.display()
-}
-
 //管理文章列表
 func (this *ArticleController) List() {
 	var (

@@ -64,7 +64,6 @@ func init() {
 
 	//相册展示
 	beego.Router("/album.html", &blog.PhotoController{}, "*:Albums")
-	beego.Router("/album1.html", &blog.MainController{}, "*:Album1")
 	beego.Router("/album:page:int.html", &blog.PhotoController{}, "*:Albums")
 
 	beego.Router("/:urlname(.+)", &blog.ArticleController{}, "*:Index") //别名访问
@@ -82,7 +81,6 @@ func init() {
 
 	//内容管理
 	beego.Router("/admin/article/list", &admin.ArticleController{}, "*:List")
-	beego.Router("/admin/article/add", &admin.ArticleController{}, "*:Add")
 	beego.Router("/article/addmarkdown", &blog.ArticleController{}, "*:AddMarkdown")
 	beego.Router("/article/editmarkdown", &blog.ArticleController{}, "*:EditMarkdown")
 	beego.Router("/admin/article/save", &admin.ArticleController{}, "post:Save")

@@ -2,7 +2,6 @@ package blog
 
 import (
 	"libertyblog/models"
-	"strconv"
 )
 
 type MainController struct {
@@ -36,25 +35,6 @@ func (this *MainController) Index() {
 func (this *MainController) Go404() {
 	this.setHeadFootMetas("Sorry 404页面没找到")
 	this.display("404", HAS_RIGHT)
-}
-
-//相册展示1
-func (this *MainController) Album1() {
-	pagesize, _ := strconv.Atoi(this.getOption("albumsize"))
-	if pagesize < 1 {
-		pagesize = 12
-	}
-	var list []*models.Album
-	query := new(models.Album).Query().Filter("ishide", 0)
-	count, _ := query.Count()
-	if count > 0 {
-		query.OrderBy("-rank", "-posttime").Limit(pagesize, (this.page-1)*pagesize).All(&list)
-	}
-	this.setHeadFootMetas("光影瞬间")
-	this.right = ""
-	this.Data["list"] = list
-	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(pagesize), "/albumnew%d.html").ToString()
-	this.display_no_layout("albumnew")
 }
 
 //分类查看

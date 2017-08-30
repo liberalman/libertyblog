@@ -215,6 +215,6 @@ func (this *UserController) User() {
 		this.ServeJSON()
 	} else {
 		this.Data["user"] = user
-		this.display("user", HAS_RIGHT)
+		this.display_no_layout("user")
 	}
 }
