@@ -35,10 +35,10 @@
 					<a href="{{.next.Link}}">下一篇</a>
 				</li>
 				<li>
-					<a href="#" class="icon fa-heart">{{.user.Follow_count}}</a>
+					<a href="#" class="icon fa-heart" title="浏览量">{{.post.Views}}</a>
 				</li>
 				<li>
-					<a href="#" class="icon fa-comment">{{.user.Post_count}}</a>
+					<a href="#" class="icon fa-comment">0</a>
 				</li>
 			</ul>
 		</footer>
@@ -73,7 +73,7 @@
 							<p>{{$v.Content}}</p>
 							<span>
 								<time class="published" datetime="2015-10-20" style="display :inline;">{{date $v.Create_time "Y-m-j"}}</time>&nbsp;|&nbsp;
-								{{if eq $v.User_id $.post.Userid}}<a role="button" onclick="del_comment({{$v.Id}})">删除</a>{{end}}&nbsp;|&nbsp;
+								{{if eq $v.User_id $.post.Userid}}<a role="button" onclick="del_comment({{$v.Id}})">删除</a>&nbsp;|&nbsp;{{end}}
 								<a role="button" data-toggle="collapse" href="#collapseExample_{{$v.Id}}" aria-expanded="false" aria-controls="collapseExample">回复</a>
 							</span>
 							<form class="collapse echo2someone" id="collapseExample_{{$v.Id}}" method="post">

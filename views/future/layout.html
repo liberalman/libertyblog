@@ -21,6 +21,8 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 
 		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/tooltipster/3.3.0/css/themes/tooltipster-shadow.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/tooltipster/3.3.0/css/tooltipster.min.css" rel="stylesheet">
 		<link href="https://cdn.bootcss.com/toastr.js/latest/toastr.min.css" rel="stylesheet">
 
 		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -127,6 +129,7 @@
 		<script src="/future/assets/js/main.js"></script>
 
 		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdn.bootcss.com/tooltipster/3.3.0/js/jquery.tooltipster.min.js"></script>
 		<script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script>
 		<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.min.js"></script>
 		<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.locales.min.js"></script>
@@ -165,7 +168,43 @@
 					}, 750);
 					return false;
 				});
+
+				$('.mytooltip').tooltipster({
+    theme: 'tooltipster-shadow'
+});
 			});
+		</script>
+		<!-- 百度分享按钮 -->
+		<script>
+			window._bd_share_config = {
+				"common": {
+					"bdSnsKey": {},
+					"bdText": "",
+					"bdMini": "2",
+					"bdMiniList": false,
+					"bdPic": "",
+					"bdStyle": "0",
+					"bdSize": "16",
+					"onBeforeClick": function() {},
+					"onAfterClick": function() {},
+				},
+				"slide": {
+					"type": "slide",
+					"bdImg": "0",
+					"bdPos": "right",
+					"bdTop": "100"
+				},
+				"image": {
+					"viewList": ["qzone", "tsina", "tqq", "renren", "weixin"],
+					"viewText": "分享到：",
+					"viewSize": "16"
+				},
+				"selectShare": {
+					"bdContainerClass": null,
+					"bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"]
+				}
+			};
+			with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
 		</script>
 
 	</body>
