@@ -62,40 +62,44 @@
 			</div>
 		</form>
 
-		{{range $k, $v := .comments}}
-		<div class="media">
-			<div class="media-left">
-				<a href="#">
-					<img class="media-object" data-src="holder.js/32x32" src="{{$v.Avatarurl}}" alt="..." style="width: 32px; height: 32px;" data-holder-rendered="true">
-				</a>
-			</div>
-			<div class="media-body">
-				<h6 class="media-heading">
-								<a role="button" href="/user/{{$v.User_id}}">{{$v.Username}}</a> 回复 <a role="button" href="/user/{{$v.To_user_id}}">{{$v.Tousername}}</a>
-							</h6>
-				<p>
-					{{$v.Content}}</p>
-				<a>{{date $v.Create_time "Y-m-j"}}</a>
-				{{if eq $v.User_id $.post.Userid}}
-				<a role="button" onclick="del_comment({{$v.Id}})">删除</a>{{end}}
-				<a role="button" data-toggle="collapse" href="#collapseExample_{{$v.Id}}" aria-expanded="false" aria-controls="collapseExample">回复</a>
-				<form class="collapse echo2someone" id="collapseExample_{{$v.Id}}" method="post">
-					<br/>
-					<input class="hidden" name="id" value="{{$v.Id}}" />
-					<input class="hidden" name="article_id" value="{{$.post.Id}}" />
-					<input class="hidden" name="flag" value="1" />
-					<input class="hidden" name="to_user_id" value="{{$v.User_id}}" />
-					<input class="hidden" name="ref_comm_id" value="{{$v.Id}}" />
-					<div class="form-group input-group has-success">
-						<input type="text" class="form-control" placeholder="回复:{{$v.Username}}" name="content" />
-						<span class="input-group-btn">
-								        <button class="btn btn-default" type="submit">发表!</button>
-								     </span>
-					</div>
-				</form>
-			</div>
-		</div>
-		{{end}}
+		<!-- Posts List -->
+		<section>
+			<ul class="posts">
+				{{range $k, $v := .comments}}
+				<li>
+					<article>
+						<header>
+							<h3><a role="button" href="/user/{{$v.User_id}}">{{$v.Username}}</a> 回复 <a role="button" href="/user/{{$v.To_user_id}}">{{$v.Tousername}}</a></h3>
+							<p>{{$v.Content}}</p>
+							<span>
+								<time class="published" datetime="2015-10-20" style="display :inline;">{{date $v.Create_time "Y-m-j"}}</time>&nbsp;|&nbsp;
+								{{if eq $v.User_id $.post.Userid}}<a role="button" onclick="del_comment({{$v.Id}})">删除</a>{{end}}&nbsp;|&nbsp;
+								<a role="button" data-toggle="collapse" href="#collapseExample_{{$v.Id}}" aria-expanded="false" aria-controls="collapseExample">回复</a>
+							</span>
+							<form class="collapse echo2someone" id="collapseExample_{{$v.Id}}" method="post">
+								<div class="row uniform">
+									<input class="hidden" name="id" value="{{$v.Id}}" />
+									<input class="hidden" name="article_id" value="{{$.post.Id}}" />
+									<input class="hidden" name="flag" value="1" />
+									<input class="hidden" name="to_user_id" value="{{$v.User_id}}" />
+									<input class="hidden" name="ref_comm_id" value="{{$v.Id}}" />
+									<div class="12u$">
+										<textarea name="content" placeholder="回复:{{$v.Username}}" rows="6"></textarea>
+									</div>
+									<div class="12u$">
+										<ul class="actions">
+											<li><input id="btn_echo2article" type="submit" value="回复" /></li>
+										</ul>
+									</div>
+								</div>
+							</form>
+						</header>
+						<a href="#" class="image"><img onerror="onerror=null;src='/future/images/pic08.jpg'" src="{{$v.Avatarurl}}" alt="" /></a>
+					</article>
+				</li>
+				{{end}}
+			</ul>
+		</section>
 
 	</article>
 
