@@ -82,27 +82,15 @@
 				<section>
 					<ul class="links">
 						<li>
-							<a href="#">
-								<h3>Lorem ipsum</h3>
+							<a href="/admin">
+								<h3>后台管理</h3>
 								<p>Feugiat tempus veroeros dolor</p>
 							</a>
 						</li>
 						<li>
-							<a href="#">
-								<h3>Dolor sit amet</h3>
+							<a href="/admin/article/list">
+								<h3>我的文章</h3>
 								<p>Sed vitae justo condimentum</p>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<h3>Feugiat veroeros</h3>
-								<p>Phasellus sed ultricies mi congue</p>
-							</a>
-						</li>
-						<li>
-							<a href="/logout">
-								<h3>Hello</h3>
-								<p>Porta lectus amet ultricies</p>
 							</a>
 						</li>
 					</ul>
@@ -113,7 +101,6 @@
 					<ul class="actions vertical">
 						<li>
 							{{if .username}}
-							<!-- if null == .useraname -->
 							<a href="/user/logout" class="button big fit">Log Out</a>
 							{{else}}
 							<a href="/login" class="button big fit">Log In</a>
