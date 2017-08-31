@@ -7,7 +7,7 @@
 	<article class="post box-shadow-1">
 		<header>
 			<div class="title">
-				<h2><a href="#" class="wrap">{{.post.Title}}</a></h2>
+				<h2><a href="#" class="wrap">{{str2html .post.Title}}</a></h2>
 				<p>
 					<span class="label label-danger"><time class="timeago" datetime={{date .post.Updated "Y-m-j"}}></time></span>
 					<span class="label label-primary">作者：{{.post.Username}}</span>
@@ -23,7 +23,7 @@
 		</header>
 
 		<div id="test-editormd-view2" style="font-size: 1.0em; line-height:2em;">
-			<textarea id="append-test" style="display:none;">{{str2html .post.Content}}</textarea>
+			<textarea id="append-test" style="display:none;">{{.post.Content}}</textarea>
 		</div>
 
 		<footer>

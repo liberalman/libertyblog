@@ -18,7 +18,7 @@ import (
 var SphinxClient *sphinx.Client
 var Sphinx_port int
 var Sphinx_host string
-var Cache1 cache.Cache
+var Cache cache.Cache
 
 const (
 	CACHE_TIME_OUT          time.Duration = 86400 // seconds
@@ -44,7 +44,7 @@ func init() {
 	}
 
 	var err error
-	Cache1, err = cache.NewCache("memory", `{"interval":60}`) // memory 在内存中做缓存，每 60s 会进行一次过期清理
+	Cache, err = cache.NewCache("memory", `{"interval":60}`) // memory 在内存中做缓存，每 60s 会进行一次过期清理
 	if nil != err {
 		beego.Error(err.Error())
 	}
@@ -84,7 +84,7 @@ func GetOptions() map[string]string {
 		for _, v := range result {
 			options[v.Name] = v.Value
 		}
-		Cache.Put("options", options)
+		Cache.Put("options", options, CACHE_TIME_OUT*time.Second)
 	}
 	v := Cache.Get("options")
 	return v.(map[string]string)
@@ -98,7 +98,7 @@ func GetLatestBlog() []*Article {
 		if count > 0 {
 			query.OrderBy("-posttime").Limit(8).All(&result)
 		}
-		Cache.Put("latestblog", result)
+		Cache.Put("latestblog", result, CACHE_TIME_OUT*time.Second)
 	}
 	v := Cache.Get("latestblog")
 	return v.([]*Article)
@@ -108,7 +108,7 @@ func GetHotBlog() []*Article {
 	if !Cache.IsExist("hotblog") {
 		var result []*Article
 		new(Article).Query().Filter("status", 0).Filter("urltype", 0).OrderBy("-views").Limit(5).All(&result)
-		Cache.Put("hotblog", result)
+		Cache.Put("hotblog", result, CACHE_TIME_OUT*time.Second)
 	}
 	v := Cache.Get("hotblog")
 	return v.([]*Article)
@@ -119,7 +119,7 @@ func GetUser(userid int64) User {
 	if !Cache.IsExist(key) {
 		var user User
 		new(User).Query().Filter("id", userid).One(&user)
-		Cache.Put(key, user)
+		Cache.Put(key, user, CACHE_TIME_OUT*time.Second)
 	}
 	v := Cache.Get(key)
 	return v.(User)
@@ -129,8 +129,7 @@ func GetLinks() []*Link {
 	if !Cache.IsExist("links") {
 		var result []*Link
 		new(Link).Query().OrderBy("-rank").All(&result)
-		Cache.Put("links", result)
-		fmt.Println(result)
+		Cache.Put("links", result, CACHE_TIME_OUT*time.Second)
 	}
 	v := Cache.Get("links")
 	return v.([]*Link)
