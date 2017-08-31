@@ -1,0 +1,215 @@
+<style>
+	.myimg {
+		/*上　右　下 　左*/
+		padding: 3.75em 0em 1.75em 1.75em;
+		border-left: solid 1px rgba(160, 160, 160, 0.3);
+		min-width: 17em;
+		text-align: right;
+		width: 17em;
+	}
+</style>
+<!-- Main -->
+<div id="main">
+	<article class="post box-shadow-1">
+		<h1>{{.tag.Name}} <small>{{.tag.Count}} 篇文章</small></h1>
+	</article>
+
+	{{range $k, $v := .list}}
+	<!-- Post -->
+	<article class="post box-shadow-1">
+		<header>
+			<div class="title">
+				<h2><a href="{{$v.Link}}" class="wrap">{{$v.Title}}</a></h2>
+			</div>
+			<div class="meta">
+				<time class="published" datetime="2015-11-01">{{date $v.Posttime "Y-m-j"}}</time>
+				<a href="/user/{{$v.Userid}}" class="author"><span class="name">{{$v.Username}}</span><img src="{{$v.Avatarurl}}" alt="" /></a>
+			</div>
+		</header>
+		<header>
+			{{if $v.Coverurl}}
+			<div class="myimg" style="overflow: hidden;">
+				<a href="{{$v.Link}}"><img src="{{$v.Coverurl}}" width="100%" alt="" /></a>
+			</div>
+			{{end}}
+			<div class="title">
+				<div id="test-editormd-view2-{{$v.Id}}" style="font-size: 1.0em; line-height:2em;">
+					<textarea id="append-test" style="display:none;">{{$v.Digest}}</textarea>
+				</div>
+			</div>
+		</header>
+		<footer>
+			<ul class="actions">
+				<li>
+					<a href="{{$v.Link}}" class="button big">Continue Reading</a>
+				</li>
+			</ul>
+			<ul class="stats">
+				<li>
+					{{str2html $v.TagsLink}}
+				</li>
+				<li>
+					<a class="icon fa-heart" onclick="likeit($(this))">{{$v.Views}}</a>
+				</li>
+				<li>
+					<a href="{{$v.Link}}" class="icon fa-comment">0</a>
+				</li>
+			</ul>
+		</footer>
+	</article>
+	{{end}} {{str2html .pagebar}}
+</div>
+
+<link rel="stylesheet" href="/editor.md/css/editormd.preview.min.css" />
+<link rel="stylesheet" href="//cdn.bootcss.com/mermaid/7.0.0/mermaid.min.css" />
+<script src="/editor.md/lib/marked.min.js"></script>
+<script src="/editor.md/lib/prettify.min.js"></script>
+<script src="/editor.md/lib/raphael.min.js"></script>
+<script src="/editor.md/lib/underscore.min.js"></script>
+<script src="/editor.md/lib/sequence-diagram.min.js"></script>
+<script src="/editor.md/lib/flowchart.min.js"></script>
+<script src="/editor.md/lib/jquery.flowchart.min.js"></script>
+<script src="//cdn.bootcss.com/mermaid/7.0.0/mermaid.min.js"></script>
+<script src="//cdn.bootcss.com/viz.js/1.8.0/viz-lite.js"></script>
+<script src="/editor.md/editormd.liberalman.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("div[id^='test-editormd-view2-']").each(function() {
+			var testEditormdView2;
+			// $(this)[0].id  获取id名字
+			testEditormdView2 = editormd.markdownToHTML($(this)[0].id, {
+				htmlDecode: "style,script,iframe", // you can filter tags decode
+				emoji: true,
+				tocm: true,
+				taskList: true,
+				tex: true, // 默认不解析
+				flowChart: true, // 默认不解析
+				sequenceDiagram: true, // 默认不解析
+				mermaid: true, // mermaid图
+				viz: true, // WebGraphviz
+			});
+		});
+	});
+</script>
+
+<!--<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>-->
+<script type="text/javascript">
+	/*
+		// toastr的配置，也可以不配置，使用默认值。
+		toastr.options = {
+		        "closeButton": false, //是否显示关闭按钮
+		        "debug": false, //是否使用debug模式
+		        "positionClass": "toast-top-right",//弹出窗的位置
+		        "showDuration": "300",//显示的动画时间
+		        "hideDuration": "1000",//消失的动画时间
+		        "timeOut": "5000", //展现时间
+		        "extendedTimeOut": "1000",//加长展示时间
+		        "showEasing": "swing",//显示时的动画缓冲方式
+		        "hideEasing": "linear",//消失时的动画缓冲方式
+		        "showMethod": "fadeIn",//显示时的动画方式
+		        "hideMethod": "fadeOut" //消失时的动画方式
+		       };
+		       */
+	function author(name, userid) {
+		toastr.info('作者：' + name);
+		window.location.href = "/user/" + userid;
+	}
+
+	function follow(name) {
+		toastr.warning('+关注：' + name);
+	}
+
+	function likeit(myself) {
+		toastr.success('此文已经被浏览' + myself.text() + '次!');
+		$(myself).removeClass("glyphicon-heart-empty").addClass("glyphicon-heart");
+	}
+
+	/*可供选择的设置选项
+	closeButton: true
+	是否在通知弹窗上面显示关闭按钮，true：显示；false：不显示
+
+	debug: true
+	是否开起debug
+
+	progressBar: false
+	是否显示进度条，当为false时候不显示；当为true时候，显示进度条，当进度条缩短到0时候，消息通知弹窗消失
+
+	positionClass: 'toast-top-right'
+	位置信息，消息弹窗显示的位置，可以显示的位置对应的值
+	1.toast-top-right
+	2.toast-botton-right
+	3.toash-bottom-left
+	4.toast-top-left
+	5.toast-top-full-width 这个是在网页顶端，宽度铺满整个屏幕
+	6.toast-bottom-full-width
+	7.toast-top-center顶端中间
+	8.toast-bottom-center
+
+	onclick: null
+	showDuration: "300"
+	显示动作（从无到有这个动作）持续的时间
+
+	hideDuration: "1000"
+	隐藏动作持续的时间
+
+	timeOut: "5000"
+	间隔的时间
+
+
+	extendedTimeOut: "1000"
+
+	showEasing: "swing",
+	hideEasing: "linear",
+	showMethod: "fadeIn"
+
+	显示的方式，和jquery相同，可以是show()
+
+
+	hideMethod: "fadeOut"
+	隐藏的方式，和jquery相同，可以是hide()
+
+
+
+	toastr['error']('I am yanying', 'title');
+	其中的error为显示的通知的样式类型，有4种选择
+	1.success 成功，绿色
+	2.info 信息，蓝色
+	3.warning，警告，橙色
+	4.error，错误，深红色
+	其中第一个参数为显示的内容，第二个参数为显示的标题，标题可以省略*/
+
+	/*// 将当前页面打快照截图
+	html2canvas(document.body).then(function(canvas) {
+		//document.body.appendChild(canvas); // 追加到body后面
+
+		// 图片导出为 png 格式
+		var type = "png";
+		var imgData = canvas.toDataURL(type);
+		//location = imgData; // 浏览器查看效果
+
+		// 获取mimeType
+		var _fixType = function(type) {
+			type = type.toLowerCase().replace(/jpg/i, 'jpeg');
+			var r = type.match(/png|jpeg|bmp|gif/)[0];
+			return 'image/' + r;
+		};
+
+		// 加工image data，替换mime type
+		imgData = imgData.replace(_fixType(type), 'image/octet-stream');
+
+		// 在本地进行文件保存
+		var saveFile = function(data, filename) {
+			var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+			save_link.href = data;
+			save_link.download = filename;
+
+			var event = document.createEvent('MouseEvents');
+			event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+			save_link.dispatchEvent(event);
+		};
+
+		// 下载后的问题名
+		var filename = 'baidufe_' + (new Date()).getTime() + '.' + type;
+		saveFile(imgData, filename);
+	});*/
+</script>
