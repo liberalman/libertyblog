@@ -208,7 +208,7 @@ func (this *UserController) updateLoginStatus(user *models.User) {
 // @router /user/:userid:int [get]
 func (this *UserController) User() {
 	userid, _ := strconv.Atoi(this.Ctx.Input.Param(":userid"))
-	user := models.GetUser(int64(userid))
+	user := models.GetUser(int64(userid), false)
 	if this.IsAjax() {
 		ret := models.NewRet(0, "", user)
 		this.Data["json"] = ret

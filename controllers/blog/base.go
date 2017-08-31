@@ -164,7 +164,7 @@ func (this *baseController) ResetUser() {
 	result := regexp.MustCompile("[0-9]+").FindAllString(auth, -1)
 	if nil != result {
 		userid, _ := strconv.Atoi(result[0])
-		user := models.GetUser(int64(userid)) // 获取用户信息
+		user := models.GetUser(int64(userid), false) // 获取用户信息
 		this.Data["username"] = user.Username
 		this.Data["email"] = user.Email
 		this.Data["avatarurl"] = user.Avatarurl

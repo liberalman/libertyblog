@@ -114,8 +114,12 @@ func GetHotBlog() []*Article {
 	return v.([]*Article)
 }
 
-func GetUser(userid int64) User {
+// reset: if to reset new cache
+func GetUser(userid int64, reset bool) User {
 	key := fmt.Sprintf("tb_user:%d", userid)
+	if reset {
+		Cache.Delete(key)
+	}
 	if !Cache.IsExist(key) {
 		var user User
 		new(User).Query().Filter("id", userid).One(&user)

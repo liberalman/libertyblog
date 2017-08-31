@@ -310,8 +310,8 @@ func (this *ArticleController) Save() {
 		}
 	}
 
-	// 更新用户信息缓存，主要是为了更新文章数量
-	models.GetUser(this.userid)
+	// 重置用户信息缓存，主要是为了更新文章数量
+	models.GetUser(this.userid, true)
 
 end:
 	this.Data["json"] = ret
