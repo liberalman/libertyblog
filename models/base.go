@@ -24,6 +24,7 @@ const (
 	CACHE_TIME_OUT          time.Duration = 86400 // seconds
 	CACHE_KEY_TB_USER       string        = "tb_user:"
 	CACHE_KEY_TB_USER_TOTAL string        = "tb_user:total:"
+	CACHE_KEY_TB_ARTICLE    string        = "tb_article:"
 )
 
 func init() {

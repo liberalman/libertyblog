@@ -1,4 +1,12 @@
-
+<style>
+	.myimg {/*上　右　下 　左*/
+				padding: 3.75em 0em 1.75em 1.75em ;
+				border-left: solid 1px rgba(160, 160, 160, 0.3);
+				min-width: 17em;
+				text-align: right;
+				width: 17em;
+			}
+</style>
 <!-- Main -->
 <div id="main">
 
@@ -14,11 +22,16 @@
 				<a href="/user/{{$v.Userid}}" class="author"><span class="name">{{$v.Username}}</span><img src="{{$v.Avatarurl}}" alt="" /></a>
 			</div>
 		</header>
-		{{if $v.Coverurl}}
-		<a href="#" class="image left"><img src="{{$v.Coverurl}}" alt=""/></a>
-		{{end}}
-		<p>{{$v.Digest}}</p>
-		<hr/>
+		<header>
+			{{if $v.Coverurl}}
+			<div class="myimg" style="overflow: hidden;">
+				<a href="{{$v.Link}}"><img src="{{$v.Coverurl}}" width="100%" alt="" /></a>
+			</div>
+			{{end}}
+			<div class="title">
+				<p>{{$v.Digest}}</p>
+			</div>
+		</header>
 		<footer>
 			<ul class="actions">
 				<li>
@@ -38,9 +51,6 @@
 			</ul>
 		</footer>
 	</article>
-	{{end}}
-	
-	{{str2html .pagebar}}
+	{{end}} {{str2html .pagebar}}
 
 </div>
-

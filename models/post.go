@@ -3,6 +3,7 @@ package models
 import (
 	"bytes"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
@@ -187,12 +188,17 @@ func PostIndex(page int, pagesize int) ([]Article, int) {
 		key := CACHE_KEY_TB_USER + id
 		tmp := Cache.Get(key)
 		if nil == tmp {
-			var article Article
+			/*var article Article
 			err := o.Raw("select p.id,p.userid,u.username,p.title,p.digest,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.updated,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id=?", id).QueryRow(&article)
 			if nil != err {
 				beego.Error(err.Error()) // 查不到数据的时候，也会报"<QuerySeter> no row found"的错误
 			} else {
 				Cache.Put(key, article, CACHE_TIME_OUT*time.Second)
+				list = append(list, article)
+			}*/
+			articleid, _ := strconv.Atoi(id)
+			article := GetArticle(int64(articleid), false)
+			if article.Id > 0 {
 				list = append(list, article)
 			}
 		} else {
