@@ -118,8 +118,8 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		/* Math.random()*(n-m)+m;
-                      返回指定范围的随机数(m-n之间)的公式,Math.random()返回的是0~1之间的浮点数*/
-		var page = Math.floor(Math.random()*(10-1)+1); // 返回1-10的随机数
+           返回指定范围的随机数(m-n之间)的公式,Math.random()返回的是0~1之间的浮点数*/
+		var page = Math.floor(Math.random() * (10 - 1) + 1); // 返回1-10的随机数
 
 		$.ajax({
 			url: "/blog/photo/recommend",
@@ -127,25 +127,25 @@
 			cache: true,
 			async: true,
 			data: {
-				page : page,
-				pagesize : 4,
+				page: page,
+				pagesize: 4,
 			},
-			success: function(data) {
-				if(0 != data.code) { // 返回0代表成功，其他失败
-					toastr.error("code: " + data.code + " message: " + data.message);
+			success: function(result) {
+				if(0 != result.code) { // 返回0代表成功，其他失败
+					toastr.error("code: " + result.code + " message: " + result.message);
 				} else {
 					var str = "";
-					data.data.list.forEach(function(value, index, array) {
-						str += '<article class="mini-post box-shadow-1">\
-							<header>\
+					if(result.data.list) {
+						result.data.list.forEach(function(value, index, array) {
+							str += '<article class="mini-post box-shadow-1"><header>\
 								<h3><a href="#">' + value.Des + '</a></h3>\
 								<time class="published" datetime="2015-10-20">' + value.Posttime + '</time>\
-								<a href="#" class="author"><img src="/future/images/avatar.jpg" alt="" /></a>\
-							</header>\
+								<a href="#" class="author"><img src="/future/images/avatar.jpg" alt="" /></a></header>\
 							<a href="/blog/album' + value.Albumid + '.html" class="image"><img src="' + value.Url + '" alt="" /></a></article>';
-					});
-					if (str != "") {
-						$('#recommend_photos').html(str);
+						});
+						if(str != "") {
+							$('#recommend_photos').html(str);
+						}
 					}
 				}
 			}

@@ -18,7 +18,7 @@
 			</div>
 			<div class="meta">
 				<time class="published" datetime="2015-11-01">{{date .post.Posttime "Y-m-j"}}</time>
-				<a href="#" class="author"><span class="name">{{.post.Username}}</span><img src="{{.post.Avatarurl}}" alt="" /></a>
+				<a href="/user/{{.post.Userid}}" class="author"><span class="name">{{.post.Username}}</span><img src="{{.post.Avatarurl}}" alt="" /></a>
 			</div>
 		</header>
 
@@ -54,7 +54,7 @@
 <script src="/editor.md/lib/jquery.flowchart.min.js"></script>
 <script src="//cdn.bootcss.com/mermaid/7.0.0/mermaid.min.js"></script>
 <script src="//cdn.bootcss.com/viz.js/1.8.0/viz-lite.js"></script>
-<script src="/editor.md/editormd.js"></script>
+<script src="/editor.md/editormd.liberalman.min.js"></script>
 <script src="/js/common.js"></script>
 <script type="text/javascript">
 	$(function() {

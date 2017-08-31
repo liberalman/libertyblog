@@ -6,6 +6,10 @@ paths:
     get:
       tags:
       - libertyblog/controllers/blogMainController
+  /about:
+    get:
+      tags:
+      - libertyblog/controllers/blogMainController
   /admin/album/delete:
     delete:
       tags:
@@ -89,6 +93,24 @@ paths:
     get:
       tags:
       - libertyblog/controllers/blogPhotoController
+  /blog/photo/recommend:
+    get:
+      tags:
+      - libertyblog/controllers/blogPhotoController
+      description: find object by objectid
+      operationId: PhotoController.Get
+      parameters:
+      - in: path
+        name: objectId
+        description: the objectid you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.User'
+        "403":
+          description: :objectId is empty
   /comment:
     post:
       tags:
