@@ -47,10 +47,9 @@
 							<a href="/blog/photo/all">photo all</a>
 						</li>
 						<li>
-							<a href="/login">Login</a>
-						</li>
-						<li>
-							<a href="/user/{{.userid}}">{{.username}}</a>
+							{{if .username}}
+							<a href="/user/{{.userid}}">{{.username}}</a> {{else}}
+							<a href="/login">Login</a> {{end}}
 						</li>
 					</ul>
 				</nav>
@@ -162,8 +161,7 @@
 				var timeagoInstance = timeago();
 				timeagoInstance.render(nodes, 'zh_CN');
 				timeago.cancel();
-				
-				
+
 				// fade in .back-to-top
 				$(window).scroll(function() {
 					if($(this).scrollTop() > 500) {

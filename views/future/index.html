@@ -1,11 +1,12 @@
 <style>
-	.myimg {/*上　右　下 　左*/
-				padding: 3.75em 0em 1.75em 1.75em ;
-				border-left: solid 1px rgba(160, 160, 160, 0.3);
-				min-width: 17em;
-				text-align: right;
-				width: 17em;
-			}
+	.myimg {
+		/*上　右　下 　左*/
+		padding: 3.75em 0em 1.75em 1.75em;
+		border-left: solid 1px rgba(160, 160, 160, 0.3);
+		min-width: 17em;
+		text-align: right;
+		width: 17em;
+	}
 </style>
 <!-- Main -->
 <div id="main">
@@ -29,7 +30,9 @@
 			</div>
 			{{end}}
 			<div class="title">
-				<p>{{$v.Digest}}</p>
+				<div id="test-editormd-view2-{{$v.Id}}" style="font-size: 1.0em; line-height:2em;">
+					<textarea id="append-test" style="display:none;">{{$v.Digest}}</textarea>
+				</div>
 			</div>
 		</header>
 		<footer>
@@ -52,5 +55,36 @@
 		</footer>
 	</article>
 	{{end}} {{str2html .pagebar}}
-
 </div>
+
+<link rel="stylesheet" href="/editor.md/css/editormd.preview.min.css" />
+<link rel="stylesheet" href="//cdn.bootcss.com/mermaid/7.0.0/mermaid.min.css" />
+<script src="/editor.md/lib/marked.min.js"></script>
+<script src="/editor.md/lib/prettify.min.js"></script>
+<script src="/editor.md/lib/raphael.min.js"></script>
+<script src="/editor.md/lib/underscore.min.js"></script>
+<script src="/editor.md/lib/sequence-diagram.min.js"></script>
+<script src="/editor.md/lib/flowchart.min.js"></script>
+<script src="/editor.md/lib/jquery.flowchart.min.js"></script>
+<script src="//cdn.bootcss.com/mermaid/7.0.0/mermaid.min.js"></script>
+<script src="//cdn.bootcss.com/viz.js/1.8.0/viz-lite.js"></script>
+<script src="/editor.md/editormd.liberalman.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("div[id^='test-editormd-view2-']").each(function() {
+			var testEditormdView2;
+			// $(this)[0].id  获取id名字
+			testEditormdView2 = editormd.markdownToHTML($(this)[0].id, {
+				htmlDecode: "style,script,iframe", // you can filter tags decode
+				emoji: true,
+				tocm: true,
+				taskList: true,
+				tex: true, // 默认不解析
+				flowChart: true, // 默认不解析
+				sequenceDiagram: true, // 默认不解析
+				mermaid: true, // mermaid图
+				viz: true, // WebGraphviz
+			});
+		});
+	});
+</script>

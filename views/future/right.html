@@ -3,11 +3,21 @@
 
 	<!-- Intro -->
 	<section id="intro">
+		{{if .username}}
 		<a href="/admin" class="logo"><img src="{{.avatarurl}}" alt="" /></a>
 		<header>
 			<h2>{{.username}}</h2>
 			<p>{{.information}}</p>
 		</header>
+		{{else}}
+		<a href="#" class="logo"><img src="/future/images/logo.jpg" alt="" /></a>
+		<header>
+			<h2>Hi, visitor!</h2>
+			<p>
+				The web was create by <a href="/user/1">Liberalman</a>, if you want to see more, please <a href="/login">Login</a>.
+			</p>
+		</header>
+		{{end}}
 	</section>
 
 	<!-- Mini Posts -->
@@ -84,7 +94,7 @@
 		<p>分享idea</p>
 		<ul class="actions">
 			<li>
-				<a href="#" class="button">Learn More</a>
+				<a href="/about" class="button">Learn More</a>
 			</li>
 		</ul>
 	</section>
