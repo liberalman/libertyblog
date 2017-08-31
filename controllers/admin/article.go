@@ -312,6 +312,8 @@ func (this *ArticleController) Save() {
 
 	// 重置用户信息缓存，主要是为了更新文章数量
 	models.GetUser(this.userid, true)
+	// reset article cache
+	models.GetArticle(id, true)
 
 end:
 	this.Data["json"] = ret
