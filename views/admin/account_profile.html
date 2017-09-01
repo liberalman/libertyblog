@@ -373,7 +373,7 @@
 			var dataURL = $('#image').cropper('getCroppedCanvas');
 			dataURL.toBlob(function(blob) {
 				var formData = new FormData();
-				formData.append('editormd-image-file', blob, "editormd-image-file.png");
+				formData.append('editormd-image-file', blob, "editormd-image-file.jpg");
 				$.ajax({
 					url: "/admin/acccount/put_avatar",
 					type: 'post',
@@ -386,12 +386,13 @@
 					success: function(result) {
 						toastr.success('修改成功！');
 						$('#myModal1').click();
+						window.location.reload();
 					},
 					error: function(result) {
 						toastr.error(result);
 					}
 				});
-			}, 'image/png', 0.5);
+			}, 'image/jpg', 0.5); //不要把图片压缩成png，因为压缩成png后base64的字符串可能比不转换前的长
 		});
 	});
 </script>

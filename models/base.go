@@ -130,6 +130,11 @@ func GetUser(userid int64, reset bool) User {
 	return v.(User)
 }
 
+func Delete(userid int64) {
+	key := fmt.Sprintf("tb_user:%d", userid)
+	Cache.Delete(key)
+}
+
 func GetLinks() []*Link {
 	if !Cache.IsExist("links") {
 		var result []*Link

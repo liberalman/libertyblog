@@ -24,7 +24,14 @@
 		<link href="https://cdn.bootcss.com/tooltipster/3.3.0/css/themes/tooltipster-shadow.min.css" rel="stylesheet">
 		<link href="https://cdn.bootcss.com/tooltipster/3.3.0/css/tooltipster.min.css" rel="stylesheet">
 		<link href="https://cdn.bootcss.com/toastr.js/latest/toastr.min.css" rel="stylesheet">
-
+		<link href="https://cdn.bootcss.com/unslider/2.0.3/css/unslider.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/unslider/2.0.3/css/unslider-dots.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/lightbox2/2.9.0/css/lightbox.min.css" rel="stylesheet">
+		<style>
+			.banner {
+				overflow: hidden;
+			}
+		</style>
 		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 		<link href="/future/style.min.css" rel="stylesheet">
 	</head>
@@ -40,6 +47,9 @@
 				<nav class="links">
 					<ul>
 						<li>
+							<a href="/"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
+						</li>
+						<li>
 							<a href="/article/addmarkdown" target="_blank">发布文章</a>
 						</li>
 						<li>
@@ -50,8 +60,10 @@
 						</li>
 						<li>
 							{{if .username}}
-							<a href="/user/{{.userid}}">{{.username}}</a> {{else}}
-							<a href="/login">Login</a> {{end}}
+							<a href="/user/{{.userid}}">{{.username}}</a>
+							{{else}}
+							<a href="/login">Login</a>
+							{{end}}
 						</li>
 					</ul>
 				</nav>
@@ -85,13 +97,13 @@
 					<ul class="links">
 						<li>
 							<a href="/admin">
-								<h3>后台管理</h3>
+								<h3>后台管理 <i class="fa fa-cog fa-spin fa-fw"></i></h3>
 								<p>Feugiat tempus veroeros dolor</p>
 							</a>
 						</li>
 						<li>
 							<a href="/admin/article/list">
-								<h3>我的文章</h3>
+								<h3>我的文章 <i class="fa fa-book fa-fw">{{.post_count}}</i></h3>
 								<p>Sed vitae justo condimentum</p>
 							</a>
 						</li>
@@ -133,6 +145,8 @@
 		<script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script>
 		<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.min.js"></script>
 		<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.locales.min.js"></script>
+		<script src="https://cdn.bootcss.com/lightbox2/2.9.0/js/lightbox.min.js"></script>
+		<script src="https://cdn.bootcss.com/unslider/2.0.3/js/unslider-min.js"></script>
 		<!--
 		作者：zscchina@163.com
 		时间：2017-08-23
@@ -170,8 +184,20 @@
 				});
 
 				$('.mytooltip').tooltipster({
-    theme: 'tooltipster-shadow'
-});
+					theme: 'tooltipster-shadow'
+				});
+
+				//启动轮播效果
+				$('.banner').unslider({
+					speed: 500, //  The speed to animate each slide (in milliseconds)
+					delay: 3000, //  The delay between slide animations (in milliseconds)
+					complete: function() {}, //  A function that gets called after every slide animation
+					keys: true, //  Enable keyboard (left, right) arrow shortcuts
+					dots: true, //  Display dot navigation
+					fluid: true, //  Support responsive design. May break non-responsive designs
+					autoplay: true,
+					arrows: false, // 是否显示上一页，下一页的箭头
+				});
 			});
 		</script>
 		<!-- 百度分享按钮 -->

@@ -55,6 +55,7 @@ func (m *User) Delete() error {
 	if _, err := orm.NewOrm().Delete(m); err != nil {
 		return err
 	}
+	Delete(m.Id) // delete cache
 	return nil
 }
 

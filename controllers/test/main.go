@@ -19,9 +19,11 @@ func (this *MainController) Prepare() {
 func (this *MainController) Index() {
 	this.TplName = "test/index.html"
 }
+
 func (this *MainController) Box() {
 	this.TplName = "test/box/index.html"
 }
+
 func (this *MainController) Slicebox3d() {
 	this.TplName = "test/slicebox3d/index.html"
 }

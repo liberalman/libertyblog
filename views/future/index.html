@@ -20,7 +20,9 @@
 			</div>
 			<div class="meta">
 				<time class="published" datetime="2015-11-01">{{date $v.Posttime "Y-m-j"}}</time>
-				<a href="/user/{{$v.Userid}}" class="author mytooltip" title="This is my span's tooltip message!"><span class="name">{{$v.Username}}</span><img src="{{$v.Avatarurl}}" alt="" /></a>
+				<a href="/user/{{$v.Userid}}" class="author mytooltip" title="This is my span's tooltip message!">
+					<span class="name">{{$v.Username}}</span><img src="{{$v.Avatarurl}}" alt="" />
+				</a>
 			</div>
 		</header>
 		<header>

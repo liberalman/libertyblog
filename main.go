@@ -27,11 +27,6 @@ func TransparentStatic(ctx *context.Context) {
 
 func main() {
 	//	beego.SetStaticPath("/css", "static/css")
-	//	beego.SetStaticPath("/js", "static/js")
-	//	beego.SetStaticPath("/img", "static/img")
-	//	beego.SetStaticPath("/fonts", "static/fonts")
-	//	beego.SetStaticPath("/editor.md", "static/editor.md")
-	//	beego.SetStaticPath("/xiaojing", "static/xiaojing")
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
 		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
