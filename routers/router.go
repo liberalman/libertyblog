@@ -37,6 +37,9 @@ func init() {
 		beego.NSInclude(
 			&test.MainController{},
 		),
+		beego.NSInclude(
+			&blog.QiniuController{},
+		),
 	)
 	beego.AddNamespace(ns)
 
@@ -49,6 +52,7 @@ func init() {
 	beego.Include(&admin.PhotoController{})
 	beego.Include(&admin.AlbumController{})
 	beego.Include(&test.MainController{})
+	beego.Include(&blog.QiniuController{})
 
 	//前台路由
 	beego.Router("/404.html", &blog.MainController{}, "*:Go404")

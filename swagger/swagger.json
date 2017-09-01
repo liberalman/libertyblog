@@ -303,6 +303,32 @@
                 }
             }
         },
+        "/qiniu/uptoken": {
+            "get": {
+                "tags": [
+                    "libertyblog/controllers/blogQiniuController"
+                ],
+                "description": "Get Qiniu uptoken",
+                "operationId": "QiniuController.Get Qiniu uptoken",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "objectId",
+                        "description": "the objectid you want to get",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "string {\"uptoken\": \"0MLvWPnyya1WtPnXFy9KLyGHyFPNdZceomL...\"}\""
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            }
+        },
         "/register": {
             "post": {
                 "tags": [

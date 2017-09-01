@@ -55,6 +55,14 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["libertyblog/controllers/blog:QiniuController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:QiniuController"],
+		beego.ControllerComments{
+			Method: "UpToken",
+			Router: `/qiniu/uptoken`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 	beego.GlobalControllerRouter["libertyblog/controllers/blog:UserController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:UserController"],
 		beego.ControllerComments{
 			Method: "Login",
