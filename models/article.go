@@ -94,11 +94,11 @@ func (this *Article) GetOneArticle() {
 
 func GetArticle(articleid int64, reset bool) Article {
 	key := fmt.Sprintf("%s%d", CACHE_KEY_TB_ARTICLE, articleid)
-	var article Article
 	if reset {
 		Cache.Delete(key)
 	}
 	if !Cache.IsExist(key) {
+		var article Article
 		o := orm.NewOrm()
 		err := o.Raw("select p.id,p.userid,u.username,p.title,p.digest,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.updated,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id=?", articleid).QueryRow(&article)
 		if nil != err {
@@ -110,11 +110,7 @@ func GetArticle(articleid int64, reset bool) Article {
 		}
 	}
 	v := Cache.Get(key)
-	if nil != v {
-		return v.(Article)
-	} else {
-		return article
-	}
+	return v.(Article)
 }
 
 func (post *Article) GetPreAndNext(postid int64) (pre, next *Article) {
