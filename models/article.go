@@ -94,22 +94,27 @@ func (this *Article) GetOneArticle() {
 
 func GetArticle(articleid int64, reset bool) Article {
 	key := fmt.Sprintf("%s%d", CACHE_KEY_TB_ARTICLE, articleid)
+	var article Article
 	if reset {
 		Cache.Delete(key)
 	}
 	if !Cache.IsExist(key) {
-		var article Article
 		o := orm.NewOrm()
 		err := o.Raw("select p.id,p.userid,u.username,p.title,p.digest,p.urlname,p.urltype,p.content,p.tags,p.posttime,p.updated,p.views,p.status,p.updated,p.istop,p.coverurl,p.pubtype,u.avatarurl from tb_user u,tb_post p where u.id=p.userid and p.id=?", articleid).QueryRow(&article)
 		if nil != err {
 			beego.Error(err.Error()) // 查不到数据的时候，也会报"<QuerySeter> no row found"的错误
+			return article
 		} else {
 			Cache.Put(key, article, CACHE_TIME_OUT*time.Second)
 			return article
 		}
 	}
 	v := Cache.Get(key)
-	return v.(Article)
+	if nil != v {
+		return v.(Article)
+	} else {
+		return article
+	}
 }
 
 func (post *Article) GetPreAndNext(postid int64) (pre, next *Article) {
