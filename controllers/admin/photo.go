@@ -77,7 +77,7 @@ func (this *PhotoController) Cover() {
 // @Failure 403 :userid is empty
 // @router /admin/photo/edit [post]
 func (this *PhotoController) Edit() {
-	ret := models.Ret{Code: 0, Message: "success"}
+	ret := models.Ret{Code: 0, Message: "修改照片描述成功"}
 	id, _ := this.GetInt64("photoid")
 	des := this.GetString("des")
 	photo := models.Photo{Id: id, Des: des}
@@ -207,4 +207,20 @@ end:
 	this.Data["json"] = out
 	//this.ServeJSONP() // 这个函数还要模板文件，好麻烦
 	this.ServeJSON()
+}
+
+// @Title qiniu callback
+// @Description upload photos by qiniu, after that, callback to ouer site.
+// @Param	key		query 	string	true		"key"
+// @Success 200 int 0
+// @Failure 403 :key is empty
+// @router /admin/photo/qiniucallback [post]
+func (this *PhotoController) QiniuCallback() {
+	/*this.GetString("key")
+	this.GetString("hash")
+	this.GetString("bucket")
+	this.GetString("fsize")
+	filepath := this.GetString("name")
+	this.Insert(albumid, desc, url)*/
+	this.Ctx.WriteString("0")
 }

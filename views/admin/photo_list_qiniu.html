@@ -1,117 +1,229 @@
+<style>
+	.wrap {
+		/* 长英文自动换行 */
+		word-break: break-all;
+		table-layout: fixed;
+		overflow: hidden;
+	}
+	
+	#container .queueList {
+		margin: 20px;
+		border: 3px dashed #e6e6e6;
+	}
+	
+	#container .placeholder {
+		min-height: 350px;
+		padding-top: 178px;
+		text-align: center;
+		background: url(../images/image.png) center 93px no-repeat;
+		color: #cccccc;
+		font-size: 18px;
+		position: relative;
+	}
+	
+	td .Wrapper {
+		margin-top: 20px;
+		text-align: center;
+		overflow: hidden;
+	}
+	
+	td .Wrapper .infoWrapper {
+		width: 50%;
+		height: 100px;
+		margin-left: 10px;
+		text-align: left;
+		line-height: 25px;
+	}
+	
+	td .Wrapper .infoWrapper a:first-child {
+		margin-right: 10px;
+	}
+	
+	td .Wrapper.default {
+		margin-top: 20px;
+		text-align: left;
+	}
+	
+	td .Wrapper.default img {
+		width: 100px;
+		height: 100px;
+	}
+	
+	td .imgWrapper {
+		position: relative;
+		width: 100px;
+		height: 100px;
+	}
+	
+	td .imgWrapper .linkWrapper {
+		position: absolute;
+		left: 15px;
+		top: 0;
+		width: 100px;
+		height: 100px;
+		cursor: pointer;
+	}
+	
+	td .imgWrapper .linkWrapper a {
+		line-height: 50px;
+	}
+	
+	table td .hash {
+		margin-bottom: 20px;
+	}
+	
+	pre {
+		margin-top: 20px;
+	}
+</style>
+<link href="https://cdn.bootcss.com/lightbox2/2.9.0/css/lightbox.min.css" rel="stylesheet">
+<link href="/css/photoAlbum.css" rel="stylesheet">
+
 <div id="page-wrapper">
-
-	<div class="container" style="padding-top: 60px;">
-
-		<div class="row" style="margin-top: 20px;">
-			<input type="hidden" id="domain" value="http://o9gqjr7iy.bkt.clouddn.com/">
-			<input type="hidden" id="uptoken_url" value="/qiniu/uptoken">
-			<div class="col-md-12">
-				<div id="container">
-					<a class="btn btn-default btn-lg " id="pickfiles" href="#">
-						<i class="glyphicon glyphicon-plus"></i>
-						<span>选择文件</span>
-					</a>
-				</div>
-			</div>
-			<div style="display:none" id="success" class="col-md-12">
-				<div class="alert-success">
-					队列全部文件处理完毕
-				</div>
-			</div>
-			<div class="col-md-12 ">
-				<table class="table table-striped table-hover text-left" style="margin-top:40px;display:none">
-					<thead>
-						<tr>
-							<th class="col-md-4">Filename</th>
-							<th class="col-md-2">Size</th>
-							<th class="col-md-6">Detail</th>
-						</tr>
-					</thead>
-					<tbody id="fsUploadProgress">
-					</tbody>
-				</table>
-			</div>
-		</div>
-
-		<div role="tabpanel" class="tab-pane fade" id="log" aria-labelledby="log-tab">
-			<pre id="qiniu-js-sdk-log"></pre>
-		</div>
-
-		<div class="body">
-			<!-- <div class="col-md-12" id="qiniu-js-sdk-log"></div> -->
-		</div>
-
-		<div class="modal fade body" id="myModal-img" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">图片效果查看</h4>
-					</div>
-					<div class="modal-body">
-						<div class="modal-body-wrapper text-center">
-							<a href="" target="_blank">
-								<img src="" alt="" data-key="" data-h="">
-							</a>
-						</div>
-						<div class="modal-body-footer">
-							<div class="watermark">
-								<span>水印控制：</span>
-								<a href="#" data-watermark="NorthWest" class="btn btn-default">
-									左上角
+	<div class="row">
+		<h1 class="page-header">相册图片</h1>
+		<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+		  上传图片
+		</button>
+	</div>
+	<div class="collapse" id="collapseExample">
+		<div class="container">
+			<div class="row">
+				<input type="hidden" id="domain" value="http://o9gqjr7iy.bkt.clouddn.com/">
+				<input type="hidden" id="uptoken_url" value="/qiniu/uptoken">
+				<div class="col-md-12">
+					<div id="container">
+						<div class="queueList">
+							<div id="dndArea" class="placeholder">
+								<a class="btn btn-default btn-lg " id="pickfiles" href="#">
+									<i class="glyphicon glyphicon-plus"></i>
+									<span>选择文件</span>
 								</a>
-								<a href="#" data-watermark="SouthWest" class="btn btn-default">
-									左下角
-								</a>
-								<a href="#" data-watermark="NorthEast" class="btn btn-default">
-									右上角
-								</a>
-								<a href="#" data-watermark="SouthEast" class="btn btn-default disabled">
-									右下角
-								</a>
-								<a href="#" data-watermark="false" class="btn btn-default">
-									无水印
-								</a>
-							</div>
-							<div class="imageView2">
-								<span>缩略控制：</span>
-								<a href="#" data-imageview="large" class="btn btn-default disabled">
-									大缩略图
-								</a>
-								<a href="#" data-imageview="middle" class="btn btn-default">
-									中缩略图
-								</a>
-								<a href="#" data-imageview="small" class="btn btn-default">
-									小缩略图
-								</a>
-							</div>
-							<div class="imageMogr2">
-								<span>高级控制：</span>
-								<a href="#" data-imagemogr="left" class="btn btn-default no-disable-click">
-									逆时针
-								</a>
-								<a href="#" data-imagemogr="right" class="btn btn-default no-disable-click">
-									顺时针
-								</a>
-								<a href="#" data-imagemogr="no-rotate" class="btn btn-default">
-									无旋转
-								</a>
-							</div>
-							<div class="text-warning">
-								备注：小图片水印效果不明显，建议使用大图片预览水印效果
+								<div id="filePicker" style="padding-top: 1em;"></div>
+								<p>或将照片拖到这里，自动上传，单次最多可选1张</p>
 							</div>
 						</div>
 					</div>
+				</div>
+				<div style="display:none" id="success" class="col-md-12">
+					<div class="alert-success">
+						队列全部文件处理完毕
+					</div>
+				</div>
+				<div class="col-md-12">
+					<table class="table table-striped table-hover text-left" style="margin-top:40px;display:none">
+						<thead>
+							<tr>
+								<th class="col-md-4">Filename</th>
+								<th class="col-md-2">Size</th>
+								<th class="col-md-6">Detail</th>
+							</tr>
+						</thead>
+						<tbody id="fsUploadProgress">
+						</tbody>
+					</table>
+				</div>
+			</div>
 
+			<div class="modal fade body" id="myModal-img" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">图片效果查看</h4>
+						</div>
+						<div class="modal-body">
+							<div class="modal-body-wrapper text-center">
+								<a href="" target="_blank">
+									<img src="" alt="" data-key="" data-h="">
+								</a>
+							</div>
+							<div class="modal-body-footer">
+								<div class="watermark">
+									<span>水印控制：</span>
+									<a href="#" data-watermark="NorthWest" class="btn btn-default">
+										左上角
+									</a>
+									<a href="#" data-watermark="SouthWest" class="btn btn-default">
+										左下角
+									</a>
+									<a href="#" data-watermark="NorthEast" class="btn btn-default">
+										右上角
+									</a>
+									<a href="#" data-watermark="SouthEast" class="btn btn-default disabled">
+										右下角
+									</a>
+									<a href="#" data-watermark="false" class="btn btn-default">
+										无水印
+									</a>
+								</div>
+								<div class="imageView2">
+									<span>缩略控制：</span>
+									<a href="#" data-imageview="large" class="btn btn-default disabled">
+										大缩略图
+									</a>
+									<a href="#" data-imageview="middle" class="btn btn-default">
+										中缩略图
+									</a>
+									<a href="#" data-imageview="small" class="btn btn-default">
+										小缩略图
+									</a>
+								</div>
+								<div class="imageMogr2">
+									<span>高级控制：</span>
+									<a href="#" data-imagemogr="left" class="btn btn-default no-disable-click">
+										逆时针
+									</a>
+									<a href="#" data-imagemogr="right" class="btn btn-default no-disable-click">
+										顺时针
+									</a>
+									<a href="#" data-imagemogr="no-rotate" class="btn btn-default">
+										无旋转
+									</a>
+								</div>
+								<div class="text-warning">
+									备注：小图片水印效果不明显，建议使用大图片预览水印效果
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
+    <hr />
+	<div class="row">
+		{{range $k, $v := .list}}
+		<div class="col-sm-5 col-md-3">
+			<div class="thumbnail">
+				<a href="{{$v.Url}}" data-lightbox="lightbox_" title="{{$v.Des}}">
+					<img src="{{$v.Small}}" alt="{{$v.Des}}">
+				</a>
+				<div class="caption">
+					<p class="wrap">
+						<input class="photo_des form-control" photoid="{{$v.Id}}" value="{{$v.Des}}" />
+					</p>
+					<p>
+						<a class="btn btn-primary" role="button" href="/admin/photo/cover?cover={{$v.Small}}&albumid={{$v.Albumid}}">设为封面</a>
+						<a class="btn btn-default" role="button" href="/admin/photo/delete?id={{$v.Id}}&albumid={{$v.Albumid}}" onclick="return del_confirm()">删除</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		{{end}}
+	</div>
+
+	<div class="row">
+		<div class="lucas-album" category="PUZZLE">
+			{{range $k, $v := .list}}
+			<img src="{{$v.Url}}" /> {{end}}
+		</div>
 	</div>
 </div>
-
+<script src="/js/photoAlbum.js"></script>
 <script src="/js/qiniu.js"></script>
-<script src="/js/liberalman-qiniu.js"></script>
-<script src="/js/liberalman-qiniu-ui.js"></script>
+<script src="/js/admin/photos.js"></script>
 <script src="https://cdn.bootcss.com/plupload/2.3.3/plupload.full.min.js"></script>
 <script src="https://cdn.bootcss.com/plupload/3.1.0/i18n/zh_CN.js"></script>
+<script src="https://cdn.bootcss.com/lightbox2/2.9.0/js/lightbox.min.js"></script>

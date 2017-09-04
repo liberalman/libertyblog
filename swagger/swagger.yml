@@ -70,6 +70,23 @@ paths:
           description: int 0
         "403":
           description: :userid is empty
+  /admin/photo/qiniucallback:
+    post:
+      tags:
+      - libertyblog/controllers/adminPhotoController
+      description: upload photos by qiniu, after that, callback to ouer site.
+      operationId: PhotoController.qiniu callback
+      parameters:
+      - in: query
+        name: key
+        description: key
+        required: true
+        type: string
+      responses:
+        "200":
+          description: int 0
+        "403":
+          description: :key is empty
   /admin/photo/upload:
     post:
       tags:
