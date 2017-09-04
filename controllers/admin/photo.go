@@ -216,11 +216,12 @@ end:
 // @Failure 403 :key is empty
 // @router /admin/photo/qiniucallback [post]
 func (this *PhotoController) QiniuCallback() {
-	/*this.GetString("key")
-	this.GetString("hash")
-	this.GetString("bucket")
-	this.GetString("fsize")
-	filepath := this.GetString("name")
-	this.Insert(albumid, desc, url)*/
+	key := this.GetString("key")
+	hash := this.GetString("hash")
+	bucket := this.GetString("bucket")
+	fsize := this.GetString("fsize")
+	name := this.GetString("name")
+	fmt.Errorf("socho %s %s %s %s\n", key, hash, bucket, fsize, name)
+	/*this.Insert(albumid, desc, url)*/
 	this.Ctx.WriteString("0")
 }
