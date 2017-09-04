@@ -10,18 +10,19 @@ import (
 type Photo struct {
 	Id       int64
 	Albumid  int64
-	Des      string    `orm:"size(100)"`
+	Des      string    `orm:"size(255)"`
 	Posttime time.Time `orm:"type(datetime);index"`
-	Url      string    `orm:"size(70)"`
-	Small    string    `orm:"-"`
+	Url      string    `orm:"size(255)"`
+	Source   int8
+	Small    string `orm:"-"`
 }
 
 type PhotoWholeSite struct {
 	Id        int64
 	Albumid   int64
-	Des       string    `orm:"size(100)"`
+	Des       string    `orm:"size(255)"`
 	Posttime  time.Time `orm:"type(datetime);index"`
-	Url       string    `orm:"size(70)"`
+	Url       string    `orm:"size(255)"`
 	Small     string    `orm:"-"`
 	Username  string
 	Albumname string

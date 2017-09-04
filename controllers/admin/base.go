@@ -15,7 +15,13 @@ const (
 	FILE_PATH      = "./static/upload/attachment/"
 )
 
-var pathArr []string = []string{"", BIG_PIC_PATH, SMALL_PIC_PATH, FILE_PATH}
+var (
+	pathArr   []string = []string{"", BIG_PIC_PATH, SMALL_PIC_PATH, FILE_PATH}
+	accessKey          = beego.AppConfig.String("qiniu_access_key")
+	secretKey          = beego.AppConfig.String("qiniu_secure_key")
+	bucket             = beego.AppConfig.String("qiniu_bucket")
+	domain             = beego.AppConfig.String("qiniu_domain")
+)
 
 type baseController struct {
 	beego.Controller

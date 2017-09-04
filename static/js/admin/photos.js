@@ -1,4 +1,32 @@
+function uuid(len, radix) {
+	var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+	var uuid = [],
+		i;
+	radix = radix || chars.length;
 
+	if(len) {
+		// Compact form
+		for(i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];
+	} else {
+		// rfc4122, version 4 form
+		var r;
+
+		// rfc4122 requires these characters
+		uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+		uuid[14] = '4';
+
+		// Fill in random data. At i==19 set the high bits of clock sequence as
+		// per rfc4122, sec. 4.1.5
+		for(i = 0; i < 36; i++) {
+			if(!uuid[i]) {
+				r = 0 | Math.random() * 16;
+				uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+			}
+		}
+	}
+
+	return uuid.join('');
+}
 
 /*global Qiniu */
 /*global plupload */
@@ -33,7 +61,7 @@ $(function() {
 		domain: $('#domain').val(),
 		get_new_uptoken: false,
 		//downtoken_url: '/downtoken',
-		unique_names: true,
+		// unique_names: true,
 		// save_key: true,
 		// x_vars: {
 		//     'id': '1234',
@@ -87,13 +115,16 @@ $(function() {
 				var progress = new FileProgress(err.file, 'fsUploadProgress');
 				progress.setError();
 				progress.setStatus(errTip);
-			}
-			// ,
-			// 'Key': function(up, file) {
-			//     var key = "";
-			//     // do something with key
-			//     return key
-			// }
+			},
+			'Key': function(up, file) {
+				// 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+				// 该配置必须要在unique_names: false，save_key: false时才生效
+				var str = String(file.type);
+				var num = /[^/]*$/; // 截取最后一个'/'之后的内容
+				var type = num.exec(str);
+				var key = "photo/" + file.id + "." + type;
+				return key
+			},
 		}
 	});
 	//uploader.init();
@@ -459,13 +490,21 @@ FileProgress.prototype.setComplete = function(up, info) {
 		str = "<div><strong>Link:</strong><a href=" + res.url +
 			" target='_blank' > " + res.url + "</a></div>" +
 			"<div class=hash><strong>Hash:</strong>" + res.hash + "</div>";
+		if(undefined != res.url) {
+			save_qiniu_response($('#albumid').val(), url, res.url);
+		}
+
 	} else {
-		var domain = up.getOption('domain');
+		var domain = up.getOption('domain'); // 发起一次'OPTION'请求，测试一下是否可以跨域上传
 		url = domain + encodeURI(res.key);
 		var link = domain + res.key;
 		str = "<div><strong>Link:</strong><a href=" + url + " target='_blank' > " +
 			link + "</a></div>" +
 			"<div class=hash><strong>Hash:</strong>" + res.hash + "</div>";
+
+		if(undefined != res.key) {
+			save_qiniu_response($('#albumid').val(), url, res.key);
+		}
 	}
 
 	tdProgress.html(str).removeClass().next().next('.status').hide();
@@ -708,3 +747,27 @@ $('.photo_des').change(function() {
 		}
 	});
 });
+
+// 将七牛上传成功后的结果写入我们的服务器
+function save_qiniu_response(albumid, fileurl, description) {
+	$.ajax({
+		url: "/admin/photo/qiniuphoto",
+		type: "POST",
+		cache: false,
+		async: true,
+		data: {
+			albumid: albumid,
+			url: fileurl,
+			description: description,
+			source: 1,
+		},
+		success: function(data) {
+			if(0 != data.code) { // 返回0代表成功，其他失败
+				toastr.error("code: " + data.code + " message: " + data.message);
+			} else {
+				toastr.success(data.message);
+			}
+		}
+	});
+	window.location.reload();
+}

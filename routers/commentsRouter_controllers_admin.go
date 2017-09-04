@@ -65,8 +65,8 @@ func init() {
 
 	beego.GlobalControllerRouter["libertyblog/controllers/admin:PhotoController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:PhotoController"],
 		beego.ControllerComments{
-			Method: "QiniuCallback",
-			Router: `/admin/photo/qiniucallback`,
+			Method: "QiniuPhoto",
+			Router: `/admin/photo/qiniuphoto`,
 			AllowHTTPMethods: []string{"post"},
 			MethodParams: param.Make(),
 			Params: nil})

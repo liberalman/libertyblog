@@ -70,23 +70,25 @@ paths:
           description: int 0
         "403":
           description: :userid is empty
-  /admin/photo/qiniucallback:
+  /admin/photo/qiniuphoto:
     post:
       tags:
       - libertyblog/controllers/adminPhotoController
-      description: upload photos by qiniu, after that, callback to ouer site.
-      operationId: PhotoController.qiniu callback
+      description: Insert photo info when upload by qiniu
+      operationId: PhotoController.qiniu photo
       parameters:
-      - in: query
-        name: key
-        description: key
+      - in: path
+        name: userid
+        description: userid
         required: true
-        type: string
+        type: integer
+        format: int64
       responses:
         "200":
-          description: int 0
+          schema:
+            $ref: '#/definitions/models.Photo'
         "403":
-          description: :key is empty
+          description: :userid is empty
   /admin/photo/upload:
     post:
       tags:
@@ -303,6 +305,28 @@ paths:
         "403":
           description: :userid is empty
 definitions:
+  models.Photo:
+    title: Photo
+    type: object
+    properties:
+      Albumid:
+        type: integer
+        format: int64
+      Des:
+        type: string
+      Id:
+        type: integer
+        format: int64
+      Posttime:
+        type: string
+        format: string
+      Small:
+        type: string
+      Source:
+        type: integer
+        format: int32
+      Url:
+        type: string
   models.User:
     title: User
     type: object

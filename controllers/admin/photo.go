@@ -4,8 +4,12 @@ import (
 	"fmt"
 	"libertyblog/models"
 	"os"
+	"regexp"
 	"strings"
 	"time"
+
+	"github.com/qiniu/api.v7/auth/qbox"
+	"github.com/qiniu/api.v7/storage"
 )
 
 type PhotoController struct {
@@ -45,18 +49,54 @@ func (this *PhotoController) Insert(albumid int64, desc, url string) {
 
 //删除照片
 func (this *PhotoController) Delete() {
+	var cleanup models.Cleanup
+
 	id, _ := this.GetInt64("id")
 	albumid := this.GetString("albumid")
 	photo := models.Photo{Id: id}
-	if photo.Read() == nil {
+	if photo.Read() == nil { // no error
+		cleanup.Source = photo.Source
+		cleanup.Url = photo.Url
+		if 1 == photo.Source { // qiniu
+			//reg := regexp.MustCompile(`[^/]*$`) // 匹配最后一个'/'之后的内容
+			reg := regexp.MustCompile(`photo\/([\S\.]*)`) // 匹配'photo'之后的内容
+			matchs := reg.FindStringSubmatch(photo.Url)
+			if len(matchs) > 0 {
+				key := reg.FindStringSubmatch(photo.Url)[0]
+				fmt.Printf("socho %s\n", key)
+				mac := qbox.NewMac(accessKey, secretKey)
+				cfg := storage.Config{
+					// 是否使用https域名进行资源管理
+					UseHTTPS: false,
+				}
+				// 指定空间所在的区域，如果不指定将自动探测
+				// 如果没有特殊需求，默认不需要指定
+				//cfg.Zone=&storage.ZoneHuabei
+				bucketManager := storage.NewBucketManager(mac, &cfg)
+				err := bucketManager.Delete(bucket, key)
+				if err != nil {
+					// 删除失败的情况下，将资源移入待清理表中
+					cleanup.Error = err.Error()
+					cleanup.Insert()
+				}
+			} else {
+				cleanup.Error = "url not match"
+				cleanup.Insert()
+			}
+
+		} else if 0 == photo.Source { // local
+			if err := os.Remove("." + photo.Url); nil != err {
+				cleanup.Error = err.Error()
+				cleanup.Insert()
+			}
+			photo.Small = strings.Replace(photo.Url, "bigpic", "smallpic", 1)
+			if err := os.Remove("." + photo.Small); nil != err {
+				cleanup.Error = err.Error()
+				cleanup.Url = photo.Small
+				cleanup.Insert()
+			}
+		}
 		photo.Delete()
-		if err := os.Remove("." + photo.Url); nil != err {
-			//
-		}
-		photo.Small = strings.Replace(photo.Url, "bigpic", "smallpic", 1)
-		if err := os.Remove("." + photo.Small); nil != err {
-			//
-		}
 	}
 	this.Redirect("/admin/photo/list?albumid="+albumid, 302)
 }
@@ -203,25 +243,38 @@ func (this *PhotoController) UploadPhotos() {
 	albumid, _ = this.GetInt64("albumid")
 	this.Insert(albumid, header.Filename, out["url"])
 end:
-	fmt.Println(out)
 	this.Data["json"] = out
 	//this.ServeJSONP() // 这个函数还要模板文件，好麻烦
 	this.ServeJSON()
 }
 
-// @Title qiniu callback
-// @Description upload photos by qiniu, after that, callback to ouer site.
-// @Param	key		query 	string	true		"key"
-// @Success 200 int 0
-// @Failure 403 :key is empty
-// @router /admin/photo/qiniucallback [post]
-func (this *PhotoController) QiniuCallback() {
-	key := this.GetString("key")
-	hash := this.GetString("hash")
-	bucket := this.GetString("bucket")
-	fsize := this.GetString("fsize")
-	name := this.GetString("name")
-	fmt.Errorf("socho %s %s %s %s\n", key, hash, bucket, fsize, name)
-	/*this.Insert(albumid, desc, url)*/
-	this.Ctx.WriteString("0")
+// @Title qiniu photo
+// @Description Insert photo info when upload by qiniu
+// @Param	userid		path 	int64	true		"userid"
+// @Success 200 {object} models.Photo
+// @Failure 403 :userid is empty
+// @router /admin/photo/qiniuphoto [post]
+func (this *PhotoController) QiniuPhoto() {
+	var ret models.Ret = models.Ret{Code: 0, Message: "success"}
+	var albumid int64
+	albumid, _ = this.GetInt64("albumid")
+	description := this.GetString("description")
+	url := this.GetString("url")
+	source, _ := this.GetInt8("source")
+	var photo models.Photo
+	photo.Albumid = albumid
+	photo.Des = description
+	photo.Posttime = time.Now()
+	photo.Url = url
+	photo.Source = source
+	if err := photo.Insert(); err != nil {
+		ret.Code = -1
+		ret.Message = err.Error()
+		goto end
+	}
+	ret.Code = 0
+	ret.Message = "上传图片到 " + url + " 成功"
+end:
+	this.Data["json"] = ret
+	this.ServeJSON()
 }
