@@ -210,7 +210,7 @@
 									toastr.error("code: " + data.code + " message: " + data.message);
 								} else {
 									toastr.success(data.message);
-									window.location = "/article/" + $(form).id; //跳转
+									window.location = "/article/{{.post.Id}}"; //跳转
 									$('#myModal', parent.document).click(); // 关闭父页面的编辑窗口
 								}
 							});
