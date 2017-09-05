@@ -66,7 +66,11 @@ func (this *baseController) Prepare() {
 	reg := regexp.MustCompile(`iPhone|Android`)
 	if reg.MatchString(this.Ctx.Request.Header.Get("User-Agent")) {
 		// 是手机访问
-		this.theme = "mobile"
+		//this.theme = "mobile"
+		this.theme = "default"
+		if v, ok := this.options["theme"]; ok && v != "" {
+			this.theme = v
+		}
 	} else {
 		this.theme = "default"
 		if v, ok := this.options["theme"]; ok && v != "" {
