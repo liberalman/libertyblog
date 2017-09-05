@@ -69,10 +69,10 @@ func (this *PhotoController) Delete() {
 					UseHTTPS: false,
 				}
 				// 指定空间所在的区域，如果不指定将自动探测
-				// 如果没有特殊需求，默认不需要指定,不指定发现报错query zone error
-				cfg.Zone = &storage.ZoneHuabei
+				// 如果没有特殊需求，默认不需要指定
+				//cfg.Zone = &storage.ZoneHuabei
 				bucketManager := storage.NewBucketManager(mac, &cfg)
-				err := bucketManager.Delete(bucket, key)
+				err := bucketManager.Delete(bucket, key) // 好奇怪，发现windows上执行ok，到linux就报failed to load system roots and no roots provided错误
 				if err != nil {
 					// 删除失败的情况下，将资源移入待清理表中
 					cleanup.Error = err.Error()

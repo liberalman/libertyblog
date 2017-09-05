@@ -11,6 +11,7 @@ RUN mkdir -p /data/conf/
 RUN mkdir -p /data/log/
 
 ENV PATH $PATH:/data/
+ENV CGO_ENABLED 1
 
 ENTRYPOINT ["./libertyblog"]
 
