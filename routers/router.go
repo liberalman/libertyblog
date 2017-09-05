@@ -4,6 +4,7 @@ import (
 	"libertyblog/controllers/admin"
 	"libertyblog/controllers/blog"
 	"libertyblog/controllers/test"
+	"libertyblog/controllers/tools"
 
 	"github.com/astaxie/beego"
 )
@@ -40,6 +41,9 @@ func init() {
 		beego.NSInclude(
 			&blog.QiniuController{},
 		),
+		beego.NSInclude(
+			&tools.MainController{},
+		),
 	)
 	beego.AddNamespace(ns)
 
@@ -53,6 +57,7 @@ func init() {
 	beego.Include(&admin.AlbumController{})
 	beego.Include(&test.MainController{})
 	beego.Include(&blog.QiniuController{})
+	beego.Include(&tools.MainController{})
 
 	//前台路由
 	beego.Router("/404.html", &blog.MainController{}, "*:Go404")
@@ -126,4 +131,7 @@ func init() {
 	beego.Router("/test", &test.MainController{}, "*:Index")
 	beego.Router("/box.html", &test.MainController{}, "*:Box")
 	beego.Router("/slicebox3d.html", &test.MainController{}, "*:Slicebox3d")
+
+	// tools
+	//beego.Router("/tools/compare", &tools.MainController{}, "*:Compare")
 }

@@ -1,0 +1,72 @@
+<link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet">
+
+<div class="row">
+	<div class="col-lg-6">
+		<textarea class="form-control" rows="45" id="code">
+<h1><a id="user-content-awakeapp" class="anchor" href="#awakeapp" aria-hidden="true"><span class="octicon octicon-link"></span></a>Awake.app</h1>
+
+<p><a href="http://type.so/object-c/awake-app.html">中文介绍</a></p>
+
+<p><a href="https://camo.githubusercontent.com/2bb97b776db20dbac366727cf21328d8f8a2c8bb/68747470733a2f2f7261772e6769746875622e636f6d2f7869616f7a692f4177616b652e6170702f6d61737465722f73637265656e73686f742e706e67" target="_blank"><img src="https://camo.githubusercontent.com/2bb97b776db20dbac366727cf21328d8f8a2c8bb/68747470733a2f2f7261772e6769746875622e636f6d2f7869616f7a692f4177616b652e6170702f6d61737465722f73637265656e73686f742e706e67" alt="screenshot" data-canonical-src="https://raw.github.com/xiaozi/Awake.app/master/screenshot.png" style="max-width:100%;"></a></p>
+
+<p>An app for mac osx to prevent sleeping; inspired by Caffeine.</p>
+
+<ol>
+<li>left click to toggle "should sleep status"</li>
+<li>right click for menu</li>
+</ol>
+
+<p>"run at login" will not take effect unless you put this app in the <code>/Applications</code> directory.</p>
+</textarea>
+	</div>
+	<div class="col-lg-6">
+		<span>
+			<pre><code class="html" id="code_highlight"></code></pre>
+		</span>
+		<span>
+			<pre><code class="markdown" id="preview"></code></pre>
+			<textarea id="preview_nohighlight" style="display:none;"></textarea>
+			<button class="btn" data-clipboard-target="#preview_nohighlight">复制Markdown内容</button>
+		</span>
+	</div>
+</div>
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/to-markdown/3.1.0/to-markdown.min.js"></script>
+<script src="https://cdn.bootcss.com/clipboard.js/1.7.1/clipboard.min.js"></script>
+
+<script>
+	var height = document.documentElement.clientHeight;
+
+	dochange();
+
+	$('#code').change(function() {
+		dochange();
+	});
+
+	function dochange() {
+		var code = $('#code').val();
+		var markdown_code = toMarkdown(code);
+		$('#preview').text(markdown_code);
+		$('#preview_nohighlight').val(markdown_code);
+		$('#code_highlight').text(code);
+		$('pre code').each(function(i, block) {
+			hljs.highlightBlock(block);
+		});
+	}
+
+	var clipboard = new Clipboard('.btn');
+	//可以自己加些处理
+	clipboard.on('success', function(e) {
+		//console.info('Action:', e.action);
+		//console.info('Text:', e.text);
+		//console.info('Trigger:', e.trigger);
+		toastr.success('复制成功');
+		e.clearSelection();
+	});
+	clipboard.on('error', function(e) {
+		//console.error('Action:', e.action);
+		//console.error('Trigger:', e.trigger);
+		toastr.error(e);
+	});
+</script>

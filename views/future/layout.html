@@ -31,6 +31,12 @@
 			.banner {
 				overflow: hidden;
 			}
+			
+			.sub-menu {
+				-moz-column-count: 3;
+				-webkit-column-count: 3;
+				column-count: 3;
+			}
 		</style>
 		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 		<link href="/future/style.min.css" rel="stylesheet">
@@ -66,6 +72,20 @@
 							{{end}}
 						</li>
 					</ul>
+				</nav>
+				<nav class="navbar">
+					<div class="collapse navbar-collapse">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="/tools/compare" target="_blank">Compare</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>
+								<a href="/tools/html2markdown" target="_blank">Html to Markdown</a>
+							</li>
+						</ul>
+					</div>
 				</nav>
 				<nav class="main">
 					<ul>
@@ -153,53 +173,7 @@
 		描述：原来的jquery.pin.min.js中的load函数没改造，我改造了之后，使得它适应jquery1.9之后的版本
 	    -->
 		<script src="/js/jquery.pin.liberalman.min.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function() {
-				// 将某元素“钉”在容器内
-				$(".pin_inner").pin({
-					containerSelector: ".pin_outer"
-				});
-
-				// 解析时间
-				var nodes = $('.timeago');
-				var timeagoInstance = timeago();
-				timeagoInstance.render(nodes, 'zh_CN');
-				timeago.cancel();
-
-				// fade in .back-to-top
-				$(window).scroll(function() {
-					if($(this).scrollTop() > 500) {
-						$('.back-to-top').fadeIn();
-					} else {
-						$('.back-to-top').fadeOut();
-					}
-				});
-				// scroll body to 0px on click
-				$('.back-to-top').click(function() {
-					$('html, body').animate({
-						scrollTop: 0,
-						easing: 'swing'
-					}, 750);
-					return false;
-				});
-
-				$('.mytooltip').tooltipster({
-					theme: 'tooltipster-shadow'
-				});
-
-				//启动轮播效果
-				$('.banner').unslider({
-					speed: 500, //  The speed to animate each slide (in milliseconds)
-					delay: 3000, //  The delay between slide animations (in milliseconds)
-					complete: function() {}, //  A function that gets called after every slide animation
-					keys: true, //  Enable keyboard (left, right) arrow shortcuts
-					dots: true, //  Display dot navigation
-					fluid: true, //  Support responsive design. May break non-responsive designs
-					autoplay: true,
-					arrows: false, // 是否显示上一页，下一页的箭头
-				});
-			});
-		</script>
+		<script src="/future/main.js"></script>
 		<!-- 百度分享按钮 -->
 		<script>
 			window._bd_share_config = {

@@ -285,6 +285,42 @@ paths:
           description: '{int} models.User.Id'
         "403":
           description: body is empty
+  /tools/compare:
+    get:
+      tags:
+      - libertyblog/controllers/toolsMainController
+      description: Search article or user
+      operationId: MainController.compare
+      parameters:
+      - in: query
+        name: key
+        description: article id or user id
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: '{int} models.User.Id'
+        "403":
+          description: body is empty
+  /tools/html2markdown:
+    get:
+      tags:
+      - libertyblog/controllers/toolsMainController
+      description: html to markdown
+      operationId: MainController.html to markdown
+      parameters:
+      - in: query
+        name: key
+        description: article id or user id
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: '{int} models.User.Id'
+        "403":
+          description: body is empty
   /user/{userid:int}:
     get:
       tags:

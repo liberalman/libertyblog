@@ -63,7 +63,6 @@ func (this *PhotoController) Delete() {
 			matchs := reg.FindStringSubmatch(photo.Url)
 			if len(matchs) > 0 {
 				key := reg.FindStringSubmatch(photo.Url)[0]
-				fmt.Printf("socho %s\n", key)
 				mac := qbox.NewMac(accessKey, secretKey)
 				cfg := storage.Config{
 					// 是否使用https域名进行资源管理
