@@ -69,8 +69,8 @@ func (this *PhotoController) Delete() {
 					UseHTTPS: false,
 				}
 				// 指定空间所在的区域，如果不指定将自动探测
-				// 如果没有特殊需求，默认不需要指定
-				//cfg.Zone=&storage.ZoneHuabei
+				// 如果没有特殊需求，默认不需要指定,不指定发现报错query zone error
+				cfg.Zone = &storage.ZoneHuabei
 				bucketManager := storage.NewBucketManager(mac, &cfg)
 				err := bucketManager.Delete(bucket, key)
 				if err != nil {
