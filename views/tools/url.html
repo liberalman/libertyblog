@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Just use IE -->
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charaset=gb2312">
+<!-- 这个文件要以gb2312 的字符编码保存，否则输出不正确。大家知道，encodeURI和encodeURIComponent会用utf-8编码。-->
+
+
+<script type="text/vbscript">
+<!--
+function str2asc(strstr)
+    str2asc   =   hex(asc(strstr))
+end function
+ 
+function   asc2str(ascasc)
+    asc2str   =   chr(ascasc)
+end function
+-->
+</script>
+ 
+ 
+<script type="text/javascript">
+<!--
+function urlEncodeASCII(str)
+{
+    var ret = "";
+    var strSpecial = "!\"#$%&’()*+,/:;<=>?[]^`{|}~%";
+    var tt = "";
+    for(var i = 0; i < str.length; i++)
+    {
+        var chr = str.charAt(i);
+        var c = str2asc(chr);
+        tt += chr + ":" + c + "n";
+        if (parseInt("0x" + c) > 0x7f)
+        {
+            ret += "%" + c.slice(0,2) + "%" + c.slice(-2);
+        }
+        else
+        {
+            if (chr == " ")
+                ret += "+";
+            else if (strSpecial.indexOf(chr) != -1)
+                ret += "%" + c.toString(16);
+            else
+                ret += chr;
+        }
+    }
+    
+    return ret;
+}
+
+function urlDecodeASCII(str)
+{
+    var ret = "";
+    for (var i = 0; i < str.length; i++)
+    {
+        var chr = str.charAt(i);
+        if (chr == "+")
+        {
+            ret += " ";
+        }
+        else if (chr == "%")
+        {
+            var asc = str.substring(i+1, i+3);
+            if (parseInt("0x"+asc) > 0x7f)
+            {
+                ret += asc2str(parseInt("0x" + asc+str.substring(i+4, i+6)));
+                i += 5;
+            }
+            else
+            {
+                ret += asc2str(parseInt("0x"+asc));
+                i += 2;
+            }
+        }
+        else
+        {
+            ret += chr;
+        }
+    }
+    
+    return ret;
+}
+
+function Decode(str)
+{
+if(document.getElementById("CharsetSelect_1").value == "gb2312")
+    return urlDecodeASCII(str);
+else
+    return decodeURI(str);
+}
+
+function Encode(str)
+{
+if(document.getElementById("CharsetSelect_2").value == "gb2312")
+    return urlEncodeASCII(str);
+else
+    return encodeURI(str);
+}
+
+
+function local2utc(obj)
+{
+document.getElementById("out_timestamp").innerText=Date.parse(obj.value)/1000;
+}
+
+function utc2local(obj)
+{
+var d=new Date();
+d.setTime(obj.value*1000);
+document.getElementById("out_time").innerText=
+checkTime(d.getMonth()+1)+"-"
++checkTime(d.getDate())+"-"
++d.getFullYear()+" "
++checkTime(d.getHours())+":"
++checkTime(d.getMinutes())+":"
++checkTime(d.getSeconds());
+}
+
+function checkTime(i) 
+{ 
+if (i<10) 
+{ 
+  i="0" + i 
+} 
+  return i 
+}
+
+function replace(arg)
+{
+    var s=arg.value;
+    var r=s.replace(/\|\|/g,'&');
+    var r1=r.replace(/\|/g,'=');
+    return r1;
+}
+
+
+function showTime()
+{
+var d = new Date();
+document.getElementById("out_timenow1").innerText= d.getTime();
+document.getElementById("out_timenow2").innerText=
+checkTime(d.getMonth()+1)+"-"
++checkTime(d.getDate())+"-"
++d.getFullYear()+" "
++checkTime(d.getHours())+":"
++checkTime(d.getMinutes())+":"
++checkTime(d.getSeconds());
+}
+
+//base64
+ var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";
+
+ function encodeBase64(input) {
+     input = escape(input);
+     var output = "";
+     var chr1, chr2, chr3 = "";
+     var enc1, enc2, enc3, enc4 = "";
+     var i = 0;
+
+     do {
+         chr1 = input.charCodeAt(i++);
+         chr2 = input.charCodeAt(i++);
+         chr3 = input.charCodeAt(i++);
+
+         enc1 = chr1 >> 2;
+         enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+         enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+         enc4 = chr3 & 63;
+
+         if (isNaN(chr2)) {
+             enc3 = enc4 = 64;
+         } else if (isNaN(chr3)) {
+             enc4 = 64;
+         }
+
+         output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);
+         chr1 = chr2 = chr3 = "";
+         enc1 = enc2 = enc3 = enc4 = "";
+     } while ( i < input . length );
+
+     return output;
+ }
+
+function decodeBase64(input) {
+    var output = "";
+    var chr1, chr2, chr3 = "";
+    var enc1, enc2, enc3, enc4 = "";
+    var i = 0;
+
+    //    remove    all    characters    that    are    not    A-Z,    a-z,    0-9,    +,    /,    or    =     
+    var base64test = /[^A-Za-z0-9\+\/\=]/g;
+    if (base64test.exec(input)) {
+        return "There    were    invalid    base64    characters    in    the    input    text.\n" + "Valid    base64    characters    are    A-Z,    a-z,    0-9,    '+',    '/',    and    '='\n" + "Expect    errors    in    decoding." ;
+    }
+    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+    do {
+        enc1 = keyStr.indexOf(input.charAt(i++));
+        enc2 = keyStr.indexOf(input.charAt(i++));
+        enc3 = keyStr.indexOf(input.charAt(i++));
+        enc4 = keyStr.indexOf(input.charAt(i++));
+
+        chr1 = (enc1 << 2) | (enc2 >> 4);
+        chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+        chr3 = ((enc3 & 3) << 6) | enc4;
+
+        output = output + String.fromCharCode(chr1);
+
+        if (enc3 != 64) {
+            output = output + String.fromCharCode(chr2);
+        }
+        if (enc4 != 64) {
+            output = output + String.fromCharCode(chr3);
+        }
+
+        chr1 = chr2 = chr3 = "";
+        enc1 = enc2 = enc3 = enc4 = "";
+
+    } while ( i < input . length );
+
+    return unescape(output);
+}
+
+//window.setInterval("showTime()",1000); //每隔一秒钟刷新
+-->
+</script>
+
+<style type="text/css">
+.output{
+font-size:13px;
+color:#22AC38;
+font-weight:bold;
+padding:5px 5px 5px 5px;
+margin-bottom:5px;
+height:30px;
+}
+/*鼠标到上面时效果*/
+.ContentHover
+{
+text-align:left;
+border:1px solid #FFB6DA;
+border-left:8px solid #FFB6DA;
+//background:#FFFFFF;
+padding:10px;
+}
+/*鼠标按下时*/
+.ContentDown
+{
+text-align:left;
+border:1px solid #FFB6DA;
+border-left:8px solid #FFB6DA;
+//background:#C6005C;
+padding:10px;
+}
+/*普通样式*/
+.Content
+{
+text-align:left;
+border:1px solid #009900;
+border-left:8px solid #009900;
+//background:#FFFFFF;
+padding:10px;
+}
+</style>
+
+</head>
+<body onload="showTime();">
+<center>
+    <div onmouseover="this.className='ContentHover'" onmouseout="this.className='Content'" onmousedown="this.className='ContentDown'" onmouseup="this.className='ContentHover'" class="Content">
+        <font color=green size=+2>URL解码:</font>
+        <TEXTAREA ID='String1' ROWS='3' COLS='150' onkeyup="javascript:String2.value=Decode(String1.value);" onmouseup="String2.value=Decode(String1.value);" onchange="String2.value=Decode(String1.value);"></TEXTAREA>
+		<br>
+        <font color=green size=+2>&nbsp;&nbsp;&nbsp;输出:</font>
+        <TEXTAREA ID='String2' ROWS='3' COLS='150' ></TEXTAREA>
+		<br>
+		<select id="CharsetSelect_1" name="charsetSelect" onchange="String2.value=Decode(String1.value);">
+            <option value="utf-8">
+                utf-8
+            </option>
+            <option value="gb2312">
+                gb2312
+            </option>
+        </select>
+	</div>
+	<br>
+    <div onmouseover="this.className='ContentHover'" onmouseout="this.className='Content'" onmousedown="this.className='ContentDown'" onmouseup="this.className='ContentHover'" class="Content">
+        <font color=green size=+2>URL编码:</font>
+        <TEXTAREA ID='String3' ROWS='3' COLS='150' onkeyup="String4.value=Encode(String3.value);" onmouseup="String4.value=Encode(String3.value);" onchange="String4.value=Encode(String3.value);"></TEXTAREA>
+		<br>
+        <font color=green size=+2>&nbsp;&nbsp;&nbsp;输出:</font>
+        <TEXTAREA ID='String4' ROWS='3' COLS='150'></TEXTAREA>
+		<br>
+		<select id="CharsetSelect_2" name="charsetSelect" onchange="String4.value=Encode(String3.value);" >
+            <option value="utf-8">
+                utf-8
+            </option>
+            <option value="gb2312">
+                gb2312
+            </option>
+        </select>
+    </div>
+	<br>
+    <div onmouseover="this.className='ContentHover'" onmouseout="this.className='Content'" onmousedown="this.className='ContentDown'" onmouseup="this.className='ContentHover'" class="Content">
+        <font color=green size=+2>
+            格式转换:
+        </font>
+        <TEXTAREA ID='String5' ROWS='3' COLS='150' onkeyup="javascript:String6.value=replace(String5);"></TEXTAREA>
+        <br>
+		<font color=green size=+2>
+        &nbsp;&nbsp;&nbsp;&nbsp;输出:
+		</font>
+        <TEXTAREA ID='String6' ROWS='3' COLS='150'></TEXTAREA>
+        
+        <br>
+    </div>
+    <br>
+    
+	<br>
+</center>
+    <div style="border:1px dashed #009900; width:350px; padding:10px; display:inline; float:left; margin:5px;" >
+        <p>
+        <input type="text" name="obj" value="12-23-2011 12:23:56" maxlength="19" size="19" onkeyup="local2utc(obj);" />
+		<label id="out_timestamp" class="output">1324614236</label>
+        <br>
+        <br>
+        <input type="text" name="utc" value="1324614236" maxlength="10" size="10" onkeyup="utc2local(utc);" />
+		<label id="out_time" class="output" >12-23-2011 12:23:56</label>
+        <br>
+        <p>
+        <input type="button" onclick="showTime()" value="Time Now" style="background:#CDE4F2; height:30px; cursor:pointer; margin-bottom:5px; width:90px;"/>
+		<label id="out_timenow1" class="output" size="15" maxlength="15"></label>
+		<label id="out_timenow2" class="output" size="25" maxlength="25"></label>
+        <br>
+        <br>
+    </div>
+    
+    <div style="border:1px dashed #009900; width:350px; padding:10px; display:inline; float:left; margin:5px;" onmouseover="this.className='ContentHover'" onmouseout="this.className='Content'" onmousedown="this.className='ContentDown'" onmouseup="this.className='ContentHover'" class="Content">
+        <font color=green size=+2>Base64解码:</font>
+        <TEXTAREA ID='String7' ROWS='3' COLS='50' onkeyup="javascript:String8.value=decodeBase64(String7.value);" onmouseup="String8.value=decodeBase64(String7.value);" onchange="String8.value=decodeBase64(String7.value);"></TEXTAREA>
+		<br>
+        <font color=green size=+2>输出:</font>
+        <TEXTAREA ID='String8' ROWS='3' COLS='50' ></TEXTAREA>
+		<br>
+	</div>
+
+    <div style="border:1px dashed #009900; width:350px; padding:10px; display:inline; float:left; margin:5px;" onmouseover="this.className='ContentHover'" onmouseout="this.className='Content'" onmousedown="this.className='ContentDown'" onmouseup="this.className='ContentHover'" class="Content">
+        <font color=green size=+2>Base64编码:</font>
+        <TEXTAREA ID='String9' ROWS='3' COLS='50' onkeyup="String10.value=encodeBase64(String9.value);" onmouseup="String10.value=encodeBase64(String9.value);" onchange="String10.value=encodeBase64(String9.value);"></TEXTAREA>
+		<br>
+        <font color=green size=+2>输出:</font>
+        <TEXTAREA ID='String10' ROWS='3' COLS='50'></TEXTAREA>
+		<br>
+    </div>
+
+</body>
+</html>

@@ -488,6 +488,27 @@
                 }
             }
         },
+        "/tools/jsformat": {
+            "get": {
+                "tags": [
+                    "libertyblog/controllers/toolsMainController"
+                ]
+            }
+        },
+        "/tools/time": {
+            "get": {
+                "tags": [
+                    "libertyblog/controllers/toolsMainController"
+                ]
+            }
+        },
+        "/tools/url": {
+            "get": {
+                "tags": [
+                    "libertyblog/controllers/toolsMainController"
+                ]
+            }
+        },
         "/user/{userid:int}": {
             "get": {
                 "tags": [

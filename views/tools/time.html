@@ -1,0 +1,271 @@
+<div style="margin: 2em 10em 0em 10em;">
+	<div class="row">
+		<div class="col-lg-3">
+			<div class="input-group">
+				<span class="input-group-btn">
+			        <button class="btn btn-default" type="button" id="btn_time2timestamp">Go!</button>
+			      </span>
+				<input type="text" id="ipt_time2timestamp" class="form-control" placeholder="Search for...">
+			</div>
+			<!-- /input-group -->
+		</div>
+		<div class="col-lg-3">
+			<div class="input-group">
+				<span class="input-group-addon" id="sizing-addon1">Timestamp</span>
+				<input type="text" id="output1" class="form-control" placeholder="Timestamp" aria-describedby="sizing-addon1">
+			</div>
+		</div>
+		<div class="col-lg-3">
+			<div class="input-group">
+				<input type="text" id="ipt_timestamp2time" class="form-control" placeholder="Timestamp" value="1504609150000">
+				<span class="input-group-btn">
+			        <button class="btn btn-primary" type="button" id="btn_timestamp2time">Go!</button>
+			      </span>
+			</div>
+		</div>
+		<div class="col-lg-3">
+			<div class="input-group">
+				<span class="input-group-addon" id="sizing-addon1">Time</span>
+				<input type="text" id="output2" class="form-control" placeholder="Time" aria-describedby="sizing-addon1">
+			</div>
+		</div>
+	</div>
+	<hr />
+	<div class="row">
+		<div class="col-lg-3">
+			<div class="input-group">
+				<input type="text" id="now" class="form-control" placeholder="Search for...">
+				<span class="input-group-btn">
+				 <button class="btn btn-danger" type="button" id="btn_now">Now!</button>
+			</span>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div style="margin: 2em 10em 0em 10em;">
+	<div class="jumbotron" style="padding: 2em;">
+		<h4>作者： BUILDER.COM</h4>
+		<p>毫无疑问，用JavaScript脚本可以通过直接查看用户的时钟，方便地在网页上显示本地时间。但是，如果你想显示不同地区的时间—--例如，如果你的本部在别的国家，你想查看“本国”时间而非当地时间，又该怎么办呢？ 要做到这一点，必须进行各种时间计算才能将当地时间转换为目的时间。本文将解释如何进行这些计算。
+			<br/>第一步： 事情的第一步是获得当地时间。在JavaScript中，这无疑可以通过初始化一个Data()对象来轻松完成。
+			<br/>// create Date object for current location d = new Date();
+			<br/>通过调用Data()对象的getTime()方法，即可显示1970年1月1日后到此当时时间之间的毫秒数。
+			<br/>// convert to msec since Jan 1 1970 localTime = d.getTime();
+		</p>
+		<p>第二步： 下一步，通过Data()对象的getTimezoneOffset()方法来找出当地时间偏移值。在缺省情况下，此方法以分钟显示时区偏移值结果，因此在早先的计算中要将此值转换成毫秒。 // obtain local UTC offset and convert to msec localOffset = d.getTimezoneOffset() * 60000; 注意，getTimezoneOffset()方法的负返回值表示当地时间在全球标准时间（UTC）之前，而正返回值则表示当地时间在全球标准时间（UTC）之后。 注意：万一你想知道我是如何得到60000这个倍增因数的，记住1000毫秒等于一秒，而一分钟等于60秒。因此 ，将分钟转换成毫秒，要用60乘以1000等于60000。
+		</p>
+		<p>第三步 将本地时间与本地时区偏移值相加得到当前国际标准时间（UTC）。 // obtain UTC time in msec utc = localTime + localOffset; 这里，变量utc包含当前国际标准时间（UTC）。但是，此时间以1970年1月1日到现在所含有的毫秒数来表示。暂时让它这样表示，因为还要进行一些计算。
+		</p>
+		<p>第四步 得到国际标准时间（UTC）后，再获得目标城市的国际标准时间（UTC）小时偏移值，把它转换成毫秒，再加上国际标准时间（UTC）。 // obtain and add destination's UTC time offset // for example, Bombay // which is UTC + 5.5 hours offset = 5.5; bombay = utc + (3600000*offset); 注意：万一你想知道我是如何得到3600000这个倍增因数的，记住1000毫秒等于一秒，而一小时等于3600秒。因此 ，将小时转换成毫秒，要用3600乘以1000等于3600000。 此时，变量bombay包含印度孟买城的当地时间。此当地时间以1970年1月1日到现在所含有的毫秒数来表示。显然，这不是很合理，因此我们还要进行一些计算。
+		</p>
+		<p/>第五步 通过初始化一个新的Data()对象，并调用此对象的toLocalString()方法，我们将前一步中计算得到的时间值转换成一个大家可以看得懂的日期/时间字符串。 // convert msec value to date string nd = new Date(bombay); document.writeln("Bombay time is " + nd.toLocaleString() + "<br>"); 这样转换就完成了！ 总结 理解上面的步骤后，我们再看一看这段脚本（列表A），它建立一个紧凑，自定义的函数calcTime()来执行所有的计算并返回一个时间值。 列表A
+		</p>
+		<p>
+			<textarea rows="20" cols="100%">
+<html>
+<head>
+<script language="JavaScript">
+// function to calculate local time
+// in a different city
+// given the city's UTC offset
+function calcTime(city, offset) {
+// create Date object for current location
+d = new Date();
+ 
+// convert to msec
+// add local time zone offset
+// get UTC time in msec
+utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+ 
+// create new Date object for different city
+// using supplied offset
+nd = new Date(utc + (3600000*offset));
+ 
+// return time as a string
+return "The local time in " + city + " is " + nd.toLocaleString();
+}
+// get Bombay time
+alert(calcTime('Bombay', '+5.5'));
+// get Singapore time
+alert(calcTime('Singapore', '+8'));
+// get London time
+alert(calcTime('London', '+1'));
+</script>
+</head>
+<body>
+</body>
+</html>
+</textarea> 这里，函数calcTime()接受一个城市名及它的国际标准时间（UTC）偏移值（按小时计）。然后内部执行所有上面描述的计算，并返回一个包含此城市当地时间的字符串。
+			<p>以下是列表A输出内容的一些样本。
+				<br/>
+				<br/>孟买当地时间为2005年8月1日，星期一下午4时43分51秒
+				<br/>新加坡当地时间为2005年8月1日，星期一下午7时13分51秒
+				<br/>伦敦当地时间为2005年8月1日，星期一下午12时13分51秒
+			</p>
+		</p>
+	</div>
+</div>
+
+<script language="JavaScript">
+	// function to calculate local time
+	// in a different city
+	// given the city's UTC offset
+	function calcTime(city, offset) {
+		// create Date object for current location
+		d = new Date();
+
+		// convert to msec
+		// add local time zone offset
+		// get UTC time in msec
+		utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+		//alert(utc);
+		// create new Date object for different city
+		// using supplied offset
+		nd = new Date(utc + (3600000 * offset));
+
+		// return time as a string
+		return "The local time in " + city + " is " + nd.toLocaleString();
+	}
+
+	function time2timestamp(time) {
+		var timestamp = 0;
+		timestamp = Date.parse(time);
+		return timestamp;
+	}
+
+	function timestamp2time(timestamp) {
+		var date = new Date();
+		date.setTime(timestamp);
+		var seperator1 = "-";
+		var seperator2 = ":";
+		var month = date.getMonth() + 1;
+		var strDate = date.getDate();
+		if(month >= 1 && month <= 9) {
+			month = "0" + month;
+		}
+		if(strDate >= 0 && strDate <= 9) {
+			strDate = "0" + strDate;
+		}
+		var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
+			" " + date.getHours() + seperator2 + date.getMinutes() +
+			seperator2 + date.getSeconds() + seperator2 + date.getMilliseconds();
+		return currentdate;
+	}
+
+	var date = new Date();
+	var now = timestamp2time(date.getTime());
+	$('#now').val(now);
+	$('#ipt_time2timestamp').val(now);
+	$('#ipt_timestamp2time').val(date.getTime());
+
+	$('#btn_now').click(function() {
+		var date = new Date();
+		var now = timestamp2time(date.getTime());
+		$('#now').val(now);
+	});
+
+	$('#btn_time2timestamp').click(function() {
+		var time = $('#ipt_time2timestamp').val();
+		$('#output1').val(time2timestamp(time));
+	});
+
+	$('#btn_timestamp2time').click(function() {
+		var timestamp = $('#ipt_timestamp2time').val();
+		$('#output2').val(timestamp2time(timestamp));
+	});
+</script>
+<!--
+<script type="text/javascript">
+var d=new Date()
+d.setYear(2011)//年
+d.setMonth(12) //月
+d.setDate(21) //天
+d.setHours(12)//
+d.setMinutes(23) //
+d.setSeconds(56)
+document.write(d+"\n</br>");
+utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+document.write(utc)
+//document.write("</br>"+Date.parse("12-21-2011 12:23:56")); //月/日/年的格式
+ </script>
+-->
+
+<!--
+作者： BUILDER.COM
+毫无疑问，用JavaScript脚本可以通过直接查看用户的时钟，方便地在网页上显示本地时间。但是，如果你想显示不同地区的时间—--例如，如果你的本部在别的国家，你想查看“本国”时间而非当地时间，又该怎么办呢？
+要做到这一点，必须进行各种时间计算才能将当地时间转换为目的时间。本文将解释如何进行这些计算。
+第一步：
+事情的第一步是获得当地时间。在JavaScript中，这无疑可以通过初始化一个Data()对象来轻松完成。
+// create Date object for current location
+d = new Date();
+通过调用Data()对象的getTime()方法，即可显示1970年1月1日后到此当时时间之间的毫秒数。
+// convert to msec since Jan 1 1970
+localTime = d.getTime();
+第二步：
+下一步，通过Data()对象的getTimezoneOffset()方法来找出当地时间偏移值。在缺省情况下，此方法以分钟显示时区偏移值结果，因此在早先的计算中要将此值转换成毫秒。
+// obtain local UTC offset and convert to msec
+localOffset = d.getTimezoneOffset() * 60000;
+注意，getTimezoneOffset()方法的负返回值表示当地时间在全球标准时间（UTC）之前，而正返回值则表示当地时间在全球标准时间（UTC）之后。
+注意：万一你想知道我是如何得到60000这个倍增因数的，记住1000毫秒等于一秒，而一分钟等于60秒。因此 ，将分钟转换成毫秒，要用60乘以1000等于60000。
+第三步
+将本地时间与本地时区偏移值相加得到当前国际标准时间（UTC）。
+// obtain UTC time in msec
+utc = localTime + localOffset;
+这里，变量utc包含当前国际标准时间（UTC）。但是，此时间以1970年1月1日到现在所含有的毫秒数来表示。暂时让它这样表示，因为还要进行一些计算。
+第四步
+得到国际标准时间（UTC）后，再获得目标城市的国际标准时间（UTC）小时偏移值，把它转换成毫秒，再加上国际标准时间（UTC）。
+// obtain and add destination's UTC time offset
+// for example, Bombay
+// which is UTC + 5.5 hours
+offset = 5.5;
+bombay = utc + (3600000*offset);
+注意：万一你想知道我是如何得到3600000这个倍增因数的，记住1000毫秒等于一秒，而一小时等于3600秒。因此 ，将小时转换成毫秒，要用3600乘以1000等于3600000。
+此时，变量bombay包含印度孟买城的当地时间。此当地时间以1970年1月1日到现在所含有的毫秒数来表示。显然，这不是很合理，因此我们还要进行一些计算。
+第五步
+通过初始化一个新的Data()对象，并调用此对象的toLocalString()方法，我们将前一步中计算得到的时间值转换成一个大家可以看得懂的日期/时间字符串。
+// convert msec value to date string
+nd = new Date(bombay);
+document.writeln("Bombay time is " + nd.toLocaleString() + "<br>");
+这样转换就完成了！
+总结
+理解上面的步骤后，我们再看一看这段脚本（列表A），它建立一个紧凑，自定义的函数calcTime()来执行所有的计算并返回一个时间值。
+列表A
+<html>
+<head>
+<script language="JavaScript">
+// function to calculate local time
+// in a different city
+// given the city's UTC offset
+function calcTime(city, offset) {
+// create Date object for current location
+d = new Date();
+ 
+// convert to msec
+// add local time zone offset
+// get UTC time in msec
+utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+ 
+// create new Date object for different city
+// using supplied offset
+nd = new Date(utc + (3600000*offset));
+ 
+// return time as a string
+return "The local time in " + city + " is " + nd.toLocaleString();
+}
+// get Bombay time
+alert(calcTime('Bombay', '+5.5'));
+// get Singapore time
+alert(calcTime('Singapore', '+8'));
+// get London time
+alert(calcTime('London', '+1'));
+</script>
+</head>
+<body>
+</body>
+</html>
+这里，函数calcTime()接受一个城市名及它的国际标准时间（UTC）偏移值（按小时计）。然后内部执行所有上面描述的计算，并返回一个包含此城市当地时间的字符串。
+以下是列表A输出内容的一些样本。
+孟买当地时间为2005年8月1日，星期一下午4时43分51秒
+新加坡当地时间为2005年8月1日，星期一下午7时13分51秒
+伦敦当地时间为2005年8月1日，星期一下午12时13分51秒
+-->

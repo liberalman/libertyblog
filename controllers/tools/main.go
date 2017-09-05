@@ -31,3 +31,18 @@ func (this *MainController) Compare() {
 func (this *MainController) Html2Markdwon() {
 	this.TplName = "tools/html2markdown.html"
 }
+
+// @router /tools/jsformat [get]
+func (this *MainController) JsFormat() {
+	this.TplName = "tools/jsformat.html"
+}
+
+// @router /tools/url [get]
+func (this *MainController) Url() {
+	this.TplName = "tools/url.html"
+}
+
+// @router /tools/time [get]
+func (this *MainController) Time() {
+	this.TplName = "tools/time.html"
+}

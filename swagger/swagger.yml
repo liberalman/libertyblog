@@ -321,6 +321,18 @@ paths:
           description: '{int} models.User.Id'
         "403":
           description: body is empty
+  /tools/jsformat:
+    get:
+      tags:
+      - libertyblog/controllers/toolsMainController
+  /tools/time:
+    get:
+      tags:
+      - libertyblog/controllers/toolsMainController
+  /tools/url:
+    get:
+      tags:
+      - libertyblog/controllers/toolsMainController
   /user/{userid:int}:
     get:
       tags:
