@@ -85,6 +85,7 @@ sphinx:
   volumes:
     - "/var/coreseek/:/usr/local/coreseek/var/"
     - "/var/coreseek/log/:/usr/local/coreseek/var/log/"
+    - "/var/coreseek/data/:/usr/local/coreseek/var/data/"
 
 sphinx-index:
   image: liberalman/coreseek
@@ -95,4 +96,5 @@ sphinx-index:
   volumes:
     - "/var/coreseek/:/usr/local/coreseek/var/"
     - "/var/coreseek/log/:/usr/local/coreseek/var/log/"
+    - "/var/coreseek/data/:/usr/local/coreseek/var/data/"
 

@@ -1,5 +1,9 @@
 #!/bin/sh
 
+mkdir /var/coreseek/
+mkdir /var/coreseek/log
+mkdir /var/coreseek/data
+
 git pull
 
 docker-compose down
