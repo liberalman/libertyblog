@@ -86,12 +86,3 @@ sphinx:
     - "/var/coreseek/:/usr/local/coreseek/var/"
     - "/var/coreseek/log/:/usr/local/coreseek/var/log/"
 
-sphinx-do-index:
-  image: liberalman/coreseek
-  environment:
-    SPHINX_MODE: indexing
-  links:
-    - db:mysql
-  volumes:
-    - "/var/coreseek/:/usr/local/coreseek/var/"
-    - "/var/coreseek/log/:/usr/local/coreseek/var/log/"
