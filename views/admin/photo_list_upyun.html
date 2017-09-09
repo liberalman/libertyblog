@@ -97,6 +97,20 @@
 <script>
 	$(document).ready(function() {
 
+		/*var signature = "";
+		var passwd_md5 = CryptoJS.MD5("password123").toString(CryptoJS.enc.Hex);
+		console.info(passwd_md5);
+		var method = "PUT";
+		var uri = "/upyun-temp/demo.jpg";
+		var date = "Wed, 09 Nov 2016 14:26:58 GMT";
+		var content_md5 = "7ac66c0f148de9519b8bd264312c4d64";
+		var tmp = method + "&" + uri + "&" + date + "&" + content_md5;
+		console.info(tmp);
+	    var hmacSHA1 = CryptoJS.HmacSHA1(passwd_md5, method + "&" + uri + "&" + date + "&" + content_md5).toString(CryptoJS.enc.Base64);
+	    console.log('base64Encrypt = ', hmacSHA1);
+	    var base = CryptoJS.HmacSHA1("482c811da5d5b4bc6d497ffa98491e38", "PUT&/upyun-temp/demo.jpg&Wed, 09 Nov 2016 14:26:58 GMT&7ac66c0f148de9519b8bd264312c4d64").toString(CryptoJS.enc.Base64);
+	    console.log('base = ', base);*/
+
 		$('.photo_des').change(function() {
 			$.ajax({
 				url: "/admin/photo/edit",
@@ -511,30 +525,60 @@
 				setState('ready');
 				updateTotalProgress();
 
+				
+				var upyun_operator = "socho";
+				var bucket = "offical";
+				//var passwd_md5 = CryptoJS.MD5("***").toString(CryptoJS.enc.Hex);
+				var passwd_md5 = "d17676c23067a329f2c5e44c3e8d38f0";
+				var method = "PUT";
+				var uri = "/" + bucket + "/demo.jpg";
+				var now = new Date();
+				var date = now.toUTCString(); //"Wed, 09 Nov 2016 14:26:58 GMT"
+				var content_md5 = "5c088354008451ea435b5ce764645e82";
+				
+				var expiration = parseInt(now.getTime() / 1000) + 300; // 加300s超时.自定义签名有效期，建议为 30 分钟。如果签名超过有效期，需要重新生成签名。
+				var obj = {"bucket": bucket , "save-key": uri, "expiration": expiration, "date": date, "content-md5": content_md5};
+				console.info(JSON.stringify(obj));
+				
+				var policy = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(obj)));
+				console.log('policy = ', policy);
+				
+				
+				var tmp = method + "&" + uri + "&" + date + "&" + policy + "&" + content_md5;
+				//var tmp = method + "&" + uri + "&" + date + "&" + policy;
+				var signature = CryptoJS.HmacSHA1(passwd_md5, tmp).toString(CryptoJS.enc.Base64);
+				var authorization = "UPYUN " + upyun_operator + ":" + signature;
+				console.log('authorization = ', authorization);
+
+				uploader.options.formData = ({
+					policy: policy,
+					authorization: authorization,
+				});
+
+				/*var now = new Date();
 				$.ajax({
 					url: "/upyun/upload_photo_signature",
 					type: "get",
 					cache: false,
 					async: true,
 					data: {
-						content_md5: "7ac66c0f148de9519b8bd264312c4d64",
+						date: parseInt(now.getTime() / 1000),
+						content_md5: "5c088354008451ea435b5ce764645e82",
 					},
 					success: function(result) {
 						if(0 != result.code) { // 返回0代表成功，其他失败
 							toastr.error("code: " + result.code + " message: " + result.message);
 						} else {
 							toastr.success(result.data.signature, result.message);
-							signature = result.data.signature;
-							authorization = result.data.authorization;
-							policy = result.data.policy;
+							var authorization = result.data.authorization;
+							var policy = result.data.policy;
 							uploader.options.formData = ({
-								/*signature: signature,*/
 								policy: policy,
 								authorization: authorization,
 							});
 						}
 					}
-				});
+				});*/
 			};
 
 			uploader.onFileDequeued = function(file) {
