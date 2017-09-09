@@ -166,6 +166,35 @@
                 }
             }
         },
+        "/admin/photo/upyunphoto": {
+            "post": {
+                "tags": [
+                    "libertyblog/controllers/adminPhotoController"
+                ],
+                "description": "Insert photo info when upload by qiniu",
+                "operationId": "PhotoController.upyun photo",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userid",
+                        "description": "userid",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.Photo"
+                        }
+                    },
+                    "403": {
+                        "description": ":userid is empty"
+                    }
+                }
+            }
+        },
         "/blog/photo/all": {
             "get": {
                 "tags": [

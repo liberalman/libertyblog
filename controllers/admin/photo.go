@@ -10,6 +10,7 @@ import (
 
 	"github.com/qiniu/api.v7/auth/qbox"
 	"github.com/qiniu/api.v7/storage"
+	//"github.com/upyun/go-sdk/upyun"
 )
 
 type PhotoController struct {
@@ -31,8 +32,10 @@ func (this *PhotoController) List() {
 	}
 	this.Data["list"] = list
 	this.Data["albumid"] = albumid
+
 	//this.display()
-	this.display("photo_list_qiniu")
+	//this.display("photo_list_qiniu")
+	this.display("photo_list_upyun")
 }
 
 //插入照片
@@ -254,6 +257,37 @@ end:
 // @Failure 403 :userid is empty
 // @router /admin/photo/qiniuphoto [post]
 func (this *PhotoController) QiniuPhoto() {
+	var ret models.Ret = models.Ret{Code: 0, Message: "success"}
+	var albumid int64
+	albumid, _ = this.GetInt64("albumid")
+	description := this.GetString("description")
+	url := this.GetString("url")
+	source, _ := this.GetInt8("source")
+	var photo models.Photo
+	photo.Albumid = albumid
+	photo.Des = description
+	photo.Posttime = time.Now()
+	photo.Url = url
+	photo.Source = source
+	if err := photo.Insert(); err != nil {
+		ret.Code = -1
+		ret.Message = err.Error()
+		goto end
+	}
+	ret.Code = 0
+	ret.Message = "上传图片到 " + url + " 成功"
+end:
+	this.Data["json"] = ret
+	this.ServeJSON()
+}
+
+// @Title upyun photo
+// @Description Insert photo info when upload by qiniu
+// @Param	userid		path 	int64	true		"userid"
+// @Success 200 {object} models.Photo
+// @Failure 403 :userid is empty
+// @router /admin/photo/upyunphoto [post]
+func (this *PhotoController) UpyunPhoto() {
 	var ret models.Ret = models.Ret{Code: 0, Message: "success"}
 	var albumid int64
 	albumid, _ = this.GetInt64("albumid")

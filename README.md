@@ -21,6 +21,7 @@ go get -u github.com/go-sql-driver/mysql
 go get -u github.com/nfnt/resize
 go get -u github.com/yunge/sphinx
 go get -u golang.org/x/net/context
+go get -u github.com/upyun/go-sdk/upyun
 ```
 
 #### 编译
