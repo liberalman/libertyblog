@@ -256,9 +256,10 @@ func (this *PhotoController) UploadPhotos() {
 			Password: upyun_passwd,
 		})
 		// 上传文件
+		ypfilepath := fmt.Sprintf("/static/album/%d/%d%s", albumid, t, ext)
 		err := up.Put(&upyun.PutObjectConfig{
-			Path:      out["url"],
-			LocalPath: out["url"],
+			Path:      ypfilepath,
+			LocalPath: filename,
 		})
 		if nil != err {
 			// 转储又拍云失败，需要记录到待处理列表中
@@ -267,6 +268,8 @@ func (this *PhotoController) UploadPhotos() {
 			cleanup.Error = err.Error()
 			cleanup.Url = out["url"]
 			cleanup.Insert()
+		} else {
+			out["url"] = "offical.b0.upaiyun.com/" + ypfilepath
 		}
 	}
 	albumid, _ = this.GetInt64("albumid")
