@@ -1,8 +1,14 @@
 #!/bin/sh
 
-mkdir /var/coreseek/
-mkdir /var/coreseek/log
-mkdir /var/coreseek/data
+if [ ! -d "/var/coreseek/" ]; then
+    mkdir /var/coreseek/
+fi
+if [ ! -d "/var/coreseek/log" ]; then
+    mkdir /var/coreseek/log
+fi
+if [ ! -d "/var/coreseek/data" ]; then
+    mkdir /var/coreseek/data
+fi
 
 git pull
 
