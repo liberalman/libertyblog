@@ -39,12 +39,13 @@ func (this *PhotoController) List() {
 }
 
 //插入照片
-func (this *PhotoController) Insert(albumid int64, desc, url string) {
+func (this *PhotoController) Insert(albumid int64, desc, url string, source int8) {
 	var photo models.Photo
 	photo.Albumid = albumid
 	photo.Des = desc
 	photo.Posttime = time.Now()
 	photo.Url = url
+	photo.Source = source
 	if err := photo.Insert(); err != nil {
 		this.showmsg(err.Error())
 	}
@@ -88,6 +89,25 @@ func (this *PhotoController) Delete() {
 
 		} else if 2 == photo.Source { // 又拍云
 			cleanup.Event = models.CANNOT_DELETE_UPYUN
+			reg := regexp.MustCompile(`.com\/([\S\.]*)`) // 匹配'.com'之后的内容
+			matchs := reg.FindStringSubmatch(photo.Url)
+			if len(matchs) > 0 {
+				key := reg.FindStringSubmatch(photo.Url)[0]
+				key = key[4:]
+				err := up.Delete(&upyun.DeleteObjectConfig{
+					Path:  key,
+					Async: false, // 是否使用异步删除
+				})
+				if nil != err {
+					// 删除失败的情况下，将资源移入待清理表中
+					cleanup.Error = err.Error()
+					cleanup.Insert()
+				}
+			} else {
+				cleanup.Error = "url not match"
+				cleanup.Insert()
+			}
+
 		} else if 0 == photo.Source { // local
 			cleanup.Event = models.CANNOT_DELETE_LOCAL
 			if err := os.Remove("." + photo.Url); nil != err {
@@ -185,7 +205,7 @@ func (this *PhotoController) UploadPhoto() {
 
 	}
 	albumid, _ := this.GetInt64("albumid")
-	this.Insert(albumid, header.Filename, out["url"])
+	this.Insert(albumid, header.Filename, out["url"], 0)
 	fmt.Println(out)
 	this.Data["json"] = out
 	this.ServeJSONP()
@@ -208,6 +228,7 @@ func (this *PhotoController) UploadPhotos() {
 	out["fileType"] = ext
 	out["original"] = header.Filename
 	out["success"] = "1"
+	var source int8 = 0
 	filename := ""
 	if err != nil {
 		out["success"] = "2"
@@ -250,13 +271,7 @@ func (this *PhotoController) UploadPhotos() {
 		}
 		out["url"] = filename[1:]
 
-		// 转储又拍云
-		/*up := upyun.NewUpYun(&upyun.UpYunConfig{
-			Bucket:   upyun_bucket,
-			Operator: upyun_operator,
-			Password: upyun_passwd,
-		})*/
-		// 上传文件
+		// 转储又拍云，上传文件
 		upyun_filepath := fmt.Sprintf("/static/album/%d/%d%s", albumid, t, ext)
 		err := up.Put(&upyun.PutObjectConfig{
 			Path:      upyun_filepath,
@@ -271,10 +286,19 @@ func (this *PhotoController) UploadPhotos() {
 			cleanup.Insert()
 		} else {
 			out["url"] = upyun_domain + upyun_filepath
+			source = 1
+			// 转储成功，删除本地文件
+			if err := os.Remove(filename); nil != err {
+				var cleanup models.Cleanup
+				cleanup.Event = models.CANNOT_DELETE_LOCAL
+				cleanup.Url = filename
+				cleanup.Error = err.Error()
+				cleanup.Insert()
+			}
 		}
 	}
 	albumid, _ = this.GetInt64("albumid")
-	this.Insert(albumid, header.Filename, out["url"])
+	this.Insert(albumid, header.Filename, out["url"], source)
 end:
 	this.Data["json"] = out
 	//this.ServeJSONP() // 这个函数还要模板文件，好麻烦
