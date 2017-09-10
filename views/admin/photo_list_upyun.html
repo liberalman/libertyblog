@@ -7,8 +7,8 @@
 	}
 </style>
 <link href="https://cdn.bootcss.com/lightbox2/2.9.0/css/lightbox.min.css" rel="stylesheet">
-<link href="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.css" rel="stylesheet">
-<script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.min.js"></script>
+<link href="//cdn.staticfile.org/webuploader/0.1.5/webuploader.css" rel="stylesheet">
+<script src="//cdn.staticfile.org/webuploader/0.1.5/webuploader.min.js"></script>
 <link href="/css/liberty/webuploader-liberty.css" rel="stylesheet">
 <script src="/js/photoAlbum.js"></script>
 
@@ -96,21 +96,6 @@
 <script src="//cdn.bootcss.com/crypto-js/3.1.9/md5.min.js"></script>
 <script>
 	$(document).ready(function() {
-
-		/*var signature = "";
-		var passwd_md5 = CryptoJS.MD5("password123").toString(CryptoJS.enc.Hex);
-		console.info(passwd_md5);
-		var method = "PUT";
-		var uri = "/upyun-temp/demo.jpg";
-		var date = "Wed, 09 Nov 2016 14:26:58 GMT";
-		var content_md5 = "7ac66c0f148de9519b8bd264312c4d64";
-		var tmp = method + "&" + uri + "&" + date + "&" + content_md5;
-		console.info(tmp);
-	    var hmacSHA1 = CryptoJS.HmacSHA1(passwd_md5, method + "&" + uri + "&" + date + "&" + content_md5).toString(CryptoJS.enc.Base64);
-	    console.log('base64Encrypt = ', hmacSHA1);
-	    var base = CryptoJS.HmacSHA1("482c811da5d5b4bc6d497ffa98491e38", "PUT&/upyun-temp/demo.jpg&Wed, 09 Nov 2016 14:26:58 GMT&7ac66c0f148de9519b8bd264312c4d64").toString(CryptoJS.enc.Base64);
-	    console.log('base = ', base);*/
-
 		$('.photo_des').change(function() {
 			$.ajax({
 				url: "/admin/photo/edit",
@@ -134,9 +119,11 @@
 		// 百度 Web Uploader
 		// http://fex-team.github.io/webuploader/doc/index.html
 		jQuery(function() {
-			var signature = "";
-			var authorization = "";
-			var policy = "";
+			var header_authorization = "";
+			var header_policy = "";
+			var header_date = "";
+			var header_content_md5 = "";
+
 			var $ = jQuery, // just in case. Make sure it's not an other libaray.
 
 				$wrap = $('#uploader'),
@@ -213,11 +200,7 @@
 					mimeTypes: 'image/*'
 				},
 
-				formData: {
-					signature: signature,
-					policy: policy,
-					authorization: authorization,
-				},
+				formData: {},
 
 				// swf文件路径
 				swf: 'https://cdn.bootcss.com/webuploader/0.1.1/Uploader.swf',
@@ -525,61 +508,114 @@
 				setState('ready');
 				updateTotalProgress();
 
-				
+				var content_md5 = "5c088354008451ea435b5ce764645e82";
+				uploader.md5File(file)
+					.progress(function(percentage) {
+						// 及时显示进度
+						console.log('Percentage:', percentage);
+					})
+					.then(function(val) {
+						// 完成
+						console.log('md5 result:', val);
+						content_md5 = val;
+						header_content_md5 = val;
+					});
+
+				var now = new Date();
+				//将本地现在时间换算成0时区时间
+				//算出时差,并转换为毫秒：
+				var offset = now.getTimezoneOffset() * 60 * 1000;
+				//算出现在的时间：
+				var nowDate = now.getTime();
+				//算出对应的格林位置时间
+				var GMTDate = new Date(nowDate - offset); //Wed Apr 20 2016 22:27:02 GMT+0800 (CST)
+				console.info(GMTDate.toUTCString());
+
+				var date = now.toUTCString(); //"Wed, 09 Nov 2016 14:26:58 GMT"
+				var expiration = parseInt(now.getTime() / 1000) + 3600; // 加600s授权.自定义签名有效期，建议为 30 分钟。如果签名超过有效期，需要重新生成签名。
+
 				var upyun_operator = "socho";
 				var bucket = "offical";
 				//var passwd_md5 = CryptoJS.MD5("***").toString(CryptoJS.enc.Hex);
 				var passwd_md5 = "d17676c23067a329f2c5e44c3e8d38f0";
 				var method = "PUT";
-				var uri = "/" + bucket + "/demo.jpg";
-				var now = new Date();
-				var date = now.toUTCString(); //"Wed, 09 Nov 2016 14:26:58 GMT"
-				var content_md5 = "5c088354008451ea435b5ce764645e82";
-				
-				var expiration = parseInt(now.getTime() / 1000) + 300; // 加300s超时.自定义签名有效期，建议为 30 分钟。如果签名超过有效期，需要重新生成签名。
-				var obj = {"bucket": bucket , "save-key": uri, "expiration": expiration, "date": date, "content-md5": content_md5};
-				console.info(JSON.stringify(obj));
-				
-				var policy = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(obj)));
+				var uri = "/demo.jpg";
+
+				var options = {
+					"bucket": bucket,
+					"save-key": uri,
+					"expiration": expiration,
+					"date": date,
+					"content-md5": content_md5
+				};
+				console.info(JSON.stringify(options));
+
+				//PS：前端配置 token 会直接暴露 api_secret ，如需使用建议开启防盗链
+				var policy = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(options)));
 				console.log('policy = ', policy);
-				
-				
+
 				var tmp = method + "&" + uri + "&" + date + "&" + policy + "&" + content_md5;
+				console.info(tmp);
 				//var tmp = method + "&" + uri + "&" + date + "&" + policy;
-				var signature = CryptoJS.HmacSHA1(passwd_md5, tmp).toString(CryptoJS.enc.Base64);
+				var signature = CryptoJS.HmacSHA1(tmp, passwd_md5).toString(CryptoJS.enc.Base64);
 				var authorization = "UPYUN " + upyun_operator + ":" + signature;
 				console.log('authorization = ', authorization);
 
 				uploader.options.formData = ({
 					policy: policy,
 					authorization: authorization,
+					bucket: bucket,
+					"save-key": uri,
+					expiration: expiration,
+					date: date,
+					"content-md5": content_md5,
 				});
 
-				/*var now = new Date();
-				$.ajax({
+				/*$.ajax({
 					url: "/upyun/upload_photo_signature",
 					type: "get",
 					cache: false,
 					async: true,
 					data: {
-						date: parseInt(now.getTime() / 1000),
-						content_md5: "5c088354008451ea435b5ce764645e82",
+						content_md5: content_md5,
 					},
 					success: function(result) {
 						if(0 != result.code) { // 返回0代表成功，其他失败
 							toastr.error("code: " + result.code + " message: " + result.message);
 						} else {
-							toastr.success(result.data.signature, result.message);
-							var authorization = result.data.authorization;
-							var policy = result.data.policy;
+							toastr.success(result.data.authorization, result.message);
+							header_authorization = result.data.authorization;
+							header_policy = result.data.policy;
 							uploader.options.formData = ({
-								policy: policy,
-								authorization: authorization,
+								policy: header_policy,
+								authorization: header_authorization,
+								// 上传参数，需要计算 Policy  
+								bucket : result.data.bucket,
+								"save-key" : result.data.save_key,
+								expiration : result.data.expiration,
+								date : result.data.date,
+								"content-md5" : result.data.content_md5,
 							});
 						}
 					}
 				});*/
 			};
+
+			// 每个分块上传之前修改headers
+			uploader.on('uploadBeforeSend', function(object, data, headers) {
+				// 设置headers方式1
+				/*$.extend(headers, {
+				"Date": header_date,
+				"Content-MD5": header_content_md5,
+				"Authorization": header_authorization,
+				});*/
+				// 设置headers方式2
+				//headers["Date"] = header_date;
+				//headers["Policy"] = header_policy;
+				//headers["Content-MD5"] = header_content_md5;
+				//headers['Authorization'] = header_authorization;
+				//console.info(headers);
+			});
 
 			uploader.onFileDequeued = function(file) {
 				fileCount--;

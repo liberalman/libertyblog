@@ -10,7 +10,7 @@ import (
 
 	"github.com/qiniu/api.v7/auth/qbox"
 	"github.com/qiniu/api.v7/storage"
-	//"github.com/upyun/go-sdk/upyun"
+	"github.com/upyun/go-sdk/upyun"
 )
 
 type PhotoController struct {
@@ -33,9 +33,9 @@ func (this *PhotoController) List() {
 	this.Data["list"] = list
 	this.Data["albumid"] = albumid
 
-	//this.display()
+	this.display()
 	//this.display("photo_list_qiniu")
-	this.display("photo_list_upyun")
+	//this.display("photo_list_upyun")
 }
 
 //插入照片
@@ -58,9 +58,9 @@ func (this *PhotoController) Delete() {
 	albumid := this.GetString("albumid")
 	photo := models.Photo{Id: id}
 	if photo.Read() == nil { // no error
-		cleanup.Source = photo.Source
 		cleanup.Url = photo.Url
 		if 1 == photo.Source { // qiniu
+			cleanup.Event = models.CANNOT_DELETE_QINIU
 			//reg := regexp.MustCompile(`[^/]*$`) // 匹配最后一个'/'之后的内容
 			reg := regexp.MustCompile(`photo\/([\S\.]*)`) // 匹配'photo'之后的内容
 			matchs := reg.FindStringSubmatch(photo.Url)
@@ -86,7 +86,10 @@ func (this *PhotoController) Delete() {
 				cleanup.Insert()
 			}
 
+		} else if 2 == photo.Source { // 又拍云
+			cleanup.Event = models.CANNOT_DELETE_UPYUN
 		} else if 0 == photo.Source { // local
+			cleanup.Event = models.CANNOT_DELETE_LOCAL
 			if err := os.Remove("." + photo.Url); nil != err {
 				cleanup.Error = err.Error()
 				cleanup.Insert()
@@ -98,6 +101,7 @@ func (this *PhotoController) Delete() {
 				cleanup.Insert()
 			}
 		}
+
 		photo.Delete()
 	}
 	this.Redirect("/admin/photo/list?albumid="+albumid, 302)
@@ -131,7 +135,7 @@ func (this *PhotoController) Edit() {
 	this.ServeJSON()
 }
 
-//上传照片)
+//上传照片 用于在写markdown文档的时候上传照片用
 func (this *PhotoController) UploadPhoto() {
 	file, header, err := this.GetFile("editormd-image-file") //upfile
 	ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
@@ -188,14 +192,15 @@ func (this *PhotoController) UploadPhoto() {
 }
 
 // @Title upload photos
-// @Description upload photos
+// @Description upload photos to album
 // @Param	userid		path 	int64	true		"userid"
 // @Success 200 {object} models.User
 // @Failure 403 :userid is empty
 // @router /admin/photo/upload [post]
 func (this *PhotoController) UploadPhotos() {
 	var albumid int64
-	file, header, err := this.GetFile("file")
+	//file, header, err := this.GetFile("file")
+	_, header, err := this.GetFile("file")
 	ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
 	out := make(map[string]string)
 	out["url"] = ""
@@ -211,8 +216,9 @@ func (this *PhotoController) UploadPhotos() {
 		t := time.Now().UnixNano()
 		day := time.Now().Format("20060102")
 
-		//小图
-		savepath := pathArr[2] + day
+		//小图,转储ypyun后不用生成小图了，直接用又拍云的小图
+		var savepath string
+		/*savepath = pathArr[2] + day
 		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
 			out["success"] = "3"
 			out["message"] = err.Error()
@@ -224,16 +230,18 @@ func (this *PhotoController) UploadPhotos() {
 			out["success"] = "4"
 			out["message"] = err.Error()
 			goto end
-		}
+		}*/
 
 		//大图
 		savepath = pathArr[1] + day
+		savepath = fmt.Sprintf("./static/album/%d", albumid)
 		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
 			out["success"] = "5"
 			out["message"] = err.Error()
 			goto end
 		}
-		filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
+		//filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
+		filename = fmt.Sprintf("./static/album/%d/%d%s", albumid, t, ext)
 		if err = this.SaveToFile("file", filename); err != nil {
 			out["success"] = "6"
 			out["message"] = err.Error()
@@ -241,6 +249,25 @@ func (this *PhotoController) UploadPhotos() {
 		}
 		out["url"] = filename[1:]
 
+		// 转储又拍云
+		up := upyun.NewUpYun(&upyun.UpYunConfig{
+			Bucket:   upyun_bucket,
+			Operator: upyun_operator,
+			Password: upyun_passwd,
+		})
+		// 上传文件
+		err := up.Put(&upyun.PutObjectConfig{
+			Path:      out["url"],
+			LocalPath: out["url"],
+		})
+		if nil != err {
+			// 转储又拍云失败，需要记录到待处理列表中
+			var cleanup models.Cleanup
+			cleanup.Event = models.CANNOT_UPLOAD_UPYUN
+			cleanup.Error = err.Error()
+			cleanup.Url = out["url"]
+			cleanup.Insert()
+		}
 	}
 	albumid, _ = this.GetInt64("albumid")
 	this.Insert(albumid, header.Filename, out["url"])

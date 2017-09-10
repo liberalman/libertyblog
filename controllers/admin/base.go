@@ -21,6 +21,11 @@ var (
 	secretKey          = beego.AppConfig.String("qiniu_secure_key")
 	bucket             = beego.AppConfig.String("qiniu_bucket")
 	domain             = beego.AppConfig.String("qiniu_domain")
+
+	upyun_passwd_md5 = beego.AppConfig.String("upyun_passwd_md5")
+	upyun_passwd     = beego.AppConfig.String("upyun_passwd")
+	upyun_operator   = beego.AppConfig.String("upyun_operator")
+	upyun_bucket     = beego.AppConfig.String("upyun_bucket")
 )
 
 type baseController struct {

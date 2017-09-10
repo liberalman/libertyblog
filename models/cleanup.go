@@ -5,10 +5,10 @@ import (
 )
 
 type Cleanup struct {
-	Id     int64
-	Url    string `orm:"size(255)"`
-	Error  string `orm:"size(255)"`
-	Source int8
+	Id    int64
+	Url   string `orm:"size(255)"`
+	Error string `orm:"size(255)"`
+	Event int16
 }
 
 func (m *Cleanup) TableName() string {

@@ -25,6 +25,11 @@ const (
 	CACHE_KEY_TB_USER       string        = "tb_user:"
 	CACHE_KEY_TB_USER_TOTAL string        = "tb_user:total:"
 	CACHE_KEY_TB_ARTICLE    string        = "tb_article:"
+
+	CANNOT_DELETE_LOCAL int16 = 1
+	CANNOT_DELETE_QINIU int16 = 2
+	CANNOT_UPLOAD_UPYUN int16 = 3
+	CANNOT_DELETE_UPYUN int16 = 4
 )
 
 func init() {
