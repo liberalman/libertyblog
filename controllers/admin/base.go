@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego"
+	"github.com/upyun/go-sdk/upyun"
 )
 
 const (
@@ -26,6 +27,14 @@ var (
 	upyun_passwd     = beego.AppConfig.String("upyun_passwd")
 	upyun_operator   = beego.AppConfig.String("upyun_operator")
 	upyun_bucket     = beego.AppConfig.String("upyun_bucket")
+	upyun_domain     = beego.AppConfig.String("upyun_domain")
+
+	// 转储又拍云
+	up = upyun.NewUpYun(&upyun.UpYunConfig{
+		Bucket:   upyun_bucket,
+		Operator: upyun_operator,
+		Password: upyun_passwd,
+	})
 )
 
 type baseController struct {

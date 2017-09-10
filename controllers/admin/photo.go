@@ -199,6 +199,7 @@ func (this *PhotoController) UploadPhoto() {
 // @router /admin/photo/upload [post]
 func (this *PhotoController) UploadPhotos() {
 	var albumid int64
+	albumid, _ = this.GetInt64("albumid")
 	//file, header, err := this.GetFile("file")
 	_, header, err := this.GetFile("file")
 	ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
@@ -250,15 +251,15 @@ func (this *PhotoController) UploadPhotos() {
 		out["url"] = filename[1:]
 
 		// 转储又拍云
-		up := upyun.NewUpYun(&upyun.UpYunConfig{
+		/*up := upyun.NewUpYun(&upyun.UpYunConfig{
 			Bucket:   upyun_bucket,
 			Operator: upyun_operator,
 			Password: upyun_passwd,
-		})
+		})*/
 		// 上传文件
-		ypfilepath := fmt.Sprintf("/static/album/%d/%d%s", albumid, t, ext)
+		upyun_filepath := fmt.Sprintf("/static/album/%d/%d%s", albumid, t, ext)
 		err := up.Put(&upyun.PutObjectConfig{
-			Path:      ypfilepath,
+			Path:      upyun_filepath,
 			LocalPath: filename,
 		})
 		if nil != err {
@@ -269,7 +270,7 @@ func (this *PhotoController) UploadPhotos() {
 			cleanup.Url = out["url"]
 			cleanup.Insert()
 		} else {
-			out["url"] = "offical.b0.upaiyun.com/" + ypfilepath
+			out["url"] = upyun_domain + upyun_filepath
 		}
 	}
 	albumid, _ = this.GetInt64("albumid")
