@@ -228,7 +228,7 @@ func (this *PhotoController) UploadPhotos() {
 	out["fileType"] = ext
 	out["original"] = header.Filename
 	out["success"] = "1"
-	var source int8 = 0
+	var source int8 = PHOTO_LOCAL
 	filename := ""
 	if err != nil {
 		out["success"] = "2"
@@ -286,7 +286,7 @@ func (this *PhotoController) UploadPhotos() {
 			cleanup.Insert()
 		} else {
 			out["url"] = upyun_domain + upyun_filepath
-			source = 1
+			source = PHOTO_UPYUN
 			// 转储成功，删除本地文件
 			if err := os.Remove(filename); nil != err {
 				var cleanup models.Cleanup

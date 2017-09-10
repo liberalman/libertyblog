@@ -14,6 +14,10 @@ const (
 	BIG_PIC_PATH   = "./static/upload/bigpic/"
 	SMALL_PIC_PATH = "./static/upload/smallpic/"
 	FILE_PATH      = "./static/upload/attachment/"
+
+	PHOTO_QINIU int8 = 1
+	PHOTO_UPYUN int8 = 2
+	PHOTO_LOCAL int8 = 0
 )
 
 var (
