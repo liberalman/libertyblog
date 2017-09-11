@@ -388,6 +388,10 @@ paths:
             $ref: '#/definitions/models.User'
         "403":
           description: :userid is empty
+  /webscan_360_cn.html:
+    get:
+      tags:
+      - libertyblog/controllers/blogMainController
 definitions:
   models.Photo:
     title: Photo

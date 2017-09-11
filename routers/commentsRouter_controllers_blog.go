@@ -31,6 +31,14 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["libertyblog/controllers/blog:MainController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:MainController"],
+		beego.ControllerComments{
+			Method: "Webscan_360",
+			Router: `/webscan_360_cn.html`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 	beego.GlobalControllerRouter["libertyblog/controllers/blog:ObjectController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:ObjectController"],
 		beego.ControllerComments{
 			Method: "Get",

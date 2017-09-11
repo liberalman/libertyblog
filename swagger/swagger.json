@@ -592,6 +592,13 @@
                     }
                 }
             }
+        },
+        "/webscan_360_cn.html": {
+            "get": {
+                "tags": [
+                    "libertyblog/controllers/blogMainController"
+                ]
+            }
         }
     },
     "definitions": {

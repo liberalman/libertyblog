@@ -31,6 +31,11 @@ func (this *MainController) Index() {
 	this.display("index", HAS_RIGHT)
 }
 
+// @router /webscan_360_cn.html [get]
+func (this *MainController) Webscan_360() {
+	this.display_no_layout("webscan_360_cn")
+}
+
 //留404页面
 func (this *MainController) Go404() {
 	this.setHeadFootMetas("Sorry 404页面没找到")
