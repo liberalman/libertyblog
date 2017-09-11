@@ -1,108 +1,111 @@
 <link rel="stylesheet" href="/editor.md/css/editormd.preview.min.css" />
 <link rel="stylesheet" href="//cdn.bootcss.com/mermaid/7.0.0/mermaid.min.css" />
-<!-- Main -->
-<div id="main">
+<div class="row">
+	<div class="col-lg-2"></div>
+	<div class="col-lg-8">
+		<!-- Main -->
+		<div id="main">
+			<!-- Post -->
+			<article class="post box-shadow-1">
+				<header>
+					<div class="title">
+						<h2><a href="#" class="wrap">{{str2html .post.Title}}</a></h2>
+						<p>
+							<span class="label label-danger"><time class="timeago" datetime={{date .post.Updated "Y-m-j"}}></time></span>
+							<span class="label label-primary">作者：{{.post.Username}}</span>
+							<span class="label label-success">阅读：{{.post.Views}}</span>
+							<span class="label label-warning">{{if eq 1 .post.Pubtype}}转载{{else}}原创{{end}}</span> {{if eq 1 .showEditBtn}}
+							<span class="label label-default"><a href="/article/editmarkdown?id={{.post.Id}}" target="_blank">编辑</a></span> {{end}}
+						</p>
+					</div>
+					<div class="meta">
+						<time class="published" datetime="2015-11-01">{{date .post.Posttime "Y-m-j"}}</time>
+						<a href="/user/{{.post.Userid}}" class="author"><span class="name">{{.post.Username}}</span><img src="{{.post.Avatarurl}}" alt="" /></a>
+					</div>
+				</header>
 
-	<!-- Post -->
-	<article class="post box-shadow-1">
-		<header>
-			<div class="title">
-				<h2><a href="#" class="wrap">{{str2html .post.Title}}</a></h2>
-				<p>
-					<span class="label label-danger"><time class="timeago" datetime={{date .post.Updated "Y-m-j"}}></time></span>
-					<span class="label label-primary">作者：{{.post.Username}}</span>
-					<span class="label label-success">阅读：{{.post.Views}}</span>
-					<span class="label label-warning">{{if eq 1 .post.Pubtype}}转载{{else}}原创{{end}}</span> {{if eq 1 .showEditBtn}}
-					<span class="label label-default"><a href="/article/editmarkdown?id={{.post.Id}}" target="_blank">编辑</a></span> {{end}}
-				</p>
-			</div>
-			<div class="meta">
-				<time class="published" datetime="2015-11-01">{{date .post.Posttime "Y-m-j"}}</time>
-				<a href="/user/{{.post.Userid}}" class="author"><span class="name">{{.post.Username}}</span><img src="{{.post.Avatarurl}}" alt="" /></a>
-			</div>
-		</header>
-
-		<div id="test-editormd-view2" style="font-size: 1.0em; line-height:2em;">
-			<textarea id="append-test" style="display:none;">{{.post.Content}}</textarea>
-		</div>
-
-		<footer>
-			<ul class="stats">
-				<li>
-					<a href="{{.pre.Link}}">上一篇</a>
-				</li>
-				<li>
-					<a href="{{.next.Link}}">下一篇</a>
-				</li>
-				<li>
-					<a href="#" class="icon fa-heart" title="浏览量">{{.post.Views}}</a>
-				</li>
-				<li>
-					<a href="#" class="icon fa-comment">0</a>
-				</li>
-			</ul>
-		</footer>
-	</article>
-
-	<article class="post box-shadow-1">
-		<form id="form_echo2article">
-			<div class="row uniform">
-				<input class="hidden" name="id" value="{{.post.Id}}" />
-				<input class="hidden" name="article_id" value="{{.post.Id}}" />
-				<input class="hidden" name="flag" value="1" />
-				<input class="hidden" name="to_user_id" value="{{.post.Userid}}" />
-				<div class="12u$">
-					<textarea name="content" placeholder="发表评论" rows="6"></textarea>
+				<div id="test-editormd-view2" style="font-size: 1.0em; line-height:2em;">
+					<textarea id="append-test" style="display:none;">{{.post.Content}}</textarea>
 				</div>
-				<div class="12u$">
-					<ul class="actions">
-						<li><input id="btn_echo2article" type="button" value="评论" /></li>
+
+				<footer>
+					<ul class="stats">
+						<li>
+							<a href="{{.pre.Link}}">上一篇</a>
+						</li>
+						<li>
+							<a href="{{.next.Link}}">下一篇</a>
+						</li>
+						<li>
+							<a href="#" class="icon fa-heart" title="浏览量">{{.post.Views}}</a>
+						</li>
+						<li>
+							<a href="#" class="icon fa-comment">0</a>
+						</li>
 					</ul>
-				</div>
-			</div>
-		</form>
+				</footer>
+			</article>
 
-		<!-- Posts List -->
-		<section>
-			<ul class="posts">
-				{{range $k, $v := .comments}}
-				<li>
-					<article>
-						<header>
-							<h3><a role="button" href="/user/{{$v.User_id}}">{{$v.Username}}</a> 回复 <a role="button" href="/user/{{$v.To_user_id}}">{{$v.Tousername}}</a></h3>
-							<p>{{$v.Content}}</p>
-							<span>
+			<article class="post box-shadow-1">
+				<form id="form_echo2article">
+					<div class="row uniform">
+						<input class="hidden" name="id" value="{{.post.Id}}" />
+						<input class="hidden" name="article_id" value="{{.post.Id}}" />
+						<input class="hidden" name="flag" value="1" />
+						<input class="hidden" name="to_user_id" value="{{.post.Userid}}" />
+						<div class="12u$">
+							<textarea name="content" placeholder="发表评论" rows="6"></textarea>
+						</div>
+						<div class="12u$">
+							<ul class="actions">
+								<li><input id="btn_echo2article" type="button" value="评论" /></li>
+							</ul>
+						</div>
+					</div>
+				</form>
+
+				<!-- Posts List -->
+				<section>
+					<ul class="posts">
+						{{range $k, $v := .comments}}
+						<li>
+							<article>
+								<header>
+									<h3><a role="button" href="/user/{{$v.User_id}}">{{$v.Username}}</a> 回复 <a role="button" href="/user/{{$v.To_user_id}}">{{$v.Tousername}}</a></h3>
+									<p>{{$v.Content}}</p>
+									<span>
 								<time class="published" datetime="2015-10-20" style="display :inline;">{{date $v.Create_time "Y-m-j"}}</time>&nbsp;|&nbsp;
 								{{if eq $v.User_id $.post.Userid}}<a role="button" onclick="del_comment({{$v.Id}})">删除</a>&nbsp;|&nbsp;{{end}}
 								<a role="button" data-toggle="collapse" href="#collapseExample_{{$v.Id}}" aria-expanded="false" aria-controls="collapseExample">回复</a>
 							</span>
-							<form class="collapse echo2someone" id="collapseExample_{{$v.Id}}" method="post">
-								<div class="row uniform">
-									<input class="hidden" name="id" value="{{$v.Id}}" />
-									<input class="hidden" name="article_id" value="{{$.post.Id}}" />
-									<input class="hidden" name="flag" value="1" />
-									<input class="hidden" name="to_user_id" value="{{$v.User_id}}" />
-									<input class="hidden" name="ref_comm_id" value="{{$v.Id}}" />
-									<div class="12u$">
-										<textarea name="content" placeholder="回复:{{$v.Username}}" rows="6"></textarea>
-									</div>
-									<div class="12u$">
-										<ul class="actions">
-											<li><input id="btn_echo2article" type="submit" value="回复" /></li>
-										</ul>
-									</div>
-								</div>
-							</form>
-						</header>
-						<a href="#" class="image"><img onerror="onerror=null;src='/future/images/pic08.jpg'" src="{{$v.Avatarurl}}" alt="" /></a>
-					</article>
-				</li>
-				{{end}}
-			</ul>
-		</section>
-
-	</article>
-
+									<form class="collapse echo2someone" id="collapseExample_{{$v.Id}}" method="post">
+										<div class="row uniform">
+											<input class="hidden" name="id" value="{{$v.Id}}" />
+											<input class="hidden" name="article_id" value="{{$.post.Id}}" />
+											<input class="hidden" name="flag" value="1" />
+											<input class="hidden" name="to_user_id" value="{{$v.User_id}}" />
+											<input class="hidden" name="ref_comm_id" value="{{$v.Id}}" />
+											<div class="12u$">
+												<textarea name="content" placeholder="回复:{{$v.Username}}" rows="6"></textarea>
+											</div>
+											<div class="12u$">
+												<ul class="actions">
+													<li><input id="btn_echo2article" type="submit" value="回复" /></li>
+												</ul>
+											</div>
+										</div>
+									</form>
+								</header>
+								<a href="#" class="image"><img onerror="onerror=null;src='/future/images/pic08.jpg'" src="{{$v.Avatarurl}}" alt="" /></a>
+							</article>
+						</li>
+						{{end}}
+					</ul>
+				</section>
+			</article>
+		</div>
+	</div>
+	<div class="col-lg-2"></div>
 </div>
 
 <script src="/editor.md/lib/marked.min.js"></script>

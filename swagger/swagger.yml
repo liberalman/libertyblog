@@ -93,7 +93,7 @@ paths:
     post:
       tags:
       - libertyblog/controllers/adminPhotoController
-      description: upload photos
+      description: upload photos to album
       operationId: PhotoController.upload photos
       parameters:
       - in: path
@@ -352,6 +352,23 @@ paths:
     get:
       tags:
       - libertyblog/controllers/toolsMainController
+  /upyun/upload_photo_signature:
+    get:
+      tags:
+      - libertyblog/controllers/blogUpyunController
+      description: Get Upyun uptoken
+      operationId: UpyunController.Get Upyun uptoken
+      parameters:
+      - in: path
+        name: objectId
+        description: the objectid you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 'string {"uptoken": "0MLvWPnyya1WtPnXFy9KLyGHyFPNdZceomL..."}"'
+        "403":
+          description: :objectId is empty
   /user/{userid:int}:
     get:
       tags:
