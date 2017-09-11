@@ -2791,9 +2791,10 @@
 
 			.post {
 				padding: 1.5em 1.5em 0.1em 1.5em ;
-				left: -1.5em;
+				/* left: -1.5em; socho update */
 				margin: 0 0 2em 0;
-				width: calc(100% + (1.5em * 2));
+				/* width: calc(100% + (1.5em * 2)); socho update */
+				width: calc(100% + (3em * 2));
 			}
 
 				.post > header {
