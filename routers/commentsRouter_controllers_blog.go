@@ -71,6 +71,14 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["libertyblog/controllers/blog:TimelineController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:TimelineController"],
+		beego.ControllerComments{
+			Method: "Index",
+			Router: `/blog/timeline/:userid:int`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 	beego.GlobalControllerRouter["libertyblog/controllers/blog:UpyunController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:UpyunController"],
 		beego.ControllerComments{
 			Method: "SignaturPolicy",

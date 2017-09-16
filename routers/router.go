@@ -42,6 +42,9 @@ func init() {
 			&blog.QiniuController{},
 		),
 		beego.NSInclude(
+			&blog.TimelineController{},
+		),
+		beego.NSInclude(
 			&blog.UpyunController{},
 		),
 		beego.NSInclude(
@@ -61,6 +64,7 @@ func init() {
 	beego.Include(&test.MainController{})
 	beego.Include(&blog.QiniuController{})
 	beego.Include(&blog.UpyunController{})
+	beego.Include(&blog.TimelineController{})
 	beego.Include(&tools.MainController{})
 
 	//前台路由
