@@ -45,7 +45,7 @@ func init() {
 	dburl := dbuser + ":" + dbpassword + "@tcp(" + dbhost + ":" + dbport + ")/" + dbname + "?charset=utf8&loc=Local"
 	orm.RegisterDataBase("default", "mysql", dburl)
 	orm.RegisterModel(new(User), new(Post), new(Tag), new(Option), new(TagPost), new(Photo), new(Album), new(Link),
-		new(Article), new(History), new(Statistics), new(Comment), new(Cleanup))
+		new(Article), new(Timeline), new(TimePoint), new(Statistics), new(Comment), new(Cleanup))
 	if beego.AppConfig.String("runmode") == "dev" {
 		orm.Debug = true
 	}
@@ -122,11 +122,8 @@ func GetHotBlog() []*Article {
 }
 
 // reset: if to reset new cache
-func GetUser(userid int64, reset bool) User {
+func CacheGetUser(userid int64) User {
 	key := fmt.Sprintf("tb_user:%d", userid)
-	if reset {
-		Cache.Delete(key)
-	}
 	if !Cache.IsExist(key) {
 		var user User
 		new(User).Query().Filter("id", userid).One(&user)
@@ -134,6 +131,14 @@ func GetUser(userid int64, reset bool) User {
 	}
 	v := Cache.Get(key)
 	return v.(User)
+}
+
+func CacheResetUser(userid int64) {
+	key := fmt.Sprintf("tb_user:%d", userid)
+	Cache.Delete(key)
+	var user User
+	new(User).Query().Filter("id", userid).One(&user)
+	Cache.Put(key, user, CACHE_TIME_OUT*time.Second)
 }
 
 func Delete(userid int64) {

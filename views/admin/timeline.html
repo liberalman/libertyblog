@@ -43,11 +43,11 @@
 						<div class="timeline-panel">
 							<div class="timeline-heading">
 								<i class="fa fa-edit fa-fw pull-right" data-toggle="modal" data-target="#myModal" data-title="{{$v.Title}}" data-content="{{$v.Content}}"
-									data-dotime="{{$v.Dotime}}" data-icosty="{{$v.Icosty}}" data-pos="{{$v.Pos}}" data-action="2" data-id="{{$v.Id}}" data-model_label="修改我的足迹"></i>
+									data-createtime="{{$v.Createtime}}" data-icosty="{{$v.Icosty}}" data-pos="{{$v.Pos}}" data-action="2" data-id="{{$v.Id}}" data-model_label="修改我的足迹"></i>
 								<h4 class="timeline-title">{{$v.Title}}</h4>
 								<p>
 									<small class="text-muted">
-										<i class="fa fa-clock-o"></i>{{$v.Dotime}}
+										<i class="fa fa-clock-o"></i>{{$v.Createtime}}
 									</small>
 								</p>
 							</div>
@@ -87,7 +87,7 @@
 										<div class="col-md-5">
 											<div class="form-group input-group">
 												<span class="input-group-addon">时间</span>
-												<input class="form-control" name="dotime" size="16" type="text" id="datetimepicker" data-date-format="yyyy-mm-dd HH:ii:ss">
+												<input class="form-control" name="createtime" size="16" type="text" id="datetimepicker" data-date-format="yyyy-mm-dd HH:ii:ss">
 												<label for="datetimepicker" class="input-group-addon"></label>
 											</div>
 											
@@ -193,7 +193,7 @@ $("#form_update").validate({
 			required: true,
 			minlength: 2
 		},
-		dotime: {
+		createtime: {
 			required: true
 		},
 		content: {
@@ -206,7 +206,7 @@ $("#form_update").validate({
 			required: '<font color="red">请输入内容!</font>',
 			minlength: '<font color="red">标题长度不能小于 2 个字母!</font>'
 		},
-		dotime: {
+		createtime: {
 			required: '<font color="red">请选择时间!</font>'
 		},
 		content: {
@@ -216,7 +216,7 @@ $("#form_update").validate({
 	},
 	// 使用 ajax 方式提交
 	submitHandler: function(form) {
-		$.post('/admin/history',
+		$.post('/admin/timeline/timepoint',
 			$(form).serialize(),
 			function(data) {
 				if ("0" != data) { // 返回0代表成功，其他失败
@@ -238,7 +238,7 @@ $("#form_update").validate({
 
 $('#del').click(function() {
 	$("#action").val(3);
-	$.post('/admin/history', {
+	$.post('/admin/timeline/timepoint', {
 			action: 3,
 			id: $("#id").val()
 		},
@@ -262,7 +262,7 @@ $('#myModal').on('show.bs.modal', function(event) {
 	
 	var title = button.data('title'); // Extract info from data-* attributes
 	var content = button.data('content');
-	var dotime = button.data('dotime');
+	var createtime = button.data('createtime');
 	var icosty = button.data('icosty');
 	var pos = button.data('pos');
 	var action = button.data('action');
@@ -297,7 +297,7 @@ $('#myModal').on('show.bs.modal', function(event) {
 	modal.find('#myModalLabel').html(model_label);
 	modal.find('#title').val(title);
 	modal.find('#content').val(content);
-	modal.find('#datetimepicker').val(dotime);
+	modal.find('#datetimepicker').val(createtime);
 	modal.find('#icosty').val(icosty);
 	modal.find('#action').val(action); // action 1 新增，2 修改，3 删除
 	if(1 == action){
@@ -312,4 +312,5 @@ $('#myModal').on('show.bs.modal', function(event) {
 		iosty_change(value);
 	});
 
-});</script>
+});
+</script>

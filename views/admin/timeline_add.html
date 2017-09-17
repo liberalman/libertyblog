@@ -1,0 +1,49 @@
+<div id="page-wrapper">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">创建属于你的历史回忆录</h1>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					HaHa
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-6">
+							<form role="form" method="post" action="/admin/timeline/add">
+								<div class="form-group input-group">
+									<span class="input-group-addon">时间轴名称</span>
+									<input type="text" class="form-control" name="name" />
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">内容</span>
+									<input type="text" class="form-control" name="content" />
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon">展示排序</span>
+									<input type="text" class="form-control" name="rank" />
+									<span class="input-group-addon">值越大越排前</span>
+								</div>
+								<button type="submit" class="btn btn-default">保存</button>
+								<button type="button" class="btn" onclick="javascript:history.back();">取消</button>
+							</form>
+						</div>
+						<!-- /.col-lg-6 (nested) -->
+						<div class="col-lg-6">
+							<h1>Hello world!</h1>
+						</div>
+						<!-- /.col-lg-6 (nested) -->
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+</div>

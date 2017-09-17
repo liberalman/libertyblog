@@ -47,7 +47,7 @@ func (m *User) Update(fields ...string) error {
 	if _, err := orm.NewOrm().Update(m, fields...); err != nil {
 		return err
 	}
-	GetUser(m.Id, true) // reset cache of 'User'
+	CacheResetUser(m.Id) // reset cache of 'User'
 	return nil
 }
 

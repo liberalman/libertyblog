@@ -48,15 +48,35 @@ type baseController struct {
 	theme          string // 主题模板
 	controllerName string
 	actionName     string
+	page           int
+	pagesize       int
+	options        map[string]string
 }
 
 func (this *baseController) Prepare() {
+	var (
+		pagesize int
+		err      error
+		page     int
+	)
 	controllerName, actionName := this.GetControllerAndAction()
 	this.theme = "admin"
 	this.controllerName = strings.ToLower(controllerName[0 : len(controllerName)-10])
 	this.actionName = strings.ToLower(actionName)
 	this.auth()
 	this.checkPermission()
+
+	if page, err = strconv.Atoi(this.Ctx.Input.Param(":page")); err != nil || page < 1 {
+		page = 1
+	}
+	if pagesize, err = strconv.Atoi(this.getOption("pagesize")); err != nil || pagesize < 1 {
+		pagesize = 10
+	}
+	this.page = page
+	this.pagesize = pagesize
+
+	this.options = models.GetOptions()
+	this.Data["options"] = this.options
 }
 
 //登录状态验证
@@ -149,5 +169,13 @@ func setLayout(this *baseController) {
 		this.Layout = this.theme + "/layout_super_admin.html"
 	} else {
 		this.Layout = this.theme + "/layout_admin.html"
+	}
+}
+
+func (this *baseController) getOption(name string) string {
+	if v, ok := this.options[name]; ok {
+		return v
+	} else {
+		return ""
 	}
 }

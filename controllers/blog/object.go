@@ -25,7 +25,7 @@ func (o *ObjectController) Get() {
 	var m models.User
 	if objectId != "" {
 		id, _ := strconv.Atoi(objectId)
-		m = models.GetUser(int64(id), false)
+		m = models.CacheGetUser(int64(id))
 	}
 	o.Data["json"] = m
 	o.ServeJSON()

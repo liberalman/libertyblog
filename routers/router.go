@@ -36,6 +36,9 @@ func init() {
 			&admin.AlbumController{},
 		),
 		beego.NSInclude(
+			&admin.TimelineController{},
+		),
+		beego.NSInclude(
 			&test.MainController{},
 		),
 		beego.NSInclude(
@@ -61,6 +64,7 @@ func init() {
 	beego.Include(&admin.CommentController{})
 	beego.Include(&admin.PhotoController{})
 	beego.Include(&admin.AlbumController{})
+	beego.Include(&admin.TimelineController{})
 	beego.Include(&test.MainController{})
 	beego.Include(&blog.QiniuController{})
 	beego.Include(&blog.UpyunController{})
@@ -110,7 +114,6 @@ func init() {
 	beego.Router("/admin/article/upload", &admin.ArticleController{}, "*:Upload")
 	beego.Router("/admin/tag", &admin.TagController{}, "*:Index")
 	beego.Router("/admin/flot", &admin.ArticleController{}, "*:Flot")
-	beego.Router("/admin/history", &admin.ArticleController{}, "*:History")
 
 	//相册管理
 	beego.Router("/admin/album/add", &admin.AlbumController{}, "*:Add")

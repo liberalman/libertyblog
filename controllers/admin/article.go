@@ -70,79 +70,6 @@ func (this *ArticleController) List() {
 	this.display("article_list")
 }
 
-func (this *ArticleController) set_args(history *models.History) {
-	history.Content = strings.TrimSpace(this.GetString("content"))
-	history.Title = strings.TrimSpace(this.GetString("title"))
-	timestr := strings.TrimSpace(this.GetString("dotime"))
-	if posttime, err := time.Parse("2006-01-02 15:04:05", timestr); err == nil {
-		history.Dotime = posttime
-	} else {
-		history.Dotime, _ = time.Parse("2006-01-02 15:04:05", history.Dotime.Format("2006-01-02 15:04:05"))
-	}
-	history.Icosty, _ = this.GetInt("icosty")
-	history.Pos, _ = this.GetInt("pos")
-}
-
-func (this *ArticleController) History() {
-	var (
-		history  models.History
-		list     []*models.History
-		pagesize int64 = 15
-		offset   int64
-	)
-	if "POST" == this.Ctx.Request.Method { // Post 说明是增删改操作,AJAX方式提交
-		var post models.History
-		action, _ := this.GetInt("action")
-		if 1 == action { // 新增
-			post.Userid = this.userid
-			this.set_args(&post)
-			if err := post.Insert(); nil != err {
-				this.Ctx.WriteString(err.Error())
-				return
-			}
-		} else if 2 == action { // 修改
-			post.Id, _ = this.GetInt64("id")
-			if err := post.Read("id"); nil != err {
-				this.Ctx.WriteString(err.Error())
-				return
-			} else {
-				if post.Userid != this.userid { // 该文章不是此用户的，无权修改
-					this.Ctx.WriteString("该文章不是此用户的，无权修改")
-					return
-				} else {
-					this.set_args(&post)
-					if err := post.Update("title", "content", "pos", "icosty", "dotime"); nil != err {
-						this.Ctx.WriteString(err.Error())
-						return
-					}
-				}
-			}
-		} else if 3 == action { // 删除
-			post.Id, _ = this.GetInt64("id")
-			if err := post.Delete(); nil != err {
-				this.Ctx.WriteString(err.Error())
-				return
-			}
-		}
-		this.Ctx.WriteString("0")
-	} else {
-		// 查询操作
-		var query orm.QuerySeter
-		/*if 1 == this.userid { // 如果是管理员用户id，则是查看所有的帖子
-			query = history.Query()
-		} else {
-			query = history.Query().Filter("userid", this.userid)
-		}*/
-		query = history.Query().Filter("userid", this.userid)
-		count, _ := query.Count()
-		if count > 0 {
-			query.OrderBy("-dotime").Limit(pagesize, offset).All(&list)
-		}
-		this.Data["list"] = list
-		this.display("history")
-	}
-}
-
 func (this *ArticleController) Flot() {
 	this.display("flot")
 }
@@ -311,7 +238,7 @@ func (this *ArticleController) Save() {
 	}
 
 	// 重置用户信息缓存，主要是为了更新文章数量
-	models.GetUser(this.userid, true)
+	models.CacheResetUser(this.userid)
 	// reset article cache
 	models.GetArticle(id, true)
 

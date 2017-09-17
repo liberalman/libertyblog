@@ -26,6 +26,7 @@
     <![endif]-->
     <link href="https://cdn.bootcss.com/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <link href="/css/admin/admin.css" rel="stylesheet">
+    <link href="/css/future/style.min.css" rel="stylesheet">
   </head>
   
   <body>
@@ -267,14 +268,27 @@
                   <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                   <li>
-                    <a href="/admin/album/list">相册列表</a></li>
-                  <li>
-                    <a href="/admin/album/add">创建相册</a></li>
+										<a href="/admin/album/list"><i class="fa fa-list" aria-hidden="true"></i> 相册列表</a>
+									</li>
+									<li>
+										<a href="/admin/album/add"><i class="fa fa-plus" aria-hidden="true"></i> 创建相册</a>
+									</li>
                 </ul>
               </li>
               <li>
-                <a href="/admin/history"><i class="fa fa-history fa-fw"></i>时间轴</a>
-              </li>
+								<a href="#">
+									<i class="fa fa-line-chart fa-fw"></i>Timeline
+									<span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
+									<li>
+										<a href="/admin/timeline/list"><i class="fa fa-list-alt" aria-hidden="true"></i> Timelines</a>
+									</li>
+									<li>
+										<a href="/admin/timeline/add"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create Timeline</a>
+									</li>
+								</ul>
+								<!-- /.nav-second-level -->
+							</li>
             </ul>
           </div>
           <!-- /.sidebar-collapse --></div>

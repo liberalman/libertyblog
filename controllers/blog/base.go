@@ -47,7 +47,6 @@ func (this *baseController) Prepare() {
 	if page, err = strconv.Atoi(this.Ctx.Input.Param(":page")); err != nil || page < 1 {
 		page = 1
 	}
-
 	if pagesize, err = strconv.Atoi(this.getOption("pagesize")); err != nil || pagesize < 1 {
 		pagesize = 10
 	}
@@ -168,7 +167,7 @@ func (this *baseController) ResetUser() {
 	result := regexp.MustCompile("[0-9]+").FindAllString(auth, -1)
 	if nil != result {
 		userid, _ := strconv.Atoi(result[0])
-		user := models.GetUser(int64(userid), false) // 获取用户信息
+		user := models.CacheGetUser(int64(userid)) // 获取用户信息
 		this.Data["username"] = user.Username
 		this.Data["email"] = user.Email
 		this.Data["avatarurl"] = user.Avatarurl

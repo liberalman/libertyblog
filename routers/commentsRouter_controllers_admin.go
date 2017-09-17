@@ -87,4 +87,60 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"],
+		beego.ControllerComments{
+			Method: "Timeline",
+			Router: `/admin/timeline/:timelineid:int`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"],
+		beego.ControllerComments{
+			Method: "Add",
+			Router: `/admin/timeline/add`,
+			AllowHTTPMethods: []string{"get","post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"],
+		beego.ControllerComments{
+			Method: "Delete",
+			Router: `/admin/timeline/delete`,
+			AllowHTTPMethods: []string{"delete"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"],
+		beego.ControllerComments{
+			Method: "Edit",
+			Router: `/admin/timeline/edit`,
+			AllowHTTPMethods: []string{"get","post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"],
+		beego.ControllerComments{
+			Method: "Hide",
+			Router: `/admin/timeline/hide`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"],
+		beego.ControllerComments{
+			Method: "List",
+			Router: `/admin/timeline/list`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"],
+		beego.ControllerComments{
+			Method: "TimePoint",
+			Router: `/admin/timeline/timepoint`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 }
