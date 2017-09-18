@@ -127,6 +127,74 @@ paths:
             $ref: '#/definitions/models.Photo'
         "403":
           description: :userid is empty
+  /admin/timeline/{timelineid:int}:
+    get:
+      tags:
+      - libertyblog/controllers/adminTimelineController
+  /admin/timeline/add:
+    get:
+      tags:
+      - libertyblog/controllers/adminTimelineController
+    post:
+      tags:
+      - libertyblog/controllers/adminTimelineController
+  /admin/timeline/delete:
+    delete:
+      tags:
+      - libertyblog/controllers/adminTimelineController
+      description: Delete timeline
+      operationId: TimelineController.Delete timeline
+      parameters:
+      - in: query
+        name: timelineid
+        description: timelineid
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: body timeline list page
+        "403":
+          description: :timelineid is empty
+  /admin/timeline/edit:
+    get:
+      tags:
+      - libertyblog/controllers/adminTimelineController
+    post:
+      tags:
+      - libertyblog/controllers/adminTimelineController
+  /admin/timeline/hide:
+    get:
+      tags:
+      - libertyblog/controllers/adminTimelineController
+      description: Hide timeline, just you can see it.
+      operationId: TimelineController.Hide timeline
+      parameters:
+      - in: query
+        name: timelineid
+        description: timelineid
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: timelineid
+        description: ishide
+        required: true
+        type: integer
+        format: int32
+      responses:
+        "200":
+          description: body timeline list page
+        "403":
+          description: :userid is empty
+  /admin/timeline/list:
+    get:
+      tags:
+      - libertyblog/controllers/adminTimelineController
+  /admin/timeline/timepoint:
+    post:
+      tags:
+      - libertyblog/controllers/adminTimelineController
   /blog/photo/all:
     get:
       tags:
@@ -149,6 +217,14 @@ paths:
             $ref: '#/definitions/models.User'
         "403":
           description: :objectId is empty
+  /blog/timeline/{timelineid:int}:
+    get:
+      tags:
+      - libertyblog/controllers/blogTimelineController
+  /blog/timeline/list:
+    get:
+      tags:
+      - libertyblog/controllers/blogTimelineController
   /comment:
     post:
       tags:

@@ -54,7 +54,7 @@ func (this *Pager) ToString() string {
 		}
 	}
 
-	buf.WriteString("<div class=\"page\">")
+	buf.WriteString("<div class=\"page\"><form id=\"next_page\">")
 	if this.Page > 1 {
 		buf.WriteString(fmt.Sprintf("&nbsp<a href=\"%s\">&laquo;</a>", this.url(this.Page-1)))
 	} else {
@@ -77,12 +77,14 @@ func (this *Pager) ToString() string {
 		buf.WriteString(fmt.Sprintf("&nbsp;<a href=\"%s\">%d</a>", this.url(totalpage), totalpage))
 	}
 
+	buf.WriteString(fmt.Sprintf("&nbsp;<input name=\"go_page\" placeholder=\"Go\" size=\"2em\" />"))
+
 	if this.Page < totalpage {
 		buf.WriteString(fmt.Sprintf("&nbsp<a href=\"%s\">&raquo;</a>", this.url(this.Page+1)))
 	} else {
 		buf.WriteString(fmt.Sprintf("&nbsp<b>&raquo;</b>"))
 	}
-	buf.WriteString("</div>")
+	buf.WriteString("</form></div>")
 
 	return buf.String()
 }
