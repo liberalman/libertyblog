@@ -17,10 +17,10 @@
 		<h1 class="page-header">相册图片</h1>
 		<!-- 页头组件能够为 h1 标签增加适当的空间，并且与页面的其他部分形成一定的分隔。 -->
 		<ul id="myTab" class="nav nav-tabs nav-justified">
-			<li>
+			<li class="active">
 				<a href="#first-tab-alt" data-toggle="tab">瀑布流模式</a>
 			</li>
-			<li class="active">
+			<li>
 				<a href="#second-tab-alt" data-toggle="tab">详细列表</a>
 			</li>
 			<li>
@@ -30,15 +30,13 @@
 	</div>
 	<div class="row">
 		<div class="tab-content alt">
-			<div class="tab-pane" id="first-tab-alt">
-				<div class="section-content">
-					<div class="lucas-album" category="PUZZLE">
-						{{range $k, $v := .list}}
-						<img src="{{$v.Url}}" /> {{end}}
-					</div>
+			<div class="tab-pane active" id="first-tab-alt">
+				<div class="lucas-album" category="BARREL" style="widows: 100%; margin: 5em auto auto auto;">
+					{{range $k, $v := .list}}
+					<img src="{{$v.Url}}" /> {{end}}
 				</div>
 			</div>
-			<div class="tab-pane active" id="second-tab-alt">
+			<div class="tab-pane" id="second-tab-alt">
 				<div class="section-content">
 					<br />
 					<div class="row">
