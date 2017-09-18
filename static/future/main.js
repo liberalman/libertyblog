@@ -240,6 +240,16 @@ function init_masonry() {
 	});
 }
 
+function init_masonry_container(container) {
+	// 瀑布流
+	container.imagesLoaded(function() {
+		container.masonry({
+			itemSelector: '.grid-item',
+			columnWidth: '.grid-item'
+		});
+	});
+}
+
 function author(name, userid) {
 	toastr.info('作者：' + name);
 	window.location.href = "/user/" + userid;

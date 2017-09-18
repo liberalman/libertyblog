@@ -1,27 +1,22 @@
-﻿<!DOCTYPE html>
-<html>
- <head> 
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-  <title>TimelineJS</title> 
-  <link rel="stylesheet" type="text/css" href="https://cdn.knightlab.com/libs/timeline/latest/css/timeline.css" /> 
-  <script src="https://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script> 
-  <!-- https://github.com/NUKnightLab/TimelineJS --> 
-  <script type="text/javascript" src="https://cdn.knightlab.com/libs/timeline/latest/js/timeline-min.js"></script> 
-  <script type="text/javascript" src="https://cdn.knightlab.com/libs/timeline/latest/js/storyjs-embed.js"></script> 
-  <script>
+﻿<style>
+	body {
+		padding-top: 0em;
+	}
+</style>
+<link rel="stylesheet" type="text/css" href="https://cdn.knightlab.com/libs/timeline/latest/css/timeline.css" />
+<div id="my-timeline"></div>
+<!-- https://github.com/NUKnightLab/TimelineJS -->
+<script type="text/javascript" src="https://cdn.knightlab.com/libs/timeline/latest/js/timeline-min.js"></script>
+<script type="text/javascript" src="https://cdn.knightlab.com/libs/timeline/latest/js/storyjs-embed.js"></script>
+<script>
 	$(document).ready(function() {
-		var height = document.documentElement.clientHeight;
+		var height = document.documentElement.clientHeight * 0.85;
 		createStoryJS({
-			type:		'timeline',
-			width:		'100%',
-			height:		height,
-			source:		window.location.pathname, // /js/timeline-test.json  或者  /blog/timeline/1
-			embed_id:	'my-timeline'
+			type: 'timeline',
+			width: '100%',
+			height: height,
+			source: window.location.pathname, // /js/timeline-test.json  或者  /blog/timeline/1
+			embed_id: 'my-timeline'
 		});
 	});
-  </script> 
- </head> 
- <body> 
-  <div id="my-timeline"></div>  
- </body>
-</html>
+</script>

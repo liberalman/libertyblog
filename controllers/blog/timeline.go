@@ -75,7 +75,8 @@ func (this *TimelineController) Index() {
 		this.ServeJSON()
 	} else {
 		this.Data["list"] = list
-		this.display_no_layout("timeline")
+		//this.display_no_layout("timeline")
+		this.display("timeline", NO_RIGHT)
 	}
 }
 
