@@ -1,91 +1,110 @@
 <style>
-.wrap {
-	/* 长英文自动换行 */
-	word-break: break-all;
-	table-layout: fixed;
-	overflow: hidden;
-}
+	.wrap {
+		/* 长英文自动换行 */
+		word-break: break-all;
+		table-layout: fixed;
+		overflow: hidden;
+	}
 </style>
 <link href="https://cdn.bootcss.com/lightbox2/2.9.0/css/lightbox.min.css" rel="stylesheet">
 <link href="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.css" rel="stylesheet">
 <script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.min.js"></script>
 <link href="/css/liberty/webuploader-liberty.css" rel="stylesheet">
-<script src="/js/photoAlbum.js"></script>
 <link href="/css/photoAlbum.css" rel="stylesheet">
+
 <div id="page-wrapper">
 	<div class="row">
 		<h1 class="page-header">相册图片</h1>
-		<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-		  上传图片
-		</button>
+		<!-- 页头组件能够为 h1 标签增加适当的空间，并且与页面的其他部分形成一定的分隔。 -->
+		<ul id="myTab" class="nav nav-tabs nav-justified">
+			<li>
+				<a href="#first-tab-alt" data-toggle="tab">瀑布流模式</a>
+			</li>
+			<li class="active">
+				<a href="#second-tab-alt" data-toggle="tab">详细列表</a>
+			</li>
+			<li>
+				<a href="#third-tab-alt" data-toggle="tab">上传图片</a>
+			</li>
+		</ul>
 	</div>
 	<div class="row">
-		<div class="collapse" id="collapseExample">
-			<fieldset>
-				<form method="post" name="p" action="/admin/article/save">
-				    <input id="albumid" value="{{.albumid}}" hidden="hidden" />
-					<table class="table table-form">
-						<tbody>
-							<tr>
-								<td>
-									<p>您可以尝试文件拖拽，使用QQ截屏工具，然后激活窗口后粘贴，或者点击添加图片按钮，来体验此demo.</p>
-									<div id="uploader" class="wu-example">
-										<div class="queueList">
-											<div id="dndArea" class="placeholder">
-												<div id="filePicker"></div>
-												<p>或将照片拖到这里，单次最多可选300张</p>
-											</div>
-										</div>
-										<div class="statusBar" style="display:none;">
-											<div class="progress">
-												<span class="text">0%</span>
-												<span class="percentage"></span>
-											</div>
-											<div class="info"></div>
-											<div class="btns">
-												<div id="filePicker2"></div>
-												<div class="uploadBtn">开始上传</div>
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</form>
-			</fieldset>
-		</div>
-		<hr />
-	</div>
-
-	<div class="row">
-		{{range $k, $v := .list}}
-		<div class="col-sm-5 col-md-3">
-			<div class="thumbnail">
-				<a href="{{$v.Url}}" data-lightbox="lightbox_" title="{{$v.Des}}">
-			    	<img src="{{$v.Small}}" alt="{{$v.Des}}">
-			    </a>
-				<div class="caption">
-					<p class="wrap">
-						<input class="photo_des form-control" photoid="{{$v.Id}}" value="{{$v.Des}}"/>
-					</p>
-					<p>
-						<a class="btn btn-primary" role="button" href="/admin/photo/cover?cover={{$v.Small}}&albumid={{$v.Albumid}}">设为封面</a>
-						<a class="btn btn-default" role="button" href="/admin/photo/delete?id={{$v.Id}}&albumid={{$v.Albumid}}" onclick="return del_confirm()">删除</a>
-					</p>
+		<div class="tab-content alt">
+			<div class="tab-pane" id="first-tab-alt">
+				<div class="section-content">
+					<div class="lucas-album" category="PUZZLE">
+						{{range $k, $v := .list}}
+						<img src="{{$v.Url}}" /> {{end}}
+					</div>
 				</div>
 			</div>
-		</div>
-		{{end}}
-	</div>
-
-	<div class="row">
-		<div class="lucas-album" category="PUZZLE">
-			{{range $k, $v := .list}}
-			<img src="{{$v.Url}}" /> {{end}}
+			<div class="tab-pane active" id="second-tab-alt">
+				<div class="section-content">
+					<br />
+					<div class="row">
+						{{range $k, $v := .list}}
+						<div class="col-sm-5 col-md-3">
+							<div class="thumbnail">
+								<a href="{{$v.Url}}" data-lightbox="lightbox_" title="{{$v.Des}}">
+									<img src="{{$v.Small}}" alt="{{$v.Des}}">
+								</a>
+								<div class="caption">
+									<p class="wrap">
+										<input class="photo_des form-control" photoid="{{$v.Id}}" value="{{$v.Des}}" />
+									</p>
+									<p>
+										<a class="btn btn-primary" role="button" href="/admin/photo/cover?cover={{$v.Small}}&albumid={{$v.Albumid}}">设为封面</a>
+										<a class="btn btn-default" role="button" href="/admin/photo/delete?id={{$v.Id}}&albumid={{$v.Albumid}}" onclick="return del_confirm()">删除</a>
+									</p>
+								</div>
+							</div>
+						</div>
+						{{end}}
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane" id="third-tab-alt">
+				<div class="section-content">
+					<br />
+					<fieldset>
+						<form method="post" name="p" action="/admin/article/save">
+							<input id="albumid" value="{{.albumid}}" hidden="hidden" />
+							<table class="table table-form">
+								<tbody>
+									<tr>
+										<td>
+											<p>您可以尝试文件拖拽，使用QQ截屏工具，然后激活窗口后粘贴，或者点击添加图片按钮，来体验此demo.</p>
+											<div id="uploader" class="wu-example">
+												<div class="queueList">
+													<div id="dndArea" class="placeholder">
+														<div id="filePicker"></div>
+														<p>或将照片拖到这里，单次最多可选300张</p>
+													</div>
+												</div>
+												<div class="statusBar" style="display:none;">
+													<div class="progress">
+														<span class="text">0%</span>
+														<span class="percentage"></span>
+													</div>
+													<div class="info"></div>
+													<div class="btns">
+														<div id="filePicker2"></div>
+														<div class="uploadBtn">开始上传</div>
+													</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</fieldset>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 
 <script src="https://cdn.bootcss.com/lightbox2/2.9.0/js/lightbox.min.js"></script>
+<script src="/js/photoAlbum.js"></script>
 <script src="/js/admin/photo_list.js"></script>
