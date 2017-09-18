@@ -25,6 +25,8 @@ type PhotoWholeSite struct {
 	Url       string    `orm:"size(255)"`
 	Small     string    `orm:"-"`
 	Username  string
+	Userid    int64
+	Avatarurl string
 	Albumname string
 }
 
@@ -76,7 +78,7 @@ func QueryAllPhotoList(page int, pagesize int) ([]PhotoWholeSite, int) {
 	var count int = 0
 	var list []PhotoWholeSite
 	o := orm.NewOrm()
-	o.Raw("select p.id,p.albumid,p.des,p.posttime,p.url,a.name albumname from tb_album a left join tb_photo p on a.id=p.albumid where a.ishide<>1 order by p.posttime desc limit ?,?", (page-1)*pagesize, pagesize).QueryRows(&list)
+	o.Raw("select p.id,p.albumid,p.des,p.posttime,p.url,a.name albumname,a.userid from tb_album a left join tb_photo p on a.id=p.albumid where a.ishide<>1 order by p.posttime desc limit ?,?", (page-1)*pagesize, pagesize).QueryRows(&list)
 	o.Raw("select count(p.id) from tb_album a left join tb_photo p on a.id=p.albumid where a.ishide<>1").QueryRow(&count)
 	return list, count
 }

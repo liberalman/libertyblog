@@ -35,6 +35,9 @@ $(document).ready(function() {
 		theme: 'tooltipster-shadow'
 	});
 
+});
+
+function init_unslider() {
 	//启动轮播效果
 	$('.banner').unslider({
 		speed: 500,
@@ -53,6 +56,20 @@ $(document).ready(function() {
 		arrows: false,
 		// 是否显示上一页，下一页的箭头
 	});
+}
+
+function get_url(type) {
+	var url = "";
+	if(1 == type) {
+		url = '/index' + $("input[name='go_page']").val() + '.html';
+	} else if(2 == type) {
+		url = '/admin/article/list?page=' + $("input[name='go_page']").val();
+	}
+	return url;
+}
+
+function init_pagebar(type) {
+	var url = "";
 
 	$("form[id='next_page']").validate({
 		rules: {
@@ -79,18 +96,17 @@ $(document).ready(function() {
 		},
 		success: function(label) {
 			//label.addClass('right').text('OK!');
-			window.location.href = '/index' + $("input[name='go_page']").val() + '.html';
+			window.location.href = get_url(type); // get_url这个函数不能放到validate之外去执行，否则可能找不到go_page元素
 		},
 		submitHandler: function() {
-			$.get('/index' + $("input[name='go_page']").val() + '.html');
+			$.get(get_url(type)); // get_url这个函数不能放到validate之外去执行，否则可能找不到go_page元素
 		},
 		// 指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
 		errorPlacement: function(error, element) {
 			toastr.error(error[0].innerText);
 		},
 	});
-
-});
+}
 
 function each_markdown_to_html() {
 	$("div[id^='test-editormd-view2-']").each(function() {
@@ -195,8 +211,17 @@ function edit_article(id) {
 }
 
 function get_recomment_photos() {
+	var pagesize = 4;
+	var page = 1;
+	var pagemax = 1;
+	var recommend_total = pagesize;
+	if(window.localStorage){
+	    // 浏览器支持localstorage
+	    recommend_total = window.localStorage.recommend_total;
+	}
+	pagemax = recommend_total / pagesize; // float类型
 	/* Math.random()*(n-m)+m; // 返回指定范围的随机数(m-n之间)的公式,Math.random()返回的是0~1之间的浮点数*/
-	var page = Math.floor(Math.random() * (20 - 1) + 1); // 返回1-10的随机数
+	page = Math.floor(Math.random() * (pagemax - 1) + 1); // 返回1-10的随机数
 
 	$.ajax({
 		url: "/blog/photo/recommend",
@@ -205,7 +230,7 @@ function get_recomment_photos() {
 		async: true,
 		data: {
 			page: page,
-			pagesize: 4,
+			pagesize: pagesize,
 		},
 		success: function(result) {
 			if(0 != result.code) { // 返回0代表成功，其他失败
@@ -217,13 +242,17 @@ function get_recomment_photos() {
 						str += '<article class="mini-post box-shadow-1 wrap"><header>\
 								<h3><a href="#">' + value.Des + '</a></h3>\
 								<time class="published" datetime="2015-10-20">' + value.Posttime + '</time>\
-								<a href="#" class="author"><img src="/future/images/avatar.jpg" alt="" /></a></header>\
+								<a href="#" class="author mytooltip" title="' + value.Username + '"><img src="' + value.Avatarurl + '" alt="" /></a></header>\
 							<a href="/blog/album' + value.Albumid + '.html" class="image"><img src="' + value.Url + '" alt="" /></a></article>';
 					});
 					if(str != "") {
 						$('#recommend_photos').html(str);
 					}
 				}
+				if(window.localStorage){
+	                // 浏览器支持localstorage
+	                window.localStorage.setItem('recommend_total', result.data.count);
+	            }
 			}
 		}
 	});

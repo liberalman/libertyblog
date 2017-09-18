@@ -91,13 +91,14 @@ func (this *PhotoController) Recomend() {
 		pagesize = 10
 	}
 	list, count := models.QueryAllPhotoList(page, pagesize)
-	this.Data["pagebar"] = models.NewPager(int64(page), int64(count), int64(pagesize), "/index%d.html").ToString()
 	i := 0
 	for i < len(list) {
 		list[i].Small = strings.Replace(list[i].Url, "bigpic", "smallpic", 1)
+		user := models.CacheGetUser(list[i].Userid)
+		list[i].Username = user.Username
+		list[i].Avatarurl = user.Avatarurl
 		i++
 	}
-	this.Data["list"] = list
 	if this.IsAjax() {
 		ret := models.Ret{Code: 0, Message: "success"}
 		var obj map[string]interface{} = map[string]interface{}{"page": this.page, "pagesize": this.pagesize}
@@ -108,6 +109,8 @@ func (this *PhotoController) Recomend() {
 		this.ServeJSON()
 		return
 	} else {
+		this.Data["list"] = list
+		this.Data["pagebar"] = models.NewPager(int64(page), int64(count), int64(pagesize), "/index%d.html").ToString()
 		this.display("photos", NO_RIGHT)
 	}
 }
