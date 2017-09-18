@@ -138,7 +138,28 @@
 				<div class="row">
 					<div class="gallery">
 						<ul id="Grid" class="gcontainer">
-							<li class="col-md-4 col-sm-4 col-xs-12 mix bw portraits mix_all" data-cat="graphics" style="display: inline-block;  opacity: 1;">
+						    {{range $k, $v := .list}}
+						    <li class="col-md-4 col-sm-4 col-xs-12 mix {{if gt $k 4}} bw {{else}} nature {{end}} portraits mix_all" data-cat="graphics" style="display: inline-block;  opacity: 1;">
+								<a data-toggle="modal" data-target="#{{$v.Id}}" class="mix-cover">
+									<img class="horizontal" src="{{$v.Url}}" alt="placeholder">
+									<span class="overlay"><span class="valign"></span><span class="title">{{$v.Des}}</span></span>
+								</a>
+								<div class="modal fade" id="{{$v.Id}}" tabindex="-1" role="dialog" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+												<h4 class="modal-title text-center"><font color="black">{{$v.Des}}</font></h4>
+											</div>
+											<div class="modal-body">
+												<img class="thumbnail" alt="Portrait1" src="{{$v.Url}}" width="100%">
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						    {{end}}
+							<!--<li class="col-md-4 col-sm-4 col-xs-12 mix bw portraits mix_all" data-cat="graphics" style="display: inline-block;  opacity: 1;">
 								<a data-toggle="modal" data-target="#portrait1" class="mix-cover">
 									<img class="horizontal" src="/img/liberty/portrait1-sm.jpg" alt="placeholder">
 									<span class="overlay"><span class="valign"></span><span class="title">Portrait 1</span></span>
@@ -191,10 +212,10 @@
 									<img class="vertical" src="/img/liberty/bw1.jpg" alt="Black and White">
 									<span class="overlay"><span class="valign"></span><span class="title">Black &amp; White</span></span>
 								</a>
-							</li>
+							</li>-->
 						</ul>
 
-						<div class="modal fade" id="portrait1" tabindex="-1" role="dialog" aria-hidden="true">
+						<!--<div class="modal fade" id="portrait1" tabindex="-1" role="dialog" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -310,7 +331,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div>-->
 
 					</div>
 				</div>
@@ -383,11 +404,12 @@
 		<script src="/js/liberty/slidefolio-script.js"></script>
 		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="/js/jquery.grumble.min.js"></script>
-
+		<script src="/future/user.js"></script>
 		<script>
 			$.vegas('slideshow', {
 				delay: 5000,
-				backgrounds: [{
+				backgrounds: [
+				/* {
 						src: '/img/liberty/nature1.jpg',
 						fade: 2000
 					},
@@ -418,83 +440,16 @@
 					{
 						src: '/img/liberty/forest.jpg',
 						fade: 2000
-					}
+					}*/
+					{{range $k, $v := .list}}
+					{
+						src: '{{$v.Url}}',
+						fade: 2000
+					},
+					{{end}}
 				]
 			})('overlay', {
-				src: '/img/liberty/overlay.png'
-			});
-		</script>
-
-		<script>
-			$(function() {
-				$('#Grid').mixitup();
-			});
-		</script>
-
-		<script>
-			$(function() {
-				$('a[href*=#]:not([href=#])').click(function() {
-					if(location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') ||
-						location.hostname == this.hostname) {
-
-						var target = $(this.hash);
-						target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-						if(target.length) {
-							$('html,body').animate({
-								scrollTop: target.offset().top
-							}, 1000);
-							return false;
-						}
-					}
-				});
-			});
-		</script>
-
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$('#nav').scrollToFixed();
-
-				$('#darkside').click(function(e) {
-					var $me = $(this),
-						interval;
-
-					e.preventDefault();
-
-					/*
-	 	text：气泡提示框中的文本。
-		angle：气泡提示框的旋转角度。
-		distance：气泡提示框距离目标的距离。
-		showAfter：显示气泡提示框之前的延迟时间。
-		hideAfter：多长时间之后隐藏气泡提示框。
-		hasHideButton：是否显示关闭按钮。
-		buttonHideText：关闭按钮的文本。
-		type：气泡提示框的类型。
-		onShow：显示提示框时的回调函数。
-		onBeginHide：开始隐藏提示框时的回调函数。
-		onHide：隐藏提示框之后的回调函数。
-	 	*/
-
-					$me.grumble({
-						angle: 130,
-						text: 'Look at me!',
-						type: 'alt-',
-						distance: 10,
-						hideOnClick: true,
-						onShow: function() {
-							var angle = 130,
-								dir = 1;
-							interval = setInterval(function() {
-								(angle > 220 ? (dir = -1, angle--) : (angle < 130 ? (dir = 1, angle++) : angle += dir));
-								$me.grumble('adjust', {
-									angle: angle
-								});
-							}, 25);
-						},
-						onHide: function() {
-							clearInterval(interval);
-						}
-					});
-				});
+				src: '/img/overlay.png'
 			});
 		</script>
 

@@ -209,12 +209,19 @@ func (this *UserController) updateLoginStatus(user *models.User) {
 func (this *UserController) User() {
 	userid, _ := strconv.Atoi(this.Ctx.Input.Param(":userid"))
 	user := models.CacheGetUser(int64(userid))
+	list, count := models.QueryMyPhotoList(int64(userid), this.page, this.pagesize)
 	if this.IsAjax() {
+		data := map[string]interface{}{}
 		ret := models.NewRet(0, "", user)
+		data["user"] = user
+		data["list"] = list
+		data["count"] = count
+		ret.Data = data
 		this.Data["json"] = ret
 		this.ServeJSON()
 	} else {
 		this.Data["user"] = user
+		this.Data["list"] = list
 		this.display_no_layout("user")
 	}
 }

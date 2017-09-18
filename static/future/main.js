@@ -241,7 +241,7 @@ function get_recomment_photos() {
 					result.data.list.forEach(function(value, index, array) {
 						str += '<article class="mini-post box-shadow-1 wrap"><header>\
 								<h3><a href="#">' + value.Des + '</a></h3>\
-								<time class="published" datetime="2015-10-20">' + value.Posttime + '</time>\
+								<time class="published" datetime="2015-10-20">' + value.Albumname + '</time>\
 								<a href="#" class="author mytooltip" title="' + value.Username + '"><img src="' + value.Avatarurl + '" alt="" /></a></header>\
 							<a href="/blog/album' + value.Albumid + '.html" class="image"><img src="' + value.Url + '" alt="" /></a></article>';
 					});
