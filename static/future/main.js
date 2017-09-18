@@ -70,6 +70,9 @@ $(document).ready(function() {
 			//label.addClass('right').text('OK!');
 			window.location.href = '/index' + $("input[name='go_page']").val() + '.html';
 		},
+		submitHandler: function() {
+			window.location.href = '/index' + $("input[name='go_page']").val() + '.html';
+		},
 		// 指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
 		errorPlacement: function(error, element) {
 			toastr.error(error[0].innerText);
