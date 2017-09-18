@@ -1,4 +1,4 @@
-<link href="/css/timeline.css" rel="stylesheet">
+<link href="/css/timeline.liberalman.css" rel="stylesheet">
 
 <div id="page-wrapper">
 	<div class="row">
@@ -77,6 +77,7 @@
 					<div class="timeline-panel">
 								<div class="timeline-body">
 									<input name="action" id="action" value="1" class="hidden"/>
+									<input name="timelineid" id="timelineid" value="{{.timelineid}}" class="hidden"/>
 									<input name="id" id="id" value="-1" class="hidden"/>
 									<div class="form-group input-group has-success">
 										<span class="input-group-addon">标题</span>
@@ -88,7 +89,6 @@
 											<div class="form-group input-group">
 												<span class="input-group-addon">时间</span>
 												<input class="form-control" name="createtime" size="16" type="text" id="datetimepicker" data-date-format="yyyy-mm-dd HH:ii:ss">
-												<label for="datetimepicker" class="input-group-addon"></label>
 											</div>
 											
 										</div>

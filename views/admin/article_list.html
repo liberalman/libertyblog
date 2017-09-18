@@ -94,10 +94,11 @@
 <script src="https://cdn.bootcss.com/datatables/1.10.15/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.bootcss.com/datatables/1.10.15/js/dataTables.bootstrap.min.js"></script>
 <script src="/js/dataTables.responsive.min.js"></script>
-<script src="/js/common.js"></script>
+
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
 	$(document).ready(function() {
+	    add_window_of_edit_article();
 		/* 以下代码不能用，否则会报Cannot set property 'nTf' 的错误，
 		因为我tfoot中的colspan="20"横跨了多个td，不满足DataTable对于th和td强一致的要求。  */
 		/*$('#dataTables-example').DataTable({

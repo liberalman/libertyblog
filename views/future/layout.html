@@ -1,197 +1,128 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <!--
 	Future Imperfect by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-
-	<head>
-		<title>{{.title}}</title>
-		<meta charset="utf-8" />
-		<meta name="keywords" content="{{.keywords}}">
-		<meta name="description" content="{{.description}}">
-		<link href="favicon.ico" rel="icon">
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="/future/assets/css/main.css" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-
-		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-		<link href="https://cdn.bootcss.com/tooltipster/3.3.0/css/themes/tooltipster-shadow.min.css" rel="stylesheet">
-		<link href="https://cdn.bootcss.com/tooltipster/3.3.0/css/tooltipster.min.css" rel="stylesheet">
-		<link href="https://cdn.bootcss.com/toastr.js/latest/toastr.min.css" rel="stylesheet">
-		<link href="https://cdn.bootcss.com/unslider/2.0.3/css/unslider.css" rel="stylesheet">
-		<link href="https://cdn.bootcss.com/unslider/2.0.3/css/unslider-dots.css" rel="stylesheet">
-		<link href="https://cdn.bootcss.com/lightbox2/2.9.0/css/lightbox.min.css" rel="stylesheet">
-		<style>
-			.banner {
-				overflow: hidden;
-			}
-		</style>
-		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-		<link href="/future/style.min.css" rel="stylesheet">
-	</head>
-
-	<body>
-
-		<!-- Wrapper -->
-		<div id="wrapper">
-
-			<!-- Header -->
-			<header id="header">
-				<h1><a href="/">Liberalman</a></h1>
-				<nav class="links">
-					<ul>
-						<li>
-							<a href="/"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
-						</li>
-						<li>
-							<a href="/article/addmarkdown" target="_blank">发布文章</a>
-						</li>
-						<li>
-							<a href="/album.html">相册</a>
-						</li>
-						<li>
-							<a href="/blog/photo/all">photo all</a>
-						</li>
-						<li>
-							<a href="/blog/timeline/list">Timeline</a>
-						</li>
-						<li>
-							{{if .username}}
-							<a href="/user/{{.userid}}">{{.username}}</a>
-							{{else}}
-							<a href="/login">Login</a>
-							{{end}}
-						</li>
-					</ul>
-				</nav>
-				<nav class="navbar">
-					<div class="collapse navbar-collapse">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li>
-								<a href="/tools/compare" target="_blank">Compare</a>
-							</li>
-							<li role="separator" class="divider"></li>
-							<li>
-								<a href="/tools/html2markdown" target="_blank">Html to Markdown</a>
-							</li>
-							<li role="separator" class="divider"></li>
-							<li>
-								<a href="/tools/jsformat" target="_blank">Js Format</a>
-							</li>
-							<li role="separator" class="divider"></li>
-							<li>
-								<a href="/tools/url" target="_blank">URL编码</a>
-							</li>
-							<li role="separator" class="divider"></li>
-							<li>
-								<a href="/tools/time" target="_blank">时间戳转换</a>
-							</li>
-						</ul>
-					</div>
-				</nav>
-				<nav class="main">
-					<ul>
-						<li class="search">
-							<a class="fa-search" href="#search">Search</a>
-							<form id="search" method="get" action="/search">
-								<input type="text" name="key" placeholder="Search" />
-							</form>
-						</li>
-						<li class="menu">
-							<a class="fa-bars" href="#menu">Menu</a>
-						</li>
-					</ul>
-				</nav>
-			</header>
-
-			<!-- Menu -->
-			<section id="menu">
-
-				<!-- Search -->
-				<section>
-					<form class="search" method="get" action="/search">
-						<input type="text" name="key" placeholder="Search" />
-					</form>
-				</section>
-
-				<!-- Links -->
-				<section>
-					<ul class="links">
-						<li>
-							<a href="/admin">
-								<h3>后台管理 <i class="fa fa-cog fa-spin fa-fw"></i></h3>
-								<p>Feugiat tempus veroeros dolor</p>
-							</a>
-						</li>
-						<li>
-							<a href="/admin/article/list">
-								<h3>我的文章 <i class="fa fa-book fa-fw">{{.post_count}}</i></h3>
-								<p>Sed vitae justo condimentum</p>
-							</a>
-						</li>
-						<li>
-							<a href="/album.html">
-								<h3>相册 <i class="fa fa-book fa-fw"></i></h3>
-								<p>Album</p>
-							</a>
-						</li>
-					</ul>
-				</section>
-
-				<!-- Actions -->
-				<section>
-					<ul class="actions vertical">
-						<li>
-							{{if .username}}
-							<a href="/user/logout" class="button big fit">Log Out</a>
-							{{else}}
-							<a href="/login" class="button big fit">Log In</a>
-							{{end}}
-						</li>
-					</ul>
-				</section>
-
-			</section>
-
-			{{.LayoutContent}} {{if .no_right}} {{else}}
-			<!-- no_right不为空的时候，显示侧边栏窗口 -->
-			{{.right}} {{end}}
-			
-		</div>
-		<div class="back-to-top">
-			<i class="fa fa-angle-up fa-3x"></i>
-		</div>
-
-		<!-- Scripts -->
-		<script src="/future/assets/js/skel.min.js"></script>
-		<script src="/future/assets/js/util.js"></script>
-		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-		<script src="/future/assets/js/main.js"></script>
-
-		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-		<script src="https://cdn.bootcss.com/tooltipster/3.3.0/js/jquery.tooltipster.min.js"></script>
-		<script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script>
-		<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.min.js"></script>
-		<script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.locales.min.js"></script>
-		<script src="https://cdn.bootcss.com/lightbox2/2.9.0/js/lightbox.min.js"></script>
-		<script src="https://cdn.bootcss.com/unslider/2.0.3/js/unslider-min.js"></script>
-		<!--
+ <head> 
+  <title>{{.title}}</title> 
+  <meta charset="utf-8" /> 
+  <meta name="keywords" content="{{.keywords}}" /> 
+  <meta name="description" content="{{.description}}" /> 
+  <link href="favicon.ico" rel="icon" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" /> 
+  <!--[if lte IE 8]><script src="/future/assets/js/ie/html5shiv.js"></script><![endif]--> 
+  <link rel="stylesheet" href="/future/assets/css/main.css" /> 
+  <!--[if lte IE 9]><link rel="stylesheet" href="/future/assets/css/ie9.css" /><![endif]--> 
+  <!--[if lte IE 8]><link rel="stylesheet" href="/future/assets/css/ie8.css" /><![endif]--> 
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" /> 
+  <link href="https://cdn.bootcss.com/tooltipster/3.3.0/css/themes/tooltipster-shadow.min.css" rel="stylesheet" /> 
+  <link href="https://cdn.bootcss.com/tooltipster/3.3.0/css/tooltipster.min.css" rel="stylesheet" /> 
+  <link href="https://cdn.bootcss.com/toastr.js/latest/toastr.min.css" rel="stylesheet" /> 
+  <link href="https://cdn.bootcss.com/unslider/2.0.3/css/unslider.css" rel="stylesheet" /> 
+  <link href="https://cdn.bootcss.com/unslider/2.0.3/css/unslider-dots.css" rel="stylesheet" /> 
+  <link href="https://cdn.bootcss.com/lightbox2/2.9.0/css/lightbox.min.css" rel="stylesheet" />  
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script> 
+  <link href="/future/style.min.css" rel="stylesheet" /> 
+ </head> 
+ <body> 
+  <!-- Wrapper --> 
+  <div id="wrapper"> 
+   <!-- Header --> 
+   <header id="header"> 
+    <h1><a href="/">Liberalman</a></h1> 
+    <nav class="links"> 
+     <ul> 
+      <li> <a href="/"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a> </li> 
+      <li> <a href="/article/addmarkdown" target="_blank">发布文章</a> </li> 
+      <li> <a href="/album.html">相册</a> </li> 
+      <li> <a href="/blog/photo/all">photo all</a> </li> 
+      <li> <a href="/blog/timeline/list">Timeline</a> </li> 
+      <li> {{if .username}} <a href="/user/{{.userid}}">{{.username}}</a> {{else}} <a href="/login">Login</a> {{end}} </li> 
+     </ul> 
+    </nav> 
+    <nav class="navbar"> 
+     <div class="collapse navbar-collapse"> 
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools<span class="caret"></span></a> 
+      <ul class="dropdown-menu"> 
+       <li> <a href="/tools/compare" target="_blank">Compare</a> </li> 
+       <li role="separator" class="divider"></li> 
+       <li> <a href="/tools/html2markdown" target="_blank">Html to Markdown</a> </li> 
+       <li role="separator" class="divider"></li> 
+       <li> <a href="/tools/jsformat" target="_blank">Js Format</a> </li> 
+       <li role="separator" class="divider"></li> 
+       <li> <a href="/tools/url" target="_blank">URL编码</a> </li> 
+       <li role="separator" class="divider"></li> 
+       <li> <a href="/tools/time" target="_blank">时间戳转换</a> </li> 
+      </ul> 
+     </div> 
+    </nav> 
+    <nav class="main"> 
+     <ul> 
+      <li class="search"> <a class="fa-search" href="#search">Search</a> 
+       <form id="search" method="get" action="/search"> 
+        <input type="text" name="key" placeholder="Search" /> 
+       </form> </li> 
+      <li class="menu"> <a class="fa-bars" href="#menu">Menu</a> </li> 
+     </ul> 
+    </nav> 
+   </header> 
+   <!-- Menu --> 
+   <section id="menu"> 
+    <!-- Search --> 
+    <section> 
+     <form class="search" method="get" action="/search"> 
+      <input type="text" name="key" placeholder="Search" /> 
+     </form> 
+    </section> 
+    <!-- Links --> 
+    <section> 
+     <ul class="links"> 
+      <li> <a href="/admin"> <h3>后台管理 <i class="fa fa-cog fa-spin fa-fw"></i></h3> <p>Feugiat tempus veroeros dolor</p> </a> </li> 
+      <li> <a href="/admin/article/list"> <h3>我的文章 <i class="fa fa-book fa-fw">{{.post_count}}</i></h3> <p>Sed vitae justo condimentum</p> </a> </li> 
+      <li> <a href="/album.html"> <h3>相册 <i class="fa fa-book fa-fw"></i></h3> <p>Album</p> </a> </li> 
+     </ul> 
+    </section> 
+    <!-- Actions --> 
+    <section> 
+     <ul class="actions vertical"> 
+      <li> {{if .username}} <a href="/user/logout" class="button big fit">Log Out</a> {{else}} <a href="/login" class="button big fit">Log In</a> {{end}} </li> 
+     </ul> 
+    </section> 
+   </section>
+   {{.LayoutContent}}
+       {{if .no_right}}
+   {{else}} 
+   <!-- no_right不为空的时候，显示侧边栏窗口 -->
+       {{.right}}
+   {{end}} 
+  </div> 
+  <!-- Scripts --> 
+  <script src="/future/assets/js/skel.min.js"></script> 
+  <script src="/future/assets/js/util.js"></script> 
+  <!--[if lte IE 8]><script src="/future/assets/js/ie/respond.min.js"></script><![endif]--> 
+  <script src="/future/assets/js/main.js"></script> 
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+  <script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.min.js"></script> 
+  <script src="https://cdn.bootcss.com/tooltipster/3.3.0/js/jquery.tooltipster.min.js"></script> 
+  <script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script> 
+  <script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.min.js"></script> 
+  <script src="https://cdn.bootcss.com/timeago.js/3.0.2/timeago.locales.min.js"></script> 
+  <script src="https://cdn.bootcss.com/lightbox2/2.9.0/js/lightbox.min.js"></script> 
+  <script src="https://cdn.bootcss.com/unslider/2.0.3/js/unslider-min.js"></script> 
+  <script src="https://cdn.bootcss.com/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js"></script>
+  <script src="https://cdn.bootcss.com/masonry/4.2.0/masonry.pkgd.min.js"></script>
+  <!--
 		作者：zscchina@163.com
 		时间：2017-08-23
 		描述：原来的jquery.pin.min.js中的load函数没改造，我改造了之后，使得它适应jquery1.9之后的版本
-	    -->
-		<script src="/js/jquery.pin.liberalman.min.js"></script>
-		<script src="/future/main.js"></script>
-		<!-- 百度分享按钮 -->
-		<script>
+	    --> 
+  <script src="/js/jquery.pin.liberalman.min.js"></script> 
+  <script src="/future/main.js"></script> 
+  <!-- 百度分享按钮 --> 
+  <script>
 			window._bd_share_config = {
 				"common": {
 					"bdSnsKey": {},
@@ -221,8 +152,6 @@
 				}
 			};
 			with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
-		</script>
-
-	</body>
-
+		</script>  
+ </body>
 </html>

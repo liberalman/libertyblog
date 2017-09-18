@@ -156,3 +156,7 @@ a:active {
 	border: #999 1px solid;
 }
 /*==== 翻页样式 end ====*/
+
+.banner {
+    overflow: hidden;
+ }

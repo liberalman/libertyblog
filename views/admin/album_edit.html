@@ -60,6 +60,7 @@
 	</div>
 </div>
 <script>
+	/*
 	//初始化fileinput控件（第一次初始化）
 	function initFileInput(ctrlName, uploadUrl, preViewImageurl) {
 		var control = $('#' + ctrlName);
@@ -98,24 +99,5 @@
 
 	//初始化fileinput控件（第一次初始化）
 	//initFileInput("editormd-image-file", "/admin/article/upload", {{.album.Cover}});
-
-	function del_album(albumid) {
-		if(confirm("确定要删除吗？")) {
-			$.ajax({
-				url: '/admin/album/delete?albumid=' + albumid,
-				data: {
-					albumid: albumid
-				},
-				type: 'delete',
-				success: function(result) {
-					if(0 != result.code) {
-						toastr.error("code:" + result.code + " message:" + result.message);
-					} else {
-						toastr.success(result.message);
-						window.location.href = "/admin/album/list";
-					}
-				}
-			});
-		}
-	}
+	*/
 </script>

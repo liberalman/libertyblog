@@ -52,24 +52,3 @@
 		<!-- /.col-lg-12 -->
 	</div>
 </div>
-<script>
-	function del_timeline(timelineid) {
-		if(confirm("确定要删除吗？")) {
-			$.ajax({
-				url: '/admin/timeline/delete?timelineid=' + timelineid,
-				data: {
-					timelineid: timelineid
-				},
-				type: 'delete',
-				success: function(result) {
-					if(0 != result.code) {
-						toastr.error("code:" + result.code + " message:" + result.message);
-					} else {
-						toastr.success(result.message);
-						window.location.href = "/admin/timeline/list";
-					}
-				}
-			});
-		}
-	}
-</script>

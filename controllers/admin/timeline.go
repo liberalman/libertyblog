@@ -159,6 +159,7 @@ func (this *TimelineController) Timeline() {
 		query.OrderBy("-createtime").Limit(pagesize, offset).All(&list)
 	}
 	this.Data["list"] = list
+	this.Data["timelineid"] = timelineid
 	this.display("timeline")
 
 }
@@ -172,6 +173,7 @@ func (this *TimelineController) TimePoint() {
 	action, _ := this.GetInt("action")
 	if 1 == action { // 新增
 		timepoint.Userid = this.userid
+		timepoint.Timelineid, _ = this.GetInt64("timelineid")
 		this.setArgs(&timepoint)
 		if err := timepoint.Insert(); nil != err {
 			this.Ctx.WriteString(err.Error())

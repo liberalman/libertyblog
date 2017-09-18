@@ -73,20 +73,6 @@
 <script src="/editor.md/editormd.liberalman.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("div[id^='test-editormd-view2-']").each(function() {
-			var testEditormdView2;
-			// $(this)[0].id  获取id名字
-			testEditormdView2 = editormd.markdownToHTML($(this)[0].id, {
-				htmlDecode: "style,script,iframe", // you can filter tags decode
-				emoji: true,
-				tocm: true,
-				taskList: true,
-				tex: true, // 默认不解析
-				flowChart: true, // 默认不解析
-				sequenceDiagram: true, // 默认不解析
-				mermaid: true, // mermaid图
-				viz: true, // WebGraphviz
-			});
-		});
+		each_markdown_to_html();
 	});
 </script>
