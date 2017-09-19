@@ -89,7 +89,7 @@ func (this *PhotoController) Delete() {
 
 		} else if 2 == photo.Source { // 又拍云
 			cleanup.Event = models.CANNOT_DELETE_UPYUN
-			reg := regexp.MustCompile(`.com\/([\S\.]*)`) // 匹配'.com'之后的内容
+			reg := regexp.MustCompile(`static/(.*/){0,}([^.]+).*`) // 匹配'.com'之后的内容 //.com\/([\S\.]*)
 			matchs := reg.FindStringSubmatch(photo.Url)
 			if len(matchs) > 0 {
 				key := reg.FindStringSubmatch(photo.Url)[0]
