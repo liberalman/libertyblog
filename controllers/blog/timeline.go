@@ -34,6 +34,7 @@ type JStimeline struct {
 // @router /blog/timeline/:timelineid:int [get]
 func (this *TimelineController) Index() {
 	timelineid, _ := strconv.Atoi(this.Ctx.Input.Param(":timelineid"))
+	this.pagesize = 1000
 	list, _ := new(models.TimePoint).GetList(this.page, this.pagesize, int64(timelineid))
 
 	// 查询操作
