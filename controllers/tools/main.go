@@ -46,3 +46,8 @@ func (this *MainController) Url() {
 func (this *MainController) Time() {
 	this.TplName = "tools/time.html"
 }
+
+// @router /tools/vim [get]
+func (this *MainController) Vim() {
+	this.TplName = "tools/vim.html"
+}

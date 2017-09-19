@@ -47,4 +47,12 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["libertyblog/controllers/tools:MainController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/tools:MainController"],
+		beego.ControllerComments{
+			Method: "Vim",
+			Router: `/tools/vim`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 }

@@ -1,0 +1,48 @@
+<div class="row">
+	<div class="col-sm-12 col-md-12">
+		<div class="thumbnail">
+			<img src="https://offical.b0.upaiyun.com/static/vgod_vim_cheat_sheet_full-1-min.jpg" alt="...">
+			<div class="caption">
+				<h3>VIM</h3>
+				<p>...</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12 col-md-12">
+		<div class="thumbnail">
+			<img src="http://images2015.cnblogs.com/blog/175824/201611/175824-20161123224659425-328736487.png" alt="...">
+			<div class="caption">
+				<h3>VIM</h3>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">@</span>
+					<textarea class="form-control" aria-describedby="basic-addon1" rows="30" readonly="readonly">
+1.替换
+:s/old/new - 用new替换当前行第一个old。
+:s/old/new/g - 用new替换当前行所有的old。
+:n1,n2s/old/new/g - 用new替换文件n1行到n2行所有的old。
+:%s/old/new/g - 用new替换文件中所有的old。
+:%s/^/xxx/g - 在每一行的行首插入xxx，^表示行首。
+:%s/$/xxx/g - 在每一行的行尾插入xxx，$表示行尾。
+所有替换命令末尾加上c，每个替换都将需要用户确认。 如：%s/old/new/gc，加上i则忽略大小写(ignore)。
+还有一种比替换更灵活的方式，它是匹配到某个模式后执行某种命令，
+语法为 :[range]g/pattern/command
+例如 :%g/^ xyz/normal dd。
+表示对于以一个空格和xyz开头的行执行normal模式下的dd命令。
+关于range的规定为：
+
+如果不指定range，则表示当前行。
+m,n: 从m行到n行。
+0: 最开始一行（可能是这样）。
+$: 最后一行
+.: 当前行
+%: 所有行
+
+</textarea>
+				</div>
+				<p></p>
+			</div>
+		</div>
+	</div>
+</div>

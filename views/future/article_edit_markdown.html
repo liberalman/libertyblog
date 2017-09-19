@@ -16,12 +16,7 @@
 			<div id="layout">
 				<header>
 					<div class="form-group">
-						<div class="input-group">
-							<span class="input-group-addon">
-	                            <label>ID</label>
-	                        </span>
-							<input name="id" class="form-control" size="2em" value="{{.post.Id}}" />
-						</div>
+						<input name="id" class="form-control" size="2em" value="{{.post.Id}}" style="display:none"/>
 						<input name="title" placeholder="文章标题，要起的大气点！" class="form-control" size="60" value="{{.post.Title}}" />
 						<input type="text" name="tags" class="form-control" placeholder="分类,多个用英文逗号‘,’分隔" value="{{.post.Tags}}" />
 						<select class="form-control" name="pubtype">
