@@ -143,13 +143,15 @@ function init_pagebar(current_page, pagesize, total) {
 						if(0 != result.code) {
 							toastr.error("code:" + result.code + " message:" + result.message);
 						} else {
+							console.info(result.data);
 							toastr.success(result.message);
 							var str = "";
 							if(result.data.list) {
 								result.data.list.forEach(function(value, index, array) {
+									var Link = '/article/' + value.Id;
 									str += '<article class="post box-shadow-1"><header>\
 											<div class="title">\
-												<h2><a href="' + value.Link + '" class="wrap">' + value.Title + '</a></h2></div>\
+												<h2><a href="' + Link + '" class="wrap">' + value.Title + '</a></h2></div>\
 											<div class="meta">\
 												<time class="published" datetime="2015-11-01">' + value.Posttime + '</time>\
 												<a href="' + value.Userid + '" class="author mytooltip" title="This is my span tooltip message">\
@@ -158,7 +160,7 @@ function init_pagebar(current_page, pagesize, total) {
 
 									if(value.Coverurl != "") {
 										str += '<div class="myimg" style="overflow: hidden;">\
-												<a href="' + value.Link + '"><img src="' + value.Coverurl + '" width="100%" alt="" /></a></div>';
+												<a href="' + Link + '"><img src="' + value.Coverurl + '" width="100%" alt="" /></a></div>';
 									}
 									str += '<div class="title">\
 												<div id="test-editormd-view2-' + value.Id + '" style="font-size: 1.0em; line-height:2em;">\
@@ -166,10 +168,10 @@ function init_pagebar(current_page, pagesize, total) {
 										</header>\
 										<footer>\
 											<ul class="actions">\
-												<li><a href="' + value.Link + '" class="button big">Continue Reading</a></li>\
+												<li><a href="' + Link + '" class="button big">Continue Reading</a></li>\
 											</ul>\
 											<ul class="stats">\
-												<li>' + value.Link + '</li>\
+												<li>' + Link + '</li>\
 												<li><a href="' + value.Link + '" class="icon fa-heart">' + value.Views + '</a></li>\
 												<li><a href="' + value.Link + '" class="icon fa-comment">0</a></li>\
 											</ul>\
