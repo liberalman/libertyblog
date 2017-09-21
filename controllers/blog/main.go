@@ -24,11 +24,26 @@ type MainController struct {
 
 // @router / [get]
 func (this *MainController) Index() {
-	var count int = 0
-	this.Data["list"], count = models.PostIndex(this.page, this.pagesize)
-	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(this.pagesize), "/index%d.html").ToString()
-	this.setHeadFootMetas()
-	this.display("index", HAS_RIGHT)
+	list, count := models.PostIndex(this.page, this.pagesize)
+	if this.IsAjax() {
+		ret := models.Ret{Code: 0, Message: "success"}
+		data := map[string]interface{}{}
+		data["total"] = count
+		data["page"] = this.page
+		data["pagesize"] = this.pagesize
+		data["list"] = list
+		ret.Data = data
+		this.Data["json"] = ret
+		this.ServeJSON()
+	} else {
+		this.Data["list"] = list
+		this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(this.pagesize), "/index%d.html").ToString()
+		this.Data["total"] = count
+		this.Data["page"] = this.page
+		this.Data["pagesize"] = this.pagesize
+		this.setHeadFootMetas()
+		this.display("index", HAS_RIGHT)
+	}
 }
 
 // @router /webscan_360_cn.html [get]

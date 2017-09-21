@@ -8,57 +8,61 @@
 		width: 17em;
 	}
 </style>
+<link rel="stylesheet" href="/css/paging-style.css" />
 <!-- Main -->
 <div id="main">
-	
-	{{range $k, $v := .list}}
-	<!-- Post -->
-	<article class="post box-shadow-1">
-		<header>
-			<div class="title">
-				<h2><a href="{{$v.Link}}" class="wrap">{{$v.Title}}</a></h2>
-			</div>
-			<div class="meta">
-				<time class="published" datetime="2015-11-01">{{date $v.Posttime "Y-m-j"}}</time>
-				<a href="/user/{{$v.Userid}}" class="author mytooltip" title="This is my span's tooltip message!">
-					<span class="name">{{$v.Username}}</span><img src="{{$v.Avatarurl}}" alt="" />
-				</a>
-			</div>
-		</header>
-		<header>
-			{{if $v.Coverurl}}
-			<div class="myimg" style="overflow: hidden;">
-				<a href="{{$v.Link}}"><img src="{{$v.Coverurl}}" width="100%" alt="" /></a>
-			</div>
-			{{end}}
-			<div class="title">
-				<div id="test-editormd-view2-{{$v.Id}}" style="font-size: 1.0em; line-height:2em;">
-					<textarea id="append-test" style="display:none;">{{$v.Digest}}</textarea>
+	<div id="articles">
+		<!-- Post -->
+		{{range $k, $v := .list}}
+		<article class="post box-shadow-1">
+			<header>
+				<div class="title">
+					<h2><a href="{{$v.Link}}" class="wrap">{{$v.Title}}</a></h2>
 				</div>
-			</div>
-		</header>
-		<footer>
-			<ul class="actions">
-				<li>
-					<a href="{{$v.Link}}" class="button big">Continue Reading</a>
-				</li>
-			</ul>
-			<ul class="stats">
-				<li>
-					{{str2html $v.TagsLink}}
-				</li>
-				<li>
-					<a href="{{$v.Link}}" class="icon fa-heart">{{$v.Views}}</a>
-				</li>
-				<li>
-					<a href="{{$v.Link}}" class="icon fa-comment">0</a>
-				</li>
-			</ul>
-		</footer>
-	</article>
-	{{end}} {{str2html .pagebar}}
+				<div class="meta">
+					<time class="published" datetime="2015-11-01">{{date $v.Posttime "Y-m-j"}}</time>
+					<a href="/user/{{$v.Userid}}" class="author mytooltip" title="This is my span's tooltip message!">
+						<span class="name">{{$v.Username}}</span><img src="{{$v.Avatarurl}}" alt="" />
+					</a>
+				</div>
+			</header>
+			<header>
+				{{if $v.Coverurl}}
+				<div class="myimg" style="overflow: hidden;">
+					<a href="{{$v.Link}}"><img src="{{$v.Coverurl}}" width="100%" alt="" /></a>
+				</div>
+				{{end}}
+				<div class="title">
+					<div id="test-editormd-view2-{{$v.Id}}" style="font-size: 1.0em; line-height:2em;">
+						<textarea id="append-test" style="display:none;">{{$v.Digest}}</textarea>
+					</div>
+				</div>
+			</header>
+			<footer>
+				<ul class="actions">
+					<li>
+						<a href="{{$v.Link}}" class="button big">Continue Reading</a>
+					</li>
+				</ul>
+				<ul class="stats">
+					<li>
+						{{str2html $v.TagsLink}}
+					</li>
+					<li>
+						<a href="{{$v.Link}}" class="icon fa-heart">{{$v.Views}}</a>
+					</li>
+					<li>
+						<a href="{{$v.Link}}" class="icon fa-comment">0</a>
+					</li>
+				</ul>
+			</footer>
+		</article>
+		{{end}} {{str2html .pagebar}}
+	</div>
+	<div class="paging-box" id="paging-box"></div>
 </div>
 
+<script src="/js/paging.min.js"></script>
 <link rel="stylesheet" href="/editor.md/css/editormd.preview.min.css" />
 <link rel="stylesheet" href="//cdn.bootcss.com/mermaid/7.0.0/mermaid.min.css" />
 <script src="/editor.md/lib/marked.min.js"></script>
@@ -75,5 +79,7 @@
 	$(document).ready(function() {
 		each_markdown_to_html();
 		init_pagebar(1);
+
+		init_pagebar({{.page}}, {{.pagesize}}, {{.total}});
 	});
 </script>

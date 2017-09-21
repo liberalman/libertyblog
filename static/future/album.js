@@ -41,9 +41,9 @@
 						data.data.list.forEach(function(value, index, array) {
 							str += '<div class="grid-item">\
 								<div class="thumbnail">\
-								    <a href="/blog/album' + value.Albumid + '.html"><img src="' + value.Url + '" alt="' + value.Des + '" /></a>\
+								    <a data-lightbox="lightbox_" title="' + value.Des + '" href="' + value.Url + '"><img src="' + value.Url + '" alt="' + value.Des + '" /></a>\
 									<div class="caption">\
-										<h3>&middot;' + value.Albumname + '</h3>\
+										<h3><a href="/blog/album' + value.Albumid + '.html">&middot;' + value.Albumname + '</a></h3>\
 										<p>' + value.Des + '</p>\
 										<p>\
 											<i class="fa fa-heart-o" aria-hidden="true"></i>\

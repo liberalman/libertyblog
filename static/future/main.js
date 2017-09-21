@@ -126,6 +126,69 @@ function each_markdown_to_html() {
 	});
 }
 
+function init_pagebar(current_page, pagesize, total) {
+	$('#paging-box').paging({
+		initPageNo: current_page, // 初始页码
+		totalPages: parseInt(total / pagesize), //总页数
+		totalCount: '合计' + total + '条数据', // 条目总数
+		slideSpeed: 600, // 缓动速度。单位毫秒
+		jump: true, //是否支持跳转
+		callback: function(page) { // 回调函数
+			if(parseInt(page)>0) {
+				$.ajax({
+					url: '/index' + page + '.html',
+					cache: true,
+					type: 'get',
+					success: function(result) {
+						if(0 != result.code) {
+							toastr.error("code:" + result.code + " message:" + result.message);
+						} else {
+							toastr.success(result.message);
+							var str = "";
+							if(result.data.list) {
+								result.data.list.forEach(function(value, index, array) {
+									str += '<article class="post box-shadow-1"><header>\
+											<div class="title">\
+												<h2><a href="' + value.Link + '" class="wrap">' + value.Title + '</a></h2></div>\
+											<div class="meta">\
+												<time class="published" datetime="2015-11-01">' + value.Posttime + '</time>\
+												<a href="' + value.Userid + '" class="author mytooltip" title="This is my span tooltip message">\
+													<span class="name">' + value.Userid + '</span><img src="' + value.Avatarurl + '" alt="a" /></a>\
+											</div></header><header>';
+
+									if(value.Coverurl != "") {
+										str += '<div class="myimg" style="overflow: hidden;">\
+												<a href="' + value.Link + '"><img src="' + value.Coverurl + '" width="100%" alt="" /></a></div>';
+									}
+									str += '<div class="title">\
+												<div id="test-editormd-view2-' + value.Id + '" style="font-size: 1.0em; line-height:2em;">\
+													<textarea id="append-test" style="display:none;">' + value.Digest + '</textarea></div></div>\
+										</header>\
+										<footer>\
+											<ul class="actions">\
+												<li><a href="' + value.Link + '" class="button big">Continue Reading</a></li>\
+											</ul>\
+											<ul class="stats">\
+												<li>' + value.Link + '</li>\
+												<li><a href="' + value.Link + '" class="icon fa-heart">' + value.Views + '</a></li>\
+												<li><a href="' + value.Link + '" class="icon fa-comment">0</a></li>\
+											</ul>\
+										</footer></article>';
+								});
+								if(str != "") {
+									$('#articles').html(str);
+									each_markdown_to_html();
+									$('.back-to-top').click();
+								}
+							}
+						}
+					}
+				});
+			}
+		}
+	});
+}
+
 function checkall(name, obj) {
 	$(":checkbox[name='" + name + "']").each(function(o) {
 		$(this).prop('checked', obj.checked);
@@ -215,9 +278,9 @@ function get_recomment_photos() {
 	var page = 1;
 	var pagemax = 1;
 	var recommend_total = pagesize;
-	if(window.localStorage){
-	    // 浏览器支持localstorage
-	    recommend_total = window.localStorage.recommend_total;
+	if(window.localStorage) {
+		// 浏览器支持localstorage
+		recommend_total = window.localStorage.recommend_total;
 	}
 	pagemax = recommend_total / pagesize; // float类型
 	/* Math.random()*(n-m)+m; // 返回指定范围的随机数(m-n之间)的公式,Math.random()返回的是0~1之间的浮点数*/
@@ -249,10 +312,10 @@ function get_recomment_photos() {
 						$('#recommend_photos').html(str);
 					}
 				}
-				if(window.localStorage){
-	                // 浏览器支持localstorage
-	                window.localStorage.setItem('recommend_total', result.data.count);
-	            }
+				if(window.localStorage) {
+					// 浏览器支持localstorage
+					window.localStorage.setItem('recommend_total', result.data.count);
+				}
 			}
 		}
 	});
