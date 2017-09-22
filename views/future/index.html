@@ -1,6 +1,6 @@
 <style>
 	.myimg {
-		/*上　右　下 　左*/
+		/* top　right　bottom left */
 		padding: 3.75em 0em 1.75em 1.75em;
 		border-left: solid 1px rgba(160, 160, 160, 0.3);
 		min-width: 17em;
@@ -11,7 +11,8 @@
 <link rel="stylesheet" href="/css/paging-style.css" />
 <!-- Main -->
 <div id="main">
-	<div id="articles">
+    <input id="hasload" value="1" style="display:none;"/>
+    <div id="articles">
 		<!-- Post -->
 		{{range $k, $v := .list}}
 		<article class="post box-shadow-1">
@@ -77,9 +78,11 @@
 <script src="/editor.md/editormd.liberalman.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		each_markdown_to_html();
-		init_pagebar(1);
-
+        console.info($('#hasload').val());
+        if(1 == $('#hasload').val()) {
+            each_markdown_to_html();
+        }
+		//init_pagebar1(1);
 		init_pagebar({{.page}}, {{.pagesize}}, {{.total}});
 	});
 </script>

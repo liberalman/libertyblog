@@ -68,7 +68,7 @@ function get_url(type) {
 	return url;
 }
 
-function init_pagebar(type) {
+function init_pagebar1(type) {
 	var url = "";
 
 	$("form[id='next_page']").validate({
@@ -126,15 +126,19 @@ function each_markdown_to_html() {
 	});
 }
 
-function init_pagebar(current_page, pagesize, total) {
+function init_pagebar(init_page, pagesize, total) {
 	$('#paging-box').paging({
-		initPageNo: current_page, // 初始页码
+		initPageNo: init_page, // 初始页码
 		totalPages: parseInt(total / pagesize), //总页数
 		totalCount: '合计' + total + '条数据', // 条目总数
 		slideSpeed: 600, // 缓动速度。单位毫秒
 		jump: true, //是否支持跳转
 		callback: function(page) { // 回调函数
-			if(parseInt(page)>0) {
+            console.info(page); 
+            old_page = sessionStorage.getItem("/page");
+            console.info(old_page); 
+            sessionStorage.setItem("/page", page);
+            if(null != old_page && old_page != page) {
 				$.ajax({
 					url: '/index' + page + '.html',
 					cache: true,

@@ -93,8 +93,10 @@ sphinx-index:
     SPHINX_MODE: indexing
   links:
     - db:mysql
-  volumes:
-    - "/var/coreseek/:/usr/local/coreseek/var/"
-    - "/var/coreseek/log/:/usr/local/coreseek/var/log/"
-    - "/var/coreseek/data/:/usr/local/coreseek/var/data/"
+  volumes_from:
+    - sphinx
+#  volumes:
+#    - "/var/coreseek/:/usr/local/coreseek/var/"
+#    - "/var/coreseek/log/:/usr/local/coreseek/var/log/"
+#    - "/var/coreseek/data/:/usr/local/coreseek/var/data/"
 
