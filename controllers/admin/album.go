@@ -42,6 +42,7 @@ func (this *AlbumController) Add() {
 	if this.Ctx.Request.Method == "POST" {
 		rank, _ := this.GetInt("rank")
 		var album models.Album
+		album.Userid = this.userid
 		album.Name = strings.TrimSpace(this.GetString("albumname"))
 		//album.Cover = strings.TrimSpace(this.GetString("cover"))
 		album.Cover = "/static/upload/defaultcover.png"
