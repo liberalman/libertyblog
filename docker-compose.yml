@@ -6,7 +6,7 @@ web:
     SERVICE_80_NAME: libertyblog
     SERVICE_TAGS: backend
   links:
-    - db
+    - database
     - sphinx
   volumes:
     - "/data/gocode/src/libertyblog/conf/app-docker.conf:/data/conf/app.conf"
@@ -17,7 +17,7 @@ web:
     - "80"
   restart: always
 
-db:
+database:
   image: mysql/mysql-server
   hostname: mysql
   volumes:
@@ -79,7 +79,7 @@ sphinx:
     - "23890:9312"
     - "9306"
   links:
-    - db:mysql
+    - database:mysql
   volumes:
     - "/var/coreseek/:/usr/local/coreseek/var/"
 
@@ -88,7 +88,7 @@ sphinx:
 #  environment:
 #    SPHINX_MODE: indexing
 #  links:
-#    - db:mysql
+#    - database:mysql
 #  volumes_from:
 #    - sphinx
 
@@ -97,6 +97,6 @@ sphinx:
 #  environment:
 #    SPHINX_MODE: merge
 #  links:
-#    - db:mysql
+#    - database:mysql
 #  volumes_from:
 #    - sphinx
