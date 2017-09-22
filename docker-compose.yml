@@ -78,25 +78,25 @@ sphinx:
   ports:
     - "23890:9312"
     - "9306"
-#  environment:
-#    SPHINX_MODE: indexing
   links:
     - db:mysql
   volumes:
     - "/var/coreseek/:/usr/local/coreseek/var/"
-    - "/var/coreseek/log/:/usr/local/coreseek/var/log/"
-    - "/var/coreseek/data/:/usr/local/coreseek/var/data/"
 
-sphinx-index:
-  image: liberalman/coreseek
-  environment:
-    SPHINX_MODE: indexing
-  links:
-    - db:mysql
-  volumes_from:
-    - sphinx
-#  volumes:
-#    - "/var/coreseek/:/usr/local/coreseek/var/"
-#    - "/var/coreseek/log/:/usr/local/coreseek/var/log/"
-#    - "/var/coreseek/data/:/usr/local/coreseek/var/data/"
+#sphinx-index:
+#  image: liberalman/coreseek
+#  environment:
+#    SPHINX_MODE: indexing
+#  links:
+#    - db:mysql
+#  volumes_from:
+#    - sphinx
 
+#sphinx-merge:
+#  image: liberalman/coreseek
+#  environment:
+#    SPHINX_MODE: merge
+#  links:
+#    - db:mysql
+#  volumes_from:
+#    - sphinx
