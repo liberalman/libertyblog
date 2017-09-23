@@ -17,7 +17,7 @@
               <i class="fa fa-comments fa-5x"></i>
             </div>
             <div class="col-xs-9 text-right">
-              <div class="huge">{{.postnum}}</div>
+              <div class="huge"><<<.postnum>>></div>
               <div>文章数量!</div></div>
           </div>
         </div>
@@ -40,7 +40,7 @@
               <i class="fa fa-tasks fa-5x"></i>
             </div>
             <div class="col-xs-9 text-right">
-              <div class="huge">{{.usernum}}</div>
+              <div class="huge"><<<.usernum>>></div>
               <div>用户数量!</div></div>
           </div>
         </div>
@@ -63,7 +63,7 @@
               <i class="fa fa-support fa-5x"></i>
             </div>
             <div class="col-xs-9 text-right">
-              <div class="huge">{{.tagnum}}</div>
+              <div class="huge"><<<.tagnum>>></div>
               <div>标签数量!</div></div>
           </div>
         </div>
@@ -86,8 +86,8 @@
               <i class="fa fa-shopping-cart fa-5x"></i>
             </div>
             <div class="col-xs-9 text-right">
-              <div class="huge">CPU数量 {{.cpunum}}</div>
-              <div>主机名称:{{.hostname}} Go语言版本:{{.gover}}  操作系统:{{.os}}({{.arch}})</div></div>
+              <div class="huge">CPU数量 <<<.cpunum>>></div>
+              <div>主机名称:<<<.hostname>>> Go语言版本:<<<.gover>>>  操作系统:<<<.os>>>(<<<.arch>>>)</div></div>
           </div>
         </div>
         <a href="#">
@@ -337,15 +337,15 @@ $(function() {
     Morris.Area({
         element: 'morris-area-chart',
         data: [
-        {{range $k, $v := .statistics}}
+        <<<range $k, $v := .statistics>>>
         {
-            period: '{{date $v.Create_time "Y-m-j"}}',
-            user_count: {{$v.User_count}},
-            post_count: {{$v.Post_count}},
-            tag_count: {{$v.Tag_count}},
-            dau: {{$v.Dau}}
+            period: '<<<date $v.Create_time "Y-m-j">>>',
+            user_count: <<<$v.User_count>>>,
+            post_count: <<<$v.Post_count>>>,
+            tag_count: <<<$v.Tag_count>>>,
+            dau: <<<$v.Dau>>>
         },
-        {{end}}
+        <<<end>>>
         ],
         xkey: 'period',
         ykeys: ['user_count', 'tag_count', 'dau', 'post_count'],
@@ -356,18 +356,18 @@ $(function() {
     });
     
     // Morris
-		//var obj = JSON.parse('{{(index .statistics 0).Tags}}');  //由JSON字符串转换为JSON对象
+		//var obj = JSON.parse('<<<(index .statistics 0).Tags>>>');  //由JSON字符串转换为JSON对象
 		//console.info(obj);
 		
     Morris.Donut({
         element: 'morris-donut-chart',
         data: [
-        {{range $k, $v := .tag_list}}
+        <<<range $k, $v := .tag_list>>>
         {
-        	label: {{$v.Name}},
-        	value: {{$v.Count}}
+        	label: <<<$v.Name>>>,
+        	value: <<<$v.Count>>>
         },
-        {{end}}
+        <<<end>>>
         ],
         resize: true
     });

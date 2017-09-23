@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="/editor.md/css/editormd.min.css" />
 		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdn.bootcss.com/toastr.js/latest/toastr.min.css" rel="stylesheet">
-		<link rel="shortcut icon" href="{{.staticPath}}/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="<<<.staticPath>>>/favicon.ico" type="image/x-icon" />
 	</head>
 
 	<body>
@@ -16,20 +16,20 @@
 			<div id="layout">
 				<header>
 					<div class="form-group">
-						<input name="id" class="form-control" size="2em" value="{{.post.Id}}" style="display:none"/>
-						<input name="title" placeholder="文章标题，要起的大气点！" class="form-control" size="60" value="{{.post.Title}}" />
-						<input type="text" name="tags" class="form-control" placeholder="分类,多个用英文逗号‘,’分隔" value="{{.post.Tags}}" />
+						<input name="id" class="form-control" size="2em" value="<<<.post.Id>>>" style="display:none"/>
+						<input name="title" placeholder="文章标题，要起的大气点！" class="form-control" size="60" value="<<<.post.Title>>>" />
+						<input type="text" name="tags" class="form-control" placeholder="分类,多个用英文逗号‘,’分隔" value="<<<.post.Tags>>>" />
 						<select class="form-control" name="pubtype">
-							{{if eq 1 .post.Pubtype }}
+							<<<if eq 1 .post.Pubtype >>>
 							<option value="0">原创</option>
 							<option value="1" selected>转载</option>
-							{{else}}
+							<<<else>>>
 							<option value="0" selected>原创</option>
 							<option value="1">转载</option>
-							{{end}}
+							<<<end>>>
 							<option value="2">翻译</option>
 						</select>
-						<input name="reprinturl" placeholder="转载地址" class="form-control" {{if eq 1 .post.Pubtype }} style="display:inline;" value="{{.post.Reprinturl}}" {{else}} style="display:none;" {{end}}/>
+						<input name="reprinturl" placeholder="转载地址" class="form-control" <<<if eq 1 .post.Pubtype >>> style="display:inline;" value="<<<.post.Reprinturl>>>" <<<else>>> style="display:none;" <<<end>>>/>
 						<select class="form-control" name="status">
 							<option value="0">已发布</option>
 							<option value="1">草稿箱</option>
@@ -40,21 +40,21 @@
                       </span>
 							<input type="text" class="form-control" aria-label="..." value="置顶" size="4">
 						</div>
-						<input class="form-control" placeholder="发布时间" name="posttime" value="{{.posttime}}" size="16" type="text" id="datetimepicker" data-date-format="yyyy-mm-dd HH:ii:ss"  style="display:none">
+						<input class="form-control" placeholder="发布时间" name="posttime" value="<<<.posttime>>>" size="16" type="text" id="datetimepicker" data-date-format="yyyy-mm-dd HH:ii:ss"  style="display:none">
 						<div class="input-group">
 							<span class="input-group-addon">
-                            <img src="{{.post.Coverurl}}" height="6%"/>
+                            <img src="<<<.post.Coverurl>>>" height="6%"/>
                         </span>
-							<input name="coverurl" placeholder="封面图片" class="form-control" id="coverurl" value="{{.post.Coverurl}}" type="hidden" />
+							<input name="coverurl" placeholder="封面图片" class="form-control" id="coverurl" value="<<<.post.Coverurl>>>" type="hidden" />
 						</div>
 						<input type="submit" value="Just do it!" class="btn btn-danger" />
 						</br>
 						</br>
-						<textarea name="digest" placeholder="文章摘要(80个字内)" class="form-control" cols="160" />{{.post.Digest}}</textarea>
+						<textarea name="digest" placeholder="文章摘要(80个字内)" class="form-control" cols="160" /><<<.post.Digest>>></textarea>
 					</div>
 				</header>
 				<div id="test-editormd">
-					<textarea style="display:none;" name="content">{{.post.Content}}</textarea>
+					<textarea style="display:none;" name="content"><<<.post.Content>>></textarea>
 				</div>
 				<div class="form-group">
 					&nbsp;&nbsp;&nbsp;&nbsp;
@@ -205,7 +205,7 @@
 									toastr.error("code: " + data.code + " message: " + data.message);
 								} else {
 									toastr.success(data.message);
-									window.location = "/article/{{.post.Id}}"; //跳转
+									window.location = "/article/<<<.post.Id>>>"; //跳转
 									$('#myModal', parent.document).click(); // 关闭父页面的编辑窗口
 								}
 							});

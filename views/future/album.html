@@ -168,13 +168,13 @@
 			<div class="section-content">
 				<br />
 				<div class="row masonry-container">
-					{{range $k, $v := .list}}
+					<<<range $k, $v := .list>>>
 					<div class="item">
 						<div class="thumbnail">
-							<a href="/blog/album{{$v.Id}}.html"><img src="{{$v.Cover}}" alt="{{$v.Name}}" /></a>
+							<a href="/blog/album<<<$v.Id>>>.html"><img src="<<<$v.Cover>>>" alt="<<<$v.Name>>>" /></a>
 							<div class="caption">
-								<h3>&middot;{{$v.Name}}</h3>
-								<p>{{$v.Content}}</p>
+								<h3>&middot;<<<$v.Name>>></h3>
+								<p><<<$v.Content>>></p>
 								<p>
 									<i class="fa fa-heart-o" aria-hidden="true"></i>
 									<i class="fa fa-eye" aria-hidden="true"></i>
@@ -182,9 +182,9 @@
 							</div>
 						</div>
 					</div>
-					{{end}}
+					<<<end>>>
 				</div>
-				<div class="row">{{str2html .pagebar}}</div>
+				<div class="row"><<<str2html .pagebar>>></div>
 			</div>
 			<br />
 			<br />

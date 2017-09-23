@@ -26,32 +26,32 @@
 									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody>{{range $k, $v := .list}}
+							<tbody><<<range $k, $v := .list>>>
 								<tr class="gradeA">
 									<td>
-										<input type="checkbox" name="ids[]" value="{{$v.Id}}" /></td>
-									<td>{{$v.Id}}</td>
-									<td class="hl_author">{{$v.Name}}</td>
+										<input type="checkbox" name="ids[]" value="<<<$v.Id>>>" /></td>
+									<td><<<$v.Id>>></td>
+									<td class="hl_author"><<<$v.Name>>></td>
 									<td>
-										<a href="/admin/photo/list?albumid={{$v.Id}}">
-											<img class="img-rounded" src="{{$v.Cover}}" onerror="onerror=null;src='/static/upload/defaultcover.png'" width="150em" />
+										<a href="/admin/photo/list?albumid=<<<$v.Id>>>">
+											<img class="img-rounded" src="<<<$v.Cover>>>" onerror="onerror=null;src='/static/upload/defaultcover.png'" width="150em" />
 										</a>
 									</td>
-									<td>{{$v.Content}}</td>
-									<td class="center">{{date $v.Posttime "Y-m-d H:i:s"}}</td>
-									<td>{{$v.Rank}}</td>
+									<td><<<$v.Content>>></td>
+									<td class="center"><<<date $v.Posttime "Y-m-d H:i:s">>></td>
+									<td><<<$v.Rank>>></td>
 									<td>
-										{{if $v.Ishide}}
-										<a href="/admin/album/hide?albumid={{$v.Id}}&ishide=0">显示</a>
-										{{else}}
-										<a href="/admin/album/hide?albumid={{$v.Id}}&ishide=1">隐藏</a>
-										{{end}} |
-										<a href="/admin/album/edit?albumid={{$v.Id}}">修改</a>
+										<<<if $v.Ishide>>>
+										<a href="/admin/album/hide?albumid=<<<$v.Id>>>&ishide=0">显示</a>
+										<<<else>>>
+										<a href="/admin/album/hide?albumid=<<<$v.Id>>>&ishide=1">隐藏</a>
+										<<<end>>> |
+										<a href="/admin/album/edit?albumid=<<<$v.Id>>>">修改</a>
 									</td>
-								</tr>{{end}}</tbody>
+								</tr><<<end>>></tbody>
 							<tfoot>
 								<tr>
-									<td colspan="22">{{str2html .pagebar}}</td>
+									<td colspan="22"><<<str2html .pagebar>>></td>
 								</tr>
 								<tr>
 									<td width="30">

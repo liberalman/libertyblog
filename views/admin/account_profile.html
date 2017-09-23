@@ -9,11 +9,11 @@
 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
 
-{{if .updated}}
+<<<if .updated>>>
 <script type="text/javascript">
 	toastr.success('修改成功！');
 </script>
-{{end}}
+<<<end>>>
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
@@ -35,31 +35,31 @@
 					<div class="list-group">
 						<a href="#" class="list-group-item">
 							<i class="fa fa-comment fa-fw"></i>用户ID
-							<span class="pull-right text-muted small"><em>{{.user.Id}}</em></span>
+							<span class="pull-right text-muted small"><em><<<.user.Id>>></em></span>
 						</a>
 						<a href="#" class="list-group-item">
 							<i class="fa fa-twitter fa-fw"></i>用户名
 
-							<span class="pull-right text-muted small"><em>{{.user.Username}}</em></span>
+							<span class="pull-right text-muted small"><em><<<.user.Username>>></em></span>
 						</a>
 						<a href="#" class="list-group-item">
 							<i class="fa fa-envelope fa-fw"></i>邮箱
-							<span class="pull-right text-muted small"><em>{{.user.Email}}</em></span>
+							<span class="pull-right text-muted small"><em><<<.user.Email>>></em></span>
 						</a>
 						<a href="#" class="list-group-item">
 							<i class="fa fa-tasks fa-fw"></i>登录次数
 							<span class="pull-right text-muted small">
-                <em>{{.user.Logincount}}</em></span>
+                <em><<<.user.Logincount>>></em></span>
 						</a>
 						<a href="#" class="list-group-item">
 							<i class="fa fa-upload fa-fw"></i>最后登录时间
 							<span class="pull-right text-muted small">
-                <em>{{date .user.Lastlogin "Y-m-d H:i:s"}}</em></span>
+                <em><<<date .user.Lastlogin "Y-m-d H:i:s">>></em></span>
 						</a>
 						<a href="#" class="list-group-item">
 							<i class="fa fa-bolt fa-fw"></i>最后登录ip
 							<span class="pull-right text-muted small">
-                <em>{{.user.Lastip}}</em></span>
+                <em><<<.user.Lastip>>></em></span>
 						</a>
 						<a href="#" class="list-group-item">
 							<i class="fa fa-warning fa-fw"></i>Server Not Responding
@@ -72,7 +72,7 @@
                 <em>9:49 AM</em></span>
 						</a>
 						<a href="#" class="list-group-item">
-							<i class="fa fa-money fa-fw"></i> {{.user.Information}}
+							<i class="fa fa-money fa-fw"></i> <<<.user.Information>>>
 							<span class="pull-right text-muted small">
                 <em>Yesterday</em></span>
 						</a>
@@ -142,7 +142,7 @@
 				<div class="panel-body">
 
 					<div class="thumbnail">
-						<img src="{{.user.Avatarurl}}" alt="我的头像">
+						<img src="<<<.user.Avatarurl>>>" alt="我的头像">
 						<div class="caption">
 							<h3>我的头像</h3>
 							<p>...</p>
@@ -178,15 +178,15 @@
 				<div class="modal-body">
 					<div class="input-group">
 						<span class="input-group-addon">用户名</span>
-						<input type="text" class="form-control" id="cusername" name="username" placeholder="用户名" value="{{.user.Username}}">
+						<input type="text" class="form-control" id="cusername" name="username" placeholder="用户名" value="<<<.user.Username>>>">
 					</div><br />
 					<div class="input-group">
 						<span class="input-group-addon">&nbsp;&nbsp;Email</span>
-						<input type="text" class="form-control" id="cemail" name="email" placeholder="Email" value="{{.user.Email}}">
+						<input type="text" class="form-control" id="cemail" name="email" placeholder="Email" value="<<<.user.Email>>>">
 					</div><br />
 					<div class="input-group">
 						<span class="input-group-addon">个人信息</span>
-						<input type="text" class="form-control" id="cinformation" name="information" placeholder="Information" value="{{.user.Information}}">
+						<input type="text" class="form-control" id="cinformation" name="information" placeholder="Information" value="<<<.user.Information>>>">
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -214,7 +214,7 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-12">
-								<img src="{{.user.Avatarurl}}" alt="我的头像" id="image">
+								<img src="<<<.user.Avatarurl>>>" alt="我的头像" id="image">
 								<label class="btn btn-primary btn-upload" for="editormd-image-file" title="Upload image file">
 					            <input type="file" class="sr-only" id="editormd-image-file" name="editormd-image-file" accept="image/*">
 					            <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with Blob URLs">

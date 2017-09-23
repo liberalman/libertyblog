@@ -37,7 +37,6 @@ func (this *MainController) Index() {
 		this.ServeJSON()
 	} else {
 		this.Data["list"] = list
-		this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(this.pagesize), "/index%d.html").ToString()
 		this.Data["total"] = count
 		this.Data["page"] = this.page
 		this.Data["pagesize"] = this.pagesize

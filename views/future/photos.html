@@ -10,15 +10,15 @@
 <!-- Main -->
 <div id="main">
 	<div class="masonry-container">
-		{{range $k, $v := .list}}
+		<<<range $k, $v := .list>>>
 		<div class="grid-item">
 			<div class="box13">
-				<h1><a href="/blog/album{{$v.Albumid}}.html"> {{$v.Albumname}} </a></h1>
-				<a href="{{$v.Url}}" data-lightbox="lightbox_" title="{{$v.Des}}">
-					<img src="{{$v.Url}}" alt="{{$v.Des}}" height="auto">
+				<h1><a href="/blog/album<<<$v.Albumid>>>.html"> <<<$v.Albumname>>> </a></h1>
+				<a href="<<<$v.Url>>>" data-lightbox="lightbox_" title="<<<$v.Des>>>">
+					<img src="<<<$v.Url>>>" alt="<<<$v.Des>>>" height="auto">
 				</a>
 				<p>
-					&middot;{{$v.Des}}
+					&middot;<<<$v.Des>>>
 				</p>
 				<br />
 				<div class="box13_corner_lf"></div>
@@ -26,7 +26,7 @@
 				<div class="box13_ribbon"></div>
 			</div>
 		</div>
-		{{end}}
+		<<<end>>>
 	</div>
 </div>
 <script type="text/javascript">

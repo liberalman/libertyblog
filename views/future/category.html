@@ -11,53 +11,53 @@
 <!-- Main -->
 <div id="main">
 	<article class="post box-shadow-1">
-		<h1>{{.tag.Name}} <small>{{.tag.Count}} 篇文章</small></h1>
+		<h1><<<.tag.Name>>> <small><<<.tag.Count>>> 篇文章</small></h1>
 	</article>
 
-	{{range $k, $v := .list}}
+	<<<range $k, $v := .list>>>
 	<!-- Post -->
 	<article class="post box-shadow-1">
 		<header>
 			<div class="title">
-				<h2><a href="{{$v.Link}}" class="wrap">{{$v.Title}}</a></h2>
+				<h2><a href="<<<$v.Link>>>" class="wrap"><<<$v.Title>>></a></h2>
 			</div>
 			<div class="meta">
-				<time class="published" datetime="2015-11-01">{{date $v.Posttime "Y-m-j"}}</time>
-				<a href="/user/{{$v.Userid}}" class="author"><span class="name">{{$v.Username}}</span><img src="{{$v.Avatarurl}}" alt="" /></a>
+				<time class="published" datetime="2015-11-01"><<<date $v.Posttime "Y-m-j">>></time>
+				<a href="/user/<<<$v.Userid>>>" class="author"><span class="name"><<<$v.Username>>></span><img src="<<<$v.Avatarurl>>>" alt="" /></a>
 			</div>
 		</header>
 		<header>
-			{{if $v.Coverurl}}
+			<<<if $v.Coverurl>>>
 			<div class="myimg" style="overflow: hidden;">
-				<a href="{{$v.Link}}"><img src="{{$v.Coverurl}}" width="100%" alt="" /></a>
+				<a href="<<<$v.Link>>>"><img src="<<<$v.Coverurl>>>" width="100%" alt="" /></a>
 			</div>
-			{{end}}
+			<<<end>>>
 			<div class="title">
-				<div id="test-editormd-view2-{{$v.Id}}" style="font-size: 1.0em; line-height:2em;">
-					<textarea id="append-test" style="display:none;">{{$v.Digest}}</textarea>
+				<div id="test-editormd-view2-<<<$v.Id>>>" style="font-size: 1.0em; line-height:2em;">
+					<textarea id="append-test" style="display:none;"><<<$v.Digest>>></textarea>
 				</div>
 			</div>
 		</header>
 		<footer>
 			<ul class="actions">
 				<li>
-					<a href="{{$v.Link}}" class="button big">Continue Reading</a>
+					<a href="<<<$v.Link>>>" class="button big">Continue Reading</a>
 				</li>
 			</ul>
 			<ul class="stats">
 				<li>
-					{{str2html $v.TagsLink}}
+					<<<str2html $v.TagsLink>>>
 				</li>
 				<li>
-					<a class="icon fa-heart" onclick="likeit($(this))">{{$v.Views}}</a>
+					<a class="icon fa-heart" onclick="likeit($(this))"><<<$v.Views>>></a>
 				</li>
 				<li>
-					<a href="{{$v.Link}}" class="icon fa-comment">0</a>
+					<a href="<<<$v.Link>>>" class="icon fa-comment">0</a>
 				</li>
 			</ul>
 		</footer>
 	</article>
-	{{end}} {{str2html .pagebar}}
+	<<<end>>> <<<str2html .pagebar>>>
 </div>
 
 <link rel="stylesheet" href="/editor.md/css/editormd.preview.min.css" />

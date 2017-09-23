@@ -32,32 +32,32 @@
 		<div class="tab-content alt">
 			<div class="tab-pane active" id="first-tab-alt">
 				<div class="lucas-album" category="BARREL" style="widows: 100%; margin: 5em auto auto auto;">
-					{{range $k, $v := .list}}
-					<img src="{{$v.Url}}" /> {{end}}
+					<<<range $k, $v := .list>>>
+					<img src="<<<$v.Url>>>" /> <<<end>>>
 				</div>
 			</div>
 			<div class="tab-pane" id="second-tab-alt">
 				<div class="section-content">
 					<br />
 					<div class="row">
-						{{range $k, $v := .list}}
+						<<<range $k, $v := .list>>>
 						<div class="col-sm-5 col-md-3">
 							<div class="thumbnail">
-								<a href="{{$v.Url}}" data-lightbox="lightbox_" title="{{$v.Des}}">
-									<img src="{{$v.Small}}" alt="{{$v.Des}}">
+								<a href="<<<$v.Url>>>" data-lightbox="lightbox_" title="<<<$v.Des>>>">
+									<img src="<<<$v.Small>>>" alt="<<<$v.Des>>>">
 								</a>
 								<div class="caption">
 									<p class="wrap">
-										<input class="photo_des form-control" photoid="{{$v.Id}}" value="{{$v.Des}}" />
+										<input class="photo_des form-control" photoid="<<<$v.Id>>>" value="<<<$v.Des>>>" />
 									</p>
 									<p>
-										<a class="btn btn-primary" role="button" href="/admin/photo/cover?cover={{$v.Small}}&albumid={{$v.Albumid}}">设为封面</a>
-										<a class="btn btn-default" role="button" href="/admin/photo/delete?id={{$v.Id}}&albumid={{$v.Albumid}}" onclick="return del_confirm()">删除</a>
+										<a class="btn btn-primary" role="button" href="/admin/photo/cover?cover=<<<$v.Small>>>&albumid=<<<$v.Albumid>>>">设为封面</a>
+										<a class="btn btn-default" role="button" href="/admin/photo/delete?id=<<<$v.Id>>>&albumid=<<<$v.Albumid>>>" onclick="return del_confirm()">删除</a>
 									</p>
 								</div>
 							</div>
 						</div>
-						{{end}}
+						<<<end>>>
 					</div>
 				</div>
 			</div>
@@ -66,7 +66,7 @@
 					<br />
 					<fieldset>
 						<form method="post" name="p" action="/admin/article/save">
-							<input id="albumid" value="{{.albumid}}" hidden="hidden" />
+							<input id="albumid" value="<<<.albumid>>>" hidden="hidden" />
 							<table class="table table-form">
 								<tbody>
 									<tr>

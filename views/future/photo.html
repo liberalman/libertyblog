@@ -18,17 +18,17 @@
 </style>
 <!-- Main -->
 <div id="main">
-	<h1>{{$.album.Name}}</h1>
+	<h1><<<$.album.Name>>></h1>
 	<h6>Ailiya</h6>
 	<div class="masonry-container">
-		{{range $k, $v := .list}}
+		<<<range $k, $v := .list>>>
 		<div class="grid-item">
 			<div class="box12">
-				<a href="{{$v.Url}}" data-lightbox="lightbox_" title="{{$v.Des}}">
-					<img src="{{$v.Url}}" alt="{{$v.Des}}" height="auto">
+				<a href="<<<$v.Url>>>" data-lightbox="lightbox_" title="<<<$v.Des>>>">
+					<img src="<<<$v.Url>>>" alt="<<<$v.Des>>>" height="auto">
 				</a>
 				<p>
-					{{$v.Des}}
+					<<<$v.Des>>>
 				</p>
 				<br />
 				<div class="fold_box12">bb</div>
@@ -36,7 +36,7 @@
 				<div class="box12_ribbon">&middot;</div>
 			</div>
 		</div>
-		{{end}}
+		<<<end>>>
 	</div>
 </div>
 <script type="text/javascript">

@@ -126,6 +126,31 @@ function each_markdown_to_html() {
 	});
 }
 
+Vue.directive('my-directive', {
+  bind: function () {
+    // 做绑定的准备工作
+    // 比如添加事件监听器，或是其他只需要执行一次的复杂操作
+  },
+  update: function (newValue, oldValue) {
+    // 根据获得的新值执行对应的更新
+    // 对于初始值也会被调用一次
+    alert(1);
+  },
+  unbind: function () {
+    // 做清理工作
+    // 比如移除在 bind() 中添加的事件监听器
+  }
+})
+
+var vm_home_page = new Vue({
+	el: '#app',
+	data: {
+		list: [],
+		input: "# hello",
+	}
+});
+//each_markdown_to_html();
+//$('.back-to-top').click();
 function init_pagebar(init_page, pagesize, total) {
 	$('#paging-box').paging({
 		initPageNo: init_page, // 初始页码
@@ -134,11 +159,9 @@ function init_pagebar(init_page, pagesize, total) {
 		slideSpeed: 600, // 缓动速度。单位毫秒
 		jump: true, //是否支持跳转
 		callback: function(page) { // 回调函数
-            console.info(page); 
-            old_page = sessionStorage.getItem("/page");
-            console.info(old_page); 
-            sessionStorage.setItem("/page", page);
-            if(null != old_page && old_page != page) {
+			old_page = sessionStorage.getItem("/page");
+			sessionStorage.setItem("/page", page);
+			if(null != old_page && old_page != page) {
 				$.ajax({
 					url: '/index' + page + '.html',
 					cache: true,
@@ -147,45 +170,14 @@ function init_pagebar(init_page, pagesize, total) {
 						if(0 != result.code) {
 							toastr.error("code:" + result.code + " message:" + result.message);
 						} else {
-							console.info(result.data);
 							toastr.success(result.message);
-							var str = "";
 							if(result.data.list) {
+								$('#articles').html('');
 								result.data.list.forEach(function(value, index, array) {
-									var Link = '/article/' + value.Id;
-									str += '<article class="post box-shadow-1"><header>\
-											<div class="title">\
-												<h2><a href="' + Link + '" class="wrap">' + value.Title + '</a></h2></div>\
-											<div class="meta">\
-												<time class="published" datetime="2015-11-01">' + value.Posttime + '</time>\
-												<a href="' + value.Userid + '" class="author mytooltip" title="This is my span tooltip message">\
-													<span class="name">' + value.Userid + '</span><img src="' + value.Avatarurl + '" alt="a" /></a>\
-											</div></header><header>';
-
-									if(value.Coverurl != "") {
-										str += '<div class="myimg" style="overflow: hidden;">\
-												<a href="' + Link + '"><img src="' + value.Coverurl + '" width="100%" alt="" /></a></div>';
-									}
-									str += '<div class="title">\
-												<div id="test-editormd-view2-' + value.Id + '" style="font-size: 1.0em; line-height:2em;">\
-													<textarea id="append-test" style="display:none;">' + value.Digest + '</textarea></div></div>\
-										</header>\
-										<footer>\
-											<ul class="actions">\
-												<li><a href="' + Link + '" class="button big">Continue Reading</a></li>\
-											</ul>\
-											<ul class="stats">\
-												<li>' + Link + '</li>\
-												<li><a href="' + value.Link + '" class="icon fa-heart">' + value.Views + '</a></li>\
-												<li><a href="' + value.Link + '" class="icon fa-comment">0</a></li>\
-											</ul>\
-										</footer></article>';
+									// https://vuejs.org/v2/examples/  这里换了个方式解析markdown，没用原来的editormd.markdownToHTML，主要是vue改了数据后，没有更新DOM，jquery的方式获取不到标签
+									value.Digest = marked(value.Digest, {sanitize: true});
+									vm_home_page.$set(vm_home_page.list, index, value);
 								});
-								if(str != "") {
-									$('#articles').html(str);
-									each_markdown_to_html();
-									$('.back-to-top').click();
-								}
 							}
 						}
 					}

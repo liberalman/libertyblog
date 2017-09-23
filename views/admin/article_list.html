@@ -37,30 +37,30 @@
 									<th>编辑|删除</th>
 								</tr>
 							</thead>
-							<tbody>{{range $k, $v := .list}}
+							<tbody><<<range $k, $v := .list>>>
 								<tr class="gradeA">
 									<td>
-										<input type="checkbox" name="ids[]" value="{{$v.Id}}" /></td>
-									<td>{{$v.Id}}</td>
-									<td class="hl_title">{{if $v.Istop}}
-										<i class="icon-arrow-up" title="置顶"></i>{{end}}
-										<a href="{{$v.Link}}" target="_blank">{{$v.Title}}</a>{{if $v.Urltype}}
-										<span class="label label-important">页面</span>{{end}}</td>
-									<td class="hl_tag">{{str2html $v.TagsLink}}</td>
-									<td>{{$v.Views}}</td>
+										<input type="checkbox" name="ids[]" value="<<<$v.Id>>>" /></td>
+									<td><<<$v.Id>>></td>
+									<td class="hl_title"><<<if $v.Istop>>>
+										<i class="icon-arrow-up" title="置顶"></i><<<end>>>
+										<a href="<<<$v.Link>>>" target="_blank"><<<$v.Title>>></a><<<if $v.Urltype>>>
+										<span class="label label-important">页面</span><<<end>>></td>
+									<td class="hl_tag"><<<str2html $v.TagsLink>>></td>
+									<td><<<$v.Views>>></td>
 									<td>0</td>
-									<td class="hl_author">{{$v.Username}}</td>
-									<td class="center">{{date $v.Posttime "Y-m-d H:i:s"}}</td>
-									<td class="center">{{date $v.Updated "Y-m-d H:i:s"}}</td>
+									<td class="hl_author"><<<$v.Username>>></td>
+									<td class="center"><<<date $v.Posttime "Y-m-d H:i:s">>></td>
+									<td class="center"><<<date $v.Updated "Y-m-d H:i:s">>></td>
 									<td>
-										<a href="#" onclick="edit_article({{$v.Id}})"><i class="fa fa-edit fa-fw"></i></a> |
-										<a href="/admin/article/delete?id={{$v.Id}}" onclick="return del_confirm()">删除</a></td>
+										<a href="#" onclick="edit_article(<<<$v.Id>>>)"><i class="fa fa-edit fa-fw"></i></a> |
+										<a href="/admin/article/delete?id=<<<$v.Id>>>" onclick="return del_confirm()">删除</a></td>
 										
-									<!-- <a href="/article/edit1?id={{$v.Id}}" data-toggle="modal" data-target="#myModal" onclick="edit({{$v.Id}})">编辑1</a> -->
-								</tr>{{end}}</tbody>
+									<!-- <a href="/article/edit1?id=<<<$v.Id>>>" data-toggle="modal" data-target="#myModal" onclick="edit(<<<$v.Id>>>)">编辑1</a> -->
+								</tr><<<end>>></tbody>
 							<tfoot>
 								<tr>
-									<td colspan="21">{{str2html .pagebar}}</td>
+									<td colspan="21"><<<str2html .pagebar>>></td>
 								</tr>
 								<tr>
 									<td width="30">
@@ -98,7 +98,7 @@
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
 	$(document).ready(function() {
-	    init_pagebar(2);
+	    init_pagebar1(2);
 	    add_window_of_edit_article();
 		/* 以下代码不能用，否则会报Cannot set property 'nTf' 的错误，
 		因为我tfoot中的colspan="20"横跨了多个td，不满足DataTable对于th和td强一致的要求。  */
