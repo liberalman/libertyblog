@@ -12,7 +12,6 @@ if [ ! -d "/var/coreseek/data" ]; then
     mkdir /var/coreseek/data
 fi
 
-    git pull
 }
 
 
@@ -42,6 +41,7 @@ function check_services()
 
 function build()
 {
+    git pull
     docker-compose stop web
     docker run -it -v /data/gocode:/data/gocode -e GOPATH=/data/gocode --rm demo/go-build:latest /bin/bash -c "cd /data/gocode/src/libertyblog && go build"
     docker build -t liberalman/libertyblog .
