@@ -91,6 +91,8 @@ func init() {
 	beego.Router("/album.html", &blog.PhotoController{}, "*:Albums")
 	beego.Router("/album:page:int.html", &blog.PhotoController{}, "*:Albums")
 
+	beego.Router("/blog/timeline/list:page:int.html", &blog.TimelineController{}, "*:List")
+
 	beego.Router("/:urlname(.+)", &blog.ArticleController{}, "*:Index") //别名访问
 
 	beego.Router("/login/callback", &blog.UserController{}, "*:Callback")
@@ -106,6 +108,7 @@ func init() {
 
 	//内容管理
 	beego.Router("/admin/article/list", &admin.ArticleController{}, "*:List")
+	beego.Router("/admin/article/list:page:int.html", &admin.ArticleController{}, "*:List")
 	beego.Router("/article/addmarkdown", &blog.ArticleController{}, "*:AddMarkdown")
 	beego.Router("/article/editmarkdown", &blog.ArticleController{}, "*:EditMarkdown")
 	beego.Router("/admin/article/save", &admin.ArticleController{}, "post:Save")

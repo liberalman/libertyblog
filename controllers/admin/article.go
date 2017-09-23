@@ -21,10 +21,7 @@ type ArticleController struct {
 //管理文章列表
 func (this *ArticleController) List() {
 	var (
-		page       int64
-		pagesize   int64 = 15
 		status     int64
-		offset     int64
 		list       []*models.Article
 		article    models.Article
 		searchtype string
@@ -33,10 +30,6 @@ func (this *ArticleController) List() {
 	searchtype = this.GetString("searchtype")
 	keyword = this.GetString("keyword")
 	status, _ = this.GetInt64("status")
-	if page, _ = this.GetInt64("page"); page < 1 {
-		page = 1
-	}
-	offset = (page - 1) * pagesize
 
 	var query orm.QuerySeter
 	if 1 == this.userid { // 如果是管理员用户id，则是查看所有的帖子
@@ -57,17 +50,32 @@ func (this *ArticleController) List() {
 	}
 	count, _ := query.Count()
 	if count > 0 {
-		query.OrderBy("-istop", "-updated").Limit(pagesize, offset).All(&list)
+		query.OrderBy("-istop", "-updated").Limit(this.pagesize, (this.page-1)*this.pagesize).All(&list)
 	}
 
-	this.Data["searchtype"] = searchtype
-	this.Data["keyword"] = keyword
-	this.Data["count_1"], _ = article.Query().Filter("status", 1).Count()
-	this.Data["count_2"], _ = article.Query().Filter("status", 2).Count()
-	this.Data["status"] = status
-	this.Data["list"] = list
-	this.Data["pagebar"] = models.NewPager(page, count, pagesize, fmt.Sprintf("/admin/article/list?status=%d&searchtype=%s&keyword=%s&page=%s", status, searchtype, keyword, "%d")).ToString()
-	this.display("article_list")
+	if this.IsAjax() {
+		ret := models.Ret{Code: 0, Message: "success"}
+		data := map[string]interface{}{}
+		data["total"] = count
+		data["page"] = this.page
+		data["pagesize"] = this.pagesize
+		data["list"] = list
+		ret.Data = data
+		this.Data["json"] = ret
+		this.ServeJSON()
+	} else {
+		//this.Data["searchtype"] = searchtype
+		//this.Data["keyword"] = keyword
+		//this.Data["count_1"], _ = article.Query().Filter("status", 1).Count()
+		//this.Data["count_2"], _ = article.Query().Filter("status", 2).Count()
+		//this.Data["status"] = status
+		//this.Data["list"] = list
+		this.Data["total"] = count
+		this.Data["page"] = this.page
+		this.Data["pagesize"] = this.pagesize
+		//this.Data["pagebar"] = models.NewPager(page, count, pagesize, fmt.Sprintf("/admin/article/list?status=%d&searchtype=%s&keyword=%s&page=%s", status, searchtype, keyword, "%d")).ToString()
+		this.display("article_list")
+	}
 }
 
 func (this *ArticleController) Flot() {

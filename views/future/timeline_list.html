@@ -7,14 +7,14 @@
 </style>
 <!-- Main -->
 <div id="main">
-	<div class="row masonry-container">
-		{{range $k, $v := .list}}
+	<div id="app1">
+	<div class="row masonry-container" v-for="v in list">
 		<div class="grid-item">
 			<div class="thumbnail">
-				<a href="/blog/timeline/{{$v.Id}}"><img src="{{$v.Coverurl}}" alt="{{$v.Name}}" /></a>
+				<a v-bind:href="['/blog/timeline/'+v.Id]"><img v-bind:src="[v.Coverurl]" v-bind:alt="[v.Name]" /></a>
 				<div class="caption">
-					<h3>&middot;{{$v.Name}}</h3>
-					<p>{{$v.Content}}</p>
+					<h3>&middot;{{v.Name}}</h3>
+					<p>{{v.Content}}</p>
 					<p>
 						<i class="fa fa-heart-o" aria-hidden="true"></i>
 						<i class="fa fa-eye" aria-hidden="true"></i>
@@ -22,8 +22,19 @@
 				</div>
 			</div>
 		</div>
-		{{end}}
 	</div>
-	<div class="row">{{str2html .pagebar}}</div>
+	</div>
+	<div class="paging-box" id="paging-box"></div>
 </div>
-
+<script type="text/javascript">
+	var vm_timeline = new Vue({
+		el: '#app1',
+		data: {
+			list: []
+		}
+	});
+	
+	$(document).ready(function() {
+		init_pagebar( <<< .page >>> , <<< .pagesize >>> , <<< .total >>> , vm_timeline, '/blog/timeline/list');
+	});
+</script>

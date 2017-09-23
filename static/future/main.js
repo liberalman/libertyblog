@@ -127,31 +127,30 @@ function each_markdown_to_html() {
 }
 
 Vue.directive('my-directive', {
-  bind: function () {
-    // 做绑定的准备工作
-    // 比如添加事件监听器，或是其他只需要执行一次的复杂操作
-  },
-  update: function (newValue, oldValue) {
-    // 根据获得的新值执行对应的更新
-    // 对于初始值也会被调用一次
-    alert(1);
-  },
-  unbind: function () {
-    // 做清理工作
-    // 比如移除在 bind() 中添加的事件监听器
-  }
+	bind: function() {
+		// 做绑定的准备工作
+		// 比如添加事件监听器，或是其他只需要执行一次的复杂操作
+	},
+	update: function(newValue, oldValue) {
+		// 根据获得的新值执行对应的更新
+		// 对于初始值也会被调用一次
+		alert(1);
+	},
+	unbind: function() {
+		// 做清理工作
+		// 比如移除在 bind() 中添加的事件监听器
+	}
 })
 
-var vm_home_page = new Vue({
+var vm_home = new Vue({
 	el: '#app',
 	data: {
 		list: [],
 		input: "# hello",
 	}
 });
-//each_markdown_to_html();
-//$('.back-to-top').click();
-function init_pagebar(init_page, pagesize, total) {
+
+function init_pagebar2(init_page, pagesize, total) {
 	$('#paging-box').paging({
 		initPageNo: init_page, // 初始页码
 		totalPages: parseInt(total / pagesize), //总页数
@@ -161,28 +160,62 @@ function init_pagebar(init_page, pagesize, total) {
 		callback: function(page) { // 回调函数
 			old_page = sessionStorage.getItem("/page");
 			sessionStorage.setItem("/page", page);
+			var url = '/index' + page + '.html';
 			if(null != old_page && old_page != page) {
 				$.ajax({
-					url: '/index' + page + '.html',
+					url: url,
 					cache: true,
 					type: 'get',
 					success: function(result) {
 						if(0 != result.code) {
 							toastr.error("code:" + result.code + " message:" + result.message);
 						} else {
-							toastr.success(result.message);
+							//toastr.success(result.message);
 							if(result.data.list) {
 								$('#articles').html('');
 								result.data.list.forEach(function(value, index, array) {
 									// https://vuejs.org/v2/examples/  这里换了个方式解析markdown，没用原来的editormd.markdownToHTML，主要是vue改了数据后，没有更新DOM，jquery的方式获取不到标签
-									value.Digest = marked(value.Digest, {sanitize: true});
-									vm_home_page.$set(vm_home_page.list, index, value);
+									value.Digest = marked(value.Digest, {
+										sanitize: true
+									});
+									vm_home.$set(vm_home.list, index, value);
 								});
+								history.pushState({}, "", url); // change path in browser.
+								$('.back-to-top').click(); // go back to top.
 							}
 						}
 					}
 				});
 			}
+		}
+	});
+}
+
+function init_pagebar(init_page, pagesize, total, vm, url) {
+	$('#paging-box').paging({
+		initPageNo: init_page, // 初始页码
+		totalPages: parseInt(total / pagesize), //总页数
+		totalCount: '合计' + total + '条数据', // 条目总数
+		slideSpeed: 600, // 缓动速度。单位毫秒
+		jump: true, //是否支持跳转
+		callback: function(page) { // 回调函数
+			var newUrl = url + page + '.html'
+			$.ajax({
+				url: newUrl,
+				cache: true,
+				type: 'get',
+				success: function(result) {
+					if(0 != result.code) {
+						toastr.error("code:" + result.code + " message:" + result.message);
+					} else {
+						//console.info(result.data.list);
+						//toastr.success(result.message);
+						vm.list = result.data.list;
+						history.pushState({}, "", newUrl); // change path in browser.
+						$('.back-to-top').click();
+					}
+				}
+			});
 		}
 	});
 }

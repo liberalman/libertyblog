@@ -84,10 +84,23 @@ func (this *TimelineController) Index() {
 // @router /blog/timeline/list [get]
 func (this *TimelineController) List() {
 	list, count := new(models.Timeline).GetList(this.page, this.pagesize)
-	this.setHeadFootMetas("时光旅行")
-	this.Data["list"] = list
-	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(this.pagesize), "/timeline%d.html").ToString()
-	this.display("timeline_list", NO_RIGHT)
+	if this.IsAjax() {
+		ret := models.Ret{Code: 0, Message: "success"}
+		data := map[string]interface{}{}
+		data["total"] = count
+		data["page"] = this.page
+		data["pagesize"] = this.pagesize
+		data["list"] = list
+		ret.Data = data
+		this.Data["json"] = ret
+		this.ServeJSON()
+	} else {
+		this.setHeadFootMetas("时光旅行")
+		this.Data["total"] = count
+		this.Data["page"] = this.page
+		this.Data["pagesize"] = this.pagesize
+		this.display("timeline_list", NO_RIGHT)
+	}
 }
 
 // /blog/timeline:userid:int/:page:int.html

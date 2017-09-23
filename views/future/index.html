@@ -8,7 +8,7 @@
 		width: 17em;
 	}
 </style>
-<link rel="stylesheet" href="/css/paging-style.css" />
+
 <!-- Main -->
 <div id="main">
     <div id="articles">
@@ -110,8 +110,7 @@
     </div>
     <div class="paging-box" id="paging-box"></div>
 </div>
-<script src="https://cdn.staticfile.org/vue/2.2.6/vue.min.js"></script>
-<script src="/js/paging.min.js"></script>
+
 <link rel="stylesheet" href="/editor.md/css/editormd.preview.min.css" />
 <link rel="stylesheet" href="//cdn.bootcss.com/mermaid/7.0.0/mermaid.min.css" />
 <script src="/editor.md/lib/marked.min.js"></script>
@@ -163,6 +162,6 @@ code {
         if(1 == $('#hasload').val()) {
             each_markdown_to_html();
         }
-		init_pagebar(<<<.page>>>, <<<.pagesize>>>, <<<.total>>>);
+		init_pagebar2(<<<.page>>>, <<<.pagesize>>>, <<<.total>>>);
 	});
 </script>
