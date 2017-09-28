@@ -27,18 +27,18 @@
 									</tr>
 								</thead>
 								<tbody>
-									{{range $k, $v := .list}}
+									<<<range $k, $v := .list>>>
 									<tr class="gradeA">
-										<td><input type="checkbox" name="ids[]" value="{{$v.Id}}" /></td>
-										<td>{{$v.Id}}</td>
-										<td class="center">{{$v.Name}}</td>
-										<td>{{$v.Count}}</td>
+										<td><input type="checkbox" name="ids[]" value="<<<$v.Id>>>" /></td>
+										<td><<<$v.Id>>></td>
+										<td class="center"><<<$v.Name>>></td>
+										<td><<<$v.Count>>></td>
 									</tr>
-									{{end}}
+									<<<end>>>
 								</tbody>
 								<tfoot>
 									<tr>
-										<td colspan="20">{{str2html .pagebar}}</td>
+										<td colspan="20"><<<str2html .pagebar>>></td>
 									</tr>
 									<tr>
 										<td width="30"><input type="checkbox" name="all" value="0" onclick="checkall('ids[]', this)" /></td>

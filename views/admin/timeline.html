@@ -17,49 +17,49 @@
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<ul class="timeline">
-					{{range $k, $v := .list}}
-					<li {{if eq $v.Pos 1}} class="timeline-inverted" {{end}}>
-						{{if eq $v.Icosty 1}}
+					<<<range $k, $v := .list>>>
+					<li <<<if eq $v.Pos 1>>> class="timeline-inverted" <<<end>>>>
+						<<<if eq $v.Icosty 1>>>
 						<div class="timeline-badge info">
 							<i class="fa fa-save"></i>
 						</div>
-						{{else if eq $v.Icosty 2}}
+						<<<else if eq $v.Icosty 2>>>
 						<div class="timeline-badge warning">
 							<i class="fa fa-credit-card"></i>
 						</div>
-						{{else if eq $v.Icosty 3}}
+						<<<else if eq $v.Icosty 3>>>
 						<div class="timeline-badge danger">
 							<i class="fa fa-bomb"></i>
 						</div>
-						{{else if eq $v.Icosty 4}}
+						<<<else if eq $v.Icosty 4>>>
 						<div class="timeline-badge success">
 							<i class="fa fa-graduation-cap"></i>
 						</div>
-						{{else}}
+						<<<else>>>
 						<div class="timeline-badge">
 							<i class="fa fa-check"></i>
 						</div>
-						{{end}}
+						<<<end>>>
 						<div class="timeline-panel">
 							<div class="timeline-heading">
-								<i class="fa fa-edit fa-fw pull-right" data-toggle="modal" data-target="#myModal" data-title="{{$v.Title}}" data-content="{{$v.Content}}"
-									data-createtime="{{$v.Createtime}}" data-icosty="{{$v.Icosty}}" data-pos="{{$v.Pos}}" data-action="2" data-id="{{$v.Id}}" data-model_label="修改我的足迹"></i>
-								<h4 class="timeline-title">{{$v.Title}}</h4>
+								<i class="fa fa-edit fa-fw pull-right" data-toggle="modal" data-target="#myModal" data-title="<<<$v.Title>>>" data-content="<<<$v.Content>>>"
+									data-createtime="<<<$v.Createtime>>>" data-icosty="<<<$v.Icosty>>>" data-pos="<<<$v.Pos>>>" data-action="2" data-id="<<<$v.Id>>>" data-model_label="修改我的足迹"></i>
+								<h4 class="timeline-title"><<<$v.Title>>></h4>
 								<p>
 									<small class="text-muted">
-										<i class="fa fa-clock-o"></i>{{$v.Createtime}}
+										<i class="fa fa-clock-o"></i><<<$v.Createtime>>>
 									</small>
 								</p>
 							</div>
 							<div class="timeline-body">
-								<!--<p>{{$v.Content}}</p>-->
-								<div id="test-editormd-view2-{{$v.Id}}" style="font-size: 1.0em; line-height:2em;">
-									<textarea id="append-test" style="display:none;">{{$v.Content}}</textarea>
+								<!--<p><<<$v.Content>>></p>-->
+								<div id="test-editormd-view2-<<<$v.Id>>>" style="font-size: 1.0em; line-height:2em;">
+									<textarea id="append-test" style="display:none;"><<<$v.Content>>></textarea>
 								</div>
 							</div>
 						</div>
 					</li>
-					{{end}}
+					<<<end>>>
 				</ul>
 			</div>
 			<!-- /.panel-body -->
@@ -80,7 +80,7 @@
 					<div class="timeline-panel">
 								<div class="timeline-body">
 									<input name="action" id="action" value="1" class="hidden"/>
-									<input name="timelineid" id="timelineid" value="{{.timelineid}}" class="hidden"/>
+									<input name="timelineid" id="timelineid" value="<<<.timelineid>>>" class="hidden"/>
 									<input name="id" id="id" value="-1" class="hidden"/>
 									<div class="form-group input-group has-success">
 										<span class="input-group-addon">标题</span>

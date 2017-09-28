@@ -33,30 +33,30 @@
 								</tr>
 							</thead>
 							<tbody>
-								{{range $k, $v := .list}}
-								<tr {{if eq $v.Id 1}} class="success" {{else}} class="gradeA" {{end}}>
-									<td><input type="checkbox" name="ids[]" value="{{$v.Id}}" /></td>
-									<td>{{$v.Id}}</td>
-									<td>{{$v.Username}}</td>
-									<td>{{$v.Email}}</td>
-									<td>{{date $v.Lastlogin "Y-m-d H:i:s"}}</td>
-									<td>{{$v.Lastip}}</td>
-									<td>{{$v.Logincount}}</td>
+								<<<range $k, $v := .list>>>
+								<tr <<<if eq $v.Id 1>>> class="success" <<<else>>> class="gradeA" <<<end>>>>
+									<td><input type="checkbox" name="ids[]" value="<<<$v.Id>>>" /></td>
+									<td><<<$v.Id>>></td>
+									<td><<<$v.Username>>></td>
+									<td><<<$v.Email>>></td>
+									<td><<<date $v.Lastlogin "Y-m-d H:i:s">>></td>
+									<td><<<$v.Lastip>>></td>
+									<td><<<$v.Logincount>>></td>
 									<td>
-										{{if eq $v.Active 1}}
-										<span class="text-success">已激活</span> {{else}}
-										<span class="text-error">未激活</span> {{end}}
+										<<<if eq $v.Active 1>>>
+										<span class="text-success">已激活</span> <<<else>>>
+										<span class="text-error">未激活</span> <<<end>>>
 									</td>
 									<td>
-										<a href="/admin/user/edit?id={{$v.Id}}">编辑</a> |
-										<a href="/admin/user/delete?id={{$v.Id}}" onclick="return del_confirm()">删除</a>
+										<a href="/admin/user/edit?id=<<<$v.Id>>>">编辑</a> |
+										<a href="/admin/user/delete?id=<<<$v.Id>>>" onclick="return del_confirm()">删除</a>
 									</td>
 								</tr>
-								{{end}}
+								<<<end>>>
 							</tbody>
 							<tfoot>
 								<tr>
-									<td colspan="20">{{str2html .pagebar}}</td>
+									<td colspan="20"><<<str2html .pagebar>>></td>
 								</tr>
 							</tfoot>
 						</table>
