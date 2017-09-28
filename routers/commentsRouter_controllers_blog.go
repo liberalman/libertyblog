@@ -7,6 +7,14 @@ import (
 
 func init() {
 
+	beego.GlobalControllerRouter["libertyblog/controllers/blog:ArticleController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:ArticleController"],
+		beego.ControllerComments{
+			Method: "AddUeditor",
+			Router: `/article/addueditor`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 	beego.GlobalControllerRouter["libertyblog/controllers/blog:MainController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:MainController"],
 		beego.ControllerComments{
 			Method: "Index",

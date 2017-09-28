@@ -80,3 +80,9 @@ func (this *ArticleController) Index() {
 	//this.display("article", NO_RIGHT) // 去掉右侧边栏
 	this.display("article", HAS_RIGHT)
 }
+
+// @router /article/addueditor [get]
+func (this *ArticleController) AddUeditor() {
+	this.auth()
+	this.display_no_layout("article_add_ueditor")
+}
