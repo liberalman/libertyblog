@@ -25,11 +25,12 @@
 					<!-- /input-group -->
 					<input class="form-control" placeholder="发布时间" name="posttime" size="16" type="text" id="datetimepicker" data-date-format="yyyy-mm-dd HH:ii:ss" style="display:none">
 					<input name="coverurl" placeholder="封面图片" class="form-control" id="coverurl" value="{{.post.Coverurl}}" type="hidden" />
+					<input class="form-control" name="editortype" value="0" type="hidden" />
 					<input type="submit" value="Just do it!" class="btn btn-danger" />
 					<a href="/article/addmarkdown">markdown</a>
 					</br>
 					</br>
-					<textarea name="digest" placeholder="文章摘要(80个字内)" class="form-control" cols="160" /></textarea>
+					<textarea name="digest" placeholder="文章摘要(80个字内)" class="form-control" style="width:100%;"/></textarea>
 				</div>
 			</header>
 			<br/>
@@ -46,7 +47,7 @@
 	</form>
 </div>
 <script src="/ueditor/ueditor.config.js"></script>
-<script src="/ueditor/ueditor.all.min.js"></script>
+<script src="/ueditor/ueditor.all.js"></script>
 <script src="/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
 	var vm_editor = new Vue({

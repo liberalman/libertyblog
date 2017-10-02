@@ -37,8 +37,10 @@
 						<!-- /input-group -->
 						<input class="form-control" placeholder="发布时间" name="posttime" size="16" type="text" id="datetimepicker" data-date-format="yyyy-mm-dd HH:ii:ss" style="display:none">
 						<input name="coverurl" placeholder="封面图片" class="form-control" id="coverurl" value="{{.post.Coverurl}}" type="hidden" />
+						<input class="form-control" name="editortype" value="1" type="hidden" />
 						<input type="submit" value="Just do it!" class="btn btn-danger" />
 						</br>
+						<a href="/article/addueditor">ueditor</a>
 						</br>
 						<textarea name="digest" placeholder="文章摘要(80个字内)" class="form-control" cols="160" /></textarea>
 					</div>

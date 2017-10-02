@@ -366,3 +366,82 @@ end:
 	this.Data["json"] = ret
 	this.ServeJSON()
 }
+
+// @router /admin/ueditor/upload [get,post]
+func (this *PhotoController) Ueditor() {
+	action := this.GetString("action")
+	if "config" == action {
+		this.TplName = this.theme + "/config.json.tpl"
+		this.ServeJSONP()
+	} else if "uploadimage" == action {
+		var albumid int64
+		//file, header, err := this.GetFile("file")
+		_, header, err := this.GetFile("upfile")
+		ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
+		out := make(map[string]string)
+		out["url"] = ""
+		out["fileType"] = ext
+		out["original"] = header.Filename
+		out["success"] = "1"
+		var source int8 = PHOTO_LOCAL
+		filename := ""
+		if err != nil {
+			out["success"] = "2"
+			out["message"] = err.Error()
+			goto end
+		} else {
+			t := time.Now().UnixNano()
+			day := time.Now().Format("20060102")
+
+			//小图,转储ypyun后不用生成小图了，直接用又拍云的小图
+			var savepath string
+
+			//大图
+			savepath = pathArr[1] + day
+			savepath = fmt.Sprintf("./static/article")
+			if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
+				out["success"] = "5"
+				out["message"] = err.Error()
+				goto end
+			}
+			filename = fmt.Sprintf("./static/article/%d%s", t, ext)
+			if err = this.SaveToFile("file", filename); err != nil {
+				out["success"] = "6"
+				out["message"] = err.Error()
+				goto end
+			}
+			out["url"] = filename[1:]
+
+			// 转储又拍云，上传文件
+			upyun_filepath := fmt.Sprintf("/static/article/%d%s", t, ext)
+			err := up.Put(&upyun.PutObjectConfig{
+				Path:      upyun_filepath,
+				LocalPath: filename,
+			})
+			if nil != err {
+				// 转储又拍云失败，需要记录到待处理列表中
+				var cleanup models.Cleanup
+				cleanup.Event = models.CANNOT_UPLOAD_UPYUN
+				cleanup.Error = err.Error()
+				cleanup.Url = out["url"]
+				cleanup.Insert()
+			} else {
+				out["url"] = upyun_domain + upyun_filepath
+				source = PHOTO_UPYUN
+				// 转储成功，删除本地文件
+				if err := os.Remove(filename); nil != err {
+					var cleanup models.Cleanup
+					cleanup.Event = models.CANNOT_DELETE_LOCAL
+					cleanup.Url = filename
+					cleanup.Error = err.Error()
+					cleanup.Insert()
+				}
+			}
+		}
+		albumid = -1
+		this.Insert(albumid, header.Filename, out["url"], source)
+	end:
+		this.Data["json"] = out
+		this.ServeJSON()
+	}
+}

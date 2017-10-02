@@ -87,6 +87,14 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["libertyblog/controllers/admin:PhotoController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:PhotoController"],
+		beego.ControllerComments{
+			Method: "Ueditor",
+			Router: `/admin/ueditor/upload`,
+			AllowHTTPMethods: []string{"get","post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 	beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:TimelineController"],
 		beego.ControllerComments{
 			Method: "Timeline",
