@@ -51,3 +51,8 @@ func (this *MainController) Time() {
 func (this *MainController) Vim() {
 	this.TplName = "tools/vim.html"
 }
+
+// @router /tools/ascii [get,post]
+func (this *MainController) Ascii() {
+	this.TplName = "tools/ascii.html"
+}

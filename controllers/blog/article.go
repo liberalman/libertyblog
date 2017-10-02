@@ -84,5 +84,6 @@ func (this *ArticleController) Index() {
 // @router /article/addueditor [get]
 func (this *ArticleController) AddUeditor() {
 	this.auth()
-	this.display_no_layout("article_add_ueditor")
+	//this.display_no_layout("article_add_ueditor")
+	this.display("article_add_ueditor", HAS_RIGHT)
 }

@@ -9,6 +9,14 @@ func init() {
 
 	beego.GlobalControllerRouter["libertyblog/controllers/tools:MainController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/tools:MainController"],
 		beego.ControllerComments{
+			Method: "Ascii",
+			Router: `/tools/ascii`,
+			AllowHTTPMethods: []string{"get","post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/tools:MainController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/tools:MainController"],
+		beego.ControllerComments{
 			Method: "Compare",
 			Router: `/tools/compare`,
 			AllowHTTPMethods: []string{"get"},
