@@ -51,15 +51,15 @@ consul-server:
     SERVICE_TAGS: my consul servers
   hostname: consul
   ports:
-#    - "8300:8300"
-#    - "8301:8301"
-#    - "8301:8301/udp"
-#    - "8302:8302"
-#    - "8302:8302/udp"
-#    - "8400:8400"
+    - "8300:8300"
+    - "8301:8301"
+    - "8301:8301/udp"
+    - "8302:8302"
+    - "8302:8302/udp"
+    - "8400:8400"
     - "8500:8500"
-#    - "53:53/udp"
-  command: -server -ui-dir /ui -advertise 118.89.191.176 -bootstrap
+    - "53:53/udp"
+  command: -server -ui-dir /ui -dc liberty-dc1 -advertise=118.89.191.176 -bootstrap
 
 # listen on local docker sock to register the container with public ports to the consul service
 registrator:
