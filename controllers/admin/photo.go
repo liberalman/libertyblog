@@ -2,6 +2,7 @@ package admin
 
 import (
 	"fmt"
+	"io"
 	"libertyblog/models"
 	"os"
 	"regexp"
@@ -375,19 +376,21 @@ func (this *PhotoController) Ueditor() {
 		this.ServeJSONP()
 	} else if "uploadimage" == action {
 		var albumid int64
-		//file, header, err := this.GetFile("file")
-		_, header, err := this.GetFile("upfile")
+		size, _ := this.GetInt("size")
+		file, header, err := this.GetFile("upfile")
+		//_, header, err := this.GetFile("upfile")
 		ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
 		out := make(map[string]string)
 		out["url"] = ""
-		out["fileType"] = ext
 		out["original"] = header.Filename
-		out["success"] = "1"
+		out["state"] = "SUCCESS"
+		out["title"] = ""
+
 		var source int8 = PHOTO_LOCAL
 		filename := ""
 		if err != nil {
-			out["success"] = "2"
-			out["message"] = err.Error()
+			out["state"] = "2"
+			out["title"] = err.Error()
 			goto end
 		} else {
 			t := time.Now().UnixNano()
@@ -398,22 +401,24 @@ func (this *PhotoController) Ueditor() {
 
 			//大图
 			savepath = pathArr[1] + day
-			savepath = fmt.Sprintf("./static/article")
+			savepath = fmt.Sprintf("./static/upload/article")
 			if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
-				out["success"] = "5"
-				out["message"] = err.Error()
+				out["state"] = "5"
+				out["title"] = err.Error()
 				goto end
 			}
-			filename = fmt.Sprintf("./static/article/%d%s", t, ext)
-			if err = this.SaveToFile("file", filename); err != nil {
-				out["success"] = "6"
-				out["message"] = err.Error()
+
+			filename = fmt.Sprintf("./static/upload/article/%d%s", t, ext)
+			err = createPicture(file, filename, size)
+			if err != nil {
+				out["state"] = "6"
+				out["title"] = err.Error()
 				goto end
 			}
 			out["url"] = filename[1:]
 
 			// 转储又拍云，上传文件
-			upyun_filepath := fmt.Sprintf("/static/article/%d%s", t, ext)
+			upyun_filepath := fmt.Sprintf("/static/upload/article/%d%s", t, ext)
 			err := up.Put(&upyun.PutObjectConfig{
 				Path:      upyun_filepath,
 				LocalPath: filename,
@@ -441,7 +446,31 @@ func (this *PhotoController) Ueditor() {
 		albumid = -1
 		this.Insert(albumid, header.Filename, out["url"], source)
 	end:
+		/*{
+		    "state": "SUCCESS",
+		    "url": "upload/demo.jpg",
+		    "title": "demo.jpg",
+		    "original": "demo.jpg"
+		}*/
 		this.Data["json"] = out
 		this.ServeJSON()
 	}
+}
+
+func createPicture(file io.Reader, filename string, size int) error {
+	out, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	p := make([]byte, size)
+	n, err := file.Read(p)
+	if n > 0 {
+		n, err := out.Write(p)
+		fmt.Println(n, err)
+		return nil
+	}
+
+	return err
 }
