@@ -199,10 +199,13 @@ func PostIndex(page int, pagesize int) ([]Article, int) {
 			articleid, _ := strconv.Atoi(id)
 			article := GetArticle(int64(articleid), false)
 			if article.Id > 0 {
+				article.Content = "" // no need content
 				list = append(list, article)
 			}
 		} else {
-			list = append(list, tmp.(Article))
+			article := (tmp).(*Article)
+			article.Content = "" // no need content
+			list = append(list, *article)
 		}
 	}
 

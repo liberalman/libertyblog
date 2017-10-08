@@ -53,6 +53,10 @@ func (this *ArticleController) List() {
 		query.OrderBy("-istop", "-updated").Limit(this.pagesize, (this.page-1)*this.pagesize).All(&list)
 	}
 
+	for _, a := range list {
+		a.Content = "" // no need content
+	}
+
 	if this.IsAjax() {
 		ret := models.Ret{Code: 0, Message: "success"}
 		data := map[string]interface{}{}
