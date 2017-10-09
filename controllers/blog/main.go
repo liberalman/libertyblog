@@ -84,23 +84,6 @@ func (this *MainController) Category() {
 	this.display("category", HAS_RIGHT)
 }
 
-// @Title Search
-// @Description Search article or user
-// @Param	key		query 	int64	true		"article id or user id"
-// @Success 200 {int} models.User.Id
-// @Failure 403 body is empty
-// @router /search [get]
-func (this *MainController) Search() {
-	article_ids := models.SearchArticle(this.GetString("key"), "test1")
-	ids_len := len(article_ids)
-	if ids_len > 0 {
-		this.Data["list"] = models.GetArticlesByIds(article_ids[:ids_len-1])
-	}
-	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(0), int64(this.pagesize), "/index%d.html").ToString()
-	this.setHeadFootMetas()
-	this.display("index", HAS_RIGHT)
-}
-
 // @router /about [get]
 func (this *MainController) About() {
 	this.display("about", NO_RIGHT)

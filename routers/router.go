@@ -54,6 +54,9 @@ func init() {
 			&blog.UpyunController{},
 		),
 		beego.NSInclude(
+			&blog.SearchController{},
+		),
+		beego.NSInclude(
 			&tools.MainController{},
 		),
 	)
@@ -73,6 +76,7 @@ func init() {
 	beego.Include(&blog.UpyunController{})
 	beego.Include(&blog.TimelineController{})
 	beego.Include(&blog.ArticleController{})
+	beego.Include(&blog.SearchController{})
 	beego.Include(&tools.MainController{})
 
 	//前台路由
@@ -96,6 +100,7 @@ func init() {
 	beego.Router("/album:page:int.html", &blog.PhotoController{}, "*:Albums")
 
 	beego.Router("/blog/timeline/list:page:int.html", &blog.TimelineController{}, "*:List")
+	beego.Router("/search:page:int.html", &blog.SearchController{}, "*:Search")
 
 	beego.Router("/:urlname(.+)", &blog.ArticleController{}, "*:Index") //别名访问
 

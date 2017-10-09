@@ -34,7 +34,7 @@
 									<th>发布人</th>
 									<th>发布时间</th>
 									<th>最近修改</th>
-									<th>编辑|删除</th>
+									<th>隐藏|编辑|删除</th>
 								</tr>
 							</thead>
 							<tbody id="app-article">
@@ -53,6 +53,7 @@
 									<td class="center">{{v.Posttime}}</td>
 									<td class="center">{{v.Updated}}</td>
 									<td>
+										<a v-bind:href="['/admin/article/hide?id='+v.Id]" onclick="return confirm()"><i class="fa fa-edit fa-fa"></i></a> |
 										<a href="#" v-bind:onclick="['edit_article('+v.Id+')']"><i class="fa fa-edit fa-fw"></i></a> |
 										<a v-bind:href="['/admin/article/delete?id='+v.Id]" onclick="return del_confirm()">删除</a></td>
 								</tr></tbody>

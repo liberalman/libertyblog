@@ -33,14 +33,6 @@ func init() {
 
 	beego.GlobalControllerRouter["libertyblog/controllers/blog:MainController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:MainController"],
 		beego.ControllerComments{
-			Method: "Search",
-			Router: `/search`,
-			AllowHTTPMethods: []string{"get"},
-			MethodParams: param.Make(),
-			Params: nil})
-
-	beego.GlobalControllerRouter["libertyblog/controllers/blog:MainController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:MainController"],
-		beego.ControllerComments{
 			Method: "Webscan_360",
 			Router: `/webscan_360_cn.html`,
 			AllowHTTPMethods: []string{"get"},
@@ -75,6 +67,14 @@ func init() {
 		beego.ControllerComments{
 			Method: "UpToken",
 			Router: `/qiniu/uptoken`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/blog:SearchController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:SearchController"],
+		beego.ControllerComments{
+			Method: "Search",
+			Router: `/search`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})

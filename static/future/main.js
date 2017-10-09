@@ -150,7 +150,7 @@ var vm_home = new Vue({
 	}
 });
 
-function init_pagebar2(init_page, pagesize, total) {
+function init_pagebar3(init_page, pagesize, total, nexturl) {
 	$('#paging-box').paging({
 		initPageNo: init_page, // 初始页码
 		totalPages: parseInt(total / pagesize), //总页数
@@ -158,9 +158,9 @@ function init_pagebar2(init_page, pagesize, total) {
 		slideSpeed: 600, // 缓动速度。单位毫秒
 		jump: true, //是否支持跳转
 		callback: function(page) { // 回调函数
-			old_page = sessionStorage.getItem("/page");
-			sessionStorage.setItem("/page", page);
-			var url = '/index' + page + '.html';
+			old_page = sessionStorage.getItem(nexturl); // nexturl="/page"
+			sessionStorage.setItem(nexturl, page);
+			var url = nexturl + page + '.html' + window.location.search; // window.location.search 是浏览器中GET请求时候的地址参数
 			if(null != old_page && old_page != page) {
 				$.ajax({
 					url: url,
@@ -228,6 +228,10 @@ function checkall(name, obj) {
 
 function del_confirm() {
 	return confirm('一旦删除将不可恢复，确定吗？');
+}
+
+function confirm() {
+	return confirm('确定操作？');
 }
 
 function del_timeline(timelineid) {
