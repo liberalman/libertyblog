@@ -26,11 +26,36 @@ func SearchArticle(key string, index string, page int, pagesize int) (string, in
 	if begin+pagesize < total {
 		end = begin + pagesize
 	} else {
-		end = total - 1
+		end = total
 	}
 	for i := begin; i < end; i++ {
 		article_ids += fmt.Sprintf("%d,", res.Matches[i].DocId)
 	}
+	/*
+		list := GetArticlesByIds(article_ids[:len(article_ids)-1])
+		var opts sphinx.ExcerptsOpts
+		opts.BeforeMatch = "<span style='font-weight:bold;color:red'>"
+		opts.AfterMatch = "</span>"
+		opts.ChunkSeparator = " ... "
+		opts.Limit = 60
+		opts.Around = 3
+		var docs []string
+		for _, v := range list {
+			docs = append(docs, v.Title)
+		}
+		var resDocs []string
+		resDocs, err = SphinxClient.BuildExcerpts(docs, index, key, opts)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println(docs, resDocs)
+		}
+	*/
+
+	/*for i := 0; i < total; i++ {
+		list[i].Content = resDocs[i]
+	}*/
+
 	SphinxClient.Close()
 	return article_ids, total
 }
