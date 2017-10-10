@@ -17,7 +17,6 @@ type SearchController struct {
 func (this *SearchController) Search() {
 	var list []models.Article
 	article_ids, count := models.SearchArticle(this.GetString("key"), "test1", this.page, this.pagesize)
-	fmt.Println(count)
 	if count > 0 {
 		list = models.GetArticlesByIds(article_ids[:len(article_ids)-1])
 	}
