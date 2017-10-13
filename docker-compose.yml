@@ -82,6 +82,7 @@ sphinx:
     - database:mysql
   volumes:
     - "/var/coreseek/:/usr/local/coreseek/var/"
+    - "/data/gocode/src/libertyblog/conf/sphinx.conf:/usr/local/coreseek/conf/sphinx.conf"
 
 #sphinx-index:
 #  image: liberalman/coreseek

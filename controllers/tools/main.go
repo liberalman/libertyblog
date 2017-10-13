@@ -52,6 +52,11 @@ func (this *MainController) Vim() {
 	this.TplName = "tools/vim.html"
 }
 
+// @router /tools/search [get]
+func (this *MainController) Search() {
+	this.TplName = "tools/search.html"
+}
+
 // @router /tools/ascii [get,post]
 func (this *MainController) Ascii() {
 	this.TplName = "tools/ascii.html"
