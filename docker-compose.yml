@@ -36,7 +36,7 @@ loadbalancer:
   image: liberalman/nginx-consul-template:latest
   hostname: nginx
   volumes:
-    - "/data/gocode/src/libertyblog/conf/nginx-docker.conf:/etc/consul-templates/nginx.conf"
+    - "/data/gocode/src/libertyblog/conf/nginx.conf.ctmpl:/etc/consul-templates/nginx.conf.ctmpl"
     - "/data/gocode/src/libertyblog/conf/server.key:/etc/nginx/server.key"
     - "/data/gocode/src/libertyblog/conf/server.crt:/etc/nginx/server.crt"
   links:
