@@ -17,14 +17,16 @@
 </ol>
 
 <p>"run at login" will not take effect unless you put this app in the <code>/Applications</code> directory.</p>
-</textarea>
+    </textarea>
 	</div>
 	<div class="col-lg-6">
+    <!--
 		<span>
 			<pre><code class="html" id="code_highlight"></code></pre>
 		</span>
+    -->
 		<span>
-			<pre><code class="markdown" id="preview"></code></pre>
+            <pre><code class="markdown" id="preview"></code></pre>
 			<textarea id="preview_nohighlight" style="display:none;"></textarea>
 			<button class="btn" data-clipboard-target="#preview_nohighlight">复制Markdown内容</button>
 		</span>
@@ -49,10 +51,10 @@
 		var markdown_code = toMarkdown(code);
 		$('#preview').text(markdown_code);
 		$('#preview_nohighlight').val(markdown_code);
-		$('#code_highlight').text(code);
-		$('pre code').each(function(i, block) {
-			hljs.highlightBlock(block);
-		});
+		//$('#code_highlight').text(code);
+		//$('pre code').each(function(i, block) {
+		//	hljs.highlightBlock(block);
+		//});
 	}
 
 	var clipboard = new Clipboard('.btn');
