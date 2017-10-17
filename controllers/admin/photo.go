@@ -2,13 +2,16 @@ package admin
 
 import (
 	"fmt"
+	"image/jpeg"
 	"io"
 	"libertyblog/models"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
+	"github.com/nfnt/resize"
 	"github.com/qiniu/api.v7/auth/qbox"
 	"github.com/qiniu/api.v7/storage"
 	"github.com/upyun/go-sdk/upyun"
@@ -158,123 +161,58 @@ func (this *PhotoController) Edit() {
 
 //上传照片 用于在写markdown文档的时候上传照片用
 func (this *PhotoController) UploadPhoto() {
-	/*	file, header, err := this.GetFile("editormd-image-file") //upfile
-		ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
-		out := make(map[string]string)
-		out["url"] = ""
-		out["fileType"] = ext
-		out["original"] = header.Filename
-		out["state"] = "SUCCESS"
-		out["success"] = "1"
-		filename := ""
-		if err != nil {
-			out["state"] = err.Error()
-			out["success"] = "2"
-			out["message"] = err.Error()
-		} else {
-			t := time.Now().UnixNano()
-			day := time.Now().Format("20060102")
-
-			//小图
-			savepath := pathArr[2] + day
-			if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
-				out["state"] = err.Error()
-				out["success"] = "3"
-				out["message"] = err.Error()
-			}
-			filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
-			err = createSmallPic(file, filename, 220, 150)
-			if err != nil {
-				out["state"] = err.Error()
-				out["success"] = "4"
-				out["message"] = err.Error()
-			}
-
-			//大图
-			savepath = pathArr[1] + day
-			if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
-				out["state"] = err.Error()
-				out["message"] = err.Error()
-			}
-			filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
-			if err = this.SaveToFile("editormd-image-file", filename); err != nil {
-				out["state"] = err.Error()
-				out["success"] = "5"
-				out["message"] = err.Error()
-			}
-			out["url"] = filename[1:]
-
-		}
-		albumid, _ := this.GetInt64("albumid")
-		this.Insert(albumid, header.Filename, out["url"], 0)
-		fmt.Println(out)
-		this.Data["json"] = out
-		this.ServeJSONP()
-	*/
-	var albumid int64 = -1
-	_, header, err := this.GetFile("editormd-image-file")
+	file, header, err := this.GetFile("editormd-image-file") //upfile
 	ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
 	out := make(map[string]string)
 	out["url"] = ""
 	out["fileType"] = ext
 	out["original"] = header.Filename
+	out["state"] = "SUCCESS"
 	out["success"] = "1"
-	var source int8 = PHOTO_LOCAL
 	filename := ""
 	if err != nil {
+		out["state"] = err.Error()
 		out["success"] = "2"
 		out["message"] = err.Error()
-		goto end
 	} else {
 		t := time.Now().UnixNano()
 		day := time.Now().Format("20060102")
 
-		var savepath string
-		savepath = pathArr[1] + day
-		savepath = fmt.Sprintf("./static/article")
+		//小图
+		savepath := pathArr[2] + day
 		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
+			out["state"] = err.Error()
+			out["success"] = "3"
+			out["message"] = err.Error()
+		}
+		filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
+		err = createSmallPic(file, filename, 220, 150)
+		if err != nil {
+			out["state"] = err.Error()
+			out["success"] = "4"
+			out["message"] = err.Error()
+		}
+
+		//大图
+		savepath = pathArr[1] + day
+		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
+			out["state"] = err.Error()
+			out["message"] = err.Error()
+		}
+		filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
+		if err = this.SaveToFile("editormd-image-file", filename); err != nil {
+			out["state"] = err.Error()
 			out["success"] = "5"
 			out["message"] = err.Error()
-			goto end
-		}
-		filename = fmt.Sprintf("./static/article/%d%s", t, ext)
-		if err = this.SaveToFile("file", filename); err != nil {
-			out["success"] = "6"
-			out["message"] = err.Error()
-			goto end
 		}
 		out["url"] = filename[1:]
 
-		// 转储又拍云，上传文件
-		upyun_filepath := fmt.Sprintf("/static/article/%d%s", t, ext)
-		err := up.Put(&upyun.PutObjectConfig{
-			Path:      upyun_filepath,
-			LocalPath: filename,
-		})
-		if nil != err {
-			// 转储又拍云失败，需要记录到待处理列表中
-			var cleanup models.Cleanup
-			cleanup.Event = models.CANNOT_UPLOAD_UPYUN
-			cleanup.Error = err.Error()
-			cleanup.Url = out["url"]
-			cleanup.Insert()
-		} else {
-			out["url"] = upyun_domain + upyun_filepath
-			source = PHOTO_UPYUN
-			// 转储成功，删除本地文件
-			if err := os.Remove(filename); nil != err {
-				var cleanup models.Cleanup
-				cleanup.Event = models.CANNOT_DELETE_LOCAL
-				cleanup.Url = filename
-				cleanup.Error = err.Error()
-				cleanup.Insert()
-			}
-		}
 	}
-	this.Insert(albumid, header.Filename, out["url"], source)
-end:
+	albumid, _ := this.GetInt64("albumid")
+	this.Insert(albumid, header.Filename, out["url"], 0)
+	fmt.Println(out)
 	this.Data["json"] = out
-	this.ServeJSON()
+	this.ServeJSONP()
 }
 
 // @Title upload photos
@@ -538,4 +476,223 @@ func createPicture(file io.Reader, filename string, size int) error {
 	}
 
 	return err
+}
+
+// @Title upyun photo
+// @Description 上传文件(用于文章图片上传，文章封面，说说封面)
+// @Param	userid		path 	int64	true		"userid"
+// @Success 200 {object} models.Photo
+// @Failure 403 :userid is empty
+// @router /admin/article/upload [post]
+func (this *PhotoController) Upload() {
+	/*var success int = 1
+		var url string
+		var message string
+
+		file, header, err := this.GetFile("editormd-image-file")
+		if err != nil {
+			success = -1
+			message = err.Error()
+		} else {
+			utype := this.GetString("type")
+			if utype == "" {
+				utype = "1"
+			}
+			index, _ := strconv.Atoi(utype)
+			if index < 1 || index > 3 {
+				success = -5
+				message = "type=" + utype + " out of bound."
+				goto end
+			}
+			fileType := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
+			savepath := pathArr[index] + time.Now().Format("20060102")
+			if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
+				success = -2
+				message = err.Error()
+			} else {
+				filename := fmt.Sprintf("%s/%d%s", savepath, time.Now().UnixNano(), fileType)
+				if this.GetString("type") == "2" {
+					w, _ := strconv.Atoi(this.GetString("w"))
+					h, _ := strconv.Atoi(this.GetString("h"))
+					err = createSmallPic(file, filename, w, h)
+					if err != nil {
+						success = -3
+						message = err.Error()
+					}
+				} else {
+					if err = this.SaveToFile("editormd-image-file", filename); err != nil {
+						success = -4
+						message = err.Error()
+					}
+				}
+				url = filename[1:]
+			}
+		}
+
+	end:
+		this.Ctx.WriteString(fmt.Sprintf("{\"success\":%d,\"url\":\"%s\",\"message\":\"%s\"}", success, url, message))
+	*/
+
+	var success int = 1
+	var url string
+	var message string
+	var source int8 = PHOTO_LOCAL
+
+	_, header, err := this.GetFile("editormd-image-file")
+	if err != nil {
+		success = -1
+		message = err.Error()
+		goto end
+	} else {
+		ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
+		utype := this.GetString("type")
+		if utype == "" {
+			utype = "1"
+		}
+		index, _ := strconv.Atoi(utype)
+		if index < 1 || index > 3 {
+			success = -5
+			message = "type=" + utype + " out of bound."
+			goto end
+		}
+		fileType := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
+		savepath := fmt.Sprintf("./static/article")
+		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
+			success = -2
+			message = err.Error()
+			goto end
+		} else {
+			t := time.Now().UnixNano()
+			filename := fmt.Sprintf("%s/%d%s", savepath, time.Now().UnixNano(), fileType)
+			if err = this.SaveToFile("editormd-image-file", filename); err != nil {
+				success = -4
+				message = err.Error()
+				goto end
+			}
+
+			url = filename[1:]
+
+			// 转储又拍云，上传文件
+			upyun_filepath := fmt.Sprintf("/static/article/%d%s", t, ext)
+			err := up.Put(&upyun.PutObjectConfig{
+				Path:      upyun_filepath,
+				LocalPath: filename,
+			})
+			if nil != err {
+				// 转储又拍云失败，需要记录到待处理列表中
+				var cleanup models.Cleanup
+				cleanup.Event = models.CANNOT_UPLOAD_UPYUN
+				cleanup.Error = err.Error()
+				cleanup.Url = url
+				cleanup.Insert()
+			} else {
+				url = upyun_domain + upyun_filepath
+				source = PHOTO_UPYUN
+				// 转储成功，删除本地文件
+				if err := os.Remove(filename); nil != err {
+					var cleanup models.Cleanup
+					cleanup.Event = models.CANNOT_DELETE_LOCAL
+					cleanup.Url = filename
+					cleanup.Error = err.Error()
+					cleanup.Insert()
+				}
+			}
+		}
+	}
+	this.Insert(-1, header.Filename, url, source)
+end:
+	this.Ctx.WriteString(fmt.Sprintf("{\"success\":%d,\"url\":\"%s\",\"message\":\"%s\"}", success, url, message))
+
+	/*var albumid int64 = -1
+		_, header, err := this.GetFile("editormd-image-file")
+		ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
+		out := make(map[string]string)
+		out["url"] = ""
+		out["fileType"] = ext
+		out["original"] = header.Filename
+		out["success"] = "1"
+		var source int8 = PHOTO_LOCAL
+		filename := ""
+		if err != nil {
+			out["success"] = "2"
+			out["message"] = err.Error()
+			goto end
+		} else {
+			t := time.Now().UnixNano()
+			day := time.Now().Format("20060102")
+
+			//小图,转储ypyun后不用生成小图了，直接用又拍云的小图
+			var savepath string
+			savepath = pathArr[1] + day
+			savepath = fmt.Sprintf("./static/article")
+			if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
+				out["success"] = "5"
+				out["message"] = err.Error()
+				goto end
+			}
+			filename = fmt.Sprintf("./static/article/%d%s", t, ext)
+			if err = this.SaveToFile("file", filename); err != nil {
+				out["success"] = "6"
+				out["message"] = err.Error()
+				goto end
+			}
+			out["url"] = filename[1:]
+
+			// 转储又拍云，上传文件
+			upyun_filepath := fmt.Sprintf("/static/article/%d%s", t, ext)
+			err := up.Put(&upyun.PutObjectConfig{
+				Path:      upyun_filepath,
+				LocalPath: filename,
+			})
+			if nil != err {
+				// 转储又拍云失败，需要记录到待处理列表中
+				var cleanup models.Cleanup
+				cleanup.Event = models.CANNOT_UPLOAD_UPYUN
+				cleanup.Error = err.Error()
+				cleanup.Url = out["url"]
+				cleanup.Insert()
+			} else {
+				out["url"] = upyun_domain + upyun_filepath
+				source = PHOTO_UPYUN
+				// 转储成功，删除本地文件
+				if err := os.Remove(filename); nil != err {
+					var cleanup models.Cleanup
+					cleanup.Event = models.CANNOT_DELETE_LOCAL
+					cleanup.Url = filename
+					cleanup.Error = err.Error()
+					cleanup.Insert()
+				}
+			}
+		}
+		this.Insert(albumid, header.Filename, out["url"], source)
+	end:
+		this.Data["json"] = out
+		this.ServeJSON()*/
+}
+
+func createSmallPic(file io.Reader, fileSmall string, w, h int) error {
+	// decode jpeg into image.Image
+	img, err := jpeg.Decode(file)
+	if err != nil {
+		return err
+	}
+	b := img.Bounds()
+	if w > b.Dx() {
+		w = b.Dx()
+	}
+	if h > b.Dy() {
+		h = b.Dy()
+	}
+	// resize to width 1000 using Lanczos resampling
+	// and preserve aspect ratio
+	m := resize.Resize(uint(w), uint(h), img, resize.Lanczos3)
+
+	out, err := os.Create(fileSmall)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	// write new image to file
+	return jpeg.Encode(out, m, nil)
 }

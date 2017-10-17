@@ -41,6 +41,14 @@ func init() {
 
 	beego.GlobalControllerRouter["libertyblog/controllers/tools:MainController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/tools:MainController"],
 		beego.ControllerComments{
+			Method: "Search",
+			Router: `/tools/search`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/tools:MainController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/tools:MainController"],
+		beego.ControllerComments{
 			Method: "Time",
 			Router: `/tools/time`,
 			AllowHTTPMethods: []string{"get"},
@@ -59,14 +67,6 @@ func init() {
 		beego.ControllerComments{
 			Method: "Vim",
 			Router: `/tools/vim`,
-			AllowHTTPMethods: []string{"get"},
-			MethodParams: param.Make(),
-			Params: nil})
-
-	beego.GlobalControllerRouter["libertyblog/controllers/tools:MainController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/tools:MainController"],
-		beego.ControllerComments{
-			Method: "Search",
-			Router: `/tools/search`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})

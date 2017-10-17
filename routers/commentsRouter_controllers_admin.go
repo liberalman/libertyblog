@@ -57,6 +57,14 @@ func init() {
 
 	beego.GlobalControllerRouter["libertyblog/controllers/admin:PhotoController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:PhotoController"],
 		beego.ControllerComments{
+			Method: "Upload",
+			Router: `/admin/article/upload`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/admin:PhotoController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/admin:PhotoController"],
+		beego.ControllerComments{
 			Method: "Edit",
 			Router: `/admin/photo/edit`,
 			AllowHTTPMethods: []string{"post"},
