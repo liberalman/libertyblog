@@ -158,58 +158,123 @@ func (this *PhotoController) Edit() {
 
 //上传照片 用于在写markdown文档的时候上传照片用
 func (this *PhotoController) UploadPhoto() {
-	file, header, err := this.GetFile("editormd-image-file") //upfile
+	/*	file, header, err := this.GetFile("editormd-image-file") //upfile
+		ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
+		out := make(map[string]string)
+		out["url"] = ""
+		out["fileType"] = ext
+		out["original"] = header.Filename
+		out["state"] = "SUCCESS"
+		out["success"] = "1"
+		filename := ""
+		if err != nil {
+			out["state"] = err.Error()
+			out["success"] = "2"
+			out["message"] = err.Error()
+		} else {
+			t := time.Now().UnixNano()
+			day := time.Now().Format("20060102")
+
+			//小图
+			savepath := pathArr[2] + day
+			if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
+				out["state"] = err.Error()
+				out["success"] = "3"
+				out["message"] = err.Error()
+			}
+			filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
+			err = createSmallPic(file, filename, 220, 150)
+			if err != nil {
+				out["state"] = err.Error()
+				out["success"] = "4"
+				out["message"] = err.Error()
+			}
+
+			//大图
+			savepath = pathArr[1] + day
+			if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
+				out["state"] = err.Error()
+				out["message"] = err.Error()
+			}
+			filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
+			if err = this.SaveToFile("editormd-image-file", filename); err != nil {
+				out["state"] = err.Error()
+				out["success"] = "5"
+				out["message"] = err.Error()
+			}
+			out["url"] = filename[1:]
+
+		}
+		albumid, _ := this.GetInt64("albumid")
+		this.Insert(albumid, header.Filename, out["url"], 0)
+		fmt.Println(out)
+		this.Data["json"] = out
+		this.ServeJSONP()
+	*/
+	var albumid int64 = -1
+	_, header, err := this.GetFile("editormd-image-file")
 	ext := strings.ToLower(header.Filename[strings.LastIndex(header.Filename, "."):])
 	out := make(map[string]string)
 	out["url"] = ""
 	out["fileType"] = ext
 	out["original"] = header.Filename
-	out["state"] = "SUCCESS"
 	out["success"] = "1"
+	var source int8 = PHOTO_LOCAL
 	filename := ""
 	if err != nil {
-		out["state"] = err.Error()
 		out["success"] = "2"
 		out["message"] = err.Error()
+		goto end
 	} else {
 		t := time.Now().UnixNano()
 		day := time.Now().Format("20060102")
 
-		//小图
-		savepath := pathArr[2] + day
-		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
-			out["state"] = err.Error()
-			out["success"] = "3"
-			out["message"] = err.Error()
-		}
-		filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
-		err = createSmallPic(file, filename, 220, 150)
-		if err != nil {
-			out["state"] = err.Error()
-			out["success"] = "4"
-			out["message"] = err.Error()
-		}
-
-		//大图
+		var savepath string
 		savepath = pathArr[1] + day
+		savepath = fmt.Sprintf("./static/article")
 		if err = os.MkdirAll(savepath, os.ModePerm); err != nil {
-			out["state"] = err.Error()
-			out["message"] = err.Error()
-		}
-		filename = fmt.Sprintf("%s/%d%s", savepath, t, ext)
-		if err = this.SaveToFile("editormd-image-file", filename); err != nil {
-			out["state"] = err.Error()
 			out["success"] = "5"
 			out["message"] = err.Error()
+			goto end
+		}
+		filename = fmt.Sprintf("./static/article/%d%s", t, ext)
+		if err = this.SaveToFile("file", filename); err != nil {
+			out["success"] = "6"
+			out["message"] = err.Error()
+			goto end
 		}
 		out["url"] = filename[1:]
 
+		// 转储又拍云，上传文件
+		upyun_filepath := fmt.Sprintf("/static/article/%d%s", t, ext)
+		err := up.Put(&upyun.PutObjectConfig{
+			Path:      upyun_filepath,
+			LocalPath: filename,
+		})
+		if nil != err {
+			// 转储又拍云失败，需要记录到待处理列表中
+			var cleanup models.Cleanup
+			cleanup.Event = models.CANNOT_UPLOAD_UPYUN
+			cleanup.Error = err.Error()
+			cleanup.Url = out["url"]
+			cleanup.Insert()
+		} else {
+			out["url"] = upyun_domain + upyun_filepath
+			source = PHOTO_UPYUN
+			// 转储成功，删除本地文件
+			if err := os.Remove(filename); nil != err {
+				var cleanup models.Cleanup
+				cleanup.Event = models.CANNOT_DELETE_LOCAL
+				cleanup.Url = filename
+				cleanup.Error = err.Error()
+				cleanup.Insert()
+			}
+		}
 	}
-	albumid, _ := this.GetInt64("albumid")
-	this.Insert(albumid, header.Filename, out["url"], 0)
-	fmt.Println(out)
+	this.Insert(albumid, header.Filename, out["url"], source)
+end:
 	this.Data["json"] = out
-	this.ServeJSONP()
+	this.ServeJSON()
 }
 
 // @Title upload photos
