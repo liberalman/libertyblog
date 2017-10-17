@@ -20,6 +20,9 @@ func (this *SearchController) Search() {
 	if count > 0 {
 		list = models.GetArticlesByIds(article_ids[:len(article_ids)-1])
 	}
+    for i := 0 ; i < len(list); i++ {
+        list[i].Content = ""
+    }
 	if this.IsAjax() {
 		ret := models.Ret{Code: 0, Message: "success"}
 		data := map[string]interface{}{}
