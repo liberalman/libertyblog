@@ -77,6 +77,10 @@
 	<section class="blurb">
 		<h2>About</h2>
 		<p><<<.description>>></p>
+		<h2>blogroll</h2>
+        <<<range $k,$v := .links>>>
+        <p><a href="<<<$v.Url>>>"><<<$v.Sitename>>></a></p>
+        <<<end>>>
 		<ul class="actions">
 			<li>
 				<a href="/about" class="button">Learn More</a>
