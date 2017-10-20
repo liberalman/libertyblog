@@ -77,8 +77,8 @@ func (this *ArticleController) Index() {
 	this.Data["comments"], count = models.QueryComments(article.Id, this.page, this.pagesize)
 	this.Data["pagebar"] = models.NewPager(int64(this.page), int64(count), int64(this.pagesize), "/index%d.html").ToString()
 
-	//this.display("article", NO_RIGHT) // 去掉右侧边栏
-	this.display("article", HAS_RIGHT)
+	this.display("article", NO_RIGHT) // 去掉右侧边栏
+	//this.display("article", HAS_RIGHT)
 }
 
 // @router /article/addueditor [get]

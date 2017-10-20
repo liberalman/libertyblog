@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+    <property>
+        <name>http.agent.name</name>
+        <value>hicool.top</value>
+        <description>Hello，welcom to visit www.hicool.top</description>
+    </property>
+    <property>
+        <name>http.robots.agents</name>
+            <value>hicool.top,*</value>
+        </property>
+    <property>
+        <name>searcher.dir</name>
+        <value>/usr/local/nutch/crawl</value>
+        <description></description>
+    </property>
+    <property>  
+        <name>plugin.includes</name>  
+        <value>protocol-httpclient|urlfilter-regex|parse-(html|tika)|index-(basic|anchor)|indexer-solr|scoring-opic|urlnormalizer-(pass|regex|basic)|parse-jsoup</value>  
+    </property>
+</configuration>
