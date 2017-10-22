@@ -11,8 +11,11 @@
 					<span class="label label-danger"><time class="timeago" datetime=<<<date .post.Updated "Y-m-j">>>></time></span>
 					<span class="label label-primary">作者：<<<.post.Username>>></span>
 					<span class="label label-success">阅读：<<<.post.Views>>></span>
-					<span class="label label-warning"><<<if eq 1 .post.Pubtype>>>转载<<<else>>>原创<<<end>>></span> <<<if eq 1 .showEditBtn>>>
-					<span class="label label-default"><a href="/article/editmarkdown?id=<<<.post.Id>>>" target="_blank">编辑</a></span> <<<end>>>
+					<span class="label label-warning"><<<if eq 1 .post.Pubtype>>>转载<<<else>>>原创<<<end>>></span>
+					<<<if eq 1 .showEditBtn>>> <span class="label label-default"><a href="/article/editmarkdown?id=<<<.post.Id>>>" target="_blank">编辑</a></span> <<<end>>>
+				</p>
+				<p>
+					<span class="label label-info"><<<str2html .post.TagsLink>>></span>
 				</p>
 			</div>
 			<div class="meta">
