@@ -20,4 +20,11 @@
          <name>plugin.includes</name>
          <value>protocol-http|urlfilter-regex|parse-(text|html|js)|analysis-(zh)|index-basic|query-(basic|site|url)|summary-lucene|scoring-opic|u    rlnormalizer-(pass|regex|basic)</value> 
     </property>
+    <property> 
+      <name>searcher.summary.length</name>
+      <value>100</value>
+      <description>
+      The total number of terms to display in a hit summary.
+      </description>
+    </property>
 </configuration>
