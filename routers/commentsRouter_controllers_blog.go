@@ -9,6 +9,14 @@ func init() {
 
 	beego.GlobalControllerRouter["libertyblog/controllers/blog:ArticleController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:ArticleController"],
 		beego.ControllerComments{
+			Method: "Index1",
+			Router: `/articles/`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["libertyblog/controllers/blog:ArticleController"] = append(beego.GlobalControllerRouter["libertyblog/controllers/blog:ArticleController"],
+		beego.ControllerComments{
 			Method: "AddUeditor",
 			Router: `/article/addueditor`,
 			AllowHTTPMethods: []string{"get"},

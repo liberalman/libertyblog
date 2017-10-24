@@ -38,6 +38,29 @@ func (this *ArticleController) EditMarkdown() {
 	this.display_no_layout("article_edit_markdown")
 }
 
+// @router /articles/ [get]
+func (this *ArticleController) Index1() {                                                                                                             
+    list, count := models.PostIndex(this.page, this.pagesize)
+    if this.IsAjax() {
+        ret := models.Ret{Code: 0, Message: "success"}
+        data := map[string]interface{}{}
+        data["total"] = count
+        data["page"] = this.page
+        data["pagesize"] = this.pagesize
+        data["list"] = list
+        ret.Data = data
+        this.Data["json"] = ret 
+        this.ServeJSON()
+    } else {
+        this.Data["list"] = list
+        this.Data["total"] = count
+        this.Data["page"] = this.page
+        this.Data["pagesize"] = this.pagesize
+        this.setHeadFootMetas()
+        this.display("article_index", NO_RIGHT)
+    }
+}
+
 func (this *ArticleController) Index() {
 	var article *models.Article = new(models.Article) //这里必须new，如果用直接声明的方式，而不new的话，网页端在使用ColorTitle、TagsLink等函数的时候会报找不到该函数。真的很奇怪，难道new之后没有自动释放？传说中的引用计数呢？
 	urlname := this.Ctx.Input.Param(":urlname")

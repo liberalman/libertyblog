@@ -12,8 +12,8 @@
 
 # accept anything else
 #+.
-+^https:\/\/www\.hicool\.top\/article\/.*$
 -^https:\/\/www\.hicool\.top\/category/.*$
 -^https:\/\/www\.hicool\.top\/album.*$
 -^https:\/\/www\.hicool\.top\/blog/photo.*$
++^https:\/\/www\.hicool\.top\/article\/.*$
 

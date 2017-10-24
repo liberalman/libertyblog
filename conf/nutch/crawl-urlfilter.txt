@@ -11,7 +11,8 @@
 -.*(/[^/]+)/[^/]+\1/[^/]+\1/
 
 # accept hosts in MY.DOMAIN.NAME
-+^https://([a-z0-9]*\.)*hicool.top/
++^https://([a-z0-9]*\.)*hicool.top/articles/
++^https://([a-z0-9]*\.)*hicool.top/article/
 
 # skip everything else
 -.
