@@ -27,6 +27,7 @@ type Post struct {
 	Istop      int8
 	Coverurl   string `orm:"size(70)"`
 	Pubtype    int8
+	Show       int8
 	Reprinturl string `orm:"size(128);"`
 }
 
@@ -47,6 +48,7 @@ type Post1 struct {
 	Coverurl   string
 	Avatarurl  string
 	Pubtype    int8
+	Show       int8
 	Reprinturl string
 }
 
@@ -183,7 +185,7 @@ func PostIndex(page int, pagesize int) ([]Article, int) {
 	o := orm.NewOrm()
 
 	var ids []string
-	o.Raw("select p.id from tb_user u,tb_post p where u.id=p.userid order by p.istop desc,p.updated desc limit ?,?", (page-1)*pagesize, pagesize).QueryRows(&ids)
+	o.Raw("select p.id from tb_user u,tb_post p where u.id=p.userid and p.show=1 order by p.istop desc,p.updated desc limit ?,?", (page-1)*pagesize, pagesize).QueryRows(&ids)
 	for _, id := range ids {
 		key := CACHE_KEY_TB_USER + id
 		tmp := Cache.Get(key)

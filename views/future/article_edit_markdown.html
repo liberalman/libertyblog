@@ -34,6 +34,15 @@
 							<option value="0">已发布</option>
 							<option value="1">草稿箱</option>
 						</select>
+                        <select class="form-control" name="show">
+                            <<<if eq 1 .post.Show >>>
+                            <option value="0">hide</option>
+                            <option value="1" selected="selected">show</option>
+                            <<<else>>>
+                            <option value="0" selected="selected">hide</option>
+                            <option value="1">show</option>
+                            <<<end>>>
+                        </select>
 						<div class="input-group">
 							<span class="input-group-addon">
                         <input type="checkbox" aria-label="..." value="1" name="istop">

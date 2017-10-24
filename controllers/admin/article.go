@@ -119,6 +119,11 @@ func (this *ArticleController) Save() {
 	if this.GetString("urltype") == "1" {
 		urltype = 1
 	}
+	if this.GetString("show") == "1" {
+        post.Show = 1
+	} else {
+        post.Show = 0
+    }
 	if status != 1 && status != 2 {
 		status = 0
 	}
@@ -215,13 +220,13 @@ func (this *ArticleController) Save() {
 	if id < 1 {
 		if 1 == post.Pubtype {
 			post.Reprinturl = strings.TrimSpace(this.GetString("reprinturl"))
-			if err = post.Update("tags", "status", "title", "digest", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype", "reprinturl"); nil != err {
+			if err = post.Update("tags", "status", "title", "digest", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype", "show", "reprinturl"); nil != err {
 				ret.Code = -3
 				ret.Message = err.Error()
 				goto end
 			}
 		} else {
-			if err = post.Update("tags", "status", "title", "digest", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype"); nil != err {
+			if err = post.Update("tags", "status", "title", "digest", "coverurl", "istop", "content", "urlname", "urltype", "updated", "posttime", "pubtype", "show"); nil != err {
 				ret.Code = -4
 				ret.Message = err.Error()
 				goto end
@@ -230,13 +235,13 @@ func (this *ArticleController) Save() {
 	} else {
 		if 1 == post.Pubtype {
 			post.Reprinturl = strings.TrimSpace(this.GetString("reprinturl"))
-			if err = post.Update("tags", "status", "title", "digest", "coverurl", "istop", "content", "urlname", "urltype", "updated", "pubtype", "reprinturl"); nil != err {
+			if err = post.Update("tags", "status", "title", "digest", "coverurl", "istop", "content", "urlname", "urltype", "updated", "pubtype", "show", "reprinturl"); nil != err {
 				ret.Code = -5
 				ret.Message = err.Error()
 				goto end
 			}
 		} else {
-			if err = post.Update("tags", "status", "title", "digest", "coverurl", "istop", "content", "urlname", "urltype", "updated", "pubtype"); nil != err {
+			if err = post.Update("tags", "status", "title", "digest", "coverurl", "istop", "content", "urlname", "urltype", "updated", "pubtype", "show"); nil != err {
 				ret.Code = -6
 				ret.Message = err.Error()
 				goto end
