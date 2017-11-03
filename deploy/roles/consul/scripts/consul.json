@@ -1,0 +1,11 @@
+{
+    "server" : false,
+    "node_name": "manager-node",
+    "advertise_addr" : "60.172.228.40",
+    "data_dir" : "/var/consul",
+    "client_addr" : "0.0.0.0",
+    "retry_join" : ["118.89.191.176"],
+    "datacenter" : "liberty-dc1",
+    "ui" : true
+}
+
