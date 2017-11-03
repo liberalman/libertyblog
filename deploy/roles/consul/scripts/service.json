@@ -26,7 +26,7 @@
             "tags": ["dev"],
             "port": 8080,
             "check": {
-                "http": "http://localhost:8080/jenkins/login/",
+                "http": "http://localhost:8080/jenkins/login",
                 "interval": "5s"
             }
         }
