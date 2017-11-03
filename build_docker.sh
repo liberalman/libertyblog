@@ -42,7 +42,12 @@ function build()
 {
     git pull
     docker-compose stop web
-    docker-compose rm web
+expect > /dev/null <<END
+spawn docker-compose rm web
+expect "Are you sure" {
+    send "y\r"
+}
+END
     docker run -it -v /data/gocode:/data/gocode -e GOPATH=/data/gocode --rm demo/go-build:latest /bin/bash -c "cd /data/gocode/src/libertyblog && go build"
     docker build -t liberalman/libertyblog .
     #docker-compose build web

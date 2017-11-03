@@ -1,0 +1,2 @@
+[webserver]
+118.89.191.176 ansible_ssh_user=root ansible_ssh_pass=
