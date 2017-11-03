@@ -4,9 +4,9 @@
             "id": "service1",
             "name": "tomcat",
             "tags": ["dev"],
-            "port": 9090,
+            "port": 8080,
             "check": {
-                "http": "http://localhost:9090/",
+                "http": "http://localhost:8080/",
                 "interval": "5s"
             }
         },
@@ -14,20 +14,20 @@
             "id": "service2",
             "name": "nutch",
             "tags": ["dev"],
-            "port": 9090,
+            "port": 8080,
             "check": {
-                "http": "http://localhost:9090/nutch/",
-                "interval": "5s",
+                "http": "http://localhost:8080/nutch/",
+                "interval": "5s"
             }
         },
         {
             "id": "service3",
             "name": "jenkins",
             "tags": ["dev"],
-            "port": 9090,
+            "port": 8080,
             "check": {
-                "http": "http://localhost:9090/jenkins/",
-                "interval": "5s",
+                "http": "http://localhost:8080/jenkins/login/",
+                "interval": "5s"
             }
         }
 
