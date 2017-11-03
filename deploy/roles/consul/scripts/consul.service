@@ -1,0 +1,14 @@
+[Unit]
+Description=Consul Agent
+After=network.service
+Requires=network.service
+
+[Service]
+User=consul
+ExecStart=/usr/local/bin/consul agent -config-dir /etc/consul.d
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=INT
+
+[Install]
+WantedBy=multi-user.target
+
