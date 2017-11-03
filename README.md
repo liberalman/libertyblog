@@ -22,6 +22,8 @@ go get -u github.com/nfnt/resize
 go get -u github.com/yunge/sphinx
 go get -u golang.org/x/net/context
 go get -u github.com/upyun/go-sdk/upyun
+go get -u github.com/qiniu/api.v7/auth/qbox
+go get -u github.com/qiniu/api.v7/storage
 ```
 
 #### 编译
