@@ -1,7 +1,4 @@
 {
-    "acl_datacenter": "liberty-dc1",
-    "acl_master_token": "ec4ad142-140d-44e5-98de-ccc4ac2eed58",
-    "acl_default_policy": "deny",
     "server" : false,
     "node_name": "manager-node",
     "advertise_addr" : "60.172.228.40",
