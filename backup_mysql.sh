@@ -11,12 +11,23 @@
 #crontab –e
 #0 4 * * *  /data/gocode/src/libertyblog/backup_mysql.sh
 
-cd /data/gocode/src/libertyblog/
-mysqldump -usocho -pLooks137 libertyblog | gzip > libertyblog.sql.gz
+pushd /data/gocode/src/libertyblog/
+    mysqldump -usocho -pLooks137 libertyblog | gzip > libertyblog.sql.gz
 
-#先要安装lean工具，可以到leancloud官网上查看云引擎下的命令行CLI工具。这里我直接给链接
-#https://releases.leanapp.cn/leancloud/lean-cli/releases/download/v0.7.5/lean-linux-amd64
-#要先登录leancloud，具体操作看官网，步骤略，这里假设已经安装lean工具并登录初始化成功
-cd seaofheart
-#seaofheart是我在leancloud上建立的工程，下载到本地来，要进入这个工程目录，然后执行上传
-lean upload ../libertyblog.sql.gz
+    #先要安装lean工具，可以到leancloud官网上查看云引擎下的命令行CLI工具。这里我直接给链接
+    #https://releases.leanapp.cn/leancloud/lean-cli/releases/download/v0.7.5/lean-linux-amd64
+    #要先登录leancloud，具体操作看官网，步骤略，这里假设已经安装lean工具并登录初始化成功
+    pushd seaofheart
+        #seaofheart是我在leancloud上建立的工程，下载到本地来，要进入这个工程目录，然后执行上传
+        lean upload ../libertyblog.sql.gz
+
+        if [ $? -eq 0 ];then
+            echo "upload libertyblog.sql.gz to leancloud success."
+        else
+            echo "upload libertyblog.sql.gz to leancloud failed." | mail -s "www.hicool.top Warning" "zscchina@163.com"
+        fi
+    popd
+
+popd
+
+
