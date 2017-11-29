@@ -1,5 +1,8 @@
 /*.exe
 conf/app.conf
+conf/app-docker.conf
+conf/sphinx.conf
+backup_mysql.sh
 .project
 conf/server.crt
 conf/server.key
