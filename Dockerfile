@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-MAINTAINER libertyblog <www.liberalman.cn>
+MAINTAINER libertyblog <www.hicool.top>
 
 RUN apk add --update bash ca-certificates && \
     rm -rf /var/cache/apk/*
