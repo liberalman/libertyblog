@@ -11,11 +11,11 @@
 #crontab –e
 #0 4 * * *  /data/gocode/src/libertyblog/backup_mysql.sh
 
-DB_USER=`cat ./db_user`
-DB_PASSWD=`cat ./db_passwd`
+dbuser=
+dbpassword=
 
 pushd /data/gocode/src/libertyblog/
-    mysqldump -u${DB_USER} -p${DB_PASSWD} -R --triggers -E libertyblog | gzip > libertyblog.sql.gz
+    mysqldump -u${dbuser} -p${dbpassword} -R --triggers -E libertyblog | gzip > libertyblog.sql.gz
 
     #先要安装lean工具，可以到leancloud官网上查看云引擎下的命令行CLI工具。这里我直接给链接
     #https://releases.leanapp.cn/leancloud/lean-cli/releases/download/v0.7.5/lean-linux-amd64
