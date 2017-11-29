@@ -7,13 +7,27 @@ libertyblog
 
 Author: liberalman
 
-首先要安装golang，配置GOROOT和GOPATH环境；还有要安装git工具，以便下载代码。
+# 安装
 
-#### 下载代码
+请确保以下软件已经安装并配置好，安装过程不赘述，自行百度
+
+|依赖环境|是否必须|Version|说明|
+|---|---|---|---|
+|golang|Yes|1.8.3|我们的代码是go写的，确保安装正确，GOPATH环境没问题|
+|git|Yes|1.8.3.1|下载代码，以及更新beego运行环境所需依赖|
+|mysql|Yes|5.7.18-log|数据库必须要配置，并且将初始化的sql脚本导入才能用|
+|docker|No|1.12.6|我把项目用到的所有组件都装进docker了，如果想要部署方便可以尝试使用docker来运行|
+|coreseek|No||搜索组件，不安装的话搜索没法用，不过不影响网站运行。coreseek，是中文分词版的sphinx，所以这个软件实际上是sphinx|
+
+>注意：如果觉得安装mysql和sphinx麻烦，尤其是sphinx的中文分词方式安装配置很繁琐，那最好选用docker方式来运行，因为docker我已经为大家配置好了mysql和sphinx，只需要拉取下来使用就可以了。
+
+#### 1.下载代码
 ```
 git clone -depth=1 https://github.com/liberalman/libertyblog.git
 ```
-#### 下载依赖库
+我将源码下载到了 /data/gocode/src/libertyblog ，后续所有的操作也都在该路径下。
+
+#### 2.更新依赖库
 该项目依赖一些golang的第三方库，执行以下命令安装
 ```
 go get -u github.com/astaxie/beego
@@ -26,14 +40,32 @@ go get -u github.com/qiniu/api.v7/auth/qbox
 go get -u github.com/qiniu/api.v7/storage
 ```
 
-#### 编译
+#### 3.编译
 ```
 cd libertyblog
 go build
 ```
-无意外的话，会生成一个libertyblog的可执行文件
+无意外的话，会在当前目录下生成一个libertyblog的可执行文件。
 
-另外一种执行方式，安装了bee工具
+#### 安装mysql
+登录mysql服务器，创建数据库，名称叫libertyblog，导入libertyblog.sql脚本文件。
+
+#### 修改配置
+启动载入的配置文件是 conf/app.conf ，打开这个文件，改为你的配置
+```
+dbhost= #数据库主机地址
+dbuser= #用户名
+dbport= #端口
+sphinx_host= #sphinx主机地址
+sphinx_port= #sphinx端口
+```
+#### 4.运行
+```
+./libertyblog
+```
+然后去 http://localhost 查看效果，OK！
+
+另外一种执行方式，需要安装bee工具
 ```
 go get -u github.com/beego/bee
 ``
@@ -42,9 +74,6 @@ go get -u github.com/beego/bee
 bee run -downdoc=true -gendoc=true
 ```
 其中-gendoc=true是指生成/swagger下的api文档，-downdoc=true是当文档目录/swagger下内容有改动的时候热更新。
-
-#### 安装mysql
-安装mysql服务，配置好访用户名密码后，创建数据库，名称叫libertyblog，导入libertyblog.sql脚本文件。关于mysql安装配置这个过程就不详述了，请自行百度
 
 
 
