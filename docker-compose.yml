@@ -70,7 +70,7 @@ registrator:
   volumes:
     - "/var/run/docker.sock:/tmp/docker.sock"
   command: -internal consul://consul:8500
-#  command: -ip 118.89.191.176 consul://118.89.191.176:8500
+#  command: -ip *.*.*.* consul://*.*.*.*:8500
 
 sphinx:
   image: liberalman/coreseek
