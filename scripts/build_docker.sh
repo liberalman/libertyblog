@@ -41,6 +41,7 @@ function check_services()
 function build()
 {
     git pull
+    cp -f ../libertyblog ./
     docker-compose stop web
 expect > /dev/null <<END
 spawn docker-compose rm web

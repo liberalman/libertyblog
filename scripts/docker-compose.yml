@@ -12,7 +12,7 @@ web:
     - "/data/gocode/src/libertyblog/conf/app-docker.conf:/data/conf/app.conf"
     - "/data/gocode/src/libertyblog/views/:/data/views/"
     - "/data/gocode/src/libertyblog/static/:/data/static/"
-    - "/var/log/:/data/log/"
+    - "/data/gocode/src/libertyblog/log/:/data/log/"
   ports:
     - "80"
   restart: always

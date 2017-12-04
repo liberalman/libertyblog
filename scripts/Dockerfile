@@ -6,7 +6,7 @@ RUN apk add --update bash ca-certificates && \
     rm -rf /var/cache/apk/*
 
 WORKDIR /data
-COPY ../libertyblog /data/
+COPY libertyblog /data/
 RUN mkdir -p /data/conf/
 RUN mkdir -p /data/log/
 
