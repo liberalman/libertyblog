@@ -9,7 +9,7 @@ web:
     - database
     - sphinx
   volumes:
-    - "/data/gocode/src/libertyblog/conf/app-docker.conf:/data/conf/app.conf"
+    - "/data/gocode/src/libertyblog/conf/app.conf:/data/conf/app.conf"
     - "/data/gocode/src/libertyblog/views/:/data/views/"
     - "/data/gocode/src/libertyblog/static/:/data/static/"
     - "/data/gocode/src/libertyblog/log/:/data/log/"

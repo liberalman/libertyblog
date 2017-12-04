@@ -1,6 +1,5 @@
 /*.exe
 conf/app.conf
-conf/app-docker.conf
 conf/sphinx.conf
 conf/server.crt
 conf/server.key
@@ -10,5 +9,5 @@ libertyblog
 scripts/libertyblog.sql.gz
 scripts/.leancloud/
 scripts/backup_mysql.sh
-scripts/init.sh
+scripts/libertyblog_init.sh
 
