@@ -5,7 +5,7 @@ conf/sphinx.conf
 conf/server.crt
 conf/server.key
 .project
-log/libertyblog.log
+log/*
 libertyblog
 scripts/libertyblog.sql.gz
 scripts/.leancloud/

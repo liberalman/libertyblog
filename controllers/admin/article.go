@@ -81,6 +81,10 @@ func (this *ArticleController) Flot() {
 	this.display("flot")
 }
 
+func (this *ArticleController) Health() {
+	this.display("health")
+}
+
 // @Title article 保存
 // @Description article 保存
 // @Param	title		post 	string	true		"the objectid you want to get"
