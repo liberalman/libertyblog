@@ -33,17 +33,18 @@ server {
   }
 }
 
-server {
-  listen 443 ssl;
-  ssl_certificate      server.crt;
-  ssl_certificate_key  server.key;
-  location / {
-    proxy_pass http://libertyblog;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    add_header Content-Security-Policy upgrade-insecure-requests;
-    #add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; preload";
-    #add_header X-Frame-Options "DENY";
-  }
-}
+#server {
+#  listen 443 ssl;
+#  ssl_certificate      server.crt;
+#  ssl_certificate_key  server.key;
+#  location / {
+#    proxy_pass http://libertyblog;
+#    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#    proxy_set_header Host $host;
+#    proxy_set_header X-Real-IP $remote_addr;
+#    add_header Content-Security-Policy upgrade-insecure-requests;
+#    #add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; preload";
+#    #add_header X-Frame-Options "DENY";
+#  }
+#}
+

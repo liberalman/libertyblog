@@ -2,11 +2,13 @@
 conf/app.conf
 conf/app-docker.conf
 conf/sphinx.conf
-backup_mysql.sh
-.project
 conf/server.crt
 conf/server.key
+.project
 log/libertyblog.log
-seaofheart/
 libertyblog
-libertyblog.sql.gz
+scripts/libertyblog.sql.gz
+scripts/.leancloud/
+scripts/backup_mysql.sh
+scripts/init.sh
+
