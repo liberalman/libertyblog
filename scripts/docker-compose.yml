@@ -63,7 +63,7 @@ consul-server:
 
 # listen on local docker sock to register the container with public ports to the consul service
 registrator:
-  image: gliderlabs/registrator:master
+  image: gliderlabs/registrator:latest
   hostname: registrator
   links:
     - consul-server:consul
