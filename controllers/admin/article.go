@@ -77,10 +77,6 @@ func (this *ArticleController) List() {
 	}
 }
 
-func (this *ArticleController) Flot() {
-	this.display("flot")
-}
-
 func (this *ArticleController) Health() {
 	this.display("health")
 }

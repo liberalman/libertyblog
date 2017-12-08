@@ -125,7 +125,6 @@ func init() {
 	beego.Router("/admin/article/delete", &admin.ArticleController{}, "*:Delete")
 	beego.Router("/admin/article/batch", &admin.ArticleController{}, "*:Batch")
 	beego.Router("/admin/tag", &admin.TagController{}, "*:Index")
-	beego.Router("/admin/flot", &admin.ArticleController{}, "*:Flot")
 	beego.Router("/admin/health", &admin.ArticleController{}, "*:Health")
 
 	//相册管理
