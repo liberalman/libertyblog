@@ -10,4 +10,5 @@ scripts/libertyblog.sql.gz
 scripts/.leancloud/
 scripts/backup_mysql.sh
 scripts/libertyblog_init.sh
+static/data/body.json
 
