@@ -1,15 +1,15 @@
 <script type="text/javascript">
-{{if .errmsg.username}}
-        toastr.error({{.errmsg.username}});
-    {{else if .errmsg.password}}
-        toastr.error({{.errmsg.password}});
-    {{else if .errmsg.password2}}
-        toastr.error({{.errmsg.password2}});
-    {{else if .errmsg.email}}
-        toastr.error({{.errmsg.email}});
-    {{else if .errmsg.information}}
-        toastr.error({{.errmsg.information}});
-{{end}}
+<<<if .errmsg.username>>>
+    toastr.error(<<<.errmsg.username>>>);
+    <<<else if .errmsg.password>>>
+        toastr.error(<<<.errmsg.password>>>);
+    <<<else if .errmsg.password2>>>
+        toastr.error(<<<.errmsg.password2>>>);
+    <<<else if .errmsg.email>>>
+        toastr.error(<<<.errmsg.email>>>);
+    <<<else if .errmsg.information>>>
+        toastr.error(<<<.errmsg.information>>>);
+<<<end>>>
 </script>
 <div id="page-wrapper">
 	<div class="row">
@@ -28,36 +28,36 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-lg-6">
-							<form role="form" method="post">
-								<input type="hidden" name="id" value="{{.user.Id}}" />
+							<form  method="POST">
+                                <input type="hidden" name="id" value="<<<.user.Id>>>" />
 								<div class="form-group input-group">
 									<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;用户名</span>
-									<input type="text" class="form-control" name="username" value="{{.user.Username}}" />
+                                    <input type="text" class="form-control" name="username" value="<<<.user.Username>>>" />
 								</div>
 								<div class="form-group input-group">
 									<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码</span>
-									<input type="password" class="form-control" name="password"/>
+									<input type="password" class="form-control" name="password"  autocomplete="new-password" />
 								</div>
 
 								<div class="form-group input-group">
 									<span class="input-group-addon">确认密码</span>
-									<input type="password" class="form-control" name="password2"/>
+									<input type="password" class="form-control" name="password2"  autocomplete="new-password" />
 								</div>
 								<div class="form-group input-group">
 									<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱</span>
-									<input type="text" class="form-control" name="email" value="{{.user.Email}}" />
+                                    <input type="text" class="form-control" name="email" value="<<<.user.Email>>>" />
 								</div>
 								<div class="form-group input-group">
 									<span class="input-group-addon">个人信息</span>
-									<input type="text" class="form-control" name="information" value="{{.user.Information}}" />
+                                    <input type="text" class="form-control" name="information" value="<<<.user.Information>>>" />
 								</div>
 								<div class="form-group">
 									<label>激活状态</label>
 									<label class="radio-inline">
-                                                <input type="radio" name="active" id="data_active_0" value="0" {{if eq .user.Active 0}}checked{{end}}>未激活
+                                        <input type="radio" name="active" id="data_active_0" value="0" <<<if eq .user.Active 0>>>checked<<<end>>>  />未激活
                                             </label>
 									<label class="radio-inline">
-                                                <input type="radio" name="active" id="data_active_1" value="1" {{if eq .user.Active 1}}checked{{end}}>已激活
+                                        <input type="radio" name="active" id="data_active_1" value="1" <<<if eq .user.Active 1>>>checked<<<end>>>  />已激活
                                             </label>
 								</div>
 								<button type="submit" class="btn btn-default">保存</button>

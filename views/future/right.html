@@ -1,3 +1,10 @@
+<style>
+.line-limit-length {
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap; //文本不换行，这样超出一行的部分被截取，显示...
+}
+</style>
 <!-- Sidebar -->
 <section id="sidebar">
 
@@ -5,7 +12,7 @@
 	<section id="intro">
 		<<<if .username>>>
 		<a href="/admin" class="logo mytooltip" title="This is my image's tooltip message!"><img src="<<<.avatarurl>>>" alt=""/></a>
-		<header>
+		<header class="line-limit-length">
 			<h2><<<.username>>></h2>
 			<p>我的帖子:<<<.post_count>>> 粉丝:<<<.follow_count>>></p>
 			<p><<<.information>>></p>

@@ -109,6 +109,7 @@ func (this *UserController) Edit() {
 	errmsg := make(map[string]string)
 
 	if this.Ctx.Request.Method == "POST" {
+		username := strings.TrimSpace(this.GetString("username"))
 		password := strings.TrimSpace(this.GetString("password"))
 		password2 := strings.TrimSpace(this.GetString("password2"))
 		email := strings.TrimSpace(this.GetString("email"))
@@ -134,6 +135,9 @@ func (this *UserController) Edit() {
 		}
 		if information != "" {
 			user.Information = information
+		}
+		if username != "" {
+			user.Username = username
 		}
 
 		if active > 0 {
