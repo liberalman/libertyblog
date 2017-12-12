@@ -58,7 +58,7 @@
 							<input class="form-control" name="editortype" value="1" type="hidden" />
 						</div>
 						<input type="submit" value="Just do it!" class="btn btn-danger" />
-						<input type="button" value="a" id="a" class="btn btn-danger" />
+                        <!--<input type="button" value="a" id="testa" class="btn btn-danger" />-->
 						</br>
 						</br>
 						<textarea name="digest" placeholder="文章摘要(80个字内)" class="form-control" cols="160" /><<<.post.Digest>>></textarea>
@@ -225,7 +225,7 @@
                         }
                         catch(e)
                         {
-                            alert(e);
+                            console.info(e);
                         }
 
 						$.post('/admin/article/save',
@@ -249,7 +249,7 @@
 				});
 			});
 
-            $('#a').click(function(){
+            $('#testa').click(function(){
                 /*var str = $("textarea[name='content']").val();
                 console.info(str);
                 var patten = new RegExp("\!\[.*\]\(.*\)", "g");
