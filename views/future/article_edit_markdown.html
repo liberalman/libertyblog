@@ -58,6 +58,7 @@
 							<input class="form-control" name="editortype" value="1" type="hidden" />
 						</div>
 						<input type="submit" value="Just do it!" class="btn btn-danger" />
+						<input type="button" value="a" id="a" class="btn btn-danger" />
 						</br>
 						</br>
 						<textarea name="digest" placeholder="文章摘要(80个字内)" class="form-control" cols="160" /><<<.post.Digest>>></textarea>
@@ -179,24 +180,25 @@
 					// 使用 ajax 方式提交
 					submitHandler: function(form) {
 						/* 获取src和alt的代码
-			        var re = /<img([^>]+?)>/ig;
-				    var s = document.getElementById("test-editormd").innerHTML;
-				    var str=""
-				    var tempImg=""
-				    var re1=/alt\s*=\s*([^\s]+)/i
-				    var re2=/src\s*=\s*(["'])([^"']+)\1/i
-				    while(re.exec(s))
-				    {
-				        tempImg=RegExp.$1
-				        str+=((re1.test(tempImg))?RegExp.$1:"")+","
-				        re2.test(tempImg)
-				        str+=((re2.test(tempImg))?RegExp.$2:"")+"\r\n"
-				    }
-				    console.info(str);*/
+                        var re = /<img([^>]+?)>/ig;
+                        var s = document.getElementById("test-editormd").innerHTML;
+                        var str=""
+                        var tempImg=""
+                        var re1=/alt\s*=\s*([^\s]+)/i
+                        var re2=/src\s*=\s*(["'])([^"']+)\1/i
+                        while(re.exec(s))
+                        {
+                            tempImg=RegExp.$1
+                            str+=((re1.test(tempImg))?RegExp.$1:"")+","
+                            re2.test(tempImg)
+                            str+=((re2.test(tempImg))?RegExp.$2:"")+"\r\n"
+                        }
+                        console.info(str);*/
 
-						// 从文章中找出一个img出来，作为封面图片，默认选第一个找到的图片。
+						/*// 从文章中找出一个img出来，作为封面图片，默认选第一个找到的图片。
 						var re = /<img([^>]+?)>/ig;
 						var s = document.getElementById("test-editormd").innerHTML;
+
 						var str = ""
 						var tempImg = ""
 						var re2 = /src\s*=\s*(["'])([^"']+)\1/i
@@ -206,7 +208,25 @@
 							str += ((re2.test(tempImg)) ? RegExp.$2 : "");
 							break; // 只获取第一条就行了
 						}
-						$('#coverurl').val(str);
+						$('#coverurl').val(str);*/
+
+						// 从文章中找出一个img出来，作为封面图片，默认选第一个找到的图片。
+                        try
+                        {  
+                            var str = $("textarea[name='content']").val();
+                            s = str.match(/\!\[.*\]\(\s*(.*)\s*\)/gi);
+                            
+                            for(var i= 0;i<s.length;i++)
+                            {
+                                var tmp = s[i];
+                                var s2=tmp.split(/\!\[.*\]\(\s*(.*)\s*\)/gi);
+                                $('#coverurl').val(s2[1]);
+                            }
+                        }
+                        catch(e)
+                        {
+                            alert(e);
+                        }
 
 						$.post('/admin/article/save',
 							$(form).serialize(),
@@ -228,6 +248,40 @@
 					}
 				});
 			});
+
+            $('#a').click(function(){
+                /*var str = $("textarea[name='content']").val();
+                console.info(str);
+                var patten = new RegExp("\!\[.*\]\(.*\)", "g");
+                var result;
+                while((result = patten.exec(str)) != null) {
+                    console.info(result);
+                    break; // 只获取第一条就行了
+                }*/
+                try
+                {  
+                    var str = $("textarea[name='content']").val();
+                    //console.info(str);
+                    s = str.match(/\!\[.*\]\(\s*(.*)\s*\)/gi);
+                    
+                      for(var i= 0;i<s.length;i++)
+                      {
+                          //console.info(s[i]);
+                          var tmp = s[i];
+                          var s2=tmp.split(/\!\[.*\]\(\s*(.*)\s*\)/gi);
+                          /*console.info(s2);
+                          for(var i= 0;i<s2.length;i++)
+                          {
+                              console.info(s2[i]);
+                          }*/
+                          console.info(s2[1]);
+                      }
+                }
+                catch(e)
+                {
+                    alert(e);
+                }
+            });
 		</script>
 
 	</body>
