@@ -48,6 +48,8 @@ expect "Are you sure" {
     send "y\r"
 }
 END
+    docker stop `docker ps|grep liberalman/libertyblog|awk '{print $1}'`
+    docker rm `docker ps|grep liberalman/libertyblog|awk '{print $1}'`
     docker run -it -v /data/gocode:/data/gocode -e GOPATH=/data/gocode --rm demo/go-build:latest /bin/bash -c "cd /data/gocode/src/libertyblog && go build"
     cp -f ../libertyblog ./
     docker build -t liberalman/libertyblog .

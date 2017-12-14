@@ -93,6 +93,7 @@ func (this *baseController) display(tpl string, no_right int) {
 	this.LayoutSections["footer"] = this.theme + "/footer.html" // 尾
 
 	if NO_RIGHT == no_right { // 1代表无右侧边栏
+		this.ResetUser()
 		this.Data["no_right"] = true
 	} else {
 		// 右侧内容
