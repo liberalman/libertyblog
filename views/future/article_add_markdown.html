@@ -571,7 +571,7 @@ digraph G {
 				    console.info(str);*/
 
 					// 从文章中找出一个img出来，作为封面图片，默认选第一个找到的图片。
-					var re = /<img([^>]+?)>/ig;
+					/*var re = /<img([^>]+?)>/ig;
 					var s = document.getElementById("test-editormd").innerHTML;
 					var str = ""
 					var tempImg = ""
@@ -583,7 +583,27 @@ digraph G {
 						str += ((re2.test(tempImg)) ? RegExp.$2 : "");
 						break; // 只获取第一条就行了
 					}
-					$('#coverurl').val(str);
+					$('#coverurl').val(str);*/
+
+					$('#coverurl').val("");
+
+					// 从文章中找出一个img出来，作为封面图片，默认选第一个找到的图片。
+                    try
+                    {  
+                        var str = $("textarea[name='content']").val();
+                        s = str.match(/\!\[.*\]\(\s*(.*)\s*\)/gi);
+                        $('#coverurl').val("");
+                        for(var i= 0;i<s.length;i++)
+                        {
+                            var tmp = s[i];
+                            var s2=tmp.split(/\!\[.*\]\(\s*(.*)\s*\)/gi);
+                            $('#coverurl').val(s2[1]);
+                        }
+                    }
+                    catch(e)
+                    {                                                                                                                         
+                        console.info(e);
+                    }
 
 						$.post('/admin/article/save',
 							$(form).serialize(),

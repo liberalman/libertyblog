@@ -215,7 +215,7 @@
                         {  
                             var str = $("textarea[name='content']").val();
                             s = str.match(/\!\[.*\]\(\s*(.*)\s*\)/gi);
-                            
+                            $('#coverurl').val("");
                             for(var i= 0;i<s.length;i++)
                             {
                                 var tmp = s[i];
