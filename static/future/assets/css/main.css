@@ -2873,7 +2873,7 @@
 		letter-spacing: 0.25em;
 		line-height: 2.5;
 		margin-top: -1em;
-		text-transform: uppercase;
+		/*text-transform: uppercase; 大写 */
 	}
 
 /* Table */
