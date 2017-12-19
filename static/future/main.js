@@ -192,7 +192,7 @@ function init_pagebar3(init_page, pagesize, total, nexturl) {
 									});
 									vm_home.$set(vm_home.list, index, value);
 								});
-								history.pushState({}, "", url); // change path in browser.
+								history.replaceState({}, "", url); // change path in browser.
 								$('.back-to-top').click(); // go back to top.
 							}
 						}
@@ -223,7 +223,7 @@ function init_pagebar(init_page, pagesize, total, vm, url) {
 						//console.info(result.data.list);
 						//toastr.success(result.message);
 						vm.list = result.data.list;
-						history.pushState({}, "", newUrl); // change path in browser.
+						history.replaceState({}, "", newUrl); // change path in browser.
 						$('.back-to-top').click();
 					}
 				}
