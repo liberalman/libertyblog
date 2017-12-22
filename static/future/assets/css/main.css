@@ -3029,7 +3029,7 @@
 					font-size: 0.7em;
 					font-weight: 400;
 					letter-spacing: 0.25em;
-					text-transform: uppercase;
+					/*text-transform: uppercase; 大写 */
 				}
 
 		#header .main {
@@ -3414,7 +3414,7 @@
 						letter-spacing: 0.25em;
 						margin-bottom: 0;
 						text-decoration: none;
-						text-transform: uppercase;
+						/*text-transform: uppercase; 大写 */
 					}
 
 					#menu .links > li a:hover h3 {
