@@ -7,7 +7,7 @@ web:
     SERVICE_TAGS: backend
   links:
     - database
-    - sphinx
+#    - sphinx
   volumes:
     - "/data/gocode/src/libertyblog/conf/app.conf:/data/conf/app.conf"
     - "/data/gocode/src/libertyblog/views/:/data/views/"
@@ -24,63 +24,63 @@ database:
     - "/data/gocode/src/libertyblog/conf/my.cnf:/etc/mysql/my.cnf"
     - "/var/lib/mysql:/var/lib/mysql"
   ports:
-    - "27893:3306"
+    - "3306"
   environment:
-    MYSQL_ROOT_PASSWORD: Looks137
+    MYSQL_ROOT_PASSWORD: 
     MYSQL_DATABASE: libertyblog
   restart: always
 
 
 # load balancer will automatically update the config using consul-template
-loadbalancer:
-  image: liberalman/nginx-consul-template:latest
-  hostname: nginx
-  volumes:
-    - "/data/gocode/src/libertyblog/conf/nginx.conf.ctmpl:/etc/consul-templates/nginx.conf.ctmpl"
-    #- "/data/gocode/src/libertyblog/conf/server.key:/etc/nginx/server.key"
-    #- "/data/gocode/src/libertyblog/conf/server.crt:/etc/nginx/server.crt"
-  links:
-    - consul-server:consul
-  ports:
-    - "80:80"
-    - "443:443"
+#loadbalancer:
+#  image: liberalman/nginx-consul-template:latest
+#  hostname: nginx
+#  volumes:
+#    - "/data/gocode/src/libertyblog/conf/nginx.conf.ctmpl:/etc/consul-templates/nginx.conf.ctmpl"
+#    #- "/data/gocode/src/libertyblog/conf/server.key:/etc/nginx/server.key"
+#    #- "/data/gocode/src/libertyblog/conf/server.crt:/etc/nginx/server.crt"
+#  links:
+#    - consul-server:consul
+#  ports:
+#    - "80:80"
+#    - "443:443"
 
-consul-server:
-  image: progrium/consul:latest
-  environment:
-    SERVICE_TAGS: my consul servers
-  hostname: consul
-  ports:
-    - "8300:8300"
-    - "8301:8301"
-    - "8301:8301/udp"
-    - "8302:8302"
-    - "8302:8302/udp"
-    - "8400:8400"
-    - "8500:8500"
-    - "53:53/udp"
-  command: -server -ui-dir /ui -dc liberty-dc1 -advertise=118.89.191.176 -bootstrap
+#consul-server:
+#  image: progrium/consul:latest
+#  environment:
+#    SERVICE_TAGS: my consul servers
+#  hostname: consul
+#  ports:
+#    - "8300:8300"
+#    - "8301:8301"
+#    - "8301:8301/udp"
+#    - "8302:8302"
+#    - "8302:8302/udp"
+#    - "8400:8400"
+#    - "8500:8500"
+#    - "53:53/udp"
+#  command: -server -ui-dir /ui -dc liberty-dc1 -advertise=118.89.191.176 -bootstrap
 
 # listen on local docker sock to register the container with public ports to the consul service
-registrator:
-  image: gliderlabs/registrator:latest
-  hostname: registrator
-  links:
-    - consul-server:consul
-  volumes:
-    - "/var/run/docker.sock:/tmp/docker.sock"
-  command: -internal consul://consul:8500
-#  command: -ip *.*.*.* consul://*.*.*.*:8500
+#registrator:
+#  image: gliderlabs/registrator:latest
+#  hostname: registrator
+#  links:
+#    - consul-server:consul
+#  volumes:
+#    - "/var/run/docker.sock:/tmp/docker.sock"
+#  command: -internal consul://consul:8500
+##  command: -ip *.*.*.* consul://*.*.*.*:8500
 
-sphinx:
-  image: liberalman/coreseek
-  hostname: sphinx
-  ports:
-    - "23890:9312"
-    - "9306"
-  links:
-    - database:mysql
-  volumes:
-    - "/var/coreseek/:/usr/local/coreseek/var/"
-    - "/data/gocode/src/libertyblog/conf/sphinx.conf:/usr/local/coreseek/conf/sphinx.conf"
+#sphinx:
+#  image: liberalman/coreseek
+#  hostname: sphinx
+#  ports:
+#    - "9312"
+#    - "9306"
+#  links:
+#    - database:mysql
+#  volumes:
+#    - "/var/coreseek/:/usr/local/coreseek/var/"
+#    - "/data/gocode/src/libertyblog/conf/sphinx.conf:/usr/local/coreseek/conf/sphinx.conf"
 

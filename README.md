@@ -153,3 +153,25 @@ views/lofter/logincallback.html 登录回调页面
 
 
 
+#### jenkins/consul
+docker-compose-host-2.yml 
+```
+registrator:
+  image: gliderlabs/registrator:master
+  hostname: registrator
+  volumes:
+    - "/var/run/docker.sock:/tmp/docker.sock"
+  command: -ip 60.172.228.40 consul://www.hicool.top:8500
+
+jenkins:
+  image: jenkins:latest
+  hostname: jenkins
+  environment:
+   SERVICE_8080_NAME: jenkins
+   SERVICE_TAGS: backend
+  ports:
+      - "9090:8080"
+  volumes:
+    - "/var/jenkins_home:/var/jenkins_home"
+```
+
